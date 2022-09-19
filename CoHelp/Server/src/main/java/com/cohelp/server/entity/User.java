@@ -1,0 +1,149 @@
+package com.cohelp.server.entity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.util.Date;
+import lombok.Data;
+
+/**
+ * 用户表
+ * @TableName user
+ */
+@TableName(value ="user")
+@Data
+public class User implements Serializable {
+    /**
+     * 主键
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+
+    /**
+     * 账号
+     */
+    private String useAccount;
+
+    /**
+     * 昵称
+     */
+    private String userName;
+
+    /**
+     * 密码
+     */
+    private String userPassword;
+
+    /**
+     * 头像
+     */
+    private Integer avatar;
+
+    /**
+     * 性别（0：男 1：女）
+     */
+    private Integer sex;
+
+    /**
+     * 联系方式
+     */
+    private String contact;
+
+    /**
+     * 年龄
+     */
+    private Integer age;
+
+    /**
+     * 学校
+     */
+    private String school;
+
+    /**
+     * 用户角色（0：普通用户 1：管理员）
+     */
+    private Integer userRole;
+
+    /**
+     * 状态（0：正常 1：异常）
+     */
+    private Integer state;
+
+    /**
+     * 用户创建时间
+     */
+    private Date userCreateTime;
+
+    @TableField(exist = false)
+    private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        User other = (User) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getUseAccount() == null ? other.getUseAccount() == null : this.getUseAccount().equals(other.getUseAccount()))
+            && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
+            && (this.getUserPassword() == null ? other.getUserPassword() == null : this.getUserPassword().equals(other.getUserPassword()))
+            && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
+            && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
+            && (this.getContact() == null ? other.getContact() == null : this.getContact().equals(other.getContact()))
+            && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
+            && (this.getSchool() == null ? other.getSchool() == null : this.getSchool().equals(other.getSchool()))
+            && (this.getUserRole() == null ? other.getUserRole() == null : this.getUserRole().equals(other.getUserRole()))
+            && (this.getState() == null ? other.getState() == null : this.getState().equals(other.getState()))
+            && (this.getUserCreateTime() == null ? other.getUserCreateTime() == null : this.getUserCreateTime().equals(other.getUserCreateTime()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getUseAccount() == null) ? 0 : getUseAccount().hashCode());
+        result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
+        result = prime * result + ((getUserPassword() == null) ? 0 : getUserPassword().hashCode());
+        result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
+        result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
+        result = prime * result + ((getContact() == null) ? 0 : getContact().hashCode());
+        result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
+        result = prime * result + ((getSchool() == null) ? 0 : getSchool().hashCode());
+        result = prime * result + ((getUserRole() == null) ? 0 : getUserRole().hashCode());
+        result = prime * result + ((getState() == null) ? 0 : getState().hashCode());
+        result = prime * result + ((getUserCreateTime() == null) ? 0 : getUserCreateTime().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", useAccount=").append(useAccount);
+        sb.append(", userName=").append(userName);
+        sb.append(", userPassword=").append(userPassword);
+        sb.append(", avatar=").append(avatar);
+        sb.append(", sex=").append(sex);
+        sb.append(", contact=").append(contact);
+        sb.append(", age=").append(age);
+        sb.append(", school=").append(school);
+        sb.append(", userRole=").append(userRole);
+        sb.append(", state=").append(state);
+        sb.append(", userCreateTime=").append(userCreateTime);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
+}

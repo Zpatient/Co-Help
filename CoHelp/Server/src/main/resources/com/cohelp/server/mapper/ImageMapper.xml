@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cohelp.server.mapper.ImageMapper">
+
+    <resultMap id="BaseResultMap" type="com.cohelp.server.entity.Image">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="imageType" column="image_type" jdbcType="INTEGER"/>
+            <result property="imageSrcId" column="image_src_id" jdbcType="INTEGER"/>
+            <result property="imageUrl" column="image_url" jdbcType="VARCHAR"/>
+            <result property="imageState" column="image_state" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,image_type,image_src_id,
+        image_url,image_state
+    </sql>
+</mapper>

@@ -1,4 +1,4 @@
-package com.cohelp.server.entity;
+package com.cohelp.server.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -24,7 +24,7 @@ public class User implements Serializable {
     /**
      * 账号
      */
-    private String useAccount;
+    private String userAccount;
 
     /**
      * 昵称
@@ -76,6 +76,12 @@ public class User implements Serializable {
      */
     private Date userCreateTime;
 
+    /**
+     * 属相
+     */
+    @TableField(exist = false)
+    private String animalSign;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -92,7 +98,7 @@ public class User implements Serializable {
         }
         User other = (User) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getUseAccount() == null ? other.getUseAccount() == null : this.getUseAccount().equals(other.getUseAccount()))
+            && (this.getUserAccount() == null ? other.getUserAccount() == null : this.getUserAccount().equals(other.getUserAccount()))
             && (this.getUserName() == null ? other.getUserName() == null : this.getUserName().equals(other.getUserName()))
             && (this.getUserPassword() == null ? other.getUserPassword() == null : this.getUserPassword().equals(other.getUserPassword()))
             && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
@@ -110,7 +116,7 @@ public class User implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getUseAccount() == null) ? 0 : getUseAccount().hashCode());
+        result = prime * result + ((getUserAccount() == null) ? 0 : getUserAccount().hashCode());
         result = prime * result + ((getUserName() == null) ? 0 : getUserName().hashCode());
         result = prime * result + ((getUserPassword() == null) ? 0 : getUserPassword().hashCode());
         result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
@@ -131,7 +137,7 @@ public class User implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", useAccount=").append(useAccount);
+        sb.append(", userAccount=").append(userAccount);
         sb.append(", userName=").append(userName);
         sb.append(", userPassword=").append(userPassword);
         sb.append(", avatar=").append(avatar);

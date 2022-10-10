@@ -1,6 +1,6 @@
 package com.cohelp.server.mapper;
 
-import com.cohelp.server.entity.RemarkHole;
+import com.cohelp.server.model.entity.RemarkHole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

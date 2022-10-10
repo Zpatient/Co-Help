@@ -4,9 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cohelp.server.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.cohelp.server.entity.User">
+    <resultMap id="BaseResultMap" type="com.cohelp.server.model.entity.User">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="useAccount" column="use_account" jdbcType="VARCHAR"/>
+            <result property="userAccount" column="use_account" jdbcType="VARCHAR"/>
             <result property="userName" column="user_name" jdbcType="VARCHAR"/>
             <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
             <result property="avatar" column="avatar" jdbcType="INTEGER"/>

@@ -1,7 +1,7 @@
 package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.entity.Help;
+import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.service.HelpService;
 import com.cohelp.server.mapper.HelpMapper;
 import org.springframework.stereotype.Service;

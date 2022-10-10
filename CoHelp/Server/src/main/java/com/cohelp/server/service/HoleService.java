@@ -1,6 +1,6 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.entity.Hole;
+import com.cohelp.server.model.entity.Hole;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

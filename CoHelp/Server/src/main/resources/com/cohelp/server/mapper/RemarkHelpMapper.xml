@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cohelp.server.mapper.RemarkHelpMapper">
 
-    <resultMap id="BaseResultMap" type="com.cohelp.server.entity.RemarkHelp">
+    <resultMap id="BaseResultMap" type="com.cohelp.server.model.entity.RemarkHelp">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="remarkContent" column="remark_content" jdbcType="VARCHAR"/>
             <result property="remarkHelpId" column="remark_help_id" jdbcType="INTEGER"/>

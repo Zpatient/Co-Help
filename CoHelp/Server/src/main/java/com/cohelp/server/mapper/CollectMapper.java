@@ -1,6 +1,6 @@
 package com.cohelp.server.mapper;
 
-import com.cohelp.server.entity.Collect;
+import com.cohelp.server.model.entity.Collect;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

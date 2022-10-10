@@ -1,6 +1,6 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.entity.RemarkHelp;
+import com.cohelp.server.model.entity.RemarkHelp;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

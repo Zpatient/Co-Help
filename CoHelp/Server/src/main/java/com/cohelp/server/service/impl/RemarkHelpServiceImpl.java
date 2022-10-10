@@ -1,7 +1,7 @@
 package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.entity.RemarkHelp;
+import com.cohelp.server.model.entity.RemarkHelp;
 import com.cohelp.server.service.RemarkHelpService;
 import com.cohelp.server.mapper.RemarkHelpMapper;
 import org.springframework.stereotype.Service;

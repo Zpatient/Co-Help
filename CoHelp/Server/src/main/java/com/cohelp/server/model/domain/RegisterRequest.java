@@ -6,6 +6,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * 注册请求体
+ *
  * @author jianping5
  * @create 2022/10/10 20:29
  */
@@ -18,6 +20,11 @@ public class RegisterRequest implements Serializable {
     private String userPassword;
 
     private String userConfirmPassword;
+
+    /**
+     * 手机号
+     */
+    private String phoneNumber;
 
     private static final long serialVersionUID = 1L;
 

@@ -139,7 +139,7 @@ create table cohelp.user
     user_password    varchar(25)        not null comment '密码',
     avatar           int     default 1  not null comment '头像',
     sex              tinyint default 0  not null comment '性别（0：男 1：女）',
-    contact          varchar(25)        null comment '联系方式',
+    phoneNumber          varchar(25)        null comment '联系方式',
     age              int     default 18 not null comment '年龄',
     school           varchar(100)       null comment '学校',
     user_role        tinyint default 0  not null comment '用户角色（0：普通用户 1：管理员）',

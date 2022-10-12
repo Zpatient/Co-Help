@@ -47,9 +47,9 @@ public class User implements Serializable {
     private Integer sex;
 
     /**
-     * 联系方式
+     * 手机号
      */
-    private String contact;
+    private String phoneNumber;
 
     /**
      * 年龄
@@ -103,7 +103,7 @@ public class User implements Serializable {
             && (this.getUserPassword() == null ? other.getUserPassword() == null : this.getUserPassword().equals(other.getUserPassword()))
             && (this.getAvatar() == null ? other.getAvatar() == null : this.getAvatar().equals(other.getAvatar()))
             && (this.getSex() == null ? other.getSex() == null : this.getSex().equals(other.getSex()))
-            && (this.getContact() == null ? other.getContact() == null : this.getContact().equals(other.getContact()))
+            && (this.getPhoneNumber() == null ? other.getPhoneNumber() == null : this.getPhoneNumber().equals(other.getPhoneNumber()))
             && (this.getAge() == null ? other.getAge() == null : this.getAge().equals(other.getAge()))
             && (this.getSchool() == null ? other.getSchool() == null : this.getSchool().equals(other.getSchool()))
             && (this.getUserRole() == null ? other.getUserRole() == null : this.getUserRole().equals(other.getUserRole()))
@@ -121,7 +121,7 @@ public class User implements Serializable {
         result = prime * result + ((getUserPassword() == null) ? 0 : getUserPassword().hashCode());
         result = prime * result + ((getAvatar() == null) ? 0 : getAvatar().hashCode());
         result = prime * result + ((getSex() == null) ? 0 : getSex().hashCode());
-        result = prime * result + ((getContact() == null) ? 0 : getContact().hashCode());
+        result = prime * result + ((getPhoneNumber() == null) ? 0 : getPhoneNumber().hashCode());
         result = prime * result + ((getAge() == null) ? 0 : getAge().hashCode());
         result = prime * result + ((getSchool() == null) ? 0 : getSchool().hashCode());
         result = prime * result + ((getUserRole() == null) ? 0 : getUserRole().hashCode());
@@ -142,7 +142,7 @@ public class User implements Serializable {
         sb.append(", userPassword=").append(userPassword);
         sb.append(", avatar=").append(avatar);
         sb.append(", sex=").append(sex);
-        sb.append(", contact=").append(contact);
+        sb.append(", phoneNumber=").append(phoneNumber);
         sb.append(", age=").append(age);
         sb.append(", school=").append(school);
         sb.append(", userRole=").append(userRole);

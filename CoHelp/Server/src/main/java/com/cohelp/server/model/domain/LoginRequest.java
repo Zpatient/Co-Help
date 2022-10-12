@@ -6,6 +6,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
+ * 登录请求体
+ *
  * @author jianping5
  * @create 2022/10/10 20:58
  */

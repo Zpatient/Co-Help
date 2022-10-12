@@ -14,6 +14,7 @@ public class StatusCode {
 
     /**
      * 登录拦截器（请求被拦截-> 返回状态码 -> 跳转登录页面）
+     * 清空本地cookie
      */
     public static final String INTERCEPTOR_LOGIN = "444";
 }

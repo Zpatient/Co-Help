@@ -8,27 +8,27 @@ package com.cohelp.server.model.domain;
  */
 public class ResultUtil {
 
-    private static Result ok(String code, Object data, String message) {
-        return new Result(code, data, message);
+    public static <T> Result<T> ok(String code, T data, String message) {
+        return new Result<>(code, data, message);
     }
 
-    private static Result ok(String code, String message) {
+    public static Result ok(String code, String message) {
         return new Result(code, message);
     }
 
-    private static Result ok(String message) {
+    public static Result ok(String message) {
         return new Result(message);
     }
 
-    private static Result fail(String code, Object data, String message) {
-        return new Result(code, data, message);
+    public static <T> Result<T> fail(String code, T data, String message) {
+        return new Result<>(code, data, message);
     }
 
-    private static Result fail(String code, String message) {
+    public static Result fail(String code, String message) {
         return new Result(code, message);
     }
 
-    private static Result fail(String message) {
+    public static Result fail(String message) {
         return new Result(message);
     }
 }

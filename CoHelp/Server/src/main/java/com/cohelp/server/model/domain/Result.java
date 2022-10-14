@@ -21,15 +21,19 @@ public class Result<T> implements Serializable {
 
     private String message;
 
-    public Result(String code, Object data, String message) {
+    public Result(String code, T data, String message) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
     }
 
     public Result(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     public Result(String message) {
+        this.message = message;
     }
-
-
 
 }

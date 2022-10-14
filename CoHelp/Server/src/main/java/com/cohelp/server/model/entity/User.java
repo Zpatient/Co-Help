@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
  * 用户表
+ * @author jianping5
  * @TableName user
  */
 @TableName(value ="user")
@@ -74,7 +78,8 @@ public class User implements Serializable {
     /**
      * 用户创建时间
      */
-    private Date userCreateTime;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private LocalDateTime userCreateTime;
 
     /**
      * 属相

@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 登录控制器
+ * 用户信息控制器
  *
  * @author jianping5
  * @create 2022/10/13 18:13

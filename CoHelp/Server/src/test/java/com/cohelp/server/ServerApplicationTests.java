@@ -1,7 +1,9 @@
 package com.cohelp.server;
 
 import com.cohelp.server.controller.UserController;
+import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.RegisterRequest;
+import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +21,7 @@ class ServerApplicationTests {
 
     @Resource
     private UserController userController;
+
 
     @Test
     void contextLoads() {
@@ -70,5 +73,8 @@ class ServerApplicationTests {
     void test04() {
         System.out.println(getAnimalSign(LocalDateTime.now().getYear() - 18));
     }
-
+    @Test
+    void sendmailtest(){
+        MailUtils.sendMail(new Mail("Test","能成功吗？"),"2939814223@qq.com");
+    }
 }

@@ -1,10 +1,12 @@
 package com.cohelp.server.interceptor;
 
+import com.cohelp.server.model.entity.User;
+import com.cohelp.server.utils.UserHolder;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 
 /**
  * @author jianping5
@@ -13,16 +15,24 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        return HandlerInterceptor.super.preHandle(request, response, handler);
+        // 获取session中的user对象
+        Object userObj = request.getSession().getAttribute("user");
+        // 若不存在，说明当前用户未登录，则返回444
+        if (userObj == null) {
+            response.setStatus(444);
+            return false;
+        }
+        // 存在，则存入 UserHolder 中，方便获取
+        User user = (User) userObj;
+        UserHolder.setUser(user);
+        // 放行
+        return true;
     }
 
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
-    }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-
+        // 一次请求完全结束后，清空UserHolder中的数据
+        UserHolder.clear();
     }
 }

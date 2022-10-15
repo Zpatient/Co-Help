@@ -5,12 +5,35 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author zgy
- * @create 2022-10-10 20:15
+ * 返回对象
+ *
+ * @author jianping5
+ * @create 2022/10/10 20:24
  */
 @Data
-public class Result implements Serializable {
+public class Result<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String code;
-    private Object data;
+
+    private T data;
+
     private String message;
+
+    public Result(String code, T data, String message) {
+        this.code = code;
+        this.data = data;
+        this.message = message;
+    }
+
+    public Result(String code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public Result(String message) {
+        this.message = message;
+    }
+
 }

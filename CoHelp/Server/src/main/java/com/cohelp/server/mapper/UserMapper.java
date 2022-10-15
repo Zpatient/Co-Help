@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @Entity com.cohelp.server.model.entity.User
 */
 public interface UserMapper extends BaseMapper<User> {
+    String getEmailByUserAccount (String userAccount);
 
 }
 

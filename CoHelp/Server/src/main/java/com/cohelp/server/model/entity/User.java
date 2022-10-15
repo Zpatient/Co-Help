@@ -64,6 +64,10 @@ public class User implements Serializable {
      * 学校
      */
     private String school;
+    /**
+     * 邮箱
+     */
+    private String userEmail;
 
     /**
      * 用户角色（0：普通用户 1：管理员）

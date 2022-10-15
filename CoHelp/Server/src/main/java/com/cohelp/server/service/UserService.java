@@ -1,5 +1,6 @@
 package com.cohelp.server.service;
 
+import com.cohelp.server.model.domain.ChangePasswordRequest;
 import com.cohelp.server.model.domain.LoginRequest;
 import com.cohelp.server.model.domain.RegisterRequest;
 import com.cohelp.server.model.domain.Result;
@@ -30,4 +31,25 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result userRegister(RegisterRequest registerRequest);
+    /**
+     * 根据用户账号获取用户邮箱
+     * @author: ZGY
+     * @param userAccount
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result getUserEmail(String userAccount);
+    /**
+     * 向用户邮箱发送验证码
+     * @author: ZGY
+     * @param userEmail
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result sendConfirmCode(String userEmail,HttpServletRequest request);
+    /**
+     * 更改用户密码(一定要带上Cookie)
+     * @author: ZGY
+     * @param changePasswordRequest
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result userChangePassword(ChangePasswordRequest changePasswordRequest,HttpServletRequest request);
 }

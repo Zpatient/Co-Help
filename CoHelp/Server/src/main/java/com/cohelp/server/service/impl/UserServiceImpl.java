@@ -1,21 +1,14 @@
 package com.cohelp.server.service.impl;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.model.domain.LoginRequest;
-import com.cohelp.server.model.domain.RegisterRequest;
-import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.domain.ResultUtil;
+import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.mapper.UserMapper;
+import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +17,7 @@ import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import static com.cohelp.server.constant.NumberConstant.*;
 import static com.cohelp.server.model.domain.StatusCode.*;
@@ -194,6 +188,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return ResultUtil.ok(SUCCESS_REGISTER, user.getId(), "注册成功");
     }
 
+
     /**
      * 获取原始 user 对象（包含加密的密码，并初始化部分属性）
      * @param userAccount
@@ -233,6 +228,100 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             case 10: return "马";
             case 11: return "羊";
             default: return "";
+        }
+    }
+    @Override
+    public Result getUserEmail(String userAccount){
+        //检查参数是否有效
+        if(null==userAccount) {
+            return ResultUtil.fail(ERROR_PARAMS, "参数为空");
+        }
+        //查询邮箱
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_account", userAccount);
+        User user = userMapper.selectOne(userQueryWrapper);
+        String email = user.getUserEmail();
+        if(null == user){
+            return ResultUtil.fail(ERROR_GET_DATA,"用户不存在！");
+        }
+        else if(null != email)
+            return ResultUtil.ok(SUCCESS_GET_DATA,email,"邮箱获取成功！");
+        else
+            return ResultUtil.fail(ERROR_GET_DATA,"邮箱获取失败！");
+    }
+    @Override
+    public Result sendConfirmCode(String userEmail,HttpServletRequest request){
+        //检查参数是否有效
+        if(null==userEmail) {
+            return ResultUtil.fail(ERROR_PARAMS, "参数为空");
+        }
+        //随机生成六位数字验证码
+        Random random = new Random();
+        Integer confirmCode = random.nextInt(899999)+100000;
+        //存放到Session域中
+        HttpSession session = request.getSession();
+        if(null!=session.getAttribute(userEmail)) {
+            session.removeAttribute(userEmail);
+        }
+        session.setAttribute(userEmail,confirmCode.toString());
+        //发送验证码
+        String message = "您的验证码是："+confirmCode.toString()+"。请妥善保管验证码，谨防泄露，如非本人操作请忽略！";
+        boolean status = MailUtils.sendMail(new Mail("Co-Help验证码", message), userEmail);
+        if(status)
+            return ResultUtil.ok(SUCCESS_REQUEST,"验证码发送成功！");
+        else
+            return ResultUtil.fail(ERROR_REQUEST,"验证码发送失败！");
+    }
+    @Override
+    public Result userChangePassword(ChangePasswordRequest changePasswordRequest,HttpServletRequest request) {
+        //检查参数是否有效
+        if(null==changePasswordRequest) {
+            return ResultUtil.fail(ERROR_PARAMS, "参数为空");
+        }
+        String userAccount = changePasswordRequest.getUserAccount();
+        String confirmCode = changePasswordRequest.getConfirmCode();
+        String newPassword = changePasswordRequest.getNewPassword();
+        String confirmNewPassword = changePasswordRequest.getConfirmNewPassword();
+        if(StringUtils.isAnyBlank(userAccount,confirmCode,newPassword,confirmNewPassword)) {
+            return ResultUtil.fail(ERROR_PARAMS, "参数为空");
+        }
+        //判断账号是否存在
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_account", userAccount);
+        User user = this.getOne(userQueryWrapper);
+        if(null==user) {
+            return ResultUtil.fail(ERROR_GET_DATA, "账号不存在");
+        }
+        //校验验证码
+        String checkCode =(String)request.getSession().getAttribute(user.getUserEmail());
+        if(null==checkCode){
+            return ResultUtil.fail(ERROR_GET_DATA,"请先发送验证码");
+        }
+        if(!confirmCode.equals(checkCode)){
+            return ResultUtil.fail(ERROR_PARAMS,"验证码错误");
+        }
+        // 检验密码格式
+        if (newPassword.length() < USER_PASSWORD_LENGTH_LOW || confirmNewPassword.length() < USER_PASSWORD_LENGTH_LOW) {
+            return ResultUtil.fail(ERROR_PARAMS, "用户密码长度过短");
+        }
+        if (newPassword.length() > USER_PASSWORD_LENGTH_HIGH || confirmNewPassword.length() > USER_PASSWORD_LENGTH_HIGH) {
+            return ResultUtil.fail(ERROR_PARAMS, "用户密码长度过长");
+        }
+        if (!RegexUtils.isUserPasswordValid(newPassword)) {
+            return ResultUtil.fail(ERROR_PARAMS, "用户密码包含违规字符");
+        }
+        //校验新密码和确认新密码是否一致
+        if (!newPassword.equals(confirmNewPassword)) {
+            return ResultUtil.fail(ERROR_PARAMS, "两次密码不一致");
+        }
+        //加密
+        String encryptedPassword = DigestUtils.md5DigestAsHex((SALT + newPassword).getBytes());
+        //更新数据库
+        user.setUserPassword(encryptedPassword);
+        boolean result = this.updateById(user);
+        if(true==result){
+            return ResultUtil.ok(SUCCESS_REQUEST,"密码修改成功");
+        }
+        else {
+            return  ResultUtil.fail(ERROR_REQUEST,"密码修改失败");
         }
     }
 }

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
 
     @Resource
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @PostMapping("/register")
     public Result<Integer> userRegister(@RequestBody RegisterRequest registerRequest) {

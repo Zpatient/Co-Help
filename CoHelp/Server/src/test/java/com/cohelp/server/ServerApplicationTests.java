@@ -22,7 +22,6 @@ class ServerApplicationTests {
     @Resource
     private UserController userController;
 
-
     @Test
     void contextLoads() {
         System.out.println();
@@ -75,6 +74,6 @@ class ServerApplicationTests {
     }
     @Test
     void sendmailtest(){
-        MailUtils.sendMail(new Mail("Test","能成功吗？"),"2939814223@qq.com");
+        MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");
     }
 }

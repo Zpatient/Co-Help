@@ -1,16 +1,15 @@
 package com.cohelp.server.utils;
 
 import com.cohelp.server.model.domain.Mail;
+import com.cohelp.server.model.entity.EmailSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
-import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.util.Date;
 
@@ -19,15 +18,28 @@ import java.util.Date;
  * @create 2022-10-15 16:38
  */
 @Slf4j
+@Component
 public class MailUtils {
 
-    //注入邮件工具类
-    @Autowired
-    private static JavaMailSender javaMailSender;
-    //绑定邮件发送方信息
-    @Value("${spring.mail.username}")
-    private static String sendMailer;
+    private static JavaMailSenderImpl javaMailSender;
 
+    /**
+     * 注入邮件发送器
+     * @author: ZGY
+     * @param emailSend
+     * @return void
+     */
+    @Autowired
+    private void setMailSender(EmailSender emailSend) {
+        MailUtils.javaMailSender = emailSend.getJavaMailSender();
+    }
+    /**
+     * 检查邮件格式
+     * @author: ZGY
+     * @param mail
+     * @param sendTo
+     * @return void
+     */
     private static void mailCheck(Mail mail, String sendTo){
         Assert.notNull(sendTo,"收件人不能为空！");
         Assert.notNull(mail.getMailSubject(),"邮件主题不能为空！");
@@ -41,12 +53,12 @@ public class MailUtils {
      * @return void
      */
     public static boolean sendMail(Mail mail,String sendTo) {
-       try {//检查邮件格式
+        try {//检查邮件格式
            mailCheck(mail, sendTo);
            //设置邮件
            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
            //发件人
-           simpleMailMessage.setFrom(sendMailer);
+           simpleMailMessage.setFrom(javaMailSender.getUsername());
            //收件人
            simpleMailMessage.setTo(sendTo.split(","));
            //主题
@@ -57,7 +69,7 @@ public class MailUtils {
            simpleMailMessage.setSentDate(new Date());
            //发送邮件
            javaMailSender.send(simpleMailMessage);
-           log.info("发送邮件成功:{}->{}", sendMailer, sendTo);
+           log.info("发送邮件成功:{}->{}", javaMailSender.getUsername(), sendTo);
            return true;
        }catch (Exception e){
            log.error("发送邮件失败",e);
@@ -84,19 +96,18 @@ public class MailUtils {
             //邮件主题
             helper.setSubject(mail.getMailSubject());
             //邮件发件人
-            helper.setFrom(sendMailer);
+            helper.setFrom(javaMailSender.getUsername());
             //邮件内容
             helper.setText(mail.getMailText(),true);
             //邮件发送时间
             helper.setSentDate(new Date());
             //发送邮件
             javaMailSender.send(mimeMessage);
-            log.info("发送邮件成功:{}->{}",sendMailer,sendTo);
+            log.info("发送邮件成功:{}->{}",javaMailSender.getUsername(),sendTo);
             return true;
         } catch (Exception e) {
             log.error("发送邮件失败",e);
             return false;
         }
     }
-
 }

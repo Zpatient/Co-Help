@@ -21,6 +21,8 @@ public class RegisterRequest implements Serializable {
 
     private String userConfirmPassword;
 
+    private String userEmail;
+
     /**
      * 手机号
      */

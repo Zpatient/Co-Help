@@ -1,4 +1,6 @@
-package com.cohelp.server.model.domain;
+package com.cohelp.server.utils;
+
+import com.cohelp.server.model.domain.Result;
 
 /**
  * 返回工具类

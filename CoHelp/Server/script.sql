@@ -1,4 +1,4 @@
-create table cohelp.activity
+create table if not exists cohelp.activity
 (
     id                   int auto_increment comment '主键'
         primary key,
@@ -12,7 +12,7 @@ create table cohelp.activity
 )
     comment '活动表';
 
-create table cohelp.collect
+create table if not exists cohelp.collect
 (
     id           int auto_increment comment '主键'
         primary key,
@@ -23,7 +23,7 @@ create table cohelp.collect
 )
     comment '收藏表';
 
-create table cohelp.help
+create table if not exists cohelp.help
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -37,7 +37,7 @@ create table cohelp.help
 )
     comment '互助表';
 
-create table cohelp.history
+create table if not exists cohelp.history
 (
     id         int auto_increment comment '主键'
         primary key,
@@ -48,7 +48,7 @@ create table cohelp.history
 )
     comment '浏览记录表';
 
-create table cohelp.hole
+create table if not exists cohelp.hole
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -61,7 +61,7 @@ create table cohelp.hole
 )
     comment '树洞表';
 
-create table cohelp.image
+create table if not exists cohelp.image
 (
     id           int auto_increment comment '主键'
         primary key,
@@ -75,7 +75,7 @@ create table cohelp.image
 
 insert into cohelp.image values(1, 0, 0, 'https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb35189.png', 0);
 
-create table cohelp.label
+create table if not exists cohelp.label
 (
     id            int auto_increment comment '主键'
         primary key,
@@ -85,7 +85,7 @@ create table cohelp.label
 )
     comment '标签表';
 
-create table cohelp.remark_activity
+create table if not exists cohelp.remark_activity
 (
     id                 int auto_increment comment '主键'
         primary key,
@@ -100,7 +100,7 @@ create table cohelp.remark_activity
 )
     comment '活动评论表';
 
-create table cohelp.remark_help
+create table if not exists cohelp.remark_help
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -115,7 +115,7 @@ create table cohelp.remark_help
 )
     comment '互助评论表';
 
-create table cohelp.remark_hole
+create table if not exists cohelp.remark_hole
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -130,22 +130,22 @@ create table cohelp.remark_hole
 )
     comment '树洞评论表';
 
-create table cohelp.user
+create table if not exists cohelp.user
 (
     id               int auto_increment comment '主键'
-        primary key,
-    use_account      varchar(25)        not null comment '账号',
-    user_name        varchar(25)        not null comment '昵称',
-    user_password    varchar(25)        not null comment '密码',
-    avatar           int     default 1  not null comment '头像',
-    sex              tinyint default 0  not null comment '性别（0：男 1：女）',
-    phoneNumber          varchar(25)        null comment '联系方式',
-    age              int     default 18 not null comment '年龄',
-    school           varchar(100)       null comment '学校',
-    user_role        tinyint default 0  not null comment '用户角色（0：普通用户 1：管理员）',
-    state            tinyint default 0  not null comment '状态（0：正常 1：异常）',
-    user_create_time datetime           not null comment '用户创建时间'
-)
+    primary key,
+    user_account     varchar(25)                        not null comment '账号',
+    user_name        varchar(25)                        not null comment '昵称',
+    user_password    varchar(255)                       not null comment '密码',
+    avatar           int      default 1                 not null comment '头像',
+    sex              tinyint  default 0                 not null comment '性别（0：男 1：女）',
+    phone_number     varchar(25)                        null comment '联系方式',
+    user_email       varchar(255)                       not null comment '邮箱',
+    school           varchar(100)                       null comment '学校',
+    user_role        tinyint  default 0                 not null comment '用户角色（0：普通用户 1：管理员）',
+    state            tinyint  default 0                 not null comment '状态（0：正常 1：异常）',
+    user_create_time datetime default CURRENT_TIMESTAMP not null comment '用户创建时间（默认当前时间）',
+    age              int      default 18                not null comment '年龄'
+    )
     comment '用户表';
-
 

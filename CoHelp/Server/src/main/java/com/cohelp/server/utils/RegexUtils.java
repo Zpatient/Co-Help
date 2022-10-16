@@ -29,8 +29,22 @@ public class RegexUtils {
         return match(userPassword, WORD_NUMBER_PATTERN);
     }
 
+    /**
+     * 判断用户手机号是否合法
+     * @param phoneNumber
+     * @return
+     */
     public static boolean isPhoneNumberValid(String phoneNumber) {
         return match(phoneNumber, PHONE_NUMBER_PATTERN);
+    }
+
+    /**
+     * 判断用户邮箱是否合法
+     * @param userEmail
+     * @return
+     */
+    public static boolean isEmailValid(String userEmail) {
+        return match(userEmail, EMAIL_PATTERN);
     }
 
 

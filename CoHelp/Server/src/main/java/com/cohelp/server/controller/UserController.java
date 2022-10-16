@@ -6,7 +6,6 @@ import com.cohelp.server.model.domain.RegisterRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;
-import com.cohelp.server.service.impl.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -34,6 +33,7 @@ public class UserController {
     public Result<User> userLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         return userService.userLogin(loginRequest, request);
     }
+
     @PostMapping("/changepassword")
     public Result<User> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, HttpServletRequest request) {
         return userService.userChangePassword(changePasswordRequest, request);
@@ -42,6 +42,7 @@ public class UserController {
     public Result<User> getUserEmail(@RequestParam String userAccount){
         return userService.getUserEmail(userAccount);
     }
+
     @PostMapping("/sendconfirmcode")
     public Result<User> sendConfirmCode(@RequestParam String userEmail, HttpServletRequest request) {
         return userService.sendConfirmCode(userEmail, request);

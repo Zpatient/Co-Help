@@ -10,6 +10,7 @@ import com.cohelp.server.service.UserService;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
+import com.cohelp.server.utils.ResultUtil;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import static com.cohelp.server.constant.NumberConstant.*;
-import static com.cohelp.server.model.domain.StatusCode.*;
+import static com.cohelp.server.constant.StatusCode.*;
 
 /**
-* @author jianping5
 * @description 针对表【user(用户表)】的数据库操作Service实现
 * @createDate 2022-09-19 21:36:51
 */
@@ -112,6 +112,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setUserRole(user.getUserRole());
         safetyUser.setState(user.getState());
         safetyUser.setUserCreateTime(user.getUserCreateTime());
+        safetyUser.setUserEmail(user.getUserEmail());
         safetyUser.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - user.getAge()));
 
         return safetyUser;
@@ -128,9 +129,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String userPassword = registerRequest.getUserPassword();
         String userConfirmPassword = registerRequest.getUserConfirmPassword();
         String phoneNumber = registerRequest.getPhoneNumber();
+        String userEmail = registerRequest.getUserEmail();
 
         // 检验是否为空
-        if (StringUtils.isAnyBlank(userAccount, userPassword, userConfirmPassword, phoneNumber)) {
+        if (StringUtils.isAnyBlank(userAccount, userPassword, userConfirmPassword, phoneNumber, userEmail)) {
             return ResultUtil.fail(ERROR_PARAMS, "参数为空");
         }
 
@@ -161,6 +163,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return ResultUtil.fail(ERROR_PARAMS, "用户手机号格式不规范");
         }
 
+        // 检验邮箱格式
+        if (!RegexUtils.isEmailValid(userEmail)) {
+            return ResultUtil.fail(ERROR_PARAMS, "用户邮箱格式不规范");
+        }
+
         // 校验密码和确认密码是否一致
         if (!userPassword.equals(userConfirmPassword)) {
             return ResultUtil.fail(ERROR_PARAMS, "两次密码不一致");
@@ -178,7 +185,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String encryptedPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
 
         // 3. 插入数据（并初始化一些数据）
-        User user = getOriginUser(userAccount, encryptedPassword, phoneNumber);
+        User user = getOriginUser(userAccount, encryptedPassword, phoneNumber, userEmail);
         boolean saveResult = this.save(user);
         if (!saveResult) {
             return ResultUtil.fail(ERROR_PARAMS, "注册失败");
@@ -196,7 +203,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @param phoneNumber
      * @return
      */
-    private User getOriginUser(String userAccount, String encryptedPassword, String phoneNumber) {
+    private User getOriginUser(String userAccount, String encryptedPassword, String phoneNumber, String userEmail) {
         User user = new User();
         user.setUserAccount(userAccount);
         user.setUserPassword(encryptedPassword);
@@ -205,6 +212,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setAvatar(1);
         user.setAge(18);
         user.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - 18));
+        user.setUserEmail(userEmail);
         return user;
     }
 
@@ -230,6 +238,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             default: return "";
         }
     }
+
     @Override
     public Result getUserEmail(String userAccount){
         //检查参数是否有效
@@ -248,6 +257,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         else
             return ResultUtil.fail(ERROR_GET_DATA,"邮箱获取失败！");
     }
+
     @Override
     public Result sendConfirmCode(String userEmail,HttpServletRequest request){
         //检查参数是否有效
@@ -271,6 +281,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         else
             return ResultUtil.fail(ERROR_REQUEST,"验证码发送失败！");
     }
+
     @Override
     public Result userChangePassword(ChangePasswordRequest changePasswordRequest,HttpServletRequest request) {
         //检查参数是否有效

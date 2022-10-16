@@ -65,7 +65,8 @@ class ServerApplicationTests {
         String userPassword = "wjp123456789";
         String userConfirmPassword = "wjp123456789";
         String phoneNumber = "13467893245";
-        userController.userRegister(new RegisterRequest(userAccount, userPassword, userConfirmPassword, phoneNumber));
+        String userEmail = "2712748478@qq.com";
+        userController.userRegister(new RegisterRequest(userAccount, userPassword, userConfirmPassword, phoneNumber, userEmail));
     }
 
     @Test

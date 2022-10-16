@@ -1,4 +1,4 @@
-package com.cohelp.server.model.domain;
+package com.cohelp.server.constant;
 
 /**
  * @author jianping5

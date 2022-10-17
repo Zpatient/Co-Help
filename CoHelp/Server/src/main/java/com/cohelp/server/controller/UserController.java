@@ -38,12 +38,12 @@ public class UserController {
     public Result<User> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, HttpServletRequest request) {
         return userService.userChangePassword(changePasswordRequest, request);
     }
-    @PostMapping("/getuseremail")
+    @GetMapping("/getuseremail")
     public Result<User> getUserEmail(@RequestParam String userAccount){
         return userService.getUserEmail(userAccount);
     }
 
-    @PostMapping("/sendconfirmcode")
+    @GetMapping("/sendconfirmcode")
     public Result<User> sendConfirmCode(@RequestParam String userEmail, HttpServletRequest request) {
         return userService.sendConfirmCode(userEmail, request);
     }

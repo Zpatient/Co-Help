@@ -242,17 +242,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public Result getUserEmail(String userAccount){
         //检查参数是否有效
-        if(null==userAccount) {
+        if(null==userAccount||userAccount.equals("")) {
             return ResultUtil.fail(ERROR_PARAMS, "参数为空");
         }
         //查询邮箱
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_account", userAccount);
         User user = userMapper.selectOne(userQueryWrapper);
-        String email = user.getUserEmail();
+        String email;
         if(null == user){
             return ResultUtil.fail(ERROR_GET_DATA,"用户不存在！");
         }
-        else if(null != email)
+        else if(null != (email = user.getUserEmail()))
             return ResultUtil.ok(SUCCESS_GET_DATA,email,"邮箱获取成功！");
         else
             return ResultUtil.fail(ERROR_GET_DATA,"邮箱获取失败！");
@@ -261,7 +261,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public Result sendConfirmCode(String userEmail,HttpServletRequest request){
         //检查参数是否有效
-        if(null==userEmail) {
+        if(null==userEmail||userEmail.equals("")) {
             return ResultUtil.fail(ERROR_PARAMS, "参数为空");
         }
         //随机生成六位数字验证码

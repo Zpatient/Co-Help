@@ -90,7 +90,7 @@ public class MailUtils {
             mailCheck(mail,sendTo);
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = null;
-            helper = new MimeMessageHelper(mimeMessage,true);
+            helper = new MimeMessageHelper(mimeMessage,true,"UTF-8");
             //邮件收件人一个或多个
             helper.setTo(sendTo.split(","));
             //邮件主题

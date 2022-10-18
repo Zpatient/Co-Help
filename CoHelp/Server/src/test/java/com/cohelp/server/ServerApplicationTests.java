@@ -1,12 +1,15 @@
 package com.cohelp.server;
 
 import com.cohelp.server.controller.UserController;
+import com.cohelp.server.model.domain.LoginRequest;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.RegisterRequest;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
+import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -76,5 +79,9 @@ class ServerApplicationTests {
     @Test
     void sendmailtest(){
         MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");
+    }
+    @Test
+    public void test(){
+
     }
 }

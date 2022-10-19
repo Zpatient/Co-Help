@@ -6,10 +6,12 @@ import com.cohelp.server.model.domain.RegisterRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;
+import org.omg.CORBA.INTERNAL;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.beans.IntrospectionException;
 
 /**
  * 用户信息控制器
@@ -46,5 +48,25 @@ public class UserController {
     @GetMapping("/sendconfirmcode")
     public Result<User> sendConfirmCode(@RequestParam String userEmail, HttpServletRequest request) {
         return userService.sendConfirmCode(userEmail, request);
+    }
+
+    @GetMapping("/current")
+    public Result<User> getCurrentUser() {
+        return userService.getCurrentUser();
+    }
+
+    @GetMapping("/viewpage")
+    public Result<User> viewPage(Integer userId) {
+        return userService.viewPage(userId);
+    }
+
+    @PostMapping("/changeuserinfo")
+    public Result<Boolean> changeUserInfo(@RequestBody User user) {
+        return userService.changeUserInfo(user);
+    }
+
+    @PostMapping("/logout")
+    public Result<Boolean> userLogout(HttpServletRequest request) {
+        return userService.userLogout(request);
     }
 }

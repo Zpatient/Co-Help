@@ -11,6 +11,7 @@ import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -81,17 +82,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         queryWrapper.eq("user_account", userAccount).eq("user_password", encryptedPassword);
         User user = this.getOne(queryWrapper);
         if (user == null) {
-            return ResultUtil.fail(ERROR_PARAMS, "账号密码不匹配");
+            return ResultUtil.fail(ERROR_LOGIN, "账号密码不匹配");
         }
 
         // 3. 除去敏感信息
         User safetyUser = getSafetyUser(user);
 
         // 4. 记录用户的登录态
-        request.getSession().setAttribute("user", user);
+        request.getSession().setAttribute("user", safetyUser);
 
         // 5. 返回数据
-        return ResultUtil.ok(SUCCESS_LOGIN, safetyUser, "登陆成功");
+        return ResultUtil.ok(SUCCESS_LOGIN, safetyUser, "登录成功");
     }
 
     /**
@@ -178,7 +179,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         queryWrapper.eq("user_account", userAccount);
         long count = this.count(queryWrapper);
         if (count != 0) {
-            return ResultUtil.fail(ERROR_PARAMS, "用户账号不能重复");
+            return ResultUtil.fail(ERROR_REGISTER, "用户账号不能重复");
         }
 
         // 2. 加密
@@ -188,7 +189,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = getOriginUser(userAccount, encryptedPassword, phoneNumber, userEmail);
         boolean saveResult = this.save(user);
         if (!saveResult) {
-            return ResultUtil.fail(ERROR_PARAMS, "注册失败");
+            return ResultUtil.fail(ERROR_REGISTER, "注册失败");
         }
 
         // 4. 返回用户id
@@ -334,6 +335,44 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         else {
             return  ResultUtil.fail(ERROR_REQUEST,"密码修改失败");
         }
+    }
+
+    @Override
+    public Result<User> getCurrentUser() {
+        User currentUser = UserHolder.getUser();
+        int userId = currentUser.getId();
+        User user = this.getById(userId);
+        User safetyUser = getSafetyUser(user);
+        return ResultUtil.ok(safetyUser);
+    }
+
+    @Override
+    public Result<User> viewPage(Integer userId) {
+        User user = this.getById(userId);
+        if (user == null) {
+            return ResultUtil.fail(ERROR_USER_EXIST, "该用户不存在");
+        }
+        User safetyUser = getSafetyUser(user);
+        return ResultUtil.ok(safetyUser);
+    }
+
+    @Override
+    public Result<Boolean> changeUserInfo(User user) {
+        User currentUser = UserHolder.getUser();
+        if (!currentUser.getId().equals(user.getId())) {
+            return ResultUtil.fail(ERROR_CHANGE_USER_INFO, false, "修改失败");
+        }
+        boolean b = this.updateById(user);
+        if (b == false) {
+            return ResultUtil.fail(ERROR_CHANGE_USER_INFO, false, "修改失败");
+        }
+        return ResultUtil.ok(SUCCESS_CHANGE_USER_INFO, true, "成功修改个人资料");
+    }
+
+    @Override
+    public Result<Boolean> userLogout(HttpServletRequest request) {
+        request.getSession().removeAttribute("user");
+        return ResultUtil.ok(SUCCESS_LOGOUT, true, "成功退出");
     }
 }
 

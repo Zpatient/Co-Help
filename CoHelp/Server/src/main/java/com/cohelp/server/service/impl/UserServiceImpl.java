@@ -349,6 +349,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public Result<User> viewPage(Integer userId) {
         User user = this.getById(userId);
+        if (user == null) {
+            return ResultUtil.fail(ERROR_USER_EXIST, "该用户不存在");
+        }
         User safetyUser = getSafetyUser(user);
         return ResultUtil.ok(safetyUser);
     }

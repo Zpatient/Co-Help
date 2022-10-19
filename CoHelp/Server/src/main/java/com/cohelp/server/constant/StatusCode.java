@@ -23,6 +23,8 @@ public class StatusCode {
     public static final String SUCCESS_CHANGE_USER_INFO = "205";
     public static final String ERROR_CHANGE_USER_INFO = "405";
 
+    public static final String ERROR_USER_EXIST = "406";
+
 
     /**
      * 参数错误（例如：为空）

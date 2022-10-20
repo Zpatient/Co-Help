@@ -30,7 +30,7 @@ public interface UserService extends IService<User> {
      * @param registerRequest
      * @return
      */
-    Result userRegister(RegisterRequest registerRequest);
+    Result userRegister(RegisterRequest registerRequest, HttpServletRequest request);
 
     /**
      * 根据用户账号获取用户邮箱

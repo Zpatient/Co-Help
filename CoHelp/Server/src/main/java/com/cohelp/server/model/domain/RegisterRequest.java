@@ -24,9 +24,9 @@ public class RegisterRequest implements Serializable {
     private String userEmail;
 
     /**
-     * 手机号
+     * 验证码
      */
-    private String phoneNumber;
+    private String confirmCode;
 
     private static final long serialVersionUID = 1L;
 

@@ -347,8 +347,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Result<User> viewPage(Integer userId) {
-        User user = this.getById(userId);
+    public Result<User> viewPage(String userAccount) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_account", userAccount);
+        User user = this.getOne(queryWrapper);
         if (user == null) {
             return ResultUtil.fail(ERROR_USER_EXIST, "该用户不存在");
         }

@@ -12,7 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,8 +76,23 @@ class ServerApplicationTests {
 
     @Test
     void test04() {
-        System.out.println(getAnimalSign(LocalDateTime.now().getYear() - 18));
+        // System.out.println(getAnimalSign(LocalDateTime.now().getYear() - 18));
+        // LocalDateTime.now();
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime time = LocalDateTime.now();
+        String localDateTime = df.format(time);
+        System.out.println(localDateTime);
+        LocalDateTime ldt = LocalDateTime.parse(localDateTime, df);
+        System.out.println(ldt);
     }
+
+    @Test
+    void test05() {
+        int a = new Integer(1000);
+        int b = new Integer(1000);
+        System.out.println(a == b);
+    }
+
     @Test
     void sendmailtest(){
         MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");

@@ -31,6 +31,7 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result userRegister(RegisterRequest registerRequest);
+
     /**
      * 根据用户账号获取用户邮箱
      * @author: ZGY
@@ -38,6 +39,7 @@ public interface UserService extends IService<User> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result getUserEmail(String userAccount);
+
     /**
      * 向用户邮箱发送验证码
      * @author: ZGY
@@ -45,6 +47,7 @@ public interface UserService extends IService<User> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result sendConfirmCode(String userEmail,HttpServletRequest request);
+
     /**
      * 更改用户密码(一定要带上Cookie)
      * @author: ZGY
@@ -52,4 +55,30 @@ public interface UserService extends IService<User> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result userChangePassword(ChangePasswordRequest changePasswordRequest,HttpServletRequest request);
+
+    /**
+     * 获取当前用户
+     * @return
+     */
+    Result<User> getCurrentUser();
+
+    /**
+     * 点击头像查看用户主页
+     * @param userAccount
+     * @return
+     */
+    Result<User> viewPage(String userAccount);
+
+    /**
+     * 修改个人资料
+     * @param user
+     * @return
+     */
+    Result<Boolean> changeUserInfo(User user);
+
+    /**
+     * 退出登录
+     * @return
+     */
+    Result<Boolean> userLogout(HttpServletRequest request);
 }

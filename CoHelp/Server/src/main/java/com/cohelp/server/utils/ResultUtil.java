@@ -22,6 +22,10 @@ public class ResultUtil {
         return new Result(message);
     }
 
+    public static <T> Result<T> ok(T data) {
+        return new Result<>(data);
+    }
+
     public static <T> Result<T> fail(String code, T data, String message) {
         return new Result<>(code, data, message);
     }

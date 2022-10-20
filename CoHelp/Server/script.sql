@@ -149,3 +149,16 @@ create table if not exists cohelp.user
     )
     comment '用户表';
 
+create table if not exists cohelp.inform
+(
+    id                     int auto_increment comment '主键'
+        primary key,
+    inform_type            varchar(255)  not null comment '举报类型',
+    informer_id            int           not null comment '举报人id',
+    inform_content         varchar(1024) not null comment '举报内容',
+    informed_instance_id   int           not null comment '被举报对象的id',
+    informed_instance_type int           not null comment '举报对象的类型',
+    create_time            datetime      not null comment '举报时间'
+)
+    comment '举报表';
+

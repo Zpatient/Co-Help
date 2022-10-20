@@ -4,10 +4,12 @@ import com.cohelp.server.controller.UserController;
 import com.cohelp.server.model.domain.LoginRequest;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.RegisterRequest;
+import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -24,6 +26,8 @@ class ServerApplicationTests {
 
     @Resource
     private UserController userController;
+    @Autowired
+    UserService userService;
 
     @Test
     void contextLoads() {

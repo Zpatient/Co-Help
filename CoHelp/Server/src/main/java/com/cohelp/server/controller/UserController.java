@@ -55,9 +55,9 @@ public class UserController {
         return userService.getCurrentUser();
     }
 
-    @GetMapping("/viewpage")
-    public Result<User> viewPage(Integer userId) {
-        return userService.viewPage(userId);
+    @GetMapping("/viewpage/{userAccount}")
+    public Result<User> viewPage(@PathVariable("userAccount") String userAccount) {
+        return userService.viewPage(userAccount);
     }
 
     @PostMapping("/changeuserinfo")

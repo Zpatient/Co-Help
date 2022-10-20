@@ -64,10 +64,10 @@ public interface UserService extends IService<User> {
 
     /**
      * 点击头像查看用户主页
-     * @param userId
+     * @param userAccount
      * @return
      */
-    Result<User> viewPage(Integer userId);
+    Result<User> viewPage(String userAccount);
 
     /**
      * 修改个人资料

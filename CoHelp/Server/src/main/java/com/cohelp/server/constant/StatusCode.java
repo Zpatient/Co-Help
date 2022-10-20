@@ -29,7 +29,7 @@ public class StatusCode {
     /**
      * 参数错误（例如：为空）
      */
-    public static final String ERROR_PARAMS = "405";
+    public static final String ERROR_PARAMS = "414";
 
     /**
      * 登录拦截器（请求被拦截-> 返回状态码 -> 跳转登录页面）

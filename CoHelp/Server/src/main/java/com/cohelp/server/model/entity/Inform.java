@@ -42,7 +42,7 @@ public class Inform implements Serializable {
     private Integer informedInstanceId;
 
     /**
-     * 举报对象的类型
+     * 举报对象的类型（0：用户 1：活动 2：互助 3：树洞）
      */
     private Integer informedInstanceType;
 

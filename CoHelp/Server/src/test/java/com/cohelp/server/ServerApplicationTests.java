@@ -28,8 +28,6 @@ class ServerApplicationTests {
 
     @Resource
     private UserController userController;
-    @Autowired
-    UserService userService;
 
     @Test
     void contextLoads() {
@@ -70,6 +68,12 @@ class ServerApplicationTests {
 
     @Test
     void test03() {
+        String userAccount = "0123456789";
+        String userPassword = "wjp123456789";
+        String userConfirmPassword = "wjp123456789";
+        String phoneNumber = "13467893245";
+        String userEmail = "2712748478@qq.com";
+  //      userController.userRegister(new RegisterRequest(userAccount, userPassword, userConfirmPassword, phoneNumber, userEmail));
     }
 
     @Test
@@ -94,5 +98,9 @@ class ServerApplicationTests {
     @Test
     void sendmailtest(){
         MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");
+    }
+    @Test
+    public void test(){
+
     }
 }

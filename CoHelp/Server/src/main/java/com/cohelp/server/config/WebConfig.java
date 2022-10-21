@@ -23,7 +23,10 @@ public class WebConfig implements WebMvcConfigurer {
                         "/user/login",
                         "/user/getuseremail",
                         "/user/sendconfirmcode",
-                        "/user/changepassword"
+                        "/user/changepassword",
+
+                        //暂时排除拦截，开发完成后移除
+                        "/inform/submitinform"
                 );
     }
 }

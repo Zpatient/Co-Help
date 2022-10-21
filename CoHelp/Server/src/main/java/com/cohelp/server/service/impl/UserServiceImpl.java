@@ -120,7 +120,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Result userRegister(RegisterRequest registerRequest) {
+    public Result userRegister(RegisterRequest registerRequest, HttpServletRequest request) {
 
         // 1. 校验
         if (registerRequest == null) {
@@ -129,11 +129,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         String userAccount = registerRequest.getUserAccount();
         String userPassword = registerRequest.getUserPassword();
         String userConfirmPassword = registerRequest.getUserConfirmPassword();
-        String phoneNumber = registerRequest.getPhoneNumber();
         String userEmail = registerRequest.getUserEmail();
+        String confirmCode = registerRequest.getConfirmCode();
 
         // 检验是否为空
-        if (StringUtils.isAnyBlank(userAccount, userPassword, userConfirmPassword, phoneNumber, userEmail)) {
+        if (StringUtils.isAnyBlank(userAccount, userPassword, userConfirmPassword, confirmCode, userEmail)) {
             return ResultUtil.fail(ERROR_PARAMS, "参数为空");
         }
 
@@ -159,11 +159,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return ResultUtil.fail(ERROR_PARAMS, "用户密码包含违规字符");
         }
 
-        // 检验手机号格式
-        if (!RegexUtils.isUserAccountValid(phoneNumber)) {
-            return ResultUtil.fail(ERROR_PARAMS, "用户手机号格式不规范");
-        }
-
         // 检验邮箱格式
         if (!RegexUtils.isEmailValid(userEmail)) {
             return ResultUtil.fail(ERROR_PARAMS, "用户邮箱格式不规范");
@@ -174,19 +169,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return ResultUtil.fail(ERROR_PARAMS, "两次密码不一致");
         }
 
+        // 校验验证码是否一致
+        String checkCode = (String) request.getSession().getAttribute(userEmail);
+        if (!confirmCode.equals(checkCode)) {
+            return ResultUtil.fail(ERROR_PARAMS, "验证码错误");
+        }
+
         // 判断用户账户是否重复
-        QueryWrapper<User> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("user_account", userAccount);
-        long count = this.count(queryWrapper);
-        if (count != 0) {
+        QueryWrapper<User> queryWrapperAccount = new QueryWrapper();
+        queryWrapperAccount.eq("user_account", userAccount);
+        long countAccount = this.count(queryWrapperAccount);
+        if (countAccount != 0) {
             return ResultUtil.fail(ERROR_REGISTER, "用户账号不能重复");
+        }
+
+        // 判断邮箱是否重复
+        QueryWrapper<User> queryWrapperEmail = new QueryWrapper<>();
+        queryWrapperEmail.eq("user_email", userEmail);
+        long countEmail = this.count(queryWrapperEmail);
+        if (countEmail != 0) {
+            return ResultUtil.fail(ERROR_REGISTER, "用户邮箱不能重复");
         }
 
         // 2. 加密
         String encryptedPassword = DigestUtils.md5DigestAsHex((SALT + userPassword).getBytes());
 
         // 3. 插入数据（并初始化一些数据）
-        User user = getOriginUser(userAccount, encryptedPassword, phoneNumber, userEmail);
+        User user = getOriginUser(userAccount, encryptedPassword, userEmail);
         boolean saveResult = this.save(user);
         if (!saveResult) {
             return ResultUtil.fail(ERROR_REGISTER, "注册失败");
@@ -201,19 +210,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * 获取原始 user 对象（包含加密的密码，并初始化部分属性）
      * @param userAccount
      * @param encryptedPassword
-     * @param phoneNumber
      * @return
      */
-    private User getOriginUser(String userAccount, String encryptedPassword, String phoneNumber, String userEmail) {
+    private User getOriginUser(String userAccount, String encryptedPassword, String userEmail) {
         User user = new User();
         user.setUserAccount(userAccount);
         user.setUserPassword(encryptedPassword);
-        user.setPhoneNumber(phoneNumber);
+        user.setUserEmail(userEmail);
         user.setUserName(RandomStringUtils.random(12, true, true));
         user.setAvatar(1);
         user.setAge(18);
         user.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - 18));
-        user.setUserEmail(userEmail);
         return user;
     }
 

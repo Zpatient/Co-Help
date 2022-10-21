@@ -27,8 +27,8 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public Result<Integer> userRegister(@RequestBody RegisterRequest registerRequest) {
-        return userService.userRegister(registerRequest);
+    public Result<Integer> userRegister(@RequestBody RegisterRequest registerRequest, HttpServletRequest request) {
+        return userService.userRegister(registerRequest, request);
     }
 
     @PostMapping("/login")
@@ -40,6 +40,7 @@ public class UserController {
     public Result<User> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, HttpServletRequest request) {
         return userService.userChangePassword(changePasswordRequest, request);
     }
+
     @GetMapping("/getuseremail")
     public Result<User> getUserEmail(@RequestParam String userAccount){
         return userService.getUserEmail(userAccount);

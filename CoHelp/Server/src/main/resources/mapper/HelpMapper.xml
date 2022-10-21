@@ -11,6 +11,9 @@
             <result property="helpDetail" column="help_detail" jdbcType="VARCHAR"/>
             <result property="helpPaid" column="help_paid" jdbcType="TINYINT"/>
             <result property="helpLike" column="help_like" jdbcType="INTEGER"/>
+            <result property="helpCollect" column="help_collect" jdbcType="INTEGER"/>
+            <result property="helpComment" column="help_comment" jdbcType="INTEGER"/>
+            <result property="helpLabel" column="help_label" jdbcType="VARCHAR"/>
             <result property="helpState" column="help_state" jdbcType="TINYINT"/>
             <result property="helpCreateTime" column="help_create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
@@ -18,6 +21,7 @@
     <sql id="Base_Column_List">
         id,help_owner_id,help_title,
         help_detail,help_paid,help_like,
+        help_collect,help_comment,help_label,
         help_state,help_create_time
     </sql>
 </mapper>

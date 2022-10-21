@@ -10,13 +10,17 @@
             <result property="holeTitle" column="hole_title" jdbcType="VARCHAR"/>
             <result property="holeDetail" column="hole_detail" jdbcType="VARCHAR"/>
             <result property="holeLike" column="hole_like" jdbcType="INTEGER"/>
+            <result property="holeCollect" column="hole_collect" jdbcType="INTEGER"/>
+            <result property="holeComment" column="hole_comment" jdbcType="INTEGER"/>
+            <result property="holeLabel" column="hole_label" jdbcType="VARCHAR"/>
             <result property="holeState" column="hole_state" jdbcType="TINYINT"/>
             <result property="holeCreateTime" column="hole_create_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,hole_owner_id,hole_title,
-        hole_detail,hole_like,hole_state,
+        hole_detail,hole_like,hole_collect,
+        hole_comment,hole_label,hole_state,
         hole_create_time
     </sql>
 </mapper>

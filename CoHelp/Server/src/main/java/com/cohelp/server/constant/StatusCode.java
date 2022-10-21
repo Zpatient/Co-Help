@@ -18,10 +18,18 @@ public class StatusCode {
     public static final String SUCCESS_REQUEST = "203";
     public static final String ERROR_REQUEST = "403";
 
+    public static final String SUCCESS_LOGOUT = "204";
+
+    public static final String SUCCESS_CHANGE_USER_INFO = "205";
+    public static final String ERROR_CHANGE_USER_INFO = "405";
+
+    public static final String ERROR_USER_EXIST = "406";
+
+
     /**
      * 参数错误（例如：为空）
      */
-    public static final String ERROR_PARAMS = "405";
+    public static final String ERROR_PARAMS = "414";
 
     /**
      * 登录拦截器（请求被拦截-> 返回状态码 -> 跳转登录页面）

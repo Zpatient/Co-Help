@@ -7,7 +7,7 @@ import com.cohelp.server.mapper.HoleMapper;
 import org.springframework.stereotype.Service;
 
 /**
-* @author 县城之子丶
+* @author zgy
 * @description 针对表【hole(树洞表)】的数据库操作Service实现
 * @createDate 2022-10-25 12:09:43
 */

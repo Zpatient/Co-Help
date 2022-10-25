@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cohelp.server.mapper.ActivityMapper">
+
+    <resultMap id="BaseResultMap" type="com.cohelp.server.model.entity.Activity">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="activityOwnerId" column="activity_owner_id" jdbcType="INTEGER"/>
+            <result property="activityTitle" column="activity_title" jdbcType="VARCHAR"/>
+            <result property="activityDetail" column="activity_detail" jdbcType="VARCHAR"/>
+            <result property="activityTime" column="activity_time" jdbcType="TIMESTAMP"/>
+            <result property="activityLike" column="activity_like" jdbcType="INTEGER"/>
+            <result property="activityComment" column="activity_comment" jdbcType="INTEGER"/>
+            <result property="activityLabel" column="activity_label" jdbcType="VARCHAR"/>
+            <result property="activityCollect" column="activity_collect" jdbcType="INTEGER"/>
+            <result property="activityState" column="activity_state" jdbcType="TINYINT"/>
+            <result property="activityCreateTime" column="activity_create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,activity_owner_id,activity_title,
+        activity_detail,activity_time,activity_like,
+        activity_comment,activity_label,activity_collect,
+        activity_state,activity_create_time
+    </sql>
+</mapper>

@@ -1,4 +1,4 @@
-create table if not exists cohelp.activity
+create table cohelp.activity
 (
     id                   int auto_increment comment '主键'
         primary key,
@@ -7,12 +7,15 @@ create table if not exists cohelp.activity
     activity_detail      varchar(1024)     not null comment '活动内容',
     activity_time        datetime          not null comment '活动时间',
     activity_like        int     default 0 not null comment '活动点赞量',
+    activity_comment     int     default 0 not null comment '活动评论量',
+    activity_label       varchar(255)      null comment '活动标签',
+    activity_collect     int     default 0 not null comment '活动收藏量',
     activity_state       tinyint default 0 not null comment '活动状态（0：正常 1：异常）',
     activity_create_time datetime          not null comment '活动发布时间'
 )
     comment '活动表';
 
-create table if not exists cohelp.collect
+create table cohelp.collect
 (
     id           int auto_increment comment '主键'
         primary key,
@@ -23,7 +26,7 @@ create table if not exists cohelp.collect
 )
     comment '收藏表';
 
-create table if not exists cohelp.help
+create table cohelp.help
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -32,12 +35,15 @@ create table if not exists cohelp.help
     help_detail      varchar(1024)     not null comment '互助内容',
     help_paid        tinyint default 0 not null comment '互助有/无偿',
     help_like        int     default 0 not null comment '互助点赞量',
+    help_collect     int     default 0 not null comment '互助收藏量',
+    help_comment     int     default 0 not null comment '互助评论量',
+    help_label       varchar(255)      null comment '互助标签',
     help_state       tinyint default 0 not null comment '互助状态（0：正常 1：异常）',
     help_create_time datetime          not null comment '互助发布时间'
 )
     comment '互助表';
 
-create table if not exists cohelp.history
+create table cohelp.history
 (
     id         int auto_increment comment '主键'
         primary key,
@@ -48,7 +54,7 @@ create table if not exists cohelp.history
 )
     comment '浏览记录表';
 
-create table if not exists cohelp.hole
+create table cohelp.hole
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -56,12 +62,15 @@ create table if not exists cohelp.hole
     hole_title       varchar(255)      not null comment '树洞主题',
     hole_detail      varchar(1024)     not null comment '树洞内容',
     hole_like        int     default 0 not null comment '树洞点赞量',
+    hole_collect     int     default 0 not null comment '树洞收藏量',
+    hole_comment     int     default 0 not null comment '树洞评论量',
+    hole_label       varchar(255)      null comment '树洞标签',
     hole_state       tinyint default 0 not null comment '树洞状态（0：正常 1：异常）',
     hole_create_time datetime          not null comment '树洞发布时间'
 )
     comment '树洞表';
 
-create table if not exists cohelp.image
+create table cohelp.image
 (
     id           int auto_increment comment '主键'
         primary key,
@@ -73,19 +82,20 @@ create table if not exists cohelp.image
 )
     comment '图片表';
 
-insert into cohelp.image values(1, 0, 0, 'https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb35189.png', 0);
-
-create table if not exists cohelp.label
+create table cohelp.inform
 (
-    id            int auto_increment comment '主键'
+    id                     int auto_increment comment '主键'
         primary key,
-    label_type    int          not null comment '标签类型：1：活动 2：互助 3：树洞',
-    label_src_id  int          not null comment '标签来源id',
-    label_content varchar(100) not null comment '标签'
+    inform_type            varchar(255)  not null comment '举报类型',
+    informer_id            int           not null comment '举报人id',
+    inform_content         varchar(1024) not null comment '举报内容',
+    informed_instance_id   int           not null comment '被举报对象的id',
+    informed_instance_type int           not null comment '举报对象的类型',
+    create_time            datetime      not null comment '举报时间'
 )
-    comment '标签表';
+    comment '举报表';
 
-create table if not exists cohelp.remark_activity
+create table cohelp.remark_activity
 (
     id                 int auto_increment comment '主键'
         primary key,
@@ -100,7 +110,7 @@ create table if not exists cohelp.remark_activity
 )
     comment '活动评论表';
 
-create table if not exists cohelp.remark_help
+create table cohelp.remark_help
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -115,7 +125,7 @@ create table if not exists cohelp.remark_help
 )
     comment '互助评论表';
 
-create table if not exists cohelp.remark_hole
+create table cohelp.remark_hole
 (
     id               int auto_increment comment '主键'
         primary key,
@@ -130,10 +140,10 @@ create table if not exists cohelp.remark_hole
 )
     comment '树洞评论表';
 
-create table if not exists cohelp.user
+create table cohelp.user
 (
     id               int auto_increment comment '主键'
-    primary key,
+        primary key,
     user_account     varchar(25)                        not null comment '账号',
     user_name        varchar(25)                        not null comment '昵称',
     user_password    varchar(255)                       not null comment '密码',
@@ -146,19 +156,7 @@ create table if not exists cohelp.user
     state            tinyint  default 0                 not null comment '状态（0：正常 1：异常）',
     user_create_time datetime default CURRENT_TIMESTAMP not null comment '用户创建时间（默认当前时间）',
     age              int      default 18                not null comment '年龄'
-    )
+)
     comment '用户表';
 
-create table if not exists cohelp.inform
-(
-    id                     int auto_increment comment '主键'
-        primary key,
-    inform_type            varchar(255)  not null comment '举报类型',
-    informer_id            int           not null comment '举报人id',
-    inform_content         varchar(1024) not null comment '举报内容',
-    informed_instance_id   int           not null comment '被举报对象的id',
-    informed_instance_type int           not null comment '举报对象的类型',
-    create_time            datetime      not null comment '举报时间'
-)
-    comment '举报表';
 

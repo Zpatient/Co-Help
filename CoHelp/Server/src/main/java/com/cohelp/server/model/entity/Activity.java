@@ -5,8 +5,11 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import static com.cohelp.server.constant.TypeEnum.ACTIVITY;
 
 /**
  * 活动表
@@ -39,7 +42,8 @@ public class Activity implements Serializable {
     /**
      * 活动时间
      */
-    private Date activityTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime activityTime;
 
     /**
      * 活动点赞量
@@ -69,8 +73,80 @@ public class Activity implements Serializable {
     /**
      * 活动发布时间
      */
-    private Date activityCreateTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime activityCreateTime;
+
+    /**
+     * 分类数
+     */
+    @TableField(exist = false)
+    private static final int typeNumber = ACTIVITY.ordinal();
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Activity other = (Activity) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getActivityOwnerId() == null ? other.getActivityOwnerId() == null : this.getActivityOwnerId().equals(other.getActivityOwnerId()))
+            && (this.getActivityTitle() == null ? other.getActivityTitle() == null : this.getActivityTitle().equals(other.getActivityTitle()))
+            && (this.getActivityDetail() == null ? other.getActivityDetail() == null : this.getActivityDetail().equals(other.getActivityDetail()))
+            && (this.getActivityTime() == null ? other.getActivityTime() == null : this.getActivityTime().equals(other.getActivityTime()))
+            && (this.getActivityLike() == null ? other.getActivityLike() == null : this.getActivityLike().equals(other.getActivityLike()))
+            && (this.getActivityComment() == null ? other.getActivityComment() == null : this.getActivityComment().equals(other.getActivityComment()))
+            && (this.getActivityLabel() == null ? other.getActivityLabel() == null : this.getActivityLabel().equals(other.getActivityLabel()))
+            && (this.getActivityCollect() == null ? other.getActivityCollect() == null : this.getActivityCollect().equals(other.getActivityCollect()))
+            && (this.getActivityState() == null ? other.getActivityState() == null : this.getActivityState().equals(other.getActivityState()))
+            && (this.getActivityCreateTime() == null ? other.getActivityCreateTime() == null : this.getActivityCreateTime().equals(other.getActivityCreateTime()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getActivityOwnerId() == null) ? 0 : getActivityOwnerId().hashCode());
+        result = prime * result + ((getActivityTitle() == null) ? 0 : getActivityTitle().hashCode());
+        result = prime * result + ((getActivityDetail() == null) ? 0 : getActivityDetail().hashCode());
+        result = prime * result + ((getActivityTime() == null) ? 0 : getActivityTime().hashCode());
+        result = prime * result + ((getActivityLike() == null) ? 0 : getActivityLike().hashCode());
+        result = prime * result + ((getActivityComment() == null) ? 0 : getActivityComment().hashCode());
+        result = prime * result + ((getActivityLabel() == null) ? 0 : getActivityLabel().hashCode());
+        result = prime * result + ((getActivityCollect() == null) ? 0 : getActivityCollect().hashCode());
+        result = prime * result + ((getActivityState() == null) ? 0 : getActivityState().hashCode());
+        result = prime * result + ((getActivityCreateTime() == null) ? 0 : getActivityCreateTime().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", activityOwnerId=").append(activityOwnerId);
+        sb.append(", activityTitle=").append(activityTitle);
+        sb.append(", activityDetail=").append(activityDetail);
+        sb.append(", activityTime=").append(activityTime);
+        sb.append(", activityLike=").append(activityLike);
+        sb.append(", activityComment=").append(activityComment);
+        sb.append(", activityLabel=").append(activityLabel);
+        sb.append(", activityCollect=").append(activityCollect);
+        sb.append(", activityState=").append(activityState);
+        sb.append(", activityCreateTime=").append(activityCreateTime);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
+    }
 }

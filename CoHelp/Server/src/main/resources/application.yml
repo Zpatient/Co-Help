@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cohelp?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
     username: 'root'
-    password: 123456
+    password: '011205'
 
   # MailConfig
   mail:
@@ -13,3 +13,11 @@ spring:
     username: 3132701082@qq.com
     password: dcxswjojxzgideac
     port: 587
+
+  # ImageConfig
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+prop:
+  upload-folder: C:/Users/靑/Desktop/项目/Co-Help/CoHelp/Server/image/

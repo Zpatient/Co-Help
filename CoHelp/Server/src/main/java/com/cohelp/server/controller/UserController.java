@@ -1,9 +1,8 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.ChangePasswordRequest;
-import com.cohelp.server.model.domain.LoginRequest;
-import com.cohelp.server.model.domain.RegisterRequest;
-import com.cohelp.server.model.domain.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cohelp.server.model.domain.*;
+import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;
 import org.omg.CORBA.INTERNAL;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.beans.IntrospectionException;
+import java.util.ArrayList;
 
 /**
  * 用户信息控制器
@@ -66,8 +66,20 @@ public class UserController {
         return userService.changeUserInfo(user);
     }
 
+    @PostMapping("/deletepub")
+    public Result<Boolean> deletePublish(@RequestBody PublishDeleteRequest publishDeleteRequest) {
+        return userService.deletePublish(publishDeleteRequest);
+    }
+
+    @GetMapping("/searchpub/{userAccount}")
+    public Result<SearchPublishResponse> searchPublish(@PathVariable("userAccount") String userAccount) {
+        return userService.searchPublish(userAccount);
+    }
+
     @PostMapping("/logout")
     public Result<Boolean> userLogout(HttpServletRequest request) {
         return userService.userLogout(request);
     }
+
+
 }

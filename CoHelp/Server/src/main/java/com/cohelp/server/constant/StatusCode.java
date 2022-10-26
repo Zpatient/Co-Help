@@ -25,6 +25,13 @@ public class StatusCode {
 
     public static final String ERROR_USER_EXIST = "406";
 
+    public static final String ERROR_SAVE_HELP = "407";
+
+    public static final String ERROR_SAVE_IMAGE = "408";
+
+    public static final String ERROR_SAVE_HOLE = "409";
+
+    public static final String ERROR_SAVE_ACTIVITY = "410";
 
     /**
      * 参数错误（例如：为空）

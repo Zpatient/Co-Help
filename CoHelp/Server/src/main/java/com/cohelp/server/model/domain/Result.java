@@ -32,6 +32,11 @@ public class Result<T> implements Serializable {
         this.message = message;
     }
 
+    public Result(T data, String message) {
+        this.data = data;
+        this.message = message;
+    }
+
     public Result(String message) {
         this.message = message;
     }

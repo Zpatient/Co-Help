@@ -2,6 +2,7 @@ package com.cohelp.server.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ChangePasswordRequest implements Serializable {
     //需要找回密码的用户账号
     private String userAccount;

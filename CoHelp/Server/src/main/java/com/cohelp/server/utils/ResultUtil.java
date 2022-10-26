@@ -26,6 +26,10 @@ public class ResultUtil {
         return new Result<>(data);
     }
 
+    public static <T> Result<T> ok(T data, String message) {
+        return new Result<>(data, message);
+    }
+
     public static <T> Result<T> fail(String code, T data, String message) {
         return new Result<>(code, data, message);
     }
@@ -36,5 +40,9 @@ public class ResultUtil {
 
     public static Result fail(String message) {
         return new Result(message);
+    }
+
+    public static <T> Result<T> fail(T data, String message) {
+        return new Result(data, message);
     }
 }

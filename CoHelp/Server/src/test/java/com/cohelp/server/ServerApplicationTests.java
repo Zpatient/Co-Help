@@ -1,27 +1,20 @@
 package com.cohelp.server;
 
+import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.controller.UserController;
-import com.cohelp.server.model.domain.LoginRequest;
 import com.cohelp.server.model.domain.Mail;
-import com.cohelp.server.model.domain.RegisterRequest;
-import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
-import com.google.gson.Gson;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.cohelp.server.constant.PatternConstant.PHONE_NUMBER_PATTERN;
-import static com.cohelp.server.service.impl.UserServiceImpl.getAnimalSign;
 
 @SpringBootTest
 class ServerApplicationTests {
@@ -100,7 +93,7 @@ class ServerApplicationTests {
         MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");
     }
     @Test
-    public void test(){
-
+    public void testTypeEnum(){
+        System.out.println(TypeEnum.isTopic(5));
     }
 }

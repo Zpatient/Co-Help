@@ -4,18 +4,23 @@ import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.mapper.ActivityMapper;
+import com.cohelp.server.mapper.ImageMapper;
 import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.User;
-import com.cohelp.server.service.UserService;
+import com.cohelp.server.model.entity.*;
+import com.cohelp.server.service.*;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
+import com.google.gson.Gson;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.util.pattern.PathPattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +28,7 @@ import javax.servlet.http.HttpSession;
 
 import static com.cohelp.server.constant.NumberConstant.*;
 import static com.cohelp.server.constant.StatusCode.*;
+import static com.cohelp.server.constant.TypeConstant.*;
 
 /**
 * @description 针对表【user(用户表)】的数据库操作Service实现
@@ -34,6 +40,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private ActivityService activityService;
+
+    @Resource
+    private HelpService helpService;
+
+    @Resource
+    private HoleService holeService;
+
+    @Resource
+    private ImageService imageService;
+
+
 
     /**
      * 加密盐值
@@ -257,10 +277,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_account", userAccount);
         User user = userMapper.selectOne(userQueryWrapper);
         String email;
-        if(null == user){
+        if (null == user){
             return ResultUtil.fail(ERROR_GET_DATA,"用户不存在！");
         }
-        else if(null != (email = user.getUserEmail()))
+        else if (null != (email = user.getUserEmail()))
             return ResultUtil.ok(SUCCESS_GET_DATA,email,"邮箱获取成功！");
         else
             return ResultUtil.fail(ERROR_GET_DATA,"邮箱获取失败！");
@@ -383,6 +403,114 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         request.getSession().removeAttribute("user");
         return ResultUtil.ok(SUCCESS_LOGOUT, true, "成功退出");
     }
+
+    @Override
+    public Result<Boolean> deletePublish(PublishDeleteRequest publishDeleteRequest) {
+        int typeNumber = publishDeleteRequest.getTypeNumber();
+        int id = publishDeleteRequest.getId();
+        int ownerId = publishDeleteRequest.getOwnerId();
+        // 活动
+        if (typeNumber == ACTIVITY_TYPE) {
+            // 判断当前登录用户是否为该发布主题的所有者
+            User user = UserHolder.getUser();
+            int userId = user.getId();
+            if (userId != ownerId) {
+                return ResultUtil.fail("抱歉！您无权进行删除！");
+            }
+            // 删除该发布主题
+            QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
+            activityQueryWrapper.eq("id", id);
+            boolean remove = activityService.remove(activityQueryWrapper);
+            if (!remove) {
+                return ResultUtil.fail("该活动删除失败");
+            }
+            // 删除与之相关的图片
+            QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+            imageQueryWrapper.eq("image_type", ACTIVITY_TYPE).eq("image_src_id", id);
+            boolean remove1 = imageService.remove(imageQueryWrapper);
+            if (!remove1) {
+                return ResultUtil.fail("该活动相关图片删除失败");
+            }
+            return ResultUtil.ok(true, "删除成功");
+        }
+        // 互助
+        if (typeNumber == HELP_TYPE) {
+            // 判断当前登录用户是否为该发布主题的所有者
+            User user = UserHolder.getUser();
+            int userId = user.getId();
+            if (userId != ownerId) {
+                return ResultUtil.fail("抱歉！您无权进行删除！");
+            }
+            // 删除该发布主题
+            QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
+            helpQueryWrapper.eq("id", id);
+            boolean remove = helpService.remove(helpQueryWrapper);
+            if (!remove) {
+                return ResultUtil.fail("该互助删除失败");
+            }
+            // 删除与之相关的图片
+            QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+            imageQueryWrapper.eq("image_type", HELP_TYPE).eq("image_src_id", id);
+            boolean remove1 = imageService.remove(imageQueryWrapper);
+            if (!remove1) {
+                return ResultUtil.fail("该互助相关图片删除失败");
+            }
+            return ResultUtil.ok(true, "删除成功");
+        }
+        // 树洞
+        if (typeNumber == HOLE_TYPE) {
+            // 判断当前登录用户是否为该发布主题的所有者
+            User user = UserHolder.getUser();
+            int userId = user.getId();
+            if (userId != ownerId) {
+                return ResultUtil.fail("抱歉！您无权进行删除！");
+            }
+            // 删除该发布主题
+            QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
+            holeQueryWrapper.eq("id", id);
+            boolean remove = holeService.remove(holeQueryWrapper);
+            if (!remove) {
+                return ResultUtil.fail("该树洞删除失败");
+            }
+            // 删除与之相关的图片
+            QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+            imageQueryWrapper.eq("image_type", HOLE_TYPE).eq("image_src_id", id);
+            boolean remove1 = imageService.remove(imageQueryWrapper);
+            if (!remove1) {
+                return ResultUtil.fail("该树洞相关图片删除失败");
+            }
+            return ResultUtil.ok(true, "删除成功");
+        }
+        return ResultUtil.fail("未存在该类型发布");
+    }
+
+    @Override
+    public Result<SearchPublishResponse> searchPublish(String userAccount) {
+        // 查看当前登录用户id与账户所查的用户id是否一致
+        User user = UserHolder.getUser();
+        int userId = user.getId();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_account", userAccount);
+        User one = this.getOne(queryWrapper);
+        if (userId != one.getId()) {
+            return ResultUtil.fail("抱歉！您无权查看");
+        }
+        // 查询活动
+        QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
+        activityQueryWrapper.eq("activity_owner_id", userId);
+        ArrayList<Activity> activityList = (ArrayList<Activity>) activityService.list(activityQueryWrapper);
+        // 查询互助
+        QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
+        helpQueryWrapper.eq("help_owner_id", userId);
+        ArrayList<Help> helpList = (ArrayList<Help>) helpService.list(helpQueryWrapper);
+        // 查询树洞
+        QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
+        holeQueryWrapper.eq("hole_owner_id", userId);
+        ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
+
+        return ResultUtil.ok(new SearchPublishResponse(activityList, helpList, holeList));
+    }
+
 }
 
 

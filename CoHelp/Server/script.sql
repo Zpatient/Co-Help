@@ -2,16 +2,16 @@ create table cohelp.activity
 (
     id                   int auto_increment comment '主键'
         primary key,
-    activity_owner_id    int               not null comment '活动发布者id',
-    activity_title       varchar(255)      not null comment '活动标题',
-    activity_detail      varchar(1024)     not null comment '活动内容',
-    activity_time        datetime          not null comment '活动时间',
-    activity_like        int     default 0 not null comment '活动点赞量',
-    activity_comment     int     default 0 not null comment '活动评论量',
-    activity_label       varchar(255)      null comment '活动标签',
-    activity_collect     int     default 0 not null comment '活动收藏量',
-    activity_state       tinyint default 0 not null comment '活动状态（0：正常 1：异常）',
-    activity_create_time datetime          not null comment '活动发布时间'
+    activity_owner_id    int                                not null comment '活动发布者id',
+    activity_title       varchar(255)                       not null comment '活动标题',
+    activity_detail      varchar(1024)                      not null comment '活动内容',
+    activity_time        datetime                           not null comment '活动时间',
+    activity_like        int      default 0                 not null comment '活动点赞量',
+    activity_comment     int      default 0                 not null comment '活动评论量',
+    activity_label       varchar(255)                       null comment '活动标签',
+    activity_collect     int      default 0                 not null comment '活动收藏量',
+    activity_state       tinyint  default 0                 not null comment '活动状态（0：正常 1：异常）',
+    activity_create_time datetime default CURRENT_TIMESTAMP not null comment '活动发布时间'
 )
     comment '活动表';
 
@@ -30,16 +30,16 @@ create table cohelp.help
 (
     id               int auto_increment comment '主键'
         primary key,
-    help_owner_id    int               not null comment '互助发布者id',
-    help_title       varchar(255)      not null comment '互助标题',
-    help_detail      varchar(1024)     not null comment '互助内容',
-    help_paid        tinyint default 0 not null comment '互助有/无偿',
-    help_like        int     default 0 not null comment '互助点赞量',
-    help_collect     int     default 0 not null comment '互助收藏量',
-    help_comment     int     default 0 not null comment '互助评论量',
-    help_label       varchar(255)      null comment '互助标签',
-    help_state       tinyint default 0 not null comment '互助状态（0：正常 1：异常）',
-    help_create_time datetime          not null comment '互助发布时间'
+    help_owner_id    int                                not null comment '互助发布者id',
+    help_title       varchar(255)                       not null comment '互助标题',
+    help_detail      varchar(1024)                      not null comment '互助内容',
+    help_paid        tinyint  default 0                 not null comment '互助有/无偿',
+    help_like        int      default 0                 not null comment '互助点赞量',
+    help_collect     int      default 0                 not null comment '互助收藏量',
+    help_comment     int      default 0                 not null comment '互助评论量',
+    help_label       varchar(255)                       null comment '互助标签',
+    help_state       tinyint  default 0                 not null comment '互助状态（0：正常 1：异常）',
+    help_create_time datetime default CURRENT_TIMESTAMP not null comment '互助发布时间'
 )
     comment '互助表';
 
@@ -58,15 +58,15 @@ create table cohelp.hole
 (
     id               int auto_increment comment '主键'
         primary key,
-    hole_owner_id    int               not null comment '树洞发布者id',
-    hole_title       varchar(255)      not null comment '树洞主题',
-    hole_detail      varchar(1024)     not null comment '树洞内容',
-    hole_like        int     default 0 not null comment '树洞点赞量',
-    hole_collect     int     default 0 not null comment '树洞收藏量',
-    hole_comment     int     default 0 not null comment '树洞评论量',
-    hole_label       varchar(255)      null comment '树洞标签',
-    hole_state       tinyint default 0 not null comment '树洞状态（0：正常 1：异常）',
-    hole_create_time datetime          not null comment '树洞发布时间'
+    hole_owner_id    int                                not null comment '树洞发布者id',
+    hole_title       varchar(255)                       not null comment '树洞主题',
+    hole_detail      varchar(1024)                      not null comment '树洞内容',
+    hole_like        int      default 0                 not null comment '树洞点赞量',
+    hole_collect     int      default 0                 not null comment '树洞收藏量',
+    hole_comment     int      default 0                 not null comment '树洞评论量',
+    hole_label       varchar(255)                       null comment '树洞标签',
+    hole_state       tinyint  default 0                 not null comment '树洞状态（0：正常 1：异常）',
+    hole_create_time datetime default CURRENT_TIMESTAMP not null comment '树洞发布时间'
 )
     comment '树洞表';
 
@@ -81,6 +81,8 @@ create table cohelp.image
 用户：更换图像时需要修改该字段（历史头像）'
 )
     comment '图片表';
+
+insert into cohelp.image values(1, 0, 0, 'https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb35189.png', 0);
 
 create table cohelp.inform
 (

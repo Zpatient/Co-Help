@@ -1,9 +1,6 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.ChangePasswordRequest;
-import com.cohelp.server.model.domain.LoginRequest;
-import com.cohelp.server.model.domain.RegisterRequest;
-import com.cohelp.server.model.domain.Result;
+import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.stereotype.Service;
@@ -81,4 +78,17 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result<Boolean> userLogout(HttpServletRequest request);
+
+    /**
+     * 删除发布
+     * @param publishDeleteRequest
+     * @return
+     */
+    Result<Boolean> deletePublish(PublishDeleteRequest publishDeleteRequest);
+
+    /**
+     * 查询发布
+     * @return
+     */
+    Result searchPublish(String userAccount);
 }

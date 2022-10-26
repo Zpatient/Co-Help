@@ -4,6 +4,7 @@ import com.cohelp.server.controller.UserController;
 import com.cohelp.server.model.domain.LoginRequest;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.RegisterRequest;
+import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
@@ -23,6 +24,10 @@ import static com.cohelp.server.service.impl.UserServiceImpl.getAnimalSign;
 
 @SpringBootTest
 class ServerApplicationTests {
+
+
+    @Resource
+    private Gson gson;
 
     @Resource
     private UserController userController;
@@ -78,6 +83,10 @@ class ServerApplicationTests {
         System.out.println(localDateTime);
         LocalDateTime ldt = LocalDateTime.parse(localDateTime, df);
         System.out.println(ldt);
+
+        System.out.println("###############");
+        System.out.println(gson.toJson(LocalDateTime.now(), LocalDateTime.class));
+    //    2022-10-26 18:42:47
     }
 
     @Test
@@ -88,9 +97,17 @@ class ServerApplicationTests {
     }
 
     @Test
+    void test06() {
+        Help help = new Help();
+        help.setHelpTitle("互助");
+        System.out.println(help);
+    }
+
+    @Test
     void sendmailtest(){
         MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");
     }
+
     @Test
     public void test(){
 

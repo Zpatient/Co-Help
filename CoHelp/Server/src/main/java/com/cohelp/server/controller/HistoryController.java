@@ -1,9 +1,7 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.CollectRequest;
 import com.cohelp.server.model.domain.HistoryRequest;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.Collect;
 import com.cohelp.server.model.entity.History;
 import com.cohelp.server.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;

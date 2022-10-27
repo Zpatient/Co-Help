@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.cohelp.task_for_stu">
+
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name="com.cohelp.task_for_stu.TaskApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="CO-help"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Task_for_stu">
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.HistoryActivity"
+            android:exported="false"
+            android:label="@string/title_activity_history"
+            android:theme="@style/Theme.Task_for_stu.NoActionBar" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerCreateNewUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerUserDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerUserCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerQuestionCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerTaskCenterActivity"
+            android:exported="false" />
+<!--        <activity-->
+<!--            android:name="com.cohelp.task_for_stu.ui.activity.user.TaskDetailActivity"-->
+<!--            android:exported="false" />-->
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.CreateNewTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.ItemQuestionDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.CreateNewQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.TaskCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.QuestionCenterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.MyQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.MyTaskActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.SettingUserActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.BasicInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.PasswordFoundActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Task_for_stu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

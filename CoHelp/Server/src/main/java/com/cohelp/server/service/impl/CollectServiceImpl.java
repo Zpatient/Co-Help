@@ -81,7 +81,6 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         else
             return ResultUtil.fail(ERROR_REQUEST,"记录插入失败");
     }
-
     @Override
     public Result deleteCollectRecord(String id) {
         //检验参数合法性

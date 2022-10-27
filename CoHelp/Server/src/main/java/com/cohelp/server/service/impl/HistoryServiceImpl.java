@@ -82,7 +82,6 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         else
             return ResultUtil.fail(ERROR_REQUEST,"记录插入失败");
     }
-
     @Override
     public Result deleteHistoryRecord(String id) {
         //检验参数合法性

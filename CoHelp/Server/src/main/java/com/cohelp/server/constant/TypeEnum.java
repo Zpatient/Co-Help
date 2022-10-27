@@ -5,7 +5,22 @@ package com.cohelp.server.constant;
  * @create 2022-10-23 18:05
  */
 public enum TypeEnum{
-    USER,ACTIVITY,HELP,HOLE;
+    /**
+     * 用户
+     */
+    USER,
+    /**
+     * 活动
+     */
+    ACTIVITY,
+    /**
+     * 互助
+     */
+    HELP,
+    /**
+     * 树洞
+     */
+    HOLE;
     /**
      * 判断type是否是话题类型
      * @author: ZGY

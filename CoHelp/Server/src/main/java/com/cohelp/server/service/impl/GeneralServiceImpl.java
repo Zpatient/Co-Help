@@ -14,19 +14,24 @@ import com.cohelp.server.utils.ResultUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
 import static com.cohelp.server.constant.StatusCode.*;
 
 /**
  * @author zgy
  * @create 2022-10-23 15:48
  */
+@Service
 public class GeneralServiceImpl implements GeneralService {
 
-    @Autowired
+    @Resource
     ActivityService activityService;
-    @Autowired
+    @Resource
     HelpService helpService;
-    @Autowired
+    @Resource
     HoleService holeService;
     @Override
     public Result getDetail(DetailRequest detailRequest) {
@@ -35,13 +40,13 @@ public class GeneralServiceImpl implements GeneralService {
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");
         }
         Integer type = detailRequest.getType();
-        String id = detailRequest.getId();
-        if(!TypeEnum.isTopic(type)|| StringUtils.isAnyBlank(id)){
+        Integer id = detailRequest.getId();
+        if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         //判断请求哪种话题的详情并执行相应操作
         if(TypeEnum.isActivity(type)){
-            Activity activity = activityService.getById(id);
+            Activity activity = activityService.getBaseMapper().selectById(id);
             return ResultUtil.returnResult(SUCCESS_GET_DATA,activity,"Activity获取成功！");
         }
         else if(TypeEnum.isHelp(type)){

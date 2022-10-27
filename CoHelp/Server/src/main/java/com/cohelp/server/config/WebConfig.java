@@ -52,10 +52,11 @@ public class WebConfig implements WebMvcConfigurer {
                         // "/user/deletepub",
                         // "/user/searchpub",
                         "/image/**",
-                        "/user/changepassword",
 
                         //暂时排除拦截，开发完成后移除
-                        "/inform/submitinform"
+                        "/inform/submitinform",
+                        "/general/getdetail"
+
                 );
     }
 

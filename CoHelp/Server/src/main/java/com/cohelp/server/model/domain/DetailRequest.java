@@ -14,9 +14,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DetailRequest implements Serializable {
-    //动态类型
+    //话题类型
     private Integer type;
-    //动态ID
-    private String id;
+    //话题ID
+    private Integer id;
     private static final long serialVersionUID = 1L;
 }

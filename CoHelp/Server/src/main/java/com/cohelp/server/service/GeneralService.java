@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
  * @author zgy
  * @create 2022-10-23 15:43
  */
-@Service
 public interface GeneralService{
     /**
      * 根据传入的参数获取话题详情

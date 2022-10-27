@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+
 /**
  * @author zgy
  * @create 2022-10-23 20:30
@@ -15,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/general")
 public class GeneralController {
-    @Autowired
+    @Resource
     GeneralService generalService;
     @RequestMapping("/getdetail")
     public Result getDetail(@RequestBody DetailRequest detailRequest){

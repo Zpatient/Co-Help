@@ -30,6 +30,7 @@ public class GeneralServiceImpl implements GeneralService {
     HoleService holeService;
     @Override
     public Result getDetail(DetailRequest detailRequest) {
+        //判断参数合法性
         if(ObjectUtils.anyNull(detailRequest)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");
         }
@@ -38,6 +39,7 @@ public class GeneralServiceImpl implements GeneralService {
         if(!TypeEnum.isTopic(type)|| StringUtils.isAnyBlank(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
+        //判断请求哪种话题的详情并执行相应操作
         if(TypeEnum.isActivity(type)){
             Activity activity = activityService.getById(id);
             return ResultUtil.returnResult(SUCCESS_GET_DATA,activity,"Activity获取成功！");

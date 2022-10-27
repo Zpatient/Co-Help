@@ -7,9 +7,11 @@ import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.model.domain.CollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Collect;
+import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.CollectService;
 import com.cohelp.server.mapper.CollectMapper;
 import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
@@ -29,17 +31,24 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
 
     @Override
     public Result getCollectList(CollectRequest collectRequest) {
+        //判断参数合法性
         if(ObjectUtils.anyNull(collectRequest)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");
         }
+        Integer userId = collectRequest.getUserId();
         Integer pageNum = collectRequest.getPageNum();
         Integer recordMaxNum = collectRequest.getRecordMaxNum();
-        if(ObjectUtils.anyNull(pageNum,recordMaxNum)){
+        if(ObjectUtils.anyNull(userId,pageNum,recordMaxNum)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
+        //判断当前用户权限
+        User user = UserHolder.getUser();
+        if(userId != user.getId())
+            return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+        //分页查询数据
         Page<Collect> collectPage = getBaseMapper().selectPage(new Page<>(pageNum, recordMaxNum),
-                new QueryWrapper<Collect>().select().orderByDesc("collect_time"));
-
+                new QueryWrapper<Collect>().eq("user_id",userId).select().orderByDesc("collect_time"));
+        //返回查询结果
         if(ObjectUtils.anyNull(collectPage)){
             return ResultUtil.fail(ERROR_GET_DATA,"数据查询失败！");
         }
@@ -50,6 +59,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     }
     @Override
     public Result insertCollectRecord(Collect collect) {
+        //检验参数合法性
         if(ObjectUtils.anyNull(collect)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");
         }
@@ -60,6 +70,11 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         if(ObjectUtils.anyNull(topicId,userId,collectTime)||!TypeEnum.isTopic(topicType)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
+        // //判断当前用户权限
+        User user = UserHolder.getUser();
+        if(userId != user.getId())
+            return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+        //返回数据库操作结果
         boolean bool = saveOrUpdate(collect);
         if(bool)
             return ResultUtil.ok(SUCCESS_REQUEST,"记录插入/更新成功！");
@@ -69,12 +84,19 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
 
     @Override
     public Result deleteCollectRecord(String id) {
+        //检验参数合法性
         if(ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空！");
         }
         if(ObjectUtils.anyNull(getById(id))){
             return ResultUtil.fail(ERROR_PARAMS,"记录不存在！");
         }
+        //判断当前用户权限
+        Integer userId = getById(id).getUserId();
+        User user = UserHolder.getUser();
+        if(userId != user.getId())
+            return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+        //返回数据库操作结果
         boolean bool = removeById(id);
         if(bool)
             return ResultUtil.ok(SUCCESS_REQUEST,"记录删除成功！");

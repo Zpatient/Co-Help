@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class HistoryRequest {
+    //用户id
+    private Integer userId;
     //页码
     private Integer pageNum;
     //每页最大记录数

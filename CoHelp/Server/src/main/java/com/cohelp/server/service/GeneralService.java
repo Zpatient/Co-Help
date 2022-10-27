@@ -11,5 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface GeneralService{
+    /**
+     * 根据传入的参数获取话题详情
+     * @author: ZGY
+     * @date: 2022-10-22 18:15
+     * @param detailRequest 话题详情请求参数
+     * @return com.cohelp.server.model.domain.Result
+     */
     public Result getDetail(DetailRequest detailRequest);
 }

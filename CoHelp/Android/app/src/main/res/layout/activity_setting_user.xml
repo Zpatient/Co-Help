@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.user.RegisterActivity">
+    <include layout="@layout/common_toolbar"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_height="80dp">
+        <ImageView
+            android:id="@+id/id_iv_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/pictures_no"
+            />
+    </RelativeLayout>
+    <EditText
+        android:id="@+id/id_et_username"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:inputType="text"
+        android:background="#E3DFDF"
+        android:hint="请输入您的账号"
+        android:textColorHint="#9A9696"/>
+    <EditText
+        android:id="@+id/id_et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:inputType="text"
+        android:background="#E3DFDF"
+        android:hint="请输入您的手机号"
+        android:textColorHint="#9A9696"/>
+    <EditText
+        android:id="@+id/id_et_realname"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:inputType="text"
+        android:background="#E3DFDF"
+        android:hint="请输入您真实姓名"
+        android:textColorHint="#9A9696"/>
+
+    <EditText
+        android:id="@+id/id_et_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:inputType="text"
+        android:background="#E3DFDF"
+        android:hint="请输入您的昵称"
+        android:textColorHint="#9A9696"/>
+
+    <EditText
+        android:id="@+id/id_et_idCard"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:inputType="text"
+        android:background="#E3DFDF"
+        android:hint="请输入您的身份证号码"
+        android:textColorHint="#9A9696"/>
+
+    <EditText
+        android:id="@+id/id_et_password"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:inputType="textWebPassword"
+        android:background="#E3DFDF"
+        android:hint="请输入您的密码"
+        android:textColorHint="#9A9696"/>
+
+    <EditText
+        android:id="@+id/id_et_repassword"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingBottom="5dp"
+        android:inputType="textWebPassword"
+        android:background="#E3DFDF"
+        android:hint="请再次输入您的密码"
+        android:textColorHint="#9A9696"/>
+    <!--    <TextView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginLeft="20dp"-->
+    <!--        android:layout_marginRight="20dp"-->
+    <!--        android:text=""-->
+    <!--        android:textStyle="bold"-->
+    <!--        />-->
+    <Button
+        android:id="@+id/id_btn_update"
+        android:layout_width="match_parent"
+        android:layout_height="40sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        style="@style/Button_Large_Pink"
+        android:text="修改用户"
+        />
+</LinearLayout>

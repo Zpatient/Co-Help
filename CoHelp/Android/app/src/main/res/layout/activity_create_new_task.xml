@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.user.CreateNewQuestionActivity">
+    <include layout="@layout/common_toolbar"/>
+    <!--    Integer reward;-->
+    <!--    String title;-->
+    <!--    String desc;-->
+
+    <EditText
+        android:id="@+id/id_et_title"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:background="@drawable/search_solid"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:hint="输入您的标题"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textLongMessage"/>
+
+    <EditText
+        android:id="@+id/id_et_reward"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:background="@drawable/search_solid"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:hint="输入采纳积分"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <EditText
+            android:focusable="false"
+            android:id="@+id/id_et_startDate"
+            android:background="@drawable/search_solid"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:hint="输入开始时间"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:inputType="datetime"/>
+
+        <LinearLayout
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:focusable="false"
+                android:id="@+id/id_et_endDate"
+                android:background="@drawable/search_solid"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:hint="输入结束时间"
+                android:layout_width="150sp"
+                android:layout_height="wrap_content"
+                android:inputType="datetime"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/id_et_content"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:background="@drawable/search_solid"
+        android:gravity="top"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:hint="输入您的任务描述"
+        android:layout_width="match_parent"
+        android:layout_height="240sp"
+        android:inputType="textMultiLine"/>
+
+    <Button
+        android:id="@+id/id_btn_submit"
+        android:text="提交"
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_width="match_parent"
+        android:background="@drawable/btn_bg_pink"
+        style="@style/Button_Large_Pink"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

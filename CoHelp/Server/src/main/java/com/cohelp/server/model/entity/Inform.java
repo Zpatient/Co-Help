@@ -51,8 +51,7 @@ public class Inform implements Serializable {
     /**
      * 举报时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    @Deprecated
     private Date createTime;
 
     @TableField(exist = false)

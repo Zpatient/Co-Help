@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-
-import static com.cohelp.server.constant.TypeConstant.ACTIVITY_TYPE;
+import static com.cohelp.server.constant.TypeEnum.ACTIVITY;
 
 /**
  * 活动表
@@ -81,7 +80,7 @@ public class Activity implements Serializable {
      * 分类数
      */
     @TableField(exist = false)
-    private static final int typeNumber = ACTIVITY_TYPE;
+    private static final int typeNumber = ACTIVITY.ordinal();
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

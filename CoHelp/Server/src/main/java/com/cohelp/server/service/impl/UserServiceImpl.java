@@ -316,21 +316,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if(null==changePasswordRequest) {
             return ResultUtil.fail(ERROR_PARAMS, "参数为空");
         }
-        String userAccount = changePasswordRequest.getUserAccount();
+        String userEmail = changePasswordRequest.getUserEmail();
         String confirmCode = changePasswordRequest.getConfirmCode();
         String newPassword = changePasswordRequest.getNewPassword();
         String confirmNewPassword = changePasswordRequest.getConfirmNewPassword();
-        if(StringUtils.isAnyBlank(userAccount,confirmCode,newPassword,confirmNewPassword)) {
+        if(StringUtils.isAnyBlank(userEmail,confirmCode,newPassword,confirmNewPassword)) {
             return ResultUtil.fail(ERROR_PARAMS, "参数为空");
         }
         //判断账号是否存在
-        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_account", userAccount);
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<User>().eq("user_email", userEmail);
         User user = this.getOne(userQueryWrapper);
         if(null==user) {
             return ResultUtil.fail(ERROR_GET_DATA, "账号不存在");
         }
         //校验验证码
-        String checkCode =(String)request.getSession().getAttribute(user.getUserEmail());
+        String checkCode =(String)request.getSession().getAttribute(userEmail);
         if(null==checkCode){
             return ResultUtil.fail(ERROR_GET_DATA,"请先发送验证码");
         }
@@ -356,12 +356,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         //更新数据库
         user.setUserPassword(encryptedPassword);
         boolean result = this.updateById(user);
+        request.getSession().removeAttribute(userEmail);
         if(true==result){
             return ResultUtil.ok(SUCCESS_REQUEST,"密码修改成功");
         }
         else {
             return  ResultUtil.fail(ERROR_REQUEST,"密码修改失败");
         }
+
     }
 
     @Override

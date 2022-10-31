@@ -7,19 +7,18 @@ import com.cohelp.server.service.InformService;
 import com.cohelp.server.mapper.InformMapper;
 import com.cohelp.server.utils.ResultUtil;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import static com.cohelp.server.constant.StatusCode.*;
 
 /**
-* @author zgy
-* @description 针对表【inform(举报表)】的数据库操作Service实现
-* @createDate 2022-10-20 18:15:55
-*/
+ * @author zgy
+ * @description 针对表【inform(举报表)】的数据库操作Service实现
+ * @createDate 2022-10-20 18:15:55
+ */
 @Service
 public class InformServiceImpl extends ServiceImpl<InformMapper, Inform>
-    implements InformService {
+        implements InformService {
 
     @Override
     public Result submitInform(Inform inform) {

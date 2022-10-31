@@ -21,7 +21,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeConstant.HOLE_TYPE;
+import static com.cohelp.server.constant.TypeEnum.HOLE;
 
 /**
 * @author jianping5
@@ -70,7 +70,7 @@ public class HoleServiceImpl
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(HOLE_TYPE);
+                image.setImageType(HOLE.ordinal());
                 image.setImageSrcId(hole.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);
@@ -106,7 +106,7 @@ public class HoleServiceImpl
         }
         // 删除之前该树洞相关的图片
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("image_type", HOLE_TYPE).eq("image_src_id", hole.getId());
+        queryWrapper.eq("image_type", HOLE.ordinal()).eq("image_src_id", hole.getId());
         boolean remove = imageService.remove(queryWrapper);
         if (!remove) {
             return ResultUtil.fail("删除失败");
@@ -122,7 +122,7 @@ public class HoleServiceImpl
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(HOLE_TYPE);
+                image.setImageType(HOLE.ordinal());
                 image.setImageSrcId(hole.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);

@@ -27,8 +27,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeConstant.HELP_TYPE;
-import static com.cohelp.server.constant.TypeConstant.HOLE_TYPE;
+import static com.cohelp.server.constant.TypeEnum.*;
 
 /**
 * @author jianping5
@@ -76,7 +75,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(HELP_TYPE);
+                image.setImageType(HELP.ordinal());
                 image.setImageSrcId(help.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);
@@ -112,7 +111,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         }
         // 删除之前该树洞相关的图片
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("image_type", HELP_TYPE).eq("image_src_id", help.getId());
+        queryWrapper.eq("image_type", HELP.ordinal()).eq("image_src_id", help.getId());
         boolean remove = imageService.remove(queryWrapper);
         if (!remove) {
             return ResultUtil.fail("删除失败");
@@ -128,7 +127,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(HELP_TYPE);
+                image.setImageType(HELP.ordinal());
                 image.setImageSrcId(help.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);

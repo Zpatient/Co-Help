@@ -36,19 +36,19 @@ public class UserController {
         return userService.userLogin(loginRequest, request);
     }
 
+    @GetMapping("/sendconfirmcode")
+    public Result<User> sendConfirmCode(@RequestParam String userEmail, HttpServletRequest request) {
+        return userService.sendConfirmCode(userEmail, request);
+    }
+
     @PostMapping("/changepassword")
     public Result<User> changePassword(@RequestBody ChangePasswordRequest changePasswordRequest, HttpServletRequest request) {
         return userService.userChangePassword(changePasswordRequest, request);
     }
-
+    @Deprecated
     @GetMapping("/getuseremail")
     public Result<User> getUserEmail(@RequestParam String userAccount){
         return userService.getUserEmail(userAccount);
-    }
-
-    @GetMapping("/sendconfirmcode")
-    public Result<User> sendConfirmCode(@RequestParam String userEmail, HttpServletRequest request) {
-        return userService.sendConfirmCode(userEmail, request);
     }
 
     @GetMapping("/current")

@@ -10,8 +10,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import static com.cohelp.server.constant.TypeConstant.ACTIVITY_TYPE;
-import static com.cohelp.server.constant.TypeConstant.HELP_TYPE;
+import static com.cohelp.server.constant.TypeEnum.*;
 
 /**
  * 互助表
@@ -81,7 +80,7 @@ public class Help implements Serializable {
      * 分类数
      */
     @TableField(exist = false)
-    private static final int typeNumber = HELP_TYPE;
+    private static final int typeNumber = HELP.ordinal();
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

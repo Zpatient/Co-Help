@@ -10,8 +10,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
-import static com.cohelp.server.constant.TypeConstant.ACTIVITY_TYPE;
-import static com.cohelp.server.constant.TypeConstant.HOLE_TYPE;
+import static com.cohelp.server.constant.TypeEnum.HOLE;
 
 /**
  * 树洞表
@@ -76,7 +75,7 @@ public class Hole implements Serializable {
      * 分类数
      */
     @TableField(exist = false)
-    private static final int typeNumber = HOLE_TYPE;
+    private static final int typeNumber = HOLE.ordinal();
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -22,7 +22,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeConstant.*;
+import static com.cohelp.server.constant.TypeEnum.*;
 
 /**
 * @author jianping5
@@ -73,7 +73,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(ACTIVITY_TYPE);
+                image.setImageType(ACTIVITY.ordinal());
                 image.setImageSrcId(activity.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);
@@ -109,7 +109,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             return ResultUtil.fail("没有权限修改");
         }
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("image_type", ACTIVITY_TYPE).eq("image_src_id", activity.getId());
+        queryWrapper.eq("image_type", ACTIVITY.ordinal()).eq("image_src_id", activity.getId());
         boolean remove = imageService.remove(queryWrapper);
         if (!remove) {
             return ResultUtil.fail("删除失败");
@@ -125,7 +125,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(ACTIVITY_TYPE);
+                image.setImageType(ACTIVITY.ordinal());
                 image.setImageSrcId(activity.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);

@@ -14,8 +14,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ChangePasswordRequest implements Serializable {
-    //需要找回密码的用户账号
-    private String userAccount;
+    //需要找回密码的用户邮箱
+    private String userEmail;
     //验证码
     private String confirmCode;
     //新密码

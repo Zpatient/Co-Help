@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 举报表
@@ -42,13 +44,14 @@ public class Inform implements Serializable {
     private Integer informedInstanceId;
 
     /**
-     * 举报对象的类型
+     * 举报对象的类型（0：用户 1：活动 2：互助 3：树洞）
      */
     private Integer informedInstanceType;
 
     /**
      * 举报时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @TableField(exist = false)

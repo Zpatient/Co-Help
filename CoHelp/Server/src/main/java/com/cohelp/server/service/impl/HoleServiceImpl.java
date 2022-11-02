@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.model.domain.HoleResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.vo.HelpVO;
+import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.HoleService;
 import com.cohelp.server.mapper.HoleMapper;
 import com.cohelp.server.service.ImageService;
+import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
 import static com.cohelp.server.constant.TypeEnum.HOLE;
@@ -35,6 +39,12 @@ public class HoleServiceImpl
 
     @Resource
     private ImageService imageService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private HoleMapper holeMapper;
 
     @Override
     public Result<Boolean> publishHole(String holeJson, MultipartFile[] files) {
@@ -136,6 +146,55 @@ public class HoleServiceImpl
             return ResultUtil.fail("修改失败");
         }
         return ResultUtil.ok("修改成功");
+    }
+
+    @Override
+    public Result<List<HoleVO>> listByCondition(Integer conditionType) {
+        if (conditionType == null) {
+            return ResultUtil.fail(ERROR_PARAMS);
+        }
+        // 创建活动视图体数组
+        List<HoleVO> holeVOList = new ArrayList<>();
+
+        // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
+        if (conditionType == 0) {
+            List<Hole> holeList = holeMapper.listByHot();
+            if (holeList == null) {
+                return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
+            }
+            holeList.forEach(hole ->
+                    holeVOList.add(traverseHole(hole))
+            );
+        }
+
+        // 按时间排序
+        if (conditionType == 1) {
+            //  按发布时间排序
+            QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
+            holeQueryWrapper.orderByDesc("hole_create_time");
+            List<Hole> holeList = holeMapper.selectList(holeQueryWrapper);
+            if (holeList == null) {
+                return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
+            }
+            holeList.forEach(hole ->
+                    holeVOList.add(traverseHole(hole))
+            );
+        }
+        return ResultUtil.ok(holeVOList);
+    }
+
+    /**
+     * 遍历树洞，将树洞信息和对应发布者部分信息注入到树洞视图体中
+     * @param hole
+     * @return
+     */
+    private HoleVO traverseHole(Hole hole) {
+        HoleVO holeVO = new HoleVO();
+        BeanUtils.copyProperties(hole, holeVO);
+        User user = userService.getById(hole.getHoleOwnerId());
+        holeVO.setAvatar(user.getAvatar());
+        holeVO.setUserName(user.getUserName());
+        return holeVO;
     }
 
 }

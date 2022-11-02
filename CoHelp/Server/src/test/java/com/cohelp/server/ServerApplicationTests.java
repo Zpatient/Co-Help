@@ -2,18 +2,27 @@ package com.cohelp.server;
 
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.controller.UserController;
+import com.cohelp.server.mapper.ActivityMapper;
+import com.cohelp.server.model.domain.ActivityListRequest;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.RegisterRequest;
+import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
+import com.cohelp.server.service.ActivityService;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
+import javafx.util.converter.TimeStringConverter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,6 +37,9 @@ class ServerApplicationTests {
 
     @Resource
     private UserController userController;
+
+    @Resource
+    private ActivityMapper activityMapper;
 
     @Test
     void contextLoads() {
@@ -95,10 +107,30 @@ class ServerApplicationTests {
 
     @Test
     void test06() {
-        Help help = new Help();
-        help.setHelpTitle("互助");
-        System.out.println(help);
+        List<Activity> activityList = activityMapper.listByHot();
+        activityList.forEach(activity -> {
+            return;
+        });
+        System.out.println(1);
+
+        ArrayList<Activity> activities = new ArrayList<>();
+        activities.forEach(
+                activity -> {
+                    System.out.println(activity.getActivityTime());
+                    System.out.println(2);
+                }
+        );
+        System.out.println(3);
     }
+
+    @Test
+    void test07() {
+        System.out.println(Help.class.getName());
+        long l = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        System.out.println(l);
+
+    }
+
 
     @Test
     void sendmailtest(){

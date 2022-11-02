@@ -4,7 +4,10 @@ import com.cohelp.server.model.domain.ActivityResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.vo.ActivityVO;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 /**
 * @author zgy
@@ -29,4 +32,11 @@ public interface ActivityService extends IService<Activity> {
      */
     Result updateActivity(String activityJson, MultipartFile[] files);
 
+    /**
+     * 根据条件展示活动
+     * @param conditionType
+     * @param dayNum
+     * @return
+     */
+    Result<List<ActivityVO>> listByCondition(Integer conditionType, Integer dayNum);
 }

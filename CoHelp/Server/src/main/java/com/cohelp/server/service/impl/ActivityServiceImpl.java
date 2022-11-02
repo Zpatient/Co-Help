@@ -7,20 +7,28 @@ import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Image;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.service.ActivityService;
 import com.cohelp.server.mapper.ActivityMapper;
 import com.cohelp.server.service.ImageService;
+import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.cohelp.server.constant.NumberConstant.ONE_DAY_MILLI;
 import static com.cohelp.server.constant.StatusCode.*;
 import static com.cohelp.server.constant.TypeEnum.*;
 
@@ -38,6 +46,12 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
     @Resource
     private ImageService imageService;
+
+    @Resource
+    private ActivityMapper activityMapper;
+
+    @Resource
+    private UserService userService;
 
     @Override
     public Result<Boolean> publishActivity(String activityJson, MultipartFile[] files) {
@@ -141,6 +155,75 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         }
 
         return ResultUtil.ok("修改成功");
+    }
+
+
+    @Override
+    public Result<List<ActivityVO>> listByCondition(Integer conditionType, Integer dayNum) {
+
+        if (conditionType == null) {
+            return ResultUtil.fail(ERROR_PARAMS);
+        }
+        // 创建活动视图体数组
+        List<ActivityVO> activityVOList = new ArrayList<>();
+
+        // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
+        if (conditionType == 0) {
+            List<Activity> activityList = activityMapper.listByHot();
+            if (activityList == null) {
+                return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
+            }
+            activityList.forEach(activity ->
+                activityVOList.add(traverseActivity(activity))
+            );
+        }
+
+        // 按时间排序
+        if (conditionType == 1) {
+            //  按发布时间排序
+            if (dayNum == null) {
+                QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
+                activityQueryWrapper.orderByDesc("activity_create_time");
+                List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
+                if (activityList == null) {
+                    return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
+                }
+                activityList.forEach(activity ->
+                    activityVOList.add(traverseActivity(activity))
+                );
+            }
+            // 按活动开始时间排序（前端传入一个天数，查询活动开始时间在该天数之内的活动）
+            if (dayNum != null) {
+                QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
+                activityQueryWrapper.orderByAsc("activity_time");
+                List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
+                if (activityList == null) {
+                    return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
+                }
+                activityList.forEach(activity -> {
+                    long timeStamp = activity.getActivityTime().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+                    long localTimeStamp = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+                    if (timeStamp >= localTimeStamp && timeStamp - localTimeStamp <= dayNum*ONE_DAY_MILLI){
+                        activityVOList.add(traverseActivity(activity));
+                    }
+                });
+            }
+        }
+        return ResultUtil.ok(activityVOList);
+    }
+
+    /**
+     * 遍历活动，将活动信息和对应发布者部分信息注入到活动视图体中
+     * @param activity
+     * @return
+     */
+    private ActivityVO traverseActivity(Activity activity) {
+        ActivityVO activityVO = new ActivityVO();
+        BeanUtils.copyProperties(activity, activityVO);
+        User user = userService.getById(activity.getActivityOwnerId());
+        activityVO.setAvatar(user.getAvatar());
+        activityVO.setUserName(user.getUserName());
+        return activityVO;
     }
 
 }

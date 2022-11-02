@@ -23,4 +23,10 @@
         hole_comment,hole_label,hole_state,
         hole_create_time
     </sql>
+
+    <select id="listByHot" resultType="com.cohelp.server.model.entity.Hole">
+        select <include refid="Base_Column_List"></include>
+        from hole
+        order by (4*hole_like+3*hole_comment+3*hole_collect) desc
+    </select>
 </mapper>

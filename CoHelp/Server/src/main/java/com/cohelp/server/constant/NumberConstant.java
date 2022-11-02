@@ -12,4 +12,5 @@ public class NumberConstant {
     public static final int USER_ACCOUNT_LENGTH_HIGH = 15;
     public static final int USER_PASSWORD_LENGTH_LOW = 10;
     public static final int USER_PASSWORD_LENGTH_HIGH = 20;
+    public static final long ONE_DAY_MILLI = 86400000;
 }

@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
-import com.cohelp.server.model.domain.CollectRequest;
+import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Collect;
 import com.cohelp.server.model.entity.User;
@@ -30,7 +30,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     implements CollectService{
 
     @Override
-    public Result getCollectList(CollectRequest collectRequest) {
+    public Result getCollectList(HistoryAndCollectRequest collectRequest) {
         //判断参数合法性
         if(ObjectUtils.anyNull(collectRequest)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");

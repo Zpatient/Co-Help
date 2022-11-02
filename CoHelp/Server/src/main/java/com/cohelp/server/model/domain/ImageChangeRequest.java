@@ -1,24 +1,26 @@
 package com.cohelp.server.model.domain;
 
+import com.cohelp.server.model.entity.Image;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author zgy
- * @create 2022-10-24 21:27
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CollectRequest implements Serializable {
-    //用户id
+public class ImageChangeRequest {
+    /**
+     *用户id
+     */
     private  Integer userId;
-    //页码
-    private Integer pageNum;
-    //每页最大记录数
-    private Integer recordMaxNum;
+    /**
+     * 待修改状态的图片Map
+     */
+    Map<Image,Integer> imageStateMap;
     private static final long serialVersionUID = 1L;
 }

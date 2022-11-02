@@ -22,7 +22,6 @@ public class HelpResponse {
      * 互助
      */
     private Help help;
-
     /**
      * 文件名组成的数组
      */

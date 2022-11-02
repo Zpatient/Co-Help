@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
-import com.cohelp.server.model.domain.HistoryRequest;
+import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.History;
 import com.cohelp.server.model.entity.User;
@@ -31,7 +31,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
     implements HistoryService {
 
     @Override
-    public Result getHistoryList(HistoryRequest historyRequest) {
+    public Result getHistoryList(HistoryAndCollectRequest historyRequest) {
         //判断参数合法性
         if(ObjectUtils.anyNull(historyRequest)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");

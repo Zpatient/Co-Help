@@ -1,6 +1,7 @@
 package com.cohelp.server.service;
 
 import com.cohelp.server.model.domain.DetailRequest;
+import com.cohelp.server.model.domain.ImageChangeRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Image;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -25,5 +26,5 @@ public interface ImageService extends IService<Image> {
      * @param imageIntegerMap 更改图片状态请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result setImageState(Map<Image,Integer> imageIntegerMap);
+    Result setImageState(ImageChangeRequest imageChangeRequest);
 }

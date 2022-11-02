@@ -1,6 +1,6 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.HistoryRequest;
+import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.History;
 import com.cohelp.server.service.HistoryService;
@@ -20,7 +20,7 @@ public class HistoryController {
     @Autowired
     HistoryService historyService;
     @RequestMapping("/gethistorylist")
-    public Result getCollectList(@RequestBody HistoryRequest historyRequest){
+    public Result getCollectList(@RequestBody HistoryAndCollectRequest historyRequest){
         return historyService.getHistoryList(historyRequest);
     }
     @RequestMapping("/inserthistoryrecord")
@@ -28,7 +28,7 @@ public class HistoryController {
         return historyService.insertHistoryRecord(history);
     }
     @RequestMapping("/deletehistoryrecord")
-    public Result deleteCollectRecord(@RequestParam String id){
+    public Result deleteCollectRecord(@RequestParam Integer id){
         return historyService.deleteHistoryRecord(id);
     }
 }

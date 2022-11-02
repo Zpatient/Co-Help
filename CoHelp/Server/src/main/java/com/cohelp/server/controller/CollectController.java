@@ -1,6 +1,6 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.CollectRequest;
+import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Collect;
 import com.cohelp.server.service.CollectService;
@@ -20,7 +20,7 @@ public class CollectController {
     @Autowired
     CollectService collectService;
     @RequestMapping("/getcollectlist")
-    public Result getCollectList(@RequestBody CollectRequest collectRequest){
+    public Result getCollectList(@RequestBody HistoryAndCollectRequest collectRequest){
         return collectService.getCollectList(collectRequest);
     }
     @RequestMapping("/insertcollectrecord")
@@ -28,7 +28,7 @@ public class CollectController {
         return collectService.insertCollectRecord(collect);
     }
     @RequestMapping("/deletecollectrecord")
-    public Result deleteCollectRecord(@RequestParam String id){
+    public Result deleteCollectRecord(@RequestParam Integer id){
         return collectService.deleteCollectRecord(id);
     }
 }

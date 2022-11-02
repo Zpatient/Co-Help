@@ -25,10 +25,17 @@ public class HelpResponse implements Serializable {
      * 互助
      */
     private Help help;
-
     /**
      * 文件名组成的数组
      */
-    private ArrayList<String> list;
+    private ArrayList<String> filelist;
+    /**
+     * 文件的URL
+     */
+    private ArrayList<String> fileUrlList;
 
+    public HelpResponse(Help help, ArrayList<String> fileUrlList) {
+        this.help = help;
+        this.fileUrlList = fileUrlList;
+    }
 }

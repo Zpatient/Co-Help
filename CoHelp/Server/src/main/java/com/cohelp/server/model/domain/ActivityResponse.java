@@ -22,6 +22,14 @@ public class ActivityResponse implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Activity activity;
-
     private ArrayList<String> fileNameList;
+    /**
+     * 文件的URL
+     */
+    private ArrayList<String> fileUrlList;
+
+    public ActivityResponse(Activity activity, ArrayList<String> fileUrlList) {
+        this.activity = activity;
+        this.fileUrlList = fileUrlList;
+    }
 }

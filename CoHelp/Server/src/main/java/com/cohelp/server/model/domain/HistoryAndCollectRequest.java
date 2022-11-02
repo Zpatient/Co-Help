@@ -13,12 +13,18 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HistoryRequest implements Serializable {
-    //用户id
+public class HistoryAndCollectRequest {
+    /**
+     * 用户id
+     */
     private Integer userId;
-    //页码
+    /**
+     * 页码
+     */
     private Integer pageNum;
-    //每页最大记录数
+    /**
+     * 每页最大记录数
+     */
     private Integer recordMaxNum;
     private static final long serialVersionUID = 1L;
 }

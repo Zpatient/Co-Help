@@ -14,9 +14,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DetailRequest implements Serializable {
-    //话题类型
+    /**
+     * 话题类型
+     */
     private Integer type;
-    //话题ID
+    /**
+     * 话题ID
+     */
     private Integer id;
     private static final long serialVersionUID = 1L;
 }

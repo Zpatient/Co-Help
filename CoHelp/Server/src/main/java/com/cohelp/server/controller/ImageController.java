@@ -14,12 +14,11 @@ import javax.annotation.Resource;
  * @author zgy
  */
 @RestController
-@RequestMapping("/image")
 public class ImageController {
     @Resource
     ImageService imageService;
 
-    @RequestMapping("/getimagelist")
+    @RequestMapping("/image/getimagelist")
     public Result getList(@RequestBody DetailRequest detailRequest){
         return imageService.getImageList(detailRequest);
     }

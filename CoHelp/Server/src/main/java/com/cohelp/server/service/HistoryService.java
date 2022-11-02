@@ -34,5 +34,5 @@ public interface HistoryService extends IService<History> {
      * @param id 待删除的记录id
      * @return com.cohelp.server.model.domain.Result
      */
-    Result deleteHistoryRecord(String id);
+    Result deleteHistoryRecord(Integer id);
 }

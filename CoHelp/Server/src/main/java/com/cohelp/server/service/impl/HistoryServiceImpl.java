@@ -44,7 +44,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         }
         //判断当前用户权限
         User user = UserHolder.getUser();
-        if(userId != user.getId())
+        if(!userId.equals(user.getId()))
             return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
         //分页查询数据
         Page<History> historyPage = getBaseMapper().selectPage(new Page<>(pageNum, recordMaxNum),
@@ -73,7 +73,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         }
         //判断当前用户权限
         User user = UserHolder.getUser();
-        if(userId != user.getId())
+        if(!userId.equals(user.getId()))
             return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
         //返回数据库操作结果
         boolean bool = saveOrUpdate(history);
@@ -83,7 +83,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
             return ResultUtil.fail(ERROR_REQUEST,"记录插入失败");
     }
     @Override
-    public Result deleteHistoryRecord(String id) {
+    public Result deleteHistoryRecord(Integer id) {
         //检验参数合法性
         if(ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空！");
@@ -94,7 +94,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         //判断当前用户权限
         Integer userId = getById(id).getUserId();
         User user = UserHolder.getUser();
-        if(userId != user.getId())
+        if(!userId.equals(user.getId()))
             return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
         //返回数据库操作结果
         boolean bool = removeById(id);

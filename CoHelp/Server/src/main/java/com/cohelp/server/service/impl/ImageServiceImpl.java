@@ -36,7 +36,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
         }
         Integer type = detailRequest.getType();
         Integer id = detailRequest.getId();
-        if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
+        if(!(TypeEnum.isTopic(type)||TypeEnum.isUser(type))|| ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         //查询数据
@@ -44,6 +44,35 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
         imageQueryWrapper.eq("image_type",type)
                 .eq("image_src_id",id)
                 .eq("image_state",0);
+        List<Image> images = getBaseMapper().selectList(imageQueryWrapper);
+        ArrayList<String> imagesUrl = new ArrayList<>();
+        for (Image image : images){
+            imagesUrl.add(image.getImageUrl());
+        }
+        //返回图片URL列表
+        if(ObjectUtils.anyNull(images)){
+            return ResultUtil.fail(ERROR_GET_DATA,imagesUrl,"数据查询失败！");
+        }
+        else{
+            return ResultUtil.returnResult(SUCCESS_GET_DATA,imagesUrl,"数据获取成功！");
+        }
+    }
+
+    @Override
+    public Result getAllImage(DetailRequest detailRequest) {
+        //判断参数合法性
+        if(ObjectUtils.anyNull(detailRequest)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
+        }
+        Integer type = detailRequest.getType();
+        Integer id = detailRequest.getId();
+        if(!(TypeEnum.isTopic(type)||TypeEnum.isUser(type))|| ObjectUtils.anyNull(id)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+        }
+        //查询数据
+        QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+        imageQueryWrapper.eq("image_type",type)
+                .eq("image_src_id",id);
         List<Image> images = getBaseMapper().selectList(imageQueryWrapper);
         ArrayList<String> imagesUrl = new ArrayList<>();
         for (Image image : images){

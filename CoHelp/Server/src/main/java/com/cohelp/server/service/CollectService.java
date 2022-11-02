@@ -35,5 +35,5 @@ public interface CollectService extends IService<Collect> {
      * @param id 待删除的记录id
      * @return com.cohelp.server.model.domain.Result
      */
-    Result deleteCollectRecord(String id);
+    Result deleteCollectRecord(Integer id);
 }

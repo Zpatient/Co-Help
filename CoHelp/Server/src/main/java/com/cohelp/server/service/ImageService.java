@@ -14,12 +14,19 @@ import java.util.Map;
 */
 public interface ImageService extends IService<Image> {
     /**
-     * 根据类型和id获取符合条件的图片
+     * 根据类型和id获取符合条件的当前使用图片
      * @author: ZGY
      * @param detailRequest 获取详情请求参数
      * @return com.cohelp.server.model.domain.Result
      */
     Result getImageList(DetailRequest detailRequest);
+    /**
+     * 根据类型和id获取符合条件的所有图片
+     * @author: ZGY
+     * @param detailRequest 获取详情请求参数
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result getAllImage(DetailRequest detailRequest);
     /**
      * 根据传回的参数对符合条件的图片状态进行变更
      * @author: ZGY
@@ -27,4 +34,5 @@ public interface ImageService extends IService<Image> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result setImageState(ImageChangeRequest imageChangeRequest);
+
 }

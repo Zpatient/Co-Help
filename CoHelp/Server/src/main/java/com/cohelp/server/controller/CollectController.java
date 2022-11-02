@@ -28,7 +28,7 @@ public class CollectController {
         return collectService.insertCollectRecord(collect);
     }
     @RequestMapping("/deletecollectrecord")
-    public Result deleteCollectRecord(@RequestParam String id){
+    public Result deleteCollectRecord(@RequestParam Integer id){
         return collectService.deleteCollectRecord(id);
     }
 }

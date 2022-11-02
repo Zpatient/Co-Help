@@ -28,7 +28,7 @@ public class HistoryController {
         return historyService.insertHistoryRecord(history);
     }
     @RequestMapping("/deletehistoryrecord")
-    public Result deleteCollectRecord(@RequestParam String id){
+    public Result deleteCollectRecord(@RequestParam Integer id){
         return historyService.deleteHistoryRecord(id);
     }
 }

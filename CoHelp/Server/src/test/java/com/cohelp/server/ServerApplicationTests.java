@@ -2,9 +2,11 @@ package com.cohelp.server;
 
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.controller.UserController;
+import com.cohelp.server.model.domain.ImageChangeRequest;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.RegisterRequest;
 import com.cohelp.server.model.entity.Help;
+import com.cohelp.server.model.entity.Image;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
@@ -16,6 +18,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -110,5 +114,13 @@ class ServerApplicationTests {
     @Test
     public void testTypeEnum(){
         System.out.println(TypeEnum.isTopic(5));
+        Map<Image, Integer> test = new HashMap<Image, Integer>();
+        Image image = new Image();
+        image.setImageType(1);
+        image.setImageSrcId(1);
+        image.setImageUrl("https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb.png");
+        test.put(image, 0);
+        ImageChangeRequest imageChangeRequest = new ImageChangeRequest(1,test);
+        String s = gson.toJson(imageChangeRequest);
     }
 }

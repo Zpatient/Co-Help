@@ -21,6 +21,6 @@ public class ImageChangeRequest {
     /**
      * 待修改状态的图片Map
      */
-    Map<Image,Integer> imageStateMap;
+    private Map<Image,Integer> imageStateMap;
     private static final long serialVersionUID = 1L;
 }

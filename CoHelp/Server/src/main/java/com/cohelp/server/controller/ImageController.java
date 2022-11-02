@@ -19,8 +19,12 @@ public class ImageController {
     ImageService imageService;
 
     @RequestMapping("/image/getimagelist")
-    public Result getList(@RequestBody DetailRequest detailRequest){
+    public Result getImageList(@RequestBody DetailRequest detailRequest){
         return imageService.getImageList(detailRequest);
+    }
+    @RequestMapping("/image/getallimage")
+    public Result getAllList(@RequestBody DetailRequest detailRequest){
+        return imageService.getAllImage(detailRequest);
     }
     @RequestMapping("/setimagestate")
     public Result setImageState(@RequestBody ImageChangeRequest imageChangeRequest){

@@ -3,6 +3,7 @@ package com.cohelp.server.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.DetailRequest;
 import com.cohelp.server.model.domain.Result;
+import com.cohelp.server.model.domain.SearchRequest;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,4 +19,5 @@ public interface GeneralService{
      * @return com.cohelp.server.model.domain.Result
      */
     public Result getDetail(DetailRequest detailRequest);
+    public Result search(SearchRequest searchRequest);
 }

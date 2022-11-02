@@ -12,9 +12,13 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.wltea.analyzer.core.IKSegmenter;
+import org.wltea.analyzer.core.Lexeme;
 
 import javax.annotation.Resource;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,5 +94,34 @@ public class GeneralServiceImpl implements GeneralService {
                 return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败");
             }
         }
+    }
+
+    @Override
+    public Result search(SearchRequest searchRequest) {
+        return null;
+    }
+
+    /**
+     * @param key 搜索关键词
+     * @return 分词词组(,拼接)
+     */
+    private String getKeywords(String key) {
+        if (StringUtils.isBlank(key)) {
+            return null;
+        }
+        StringReader reader = new StringReader(key);
+        IKSegmenter iks = new IKSegmenter(reader, true);
+        StringBuilder buffer = new StringBuilder();
+        try {
+            Lexeme lexeme;
+            while ((lexeme = iks.next()) != null) {
+                buffer.append(lexeme.getLexemeText()).append(',');
+            }
+        } catch (IOException e) {
+        }
+        if (buffer.length() > 0) {
+            buffer.setLength(buffer.length() - 1);
+        }
+        return buffer.toString();
     }
 }

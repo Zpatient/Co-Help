@@ -161,4 +161,15 @@ create table cohelp.user
 )
     comment '用户表';
 
+create table cohelp.topic_like
+(
+    id         int auto_increment comment '主键'
+        primary key,
+    user_id    int               not null comment '用户id',
+    topic_type int               not null comment '话题类型',
+    is_liked   tinyint default 0 not null comment '是否点赞',
+    topic_id   int               not null comment '话题id'
+)
+    comment '点赞记录表';
+
 

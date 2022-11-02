@@ -1,7 +1,10 @@
 package com.cohelp.server.service;
 
+import com.cohelp.server.model.domain.DetailRequest;
+import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Image;
 import com.baomidou.mybatisplus.extension.service.IService;
+import java.util.Map;
 
 /**
 * @author jianping5
@@ -9,5 +12,18 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2022-09-19 21:36:20
 */
 public interface ImageService extends IService<Image> {
-
+    /**
+     * 根据类型和id获取符合条件的图片
+     * @author: ZGY
+     * @param detailRequest 获取详情请求参数
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result getImageList(DetailRequest detailRequest);
+    /**
+     * 根据传回的参数对符合条件的图片状态进行变更
+     * @author: ZGY
+     * @param imageIntegerMap 更改图片状态请求参数
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result setImageState(Map<Image,Integer> imageIntegerMap);
 }

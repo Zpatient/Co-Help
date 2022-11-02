@@ -19,6 +19,14 @@ import java.util.ArrayList;
 public class ActivityResponse {
 
     private Activity activity;
-
     private ArrayList<String> fileNameList;
+    /**
+     * 文件的URL
+     */
+    private ArrayList<String> fileUrlList;
+
+    public ActivityResponse(Activity activity, ArrayList<String> fileUrlList) {
+        this.activity = activity;
+        this.fileUrlList = fileUrlList;
+    }
 }

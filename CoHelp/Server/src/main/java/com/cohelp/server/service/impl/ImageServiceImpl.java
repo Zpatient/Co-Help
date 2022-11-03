@@ -29,6 +29,20 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
     implements ImageService {
 
     @Override
+    public Result getImageById(Integer id) {
+        //判断参数合法性
+        if(ObjectUtils.anyNull(id)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
+        }
+        Image image = getById(id);
+        if(ObjectUtils.anyNull(image)){
+            return ResultUtil.fail("数据为空！");
+        }else {
+            return ResultUtil.fail(image.getImageUrl(),"图片Url获取成功");
+        }
+    }
+
+    @Override
     public Result getImageList(DetailRequest detailRequest) {
         //判断参数合法性
         if(ObjectUtils.anyNull(detailRequest)){

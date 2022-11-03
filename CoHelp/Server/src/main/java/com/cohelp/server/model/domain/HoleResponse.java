@@ -21,13 +21,4 @@ public class HoleResponse {
     private Hole hole;
 
     private ArrayList<String> fileNameList;
-    /**
-     * 文件的URL
-     */
-    private ArrayList<String> fileUrlList;
-
-    public HoleResponse(Hole hole, ArrayList<String> fileUrlList) {
-        this.hole = hole;
-        this.fileUrlList = fileUrlList;
-    }
 }

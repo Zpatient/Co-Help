@@ -19,5 +19,11 @@ public interface GeneralService{
      * @return com.cohelp.server.model.domain.Result
      */
     public Result getDetail(DetailRequest detailRequest);
+    /**
+     * 根据参数内容查询相应表的数据
+     * @author: ZGY
+     * @param searchRequest 查询请求参数
+     * @return com.cohelp.server.model.domain.Result
+     */
     public Result search(SearchRequest searchRequest);
 }

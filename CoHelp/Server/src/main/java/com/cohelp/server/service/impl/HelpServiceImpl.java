@@ -43,7 +43,7 @@ import static com.cohelp.server.constant.TypeEnum.*;
 * @description 针对表【help(互助表)】的数据库操作Service实现
 * @createDate 2022-10-21 21:25:55
 */
-@Service
+@Service("helpService")
 @Slf4j
 public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
     implements HelpService{
@@ -247,7 +247,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
      * @param help
      * @return
      */
-    private HelpVO traverseHelp(Help help) {
+    public HelpVO traverseHelp(Help help) {
         HelpVO helpVO = new HelpVO();
         BeanUtils.copyProperties(help, helpVO);
         User user = userService.getById(help.getHelpOwnerId());

@@ -1,5 +1,7 @@
 package com.cohelp.server.constant;
 
+import java.util.Collection;
+
 /**
  * @author zgy
  * @create 2022-10-23 18:05
@@ -89,5 +91,13 @@ public enum TypeEnum{
             return true;
         else
             return false;
+    }
+    public static Boolean isTopic(Collection<Integer> types){
+        boolean flag = true;
+        for(Integer type : types){
+            if(!isTopic(type))
+                flag = false;
+        }
+        return flag;
     }
 }

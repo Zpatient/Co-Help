@@ -14,6 +14,13 @@ import java.util.Map;
 */
 public interface ImageService extends IService<Image> {
     /**
+     * 根据图片ID查询图片信息
+     * @author: ZGY
+     * @param id 图片ID
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result getImageById(Integer id);
+    /**
      * 根据类型和id获取符合条件的当前使用图片
      * @author: ZGY
      * @param detailRequest 获取详情请求参数

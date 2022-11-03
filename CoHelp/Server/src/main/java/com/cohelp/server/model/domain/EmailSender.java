@@ -1,4 +1,4 @@
-package com.cohelp.server.model.entity;
+package com.cohelp.server.model.domain;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;

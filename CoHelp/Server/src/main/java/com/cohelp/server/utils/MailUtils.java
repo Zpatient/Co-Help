@@ -1,7 +1,7 @@
 package com.cohelp.server.utils;
 
 import com.cohelp.server.model.domain.Mail;
-import com.cohelp.server.model.entity.EmailSender;
+import com.cohelp.server.model.domain.EmailSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

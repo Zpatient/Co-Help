@@ -6,6 +6,7 @@ import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.service.ImageService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -26,8 +27,12 @@ public class ImageController {
     public Result getAllList(@RequestBody DetailRequest detailRequest){
         return imageService.getAllImage(detailRequest);
     }
+    @RequestMapping("/image/getimagebyid")
+    public Result setImageState(@RequestParam Integer imageId){
+        return imageService.getImageById(imageId);
+    }
     @RequestMapping("/setimagestate")
-    public Result setImageState(@RequestBody ImageChangeRequest imageChangeRequest){
+    public Result setImageState(@RequestBody ImageChangeRequest imageChangeRequest) {
         return imageService.setImageState(imageChangeRequest);
     }
 }

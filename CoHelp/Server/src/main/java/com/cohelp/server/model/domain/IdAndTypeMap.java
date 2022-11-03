@@ -6,22 +6,20 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author zgy
+ * @create 2022-11-03 15:07
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchRequest implements Serializable {
+public class IdAndTypeMap implements Serializable {
     /**
-     * 搜索关键词
+     * 存储话题id和type的Map
      */
-    private String key;
-    /**
-     * 搜索类型
-     */
-    private List<Integer> types;
+    Map<Integer,Integer> idAndTypeMap;
 
     private static final long serialVersionUID = 1L;
 }

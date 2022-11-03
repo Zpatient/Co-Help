@@ -37,7 +37,7 @@ import static com.cohelp.server.constant.TypeEnum.*;
 * @description 针对表【activity(活动表)】的数据库操作Service实现
 * @createDate 2022-10-21 21:22:49
 */
-@Service
+@Service("activityService")
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
     implements ActivityService{
 
@@ -217,7 +217,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
      * @param activity
      * @return
      */
-    private ActivityVO traverseActivity(Activity activity) {
+    public ActivityVO traverseActivity(Activity activity) {
         ActivityVO activityVO = new ActivityVO();
         BeanUtils.copyProperties(activity, activityVO);
         User user = userService.getById(activity.getActivityOwnerId());

@@ -32,7 +32,7 @@ import static com.cohelp.server.constant.TypeEnum.HOLE;
 * @description 针对表【hole(树洞表)】的数据库操作Service实现
 * @createDate 2022-10-21 21:26:01
 */
-@Service
+@Service("holeService")
 public class HoleServiceImpl
         extends ServiceImpl<HoleMapper, Hole>
     implements HoleService{
@@ -188,7 +188,7 @@ public class HoleServiceImpl
      * @param hole
      * @return
      */
-    private HoleVO traverseHole(Hole hole) {
+    public HoleVO traverseHole(Hole hole) {
         HoleVO holeVO = new HoleVO();
         BeanUtils.copyProperties(hole, holeVO);
         User user = userService.getById(hole.getHoleOwnerId());

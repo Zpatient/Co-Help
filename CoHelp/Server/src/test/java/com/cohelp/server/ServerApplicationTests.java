@@ -1,5 +1,6 @@
 package com.cohelp.server;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.controller.UserController;
 import com.cohelp.server.model.domain.ImageChangeRequest;
@@ -11,6 +12,8 @@ import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Image;
 import com.cohelp.server.service.ActivityService;
+import com.cohelp.server.service.GeneralService;
+import com.cohelp.server.service.impl.GeneralServiceImpl;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
@@ -46,6 +49,8 @@ class ServerApplicationTests {
 
     @Resource
     private ActivityMapper activityMapper;
+    @Resource
+    private GeneralServiceImpl generalServiceImpl;
 
     @Test
     void contextLoads() {

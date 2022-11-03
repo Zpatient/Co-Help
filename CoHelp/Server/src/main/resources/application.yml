@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cohelp?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
     username: 'root'
-    password: '011205'
+    password: '123456'
 
   # MailConfig
   mail:

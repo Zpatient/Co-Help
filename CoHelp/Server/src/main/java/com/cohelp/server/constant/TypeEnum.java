@@ -1,5 +1,7 @@
 package com.cohelp.server.constant;
 
+import org.apache.commons.lang3.ObjectUtils;
+
 import java.util.Collection;
 
 /**
@@ -48,6 +50,8 @@ public enum TypeEnum{
      * @return java.lang.Boolean
      */
     public static Boolean isUser(Integer type){
+        if(ObjectUtils.anyNull(type))
+            return false;
         if(type == TypeEnum.USER.ordinal())
             return true;
         else
@@ -61,6 +65,8 @@ public enum TypeEnum{
      * @return java.lang.Boolean
      */
     public static Boolean isActivity(Integer type){
+        if(ObjectUtils.anyNull(type))
+            return false;
         if(type == TypeEnum.ACTIVITY.ordinal())
             return true;
         else
@@ -74,6 +80,8 @@ public enum TypeEnum{
      * @return java.lang.Boolean
      */
     public static Boolean isHelp(Integer type){
+        if(ObjectUtils.anyNull(type))
+            return false;
         if(type == TypeEnum.HELP.ordinal())
             return true;
         else
@@ -87,13 +95,17 @@ public enum TypeEnum{
      * @return java.lang.Boolean
      */
     public static Boolean isHole(Integer type){
+        if(ObjectUtils.anyNull(type))
+            return false;
         if(type == TypeEnum.HOLE.ordinal())
             return true;
         else
             return false;
     }
     public static Boolean isTopic(Collection<Integer> types){
-        boolean flag = true;
+        if(ObjectUtils.anyNull(types)||ObjectUtils.isEmpty(types))
+            return false;
+        boolean flag = false;
         for(Integer type : types){
             if(!isTopic(type))
                 flag = false;

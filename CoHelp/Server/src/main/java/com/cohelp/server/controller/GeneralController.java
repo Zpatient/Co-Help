@@ -1,6 +1,7 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.model.domain.IdAndType;
+import com.cohelp.server.model.domain.RemarkRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.SearchRequest;
 import com.cohelp.server.service.GeneralService;
@@ -24,5 +25,17 @@ public class GeneralController {
     @RequestMapping("/search")
     public Result search(@RequestBody SearchRequest searchRequest){
         return generalService.search(searchRequest);
+    }
+    @RequestMapping("/insertremark")
+    public Result insertRemark(@RequestBody RemarkRequest remarkRequest){
+        return generalService.insertRemark(remarkRequest);
+    }
+    @RequestMapping("/deleteremark")
+    public Result deleteRemark(@RequestBody IdAndType idAndType){
+        return generalService.deleteRemark(idAndType);
+    }
+    @RequestMapping("/getremarklist")
+    public Result getremarklist(@RequestBody IdAndType idAndType){
+        return generalService.getRemarkList(idAndType);
     }
 }

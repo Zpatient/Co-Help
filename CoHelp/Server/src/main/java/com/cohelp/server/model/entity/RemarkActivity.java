@@ -20,42 +20,34 @@ public class RemarkActivity implements Serializable {
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
-
     /**
      * 评论内容
      */
     private String remarkContent;
-
-    /**
-     * 评论对象id
-     */
-    private Integer remarkTargetId;
-
-    /**
-     * 评论点赞量
-     */
-    private Integer remarkLike;
-
     /**
      * 评论活动id
      */
     private Integer remarkActivityId;
-
+    /**
+     * 评论对象id
+     */
+    private Integer remarkTargetId;
+    /**
+     * 评论点赞量
+     */
+    private Integer remarkLike;
     /**
      * 顶层id（评论链的根id）
      */
     private Integer topId;
-
     /**
      * 评论对象是否为活动（0：否 1：是）
      */
     private Integer targetIsActivity;
-
     /**
      * 评论拥有者id
      */
     private Integer remarkOwnerId;
-
     /**
      * 评论发布时间
      */

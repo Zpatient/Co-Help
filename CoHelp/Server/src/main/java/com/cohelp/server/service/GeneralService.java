@@ -1,6 +1,7 @@
 package com.cohelp.server.service;
 
 import com.cohelp.server.model.domain.IdAndType;
+import com.cohelp.server.model.domain.RemarkRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.SearchRequest;
 
@@ -16,12 +17,34 @@ public interface GeneralService{
      * @param idAndType 话题详情请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    public Result getDetail(IdAndType idAndType);
+    Result getDetail(IdAndType idAndType);
     /**
      * 根据参数内容查询相应表的数据
      * @author: ZGY
      * @param searchRequest 查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    public Result search(SearchRequest searchRequest);
+    Result search(SearchRequest searchRequest);
+    /**
+     * 插入评论
+     * @author: ZGY
+     * @param remarkRequest
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result insertRemark(RemarkRequest remarkRequest);
+    /**
+     * 删除评论
+     * @author: ZGY
+     * @param remarkRequest
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result deleteRemark(IdAndType idAndType);
+    /**
+     * 获取评论
+     * @author: ZGY
+     * @param remarkRequest
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result getRemarkList(IdAndType idAndType);
+
 }

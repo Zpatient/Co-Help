@@ -3,9 +3,7 @@ package com.cohelp.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.Activity;
-import com.cohelp.server.model.entity.Help;
-import com.cohelp.server.model.entity.Hole;
+import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
@@ -42,6 +40,12 @@ public class GeneralServiceImpl implements GeneralService {
     HoleService holeService;
     @Resource
     ImageService imageService;
+    @Resource
+    RemarkActivityService remarkActivityService;
+    @Resource
+    RemarkHelpService remarkHelpService;
+    @Resource
+    RemarkHoleService remarkHoleService;
     @Override
     public Result getDetail(IdAndType idAndType) {
         //判断参数合法性
@@ -188,6 +192,111 @@ public class GeneralServiceImpl implements GeneralService {
         idAndTypes.setIdAndTypeList(idAndTypeList);
         return ResultUtil.ok(SUCCESS_GET_DATA, idAndTypes,"数据查询成功！");
     }
+
+    @Override
+    public Result insertRemark(RemarkRequest remarkRequest) {
+        //判断参数合法性
+        if(ObjectUtils.anyNull(remarkRequest)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
+        }
+        //插入评论到评论表
+        Integer type = remarkRequest.getType();
+        if(!TypeEnum.isTopic(type)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+        }
+        else if(TypeEnum.isActivity(type)){
+            RemarkActivity remarkActivity = remarkRequest.getRemarkActivity();
+            if(ObjectUtils.anyNull(remarkActivity))
+                return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+            else{
+                remarkActivityService.saveOrUpdate(remarkActivity);
+                return ResultUtil.ok("评论成功！");
+            }
+        }
+        else if(TypeEnum.isHelp(type)){
+            RemarkHelp remarkHelp = remarkRequest.getRemarkHelp();
+            if(ObjectUtils.anyNull(remarkHelp))
+                return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+            else{
+                remarkHelpService.saveOrUpdate(remarkHelp);
+                return ResultUtil.ok("评论成功！");
+            }
+        }
+        else{
+            RemarkHole remarkHole = remarkRequest.getRemarkHole();
+            if(ObjectUtils.anyNull(remarkHole))
+                return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+            else{
+                remarkHoleService.saveOrUpdate(remarkHole);
+                return ResultUtil.ok("评论成功！");
+            }
+        }
+    }
+
+    @Override
+    public Result deleteRemark(IdAndType idAndType) {
+        //判断参数合法性
+        if(ObjectUtils.anyNull(idAndType)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
+        }
+        Integer type = idAndType.getType();
+        Integer id = idAndType.getId();
+        //根据type和id到相应评论表删除评论
+        if(ObjectUtils.anyNull(type,id)||!TypeEnum.isTopic(type)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+        }
+        else if(TypeEnum.isActivity(type)){
+            boolean result = remarkActivityService.removeById(id);
+            if(!result)
+                return ResultUtil.fail("评论删除失败！");
+            else
+                return ResultUtil.ok("评论删除成功！");
+        }
+        else if(TypeEnum.isHelp(type)){
+            boolean result = remarkHelpService.removeById(id);
+            if(!result)
+                return ResultUtil.fail("评论删除失败！");
+            else
+                return ResultUtil.ok("评论删除成功！");
+        }
+        else{
+            boolean result = remarkHoleService.removeById(id);
+            if(!result)
+                return ResultUtil.fail("评论删除失败！");
+            else
+                return ResultUtil.ok("评论删除成功！");
+        }
+    }
+
+    @Override
+    public Result getRemarkList(IdAndType idAndType) {
+        //判断参数合法性
+        if(ObjectUtils.anyNull(idAndType)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
+        }
+        Integer type = idAndType.getType();
+        Integer id = idAndType.getId();
+        //根据type和id到相应评论表删除评论
+        if(ObjectUtils.anyNull(type,id)||!TypeEnum.isTopic(type)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+        }
+        else if(TypeEnum.isActivity(type)){
+            QueryWrapper<RemarkActivity> remarkQueryWrapper = new QueryWrapper<RemarkActivity>().eq("top_id", id);
+            List<RemarkActivity> remarkList = remarkActivityService.list(remarkQueryWrapper);
+            return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkList,"评论查询成功");
+        }
+        else if(TypeEnum.isHelp(type)){
+            QueryWrapper<RemarkHelp> remarkQueryWrapper = new QueryWrapper<RemarkHelp>().eq("top_id", id);
+            List<RemarkHelp> remarkList = remarkHelpService.list(remarkQueryWrapper);
+            return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkList,"评论查询成功");
+        }
+        else{
+            QueryWrapper<RemarkHole> remarkQueryWrapper = new QueryWrapper<RemarkHole>().eq("top_id", id);
+            List<RemarkHole> remarkList = remarkHoleService.list(remarkQueryWrapper);
+            return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkList,"评论查询成功");
+        }
+    }
+
     /**
      * @param key 搜索关键词
      * @return 分词词组(,拼接)

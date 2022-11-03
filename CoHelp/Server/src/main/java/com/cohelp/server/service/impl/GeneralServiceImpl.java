@@ -9,6 +9,7 @@ import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.*;
 import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -208,28 +209,49 @@ public class GeneralServiceImpl implements GeneralService {
             RemarkActivity remarkActivity = remarkRequest.getRemarkActivity();
             if(ObjectUtils.anyNull(remarkActivity))
                 return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-            else{
-                remarkActivityService.saveOrUpdate(remarkActivity);
-                return ResultUtil.ok("评论成功！");
-            }
+            //判断当前用户权限
+            Integer remarkOwnerId = remarkActivity.getRemarkOwnerId();
+            User user = UserHolder.getUser();
+            if(!remarkOwnerId.equals(user.getId()))
+                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+            //插入评论
+            boolean result = remarkActivityService.saveOrUpdate(remarkActivity);
+            if(!result)
+                return ResultUtil.fail("评论失败！");
+            else
+                return ResultUtil.fail("评论成功！");
         }
         else if(TypeEnum.isHelp(type)){
             RemarkHelp remarkHelp = remarkRequest.getRemarkHelp();
             if(ObjectUtils.anyNull(remarkHelp))
                 return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-            else{
-                remarkHelpService.saveOrUpdate(remarkHelp);
-                return ResultUtil.ok("评论成功！");
-            }
+            //判断当前用户权限
+            Integer remarkOwnerId = remarkHelp.getRemarkOwnerId();
+            User user = UserHolder.getUser();
+            if(!remarkOwnerId.equals(user.getId()))
+                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+            //插入评论
+            boolean result = remarkHelpService.saveOrUpdate(remarkHelp);
+            if(!result)
+                return ResultUtil.fail("评论失败！");
+            else
+                return ResultUtil.fail("评论成功！");
         }
         else{
             RemarkHole remarkHole = remarkRequest.getRemarkHole();
             if(ObjectUtils.anyNull(remarkHole))
                 return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-            else{
-                remarkHoleService.saveOrUpdate(remarkHole);
-                return ResultUtil.ok("评论成功！");
-            }
+            //判断当前用户权限
+            Integer remarkOwnerId = remarkHole.getRemarkOwnerId();
+            User user = UserHolder.getUser();
+            if(!remarkOwnerId.equals(user.getId()))
+                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+            //插入评论
+            boolean result = remarkHoleService.saveOrUpdate(remarkHole);
+            if(!result)
+                return ResultUtil.fail("评论失败！");
+            else
+                return ResultUtil.fail("评论成功！");
         }
     }
 
@@ -242,10 +264,15 @@ public class GeneralServiceImpl implements GeneralService {
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
         //根据type和id到相应评论表删除评论
+        User user = UserHolder.getUser();
         if(ObjectUtils.anyNull(type,id)||!TypeEnum.isTopic(type)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         else if(TypeEnum.isActivity(type)){
+            RemarkActivity remarkActivity = remarkActivityService.getById(id);
+            Integer remarkOwnerId = remarkActivity.getRemarkOwnerId();
+            if(!remarkOwnerId.equals(user.getId()))
+                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
             boolean result = remarkActivityService.removeById(id);
             if(!result)
                 return ResultUtil.fail("评论删除失败！");
@@ -253,6 +280,10 @@ public class GeneralServiceImpl implements GeneralService {
                 return ResultUtil.ok("评论删除成功！");
         }
         else if(TypeEnum.isHelp(type)){
+            RemarkHelp remarkHelp = remarkHelpService.getById(id);
+            Integer remarkOwnerId = remarkHelp.getRemarkOwnerId();
+            if(!remarkOwnerId.equals(user.getId()))
+                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
             boolean result = remarkHelpService.removeById(id);
             if(!result)
                 return ResultUtil.fail("评论删除失败！");
@@ -260,6 +291,10 @@ public class GeneralServiceImpl implements GeneralService {
                 return ResultUtil.ok("评论删除成功！");
         }
         else{
+            RemarkHole remarkHole = remarkHoleService.getById(id);
+            Integer remarkOwnerId = remarkHole.getRemarkOwnerId();
+            if(!remarkOwnerId.equals(user.getId()))
+                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
             boolean result = remarkHoleService.removeById(id);
             if(!result)
                 return ResultUtil.fail("评论删除失败！");

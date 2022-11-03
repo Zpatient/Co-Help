@@ -5,22 +5,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author zgy
- * @create 2022-10-26 15:53
+ * @create 2022-11-03 15:07
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DetailRequest implements Serializable {
+public class IdAndTypeList implements Serializable {
     /**
-     * 话题类型
+     * 存储话题id和type的Map
      */
-    private Integer type;
-    /**
-     * 话题ID
-     */
-    private Integer id;
+    List<IdAndType> idAndTypeList;
+
     private static final long serialVersionUID = 1L;
 }

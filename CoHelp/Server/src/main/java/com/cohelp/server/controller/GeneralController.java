@@ -1,9 +1,9 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.DetailRequest;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
+import com.cohelp.server.model.domain.SearchRequest;
 import com.cohelp.server.service.GeneralService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,8 +18,11 @@ public class GeneralController {
     @Resource
     GeneralService generalService;
     @RequestMapping("/getdetail")
-    public Result getDetail(@RequestBody DetailRequest detailRequest){
-        return generalService.getDetail(detailRequest);
+    public Result getDetail(@RequestBody IdAndType idAndType){
+        return generalService.getDetail(idAndType);
     }
-
+    @RequestMapping("/search")
+    public Result search(@RequestBody SearchRequest searchRequest){
+        return generalService.search(searchRequest);
+    }
 }

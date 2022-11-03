@@ -43,18 +43,18 @@ public class GeneralServiceImpl implements GeneralService {
     @Resource
     ImageService imageService;
     @Override
-    public Result getDetail(DetailRequest detailRequest) {
+    public Result getDetail(IdAndType idAndType) {
         //判断参数合法性
-        if(ObjectUtils.anyNull(detailRequest)){
+        if(ObjectUtils.anyNull(idAndType)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");
         }
-        Integer type = detailRequest.getType();
-        Integer id = detailRequest.getId();
+        Integer type = idAndType.getType();
+        Integer id = idAndType.getId();
         if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         //获取该话题对应的的图片URL列表
-        Result images = imageService.getImageList(detailRequest);
+        Result images = imageService.getImageList(idAndType);
         ArrayList<String>  imagesUrl = (ArrayList<String>)images.getData();
         String imageMessage = "";
         if(images.getCode().equals(ERROR_GET_DATA)){
@@ -129,8 +129,8 @@ public class GeneralServiceImpl implements GeneralService {
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         //查询数据
-        IdAndTypeMap idAndTypeMap = new IdAndTypeMap();
-        HashMap<Integer, Integer> idAndTypeList = new HashMap<>();
+        IdAndTypeList idAndTypes = new IdAndTypeList();
+        List<IdAndType> idAndTypeList = new ArrayList<>();
         String[] keywords = getKeywords(key).split(",");
         for(Integer type : types){
             if(TypeEnum.isActivity(type)){
@@ -147,7 +147,7 @@ public class GeneralServiceImpl implements GeneralService {
                 List<Activity> activityList = activityService.list(queryWrapper);
                 for(Activity activity:activityList){
                     Integer id = activity.getId();
-                    idAndTypeList.put(id,1);
+                    idAndTypeList.add(new IdAndType(id,type));
                 }
             }
             else if(TypeEnum.isHelp(type)){
@@ -164,7 +164,7 @@ public class GeneralServiceImpl implements GeneralService {
                 List<Help> helpList = helpService.list(queryWrapper);
                 for(Help help:helpList) {
                     Integer id = help.getId();
-                    idAndTypeList.put(id, 2);
+                    idAndTypeList.add(new IdAndType(id,type));
                 }
             }
             else{
@@ -181,12 +181,12 @@ public class GeneralServiceImpl implements GeneralService {
                 List<Hole> holeList = holeService.list(queryWrapper);
                 for(Hole hole:holeList) {
                     Integer id = hole.getId();
-                    idAndTypeList.put(id, 3);
+                    idAndTypeList.add(new IdAndType(id,type));
                 }
             }
         }
-        idAndTypeMap.setIdAndTypeMap(idAndTypeList);
-        return ResultUtil.ok(SUCCESS_GET_DATA, idAndTypeMap,"数据查询成功！");
+        idAndTypes.setIdAndTypeList(idAndTypeList);
+        return ResultUtil.ok(SUCCESS_GET_DATA, idAndTypes,"数据查询成功！");
     }
     /**
      * @param key 搜索关键词

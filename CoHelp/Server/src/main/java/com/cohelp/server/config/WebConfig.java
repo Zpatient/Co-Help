@@ -44,6 +44,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/user/sendconfirmcode",
                         "/user/changepassword",
                         "/general/getdetail",
+                        "/general/search",
                         // "/help/publish",
                         // "/activity/publish",
                         // "/hole/publish",

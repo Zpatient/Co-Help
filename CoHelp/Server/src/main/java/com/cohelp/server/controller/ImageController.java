@@ -1,6 +1,6 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.DetailRequest;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.ImageChangeRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.service.ImageService;
@@ -20,12 +20,12 @@ public class ImageController {
     ImageService imageService;
 
     @RequestMapping("/image/getimagelist")
-    public Result getImageList(@RequestBody DetailRequest detailRequest){
-        return imageService.getImageList(detailRequest);
+    public Result getImageList(@RequestBody IdAndType idAndType){
+        return imageService.getImageList(idAndType);
     }
     @RequestMapping("/image/getallimage")
-    public Result getAllList(@RequestBody DetailRequest detailRequest){
-        return imageService.getAllImage(detailRequest);
+    public Result getAllList(@RequestBody IdAndType idAndType){
+        return imageService.getAllImage(idAndType);
     }
     @RequestMapping("/image/getimagebyid")
     public Result setImageState(@RequestParam Integer imageId){

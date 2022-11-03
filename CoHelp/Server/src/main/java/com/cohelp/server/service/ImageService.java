@@ -1,11 +1,10 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.DetailRequest;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.ImageChangeRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Image;
 import com.baomidou.mybatisplus.extension.service.IService;
-import java.util.Map;
 
 /**
 * @author jianping5
@@ -23,17 +22,17 @@ public interface ImageService extends IService<Image> {
     /**
      * 根据类型和id获取符合条件的当前使用图片
      * @author: ZGY
-     * @param detailRequest 获取详情请求参数
+     * @param idAndType 获取详情请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result getImageList(DetailRequest detailRequest);
+    Result getImageList(IdAndType idAndType);
     /**
      * 根据类型和id获取符合条件的所有图片
      * @author: ZGY
-     * @param detailRequest 获取详情请求参数
+     * @param idAndType 获取详情请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result getAllImage(DetailRequest detailRequest);
+    Result getAllImage(IdAndType idAndType);
     /**
      * 根据传回的参数对符合条件的图片状态进行变更
      * @author: ZGY

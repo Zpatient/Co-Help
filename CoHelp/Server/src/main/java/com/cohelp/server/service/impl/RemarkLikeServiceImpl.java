@@ -109,7 +109,7 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
                 return ResultUtil.ok(true, "取消点赞成功");
             }
         } else if (TypeEnum.isHelp(type)) {
-            RemarkActivity remarkActivity = (RemarkActivity) getRemarkById(type, id);
+            RemarkHelp remarkHelp = (RemarkHelp) getRemarkById(type, id);
             // 获取当前用户对该主题的点赞记录
             if (loginUser == null) {
                 return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
@@ -117,23 +117,23 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             Integer loginUserId = loginUser.getId();
             QueryWrapper<RemarkLike> likeQueryWrapper = new QueryWrapper<RemarkLike>();
             likeQueryWrapper.eq("user_id", loginUserId);
-            likeQueryWrapper.eq("remark_id", remarkActivity.getId());
-            likeQueryWrapper.eq("remark_type", TypeEnum.ACTIVITY.ordinal());
+            likeQueryWrapper.eq("remark_id", remarkHelp.getId());
+            likeQueryWrapper.eq("remark_type", TypeEnum.HELP.ordinal());
             RemarkLike like = remarkLikeService.getOne(likeQueryWrapper);
             // 之前未点赞且无记录
             if (like == null) {
                 RemarkLike newLike = new RemarkLike();
                 newLike.setUserId(loginUserId);
                 newLike.setRemarkId(id);
-                newLike.setRemarkType(TypeEnum.ACTIVITY.ordinal());
+                newLike.setRemarkType(TypeEnum.HELP.ordinal());
                 newLike.setIsLiked(1);
                 boolean saveResult = remarkLikeService.save(newLike);
                 if (!saveResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
                 // 增加对应主题的点赞量到
-                remarkActivity.setRemarkLike(remarkActivity.getRemarkLike() + 1);
-                boolean updateResult = remarkActivityService.updateById(remarkActivity);
+                remarkHelp.setRemarkLike(remarkHelp.getRemarkLike() + 1);
+                boolean updateResult = remarkHelpService.updateById(remarkHelp);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
@@ -143,8 +143,8 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             // 更新条件（对应主题对应用户id）
             UpdateWrapper<RemarkLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
-            likeUpdateWrapper.eq("topic_id", remarkActivity.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.ACTIVITY.ordinal());
+            likeUpdateWrapper.eq("topic_id", remarkHelp.getId());
+            likeQueryWrapper.eq("topic_type", TypeEnum.HELP.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {
@@ -154,8 +154,8 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
                 // 增加对应主题的点赞量到
-                remarkActivity.setRemarkLike(remarkActivity.getRemarkLike() + 1);
-                boolean updateResult = remarkActivityService.updateById(remarkActivity);
+                remarkHelp.setRemarkLike(remarkHelp.getRemarkLike() + 1);
+                boolean updateResult = remarkHelpService.updateById(remarkHelp);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
@@ -169,15 +169,15 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
                     return ResultUtil.fail(ERROR_SYSTEM, "取消点赞失败");
                 }
                 // 减少对应主题的点赞量到
-                remarkActivity.setRemarkLike(remarkActivity.getRemarkLike() - 1);
-                boolean updateResult = remarkActivityService.updateById(remarkActivity);
+                remarkHelp.setRemarkLike(remarkHelp.getRemarkLike() - 1);
+                boolean updateResult = remarkHelpService.updateById(remarkHelp);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "取消点赞失败");
                 }
                 return ResultUtil.ok(true, "取消点赞成功");
             }
         } else {
-            RemarkActivity remarkActivity = (RemarkActivity) getRemarkById(type, id);
+            RemarkHole remarkHole = (RemarkHole) getRemarkById(type, id);
             // 获取当前用户对该主题的点赞记录
             if (loginUser == null) {
                 return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
@@ -185,23 +185,23 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             Integer loginUserId = loginUser.getId();
             QueryWrapper<RemarkLike> likeQueryWrapper = new QueryWrapper<RemarkLike>();
             likeQueryWrapper.eq("user_id", loginUserId);
-            likeQueryWrapper.eq("remark_id", remarkActivity.getId());
-            likeQueryWrapper.eq("remark_type", TypeEnum.ACTIVITY.ordinal());
+            likeQueryWrapper.eq("remark_id", remarkHole.getId());
+            likeQueryWrapper.eq("remark_type", TypeEnum.HOLE.ordinal());
             RemarkLike like = remarkLikeService.getOne(likeQueryWrapper);
             // 之前未点赞且无记录
             if (like == null) {
                 RemarkLike newLike = new RemarkLike();
                 newLike.setUserId(loginUserId);
                 newLike.setRemarkId(id);
-                newLike.setRemarkType(TypeEnum.ACTIVITY.ordinal());
+                newLike.setRemarkType(TypeEnum.HOLE.ordinal());
                 newLike.setIsLiked(1);
                 boolean saveResult = remarkLikeService.save(newLike);
                 if (!saveResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
                 // 增加对应主题的点赞量到
-                remarkActivity.setRemarkLike(remarkActivity.getRemarkLike() + 1);
-                boolean updateResult = remarkActivityService.updateById(remarkActivity);
+                remarkHole.setRemarkLike(remarkHole.getRemarkLike() + 1);
+                boolean updateResult = remarkHoleService.updateById(remarkHole);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
@@ -211,8 +211,8 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             // 更新条件（对应主题对应用户id）
             UpdateWrapper<RemarkLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
-            likeUpdateWrapper.eq("topic_id", remarkActivity.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.ACTIVITY.ordinal());
+            likeUpdateWrapper.eq("topic_id", remarkHole.getId());
+            likeQueryWrapper.eq("topic_type", TypeEnum.HOLE.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {
@@ -222,8 +222,8 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
                 // 增加对应主题的点赞量到
-                remarkActivity.setRemarkLike(remarkActivity.getRemarkLike() + 1);
-                boolean updateResult = remarkActivityService.updateById(remarkActivity);
+                remarkHole.setRemarkLike(remarkHole.getRemarkLike() + 1);
+                boolean updateResult = remarkHoleService.updateById(remarkHole);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
@@ -237,15 +237,16 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
                     return ResultUtil.fail(ERROR_SYSTEM, "取消点赞失败");
                 }
                 // 减少对应主题的点赞量到
-                remarkActivity.setRemarkLike(remarkActivity.getRemarkLike() - 1);
-                boolean updateResult = remarkActivityService.updateById(remarkActivity);
+                remarkHole.setRemarkLike(remarkHole.getRemarkLike() - 1);
+                boolean updateResult = remarkHoleService.updateById(remarkHole);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "取消点赞失败");
                 }
                 return ResultUtil.ok(true, "取消点赞成功");
             }
+        }
+        return ResultUtil.ok(false, "操作失败");
     }
-
     /**
      * 根据id和类型获取对应评论
      * @author: ZGY

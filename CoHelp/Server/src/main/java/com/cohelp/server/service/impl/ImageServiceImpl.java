@@ -115,7 +115,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
         //判断当前用户权限
         User user = UserHolder.getUser();
         if(userId != user.getId())
-            return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //对于操作失败的图片加入到failMap中返回给前端
         Map<Image, Integer> failMap = new HashMap<>();
         for(Image image : images ){

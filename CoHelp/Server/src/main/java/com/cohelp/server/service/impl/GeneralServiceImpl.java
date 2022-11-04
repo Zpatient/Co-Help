@@ -213,7 +213,7 @@ public class GeneralServiceImpl implements GeneralService {
             Integer remarkOwnerId = remarkActivity.getRemarkOwnerId();
             User user = UserHolder.getUser();
             if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
             //插入评论
             boolean result = remarkActivityService.saveOrUpdate(remarkActivity);
             if(!result)
@@ -229,7 +229,7 @@ public class GeneralServiceImpl implements GeneralService {
             Integer remarkOwnerId = remarkHelp.getRemarkOwnerId();
             User user = UserHolder.getUser();
             if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
             //插入评论
             boolean result = remarkHelpService.saveOrUpdate(remarkHelp);
             if(!result)
@@ -245,7 +245,7 @@ public class GeneralServiceImpl implements GeneralService {
             Integer remarkOwnerId = remarkHole.getRemarkOwnerId();
             User user = UserHolder.getUser();
             if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
             //插入评论
             boolean result = remarkHoleService.saveOrUpdate(remarkHole);
             if(!result)
@@ -253,6 +253,7 @@ public class GeneralServiceImpl implements GeneralService {
             else
                 return ResultUtil.fail("评论成功！");
         }
+
     }
 
     @Override
@@ -272,7 +273,7 @@ public class GeneralServiceImpl implements GeneralService {
             RemarkActivity remarkActivity = remarkActivityService.getById(id);
             Integer remarkOwnerId = remarkActivity.getRemarkOwnerId();
             if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
             boolean result = remarkActivityService.removeById(id);
             if(!result)
                 return ResultUtil.fail("评论删除失败！");
@@ -283,7 +284,7 @@ public class GeneralServiceImpl implements GeneralService {
             RemarkHelp remarkHelp = remarkHelpService.getById(id);
             Integer remarkOwnerId = remarkHelp.getRemarkOwnerId();
             if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
             boolean result = remarkHelpService.removeById(id);
             if(!result)
                 return ResultUtil.fail("评论删除失败！");
@@ -294,7 +295,7 @@ public class GeneralServiceImpl implements GeneralService {
             RemarkHole remarkHole = remarkHoleService.getById(id);
             Integer remarkOwnerId = remarkHole.getRemarkOwnerId();
             if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
             boolean result = remarkHoleService.removeById(id);
             if(!result)
                 return ResultUtil.fail("评论删除失败！");

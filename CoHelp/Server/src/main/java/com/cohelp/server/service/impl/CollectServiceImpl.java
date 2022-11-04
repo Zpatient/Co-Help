@@ -44,7 +44,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         //判断当前用户权限
         User user = UserHolder.getUser();
         if(!userId.equals(user.getId()))
-            return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //分页查询数据
         Page<Collect> collectPage = getBaseMapper().selectPage(new Page<>(pageNum, recordMaxNum),
                 new QueryWrapper<Collect>().eq("user_id",userId).select().orderByDesc("collect_time"));
@@ -73,7 +73,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         // //判断当前用户权限
         User user = UserHolder.getUser();
         if(!userId.equals(user.getId()))
-            return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //返回数据库操作结果
         boolean bool = saveOrUpdate(collect);
         if(bool)
@@ -94,7 +94,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         Integer userId = getById(id).getUserId();
         User user = UserHolder.getUser();
         if(!userId.equals(user.getId()))
-            return ResultUtil.fail(ERROR_GET_DATA,"用户不一致！");
+            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //返回数据库操作结果
         boolean bool = removeById(id);
         if(bool)

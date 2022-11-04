@@ -309,17 +309,17 @@ public class GeneralServiceImpl implements GeneralService {
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         else if(TypeEnum.isActivity(type)){
-            QueryWrapper<RemarkActivity> remarkQueryWrapper = new QueryWrapper<RemarkActivity>().eq("top_id", id);
+            QueryWrapper<RemarkActivity> remarkQueryWrapper = new QueryWrapper<RemarkActivity>().eq("remark_activity_id", id);
             List<RemarkActivity> remarkList = remarkActivityService.list(remarkQueryWrapper);
             return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkList,"评论查询成功");
         }
         else if(TypeEnum.isHelp(type)){
-            QueryWrapper<RemarkHelp> remarkQueryWrapper = new QueryWrapper<RemarkHelp>().eq("top_id", id);
+            QueryWrapper<RemarkHelp> remarkQueryWrapper = new QueryWrapper<RemarkHelp>().eq("remark_help_id", id);
             List<RemarkHelp> remarkList = remarkHelpService.list(remarkQueryWrapper);
             return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkList,"评论查询成功");
         }
         else{
-            QueryWrapper<RemarkHole> remarkQueryWrapper = new QueryWrapper<RemarkHole>().eq("top_id", id);
+            QueryWrapper<RemarkHole> remarkQueryWrapper = new QueryWrapper<RemarkHole>().eq("remark_hole_id", id);
             List<RemarkHole> remarkList = remarkHoleService.list(remarkQueryWrapper);
             return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkList,"评论查询成功");
         }

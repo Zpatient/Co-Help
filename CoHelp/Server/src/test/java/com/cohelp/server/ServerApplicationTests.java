@@ -1,36 +1,26 @@
 package com.cohelp.server;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.controller.UserController;
-import com.cohelp.server.model.domain.ImageChangeRequest;
 import com.cohelp.server.mapper.ActivityMapper;
-import com.cohelp.server.model.domain.ActivityListRequest;
 import com.cohelp.server.model.domain.Mail;
-import com.cohelp.server.model.domain.RegisterRequest;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Image;
-import com.cohelp.server.service.ActivityService;
-import com.cohelp.server.service.GeneralService;
 import com.cohelp.server.service.impl.GeneralServiceImpl;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
-import javafx.util.converter.TimeStringConverter;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

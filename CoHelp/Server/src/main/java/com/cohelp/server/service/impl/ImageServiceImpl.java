@@ -4,13 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.model.domain.IdAndType;
-import com.cohelp.server.model.domain.ImageChangeRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.ImageService;
 import com.cohelp.server.mapper.ImageMapper;
 import com.cohelp.server.utils.ResultUtil;
-import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 

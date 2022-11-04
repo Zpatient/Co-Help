@@ -171,5 +171,15 @@ create table cohelp.topic_like
     topic_id   int               not null comment '话题id'
 )
     comment '点赞记录表';
+create table cohelp.remark_like
+(
+    id         int auto_increment comment '主键'
+        primary key,
+    user_id    int               not null comment '用户id',
+    remark_type int               not null comment '评论类型',
+    is_liked   tinyint default 0 not null comment '是否点赞',
+    remark_id   int               not null comment '评论id'
+)
+    comment '评论点赞记录表';
 
 

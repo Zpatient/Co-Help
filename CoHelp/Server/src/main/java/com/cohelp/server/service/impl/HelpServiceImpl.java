@@ -2,13 +2,10 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.model.domain.HelpResponse;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Image;
 import com.cohelp.server.model.entity.User;
-import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.service.HelpService;
 import com.cohelp.server.mapper.HelpMapper;
@@ -21,20 +18,13 @@ import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
-import static com.cohelp.server.constant.NumberConstant.ONE_DAY_MILLI;
 import static com.cohelp.server.constant.StatusCode.*;
 import static com.cohelp.server.constant.TypeEnum.*;
 

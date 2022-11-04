@@ -1,6 +1,5 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.ActivityResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.baomidou.mybatisplus.extension.service.IService;

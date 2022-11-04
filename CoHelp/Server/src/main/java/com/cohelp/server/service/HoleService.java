@@ -1,13 +1,11 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.HoleResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Hole;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.vo.HoleVO;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

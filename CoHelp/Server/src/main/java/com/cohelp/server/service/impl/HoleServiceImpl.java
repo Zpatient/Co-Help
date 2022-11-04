@@ -2,10 +2,8 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.model.domain.HoleResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
-import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.HoleService;
 import com.cohelp.server.mapper.HoleMapper;

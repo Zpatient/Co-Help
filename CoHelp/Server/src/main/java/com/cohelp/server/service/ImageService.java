@@ -6,6 +6,8 @@ import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Image;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.ArrayList;
+
 /**
 * @author jianping5
 * @description 针对表【image(图片表)】的数据库操作Service
@@ -25,7 +27,8 @@ public interface ImageService extends IService<Image> {
      * @param idAndType 获取详情请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result getImageList(IdAndType idAndType);
+    ArrayList<String> getImageList(IdAndType idAndType);
+
     /**
      * 根据类型和id获取符合条件的所有图片
      * @author: ZGY
@@ -33,12 +36,5 @@ public interface ImageService extends IService<Image> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result getAllImage(IdAndType idAndType);
-    /**
-     * 根据传回的参数对符合条件的图片状态进行变更
-     * @author: ZGY
-     * @param imageIntegerMap 更改图片状态请求参数
-     * @return com.cohelp.server.model.domain.Result
-     */
-    Result setImageState(ImageChangeRequest imageChangeRequest);
 
 }

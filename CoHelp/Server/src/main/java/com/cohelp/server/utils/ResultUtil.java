@@ -64,4 +64,5 @@ public class ResultUtil {
            return  fail(ERROR_GET_DATA,"数据获取失败！");
         }
     }
+
 }

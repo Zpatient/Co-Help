@@ -21,7 +21,6 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
@@ -59,20 +58,14 @@ public class GeneralServiceImpl implements GeneralService {
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         //获取该话题对应的的图片URL列表
-        Result images = imageService.getImageList(idAndType);
-        ArrayList<String>  imagesUrl = (ArrayList<String>)images.getData();
-        String imageMessage = "";
-        if(images.getCode().equals(ERROR_GET_DATA)){
-            imageMessage = "图片获取失败,";
-        }
-        else{
-            imageMessage = "图片获取成功,";
+        ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
+        if(ObjectUtils.anyNull(imagesUrl)){
+            imagesUrl = new ArrayList<>();
         }
         //判断请求哪种话题的详情并执行相应操作
         if(TypeEnum.isActivity(type)){
             Activity activity = activityService.getBaseMapper().selectById(id);
             if(ObjectUtils.anyNull(activity)){
-                String message = imageMessage+"基本数据获取成功！";
                 ActivityServiceImpl activityServiceImpl = (ActivityServiceImpl)activityService;
                 ActivityVO activityVO = activityServiceImpl.traverseActivity(activity);
                 String publisherAvatarUrl = imageService.getById(activityVO.getAvatar()).getImageUrl();
@@ -80,7 +73,8 @@ public class GeneralServiceImpl implements GeneralService {
                 detailResponse.setActivityVO(activityVO);
                 detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
                 detailResponse.setImagesUrl(imagesUrl);
-                return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,message);
+
+                return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,"数据获取成功！");
             }
             else{
                 return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败");
@@ -89,7 +83,6 @@ public class GeneralServiceImpl implements GeneralService {
         else if(TypeEnum.isHelp(type)){
             Help help = helpService.getById(id);
             if(ObjectUtils.anyNull(help)){
-                String message = imageMessage+"基本数据获取成功！";
                 HelpServiceImpl helpServiceImpl = (HelpServiceImpl)helpService;
                 HelpVO helpVO = helpServiceImpl.traverseHelp(help);
                 String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();
@@ -97,16 +90,15 @@ public class GeneralServiceImpl implements GeneralService {
                 detailResponse.setHelpVO(helpVO);
                 detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
                 detailResponse.setImagesUrl(imagesUrl);
-                return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,message);
+                return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,"数据获取成功！");
             }
             else{
-                return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败");
+                return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败！");
             }
         }
         else {
             Hole hole = holeService.getById(id);
             if(ObjectUtils.anyNull(hole)) {
-                String message = imageMessage + "基本数据获取成功！";
                 HoleServiceImpl holeServiceImpl = (HoleServiceImpl)holeService;
                 HoleVO holeVO = holeServiceImpl.traverseHole(hole);
                 String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();
@@ -114,7 +106,7 @@ public class GeneralServiceImpl implements GeneralService {
                 detailResponse.setHoleVO(holeVO);
                 detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
                 detailResponse.setImagesUrl(imagesUrl);
-                return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse, message);
+                return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse, "数据获取成功");
             }
             else{
                 return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败");

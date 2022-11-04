@@ -2,7 +2,6 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.model.domain.ActivityResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Image;
@@ -26,7 +25,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.cohelp.server.constant.NumberConstant.ONE_DAY_MILLI;
 import static com.cohelp.server.constant.StatusCode.*;

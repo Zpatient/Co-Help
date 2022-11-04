@@ -1,15 +1,10 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.model.domain.ActivityListRequest;
-import com.cohelp.server.model.domain.ActivityResponse;
-import com.cohelp.server.model.domain.HelpResponse;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.service.ActivityService;
-import com.cohelp.server.service.HelpService;
 import com.cohelp.server.utils.ResultUtil;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

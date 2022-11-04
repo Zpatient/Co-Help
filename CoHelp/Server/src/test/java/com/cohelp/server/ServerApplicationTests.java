@@ -141,13 +141,5 @@ class ServerApplicationTests {
     @Test
     public void testTypeEnum(){
         System.out.println(TypeEnum.isTopic(5));
-        Map<Image, Integer> test = new HashMap<Image, Integer>();
-        Image image = new Image();
-        image.setImageType(1);
-        image.setImageSrcId(1);
-        image.setImageUrl("https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb.png");
-        test.put(image, 0);
-        ImageChangeRequest imageChangeRequest = new ImageChangeRequest(1,test);
-        String s = gson.toJson(imageChangeRequest);
     }
 }

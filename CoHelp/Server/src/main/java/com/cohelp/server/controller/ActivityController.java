@@ -1,6 +1,7 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.model.domain.ActivityListRequest;
+import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.service.ActivityService;
@@ -39,7 +40,7 @@ public class ActivityController {
     }
 
     @PostMapping("/list")
-    public Result<List<ActivityVO>> listByCondition(@RequestBody ActivityListRequest activityListRequest) {
+    public Result<List<DetailResponse>> listByCondition(@RequestBody ActivityListRequest activityListRequest) {
         if (activityListRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }

@@ -1,5 +1,6 @@
 package com.cohelp.server.service;
 
+import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Hole;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -36,5 +37,5 @@ public interface HoleService extends IService<Hole> {
      * @param conditionType
      * @return
      */
-    Result<List<HoleVO>> listByCondition(Integer conditionType);
+    Result<List<DetailResponse>> listByCondition(Integer conditionType);
 }

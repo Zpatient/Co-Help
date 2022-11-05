@@ -2,6 +2,9 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.constant.TypeEnum;
+import com.cohelp.server.model.domain.DetailResponse;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Image;
@@ -15,6 +18,7 @@ import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -157,13 +161,13 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
 
     @Override
-    public Result<List<ActivityVO>> listByCondition(Integer conditionType, Integer dayNum) {
+    public Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum) {
 
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建活动视图体数组
-        List<ActivityVO> activityVOList = new ArrayList<>();
+        List<DetailResponse> detailResponseList = new ArrayList<>();
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
@@ -172,7 +176,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                 return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
             }
             activityList.forEach(activity ->
-                activityVOList.add(traverseActivity(activity))
+                detailResponseList.add(getDetailResponse(activity))
             );
         }
 
@@ -187,7 +191,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                     return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
                 }
                 activityList.forEach(activity ->
-                    activityVOList.add(traverseActivity(activity))
+                        detailResponseList.add(getDetailResponse(activity))
                 );
             }
             // 按活动开始时间排序（前端传入一个天数，查询活动开始时间在该天数之内的活动）
@@ -202,19 +206,44 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                     long timeStamp = activity.getActivityTime().toInstant(ZoneOffset.of("+8")).toEpochMilli();
                     long localTimeStamp = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
                     if (timeStamp >= localTimeStamp && timeStamp - localTimeStamp <= dayNum*ONE_DAY_MILLI){
-                        activityVOList.add(traverseActivity(activity));
+                        detailResponseList.add(getDetailResponse(activity));
                     }
                 });
             }
         }
-        return ResultUtil.ok(activityVOList);
+        return ResultUtil.ok(detailResponseList);
     }
 
     /**
-     * 遍历活动，将活动信息和对应发布者部分信息注入到活动视图体中
+     * 获取DetailResponse
      * @param activity
      * @return
      */
+    public DetailResponse getDetailResponse(Activity activity) {
+        DetailResponse detailResponse = new DetailResponse();
+        // 注入 ActivityVO
+        ActivityVO activityVO = traverseActivity(activity);
+        detailResponse.setActivityVO(activityVO);
+
+        // 注入发布者图片
+        String publisherAvatarUrl = imageService.getById(activityVO.getAvatar()).getImageUrl();
+        detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+
+        // 注入话题图片URL
+        IdAndType idAndType = new IdAndType();
+        idAndType.setType(ACTIVITY.ordinal());
+        idAndType.setId(activity.getId());
+
+        //获取该话题对应的的图片URL列表
+        ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
+        if(ObjectUtils.anyNull(imagesUrl)){
+            imagesUrl = new ArrayList<>();
+        }
+        detailResponse.setImagesUrl(imagesUrl);
+
+        return detailResponse;
+    }
+
     public ActivityVO traverseActivity(Activity activity) {
         ActivityVO activityVO = new ActivityVO();
         BeanUtils.copyProperties(activity, activityVO);

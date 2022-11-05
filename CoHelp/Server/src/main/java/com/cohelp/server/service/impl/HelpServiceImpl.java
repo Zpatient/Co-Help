@@ -2,10 +2,14 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.model.domain.DetailResponse;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
+import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Image;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.service.HelpService;
 import com.cohelp.server.mapper.HelpMapper;
@@ -16,6 +20,7 @@ import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -150,12 +155,12 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
     }
 
     @Override
-    public Result<List<HelpVO>> listByCondition(Integer conditionType) {
+    public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建互助视图体数组
-        List<HelpVO> helpVOList = new ArrayList<>();
+        List<DetailResponse> detailResponseList = new ArrayList<>();
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
@@ -164,7 +169,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
             helpList.forEach(help ->
-                    helpVOList.add(traverseHelp(help))
+                    detailResponseList.add(getDetailResponse(help))
             );
         }
 
@@ -178,7 +183,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
             helpList.forEach(help ->
-                    helpVOList.add(traverseHelp(help))
+                    detailResponseList.add(getDetailResponse(help))
             );
         }
 
@@ -191,7 +196,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
                 return ResultUtil.fail(ERROR_PARAMS, "暂无有偿互助");
             }
             helpList.forEach(help ->
-                    helpVOList.add(traverseHelp(help))
+                    detailResponseList.add(getDetailResponse(help))
             );
         }
 
@@ -204,19 +209,19 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
                 return ResultUtil.fail(ERROR_PARAMS, "暂无无偿互助");
             }
             helpList.forEach(help ->
-                    helpVOList.add(traverseHelp(help))
+                    detailResponseList.add(getDetailResponse(help))
             );
         }
-        return ResultUtil.ok(helpVOList);
+        return ResultUtil.ok(detailResponseList);
     }
 
     @Override
-    public Result<List<HelpVO>> listByTag(String tag) {
+    public Result<List<DetailResponse>> listByTag(String tag) {
         if (tag == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建互助视图体数组
-        List<HelpVO> helpVOList = new ArrayList<>();
+        List<DetailResponse> detailResponseList = new ArrayList<>();
 
         List<Help> helpList = this.list();
         if (helpList == null) {
@@ -225,10 +230,38 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         helpList.forEach(help -> {
             String helpTag = help.getHelpLabel();
             if (helpTag != null && helpTag.contains(tag)) {
-                helpVOList.add(traverseHelp(help));
+                detailResponseList.add(getDetailResponse(help));
             }
         });
-        return ResultUtil.ok(helpVOList);
+        return ResultUtil.ok(detailResponseList);
+    }
+
+    /**
+     * 获取 DetailResponse
+     * @param help
+     * @return
+     */
+    public DetailResponse getDetailResponse(Help help) {
+        DetailResponse detailResponse = new DetailResponse();
+        // 注入 ActivityVO
+        HelpVO helpVO = traverseHelp(help);
+        detailResponse.setHelpVO(helpVO);
+
+        // 注入发布者图片
+        String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();
+        detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+
+        //获取该话题对应的的图片URL列表
+        IdAndType idAndType = new IdAndType();
+        idAndType.setType(HELP.ordinal());
+        idAndType.setId(help.getId());
+        ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
+        if(ObjectUtils.anyNull(imagesUrl)){
+            imagesUrl = new ArrayList<>();
+        }
+        detailResponse.setImagesUrl(imagesUrl);
+
+        return detailResponse;
     }
 
 

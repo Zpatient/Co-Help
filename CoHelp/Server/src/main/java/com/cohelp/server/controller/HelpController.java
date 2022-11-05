@@ -43,7 +43,7 @@ public class HelpController {
     }
 
     @PostMapping("/list")
-    public Result<List<HelpVO>> listByCondition(@RequestBody HelpListRequest helpListRequest) {
+    public Result<List<DetailResponse>> listByCondition(@RequestBody HelpListRequest helpListRequest) {
         if (helpListRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
@@ -52,7 +52,7 @@ public class HelpController {
     }
 
     @PostMapping("/list/tag")
-    public Result<List<HelpVO>> listByTag(@RequestBody HelpTagRequest helpTagRequest) {
+    public Result<List<DetailResponse>> listByTag(@RequestBody HelpTagRequest helpTagRequest) {
         if (helpTagRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }

@@ -44,7 +44,7 @@ public class HoleController {
     }
 
     @PostMapping("/list")
-    public Result<List<HoleVO>> listByCondition(@RequestBody HoleListRequest holeListRequest) {
+    public Result<List<DetailResponse>> listByCondition(@RequestBody HoleListRequest holeListRequest) {
         if (holeListRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }

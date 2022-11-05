@@ -3,6 +3,7 @@ package com.cohelp.server;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.controller.UserController;
 import com.cohelp.server.mapper.ActivityMapper;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
@@ -11,6 +12,7 @@ import com.cohelp.server.service.impl.GeneralServiceImpl;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -55,8 +57,13 @@ class ServerApplicationTests {
         // Matcher m = p.matcher(str);
         // System.out.println(m.matches());
 
-        boolean userAccountValid = RegexUtils.isUserAccountValid("123ekljl");
-        System.out.println(userAccountValid);
+        // boolean userAccountValid = RegexUtils.isUserAccountValid("123ekljl");
+        // System.out.println(userAccountValid);
+
+        IdAndType idAndType = new IdAndType();
+        idAndType.setType(1);
+        idAndType.setId(18);
+        System.out.println(ObjectUtils.anyNull(idAndType));
     }
 
     @Test

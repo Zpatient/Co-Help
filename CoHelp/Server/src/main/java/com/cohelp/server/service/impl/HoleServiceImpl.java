@@ -2,8 +2,11 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.model.domain.DetailResponse;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.HoleService;
 import com.cohelp.server.mapper.HoleMapper;
@@ -13,6 +16,7 @@ import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
+import static com.cohelp.server.constant.TypeEnum.HELP;
 import static com.cohelp.server.constant.TypeEnum.HOLE;
 
 /**
@@ -147,12 +152,12 @@ public class HoleServiceImpl
     }
 
     @Override
-    public Result<List<HoleVO>> listByCondition(Integer conditionType) {
+    public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建活动视图体数组
-        List<HoleVO> holeVOList = new ArrayList<>();
+        List<DetailResponse> detailResponseList = new ArrayList<>();
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
@@ -161,7 +166,7 @@ public class HoleServiceImpl
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
             holeList.forEach(hole ->
-                    holeVOList.add(traverseHole(hole))
+                    detailResponseList.add(getDetailResponse(hole))
             );
         }
 
@@ -175,10 +180,39 @@ public class HoleServiceImpl
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
             holeList.forEach(hole ->
-                    holeVOList.add(traverseHole(hole))
+                    detailResponseList.add(getDetailResponse(hole))
             );
         }
-        return ResultUtil.ok(holeVOList);
+        return ResultUtil.ok(detailResponseList);
+    }
+
+
+    /**
+     * 获取 DetailResponse
+     * @param hole
+     * @return
+     */
+    public DetailResponse getDetailResponse(Hole hole) {
+        DetailResponse detailResponse = new DetailResponse();
+        // 注入 ActivityVO
+        HoleVO holeVO = traverseHole(hole);
+        detailResponse.setHoleVO(holeVO);
+
+        // 注入发布者图片
+        String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();
+        detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+
+        //获取该话题对应的的图片URL列表
+        IdAndType idAndType = new IdAndType();
+        idAndType.setType(HOLE.ordinal());
+        idAndType.setId(hole.getId());
+        ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
+        if(ObjectUtils.anyNull(imagesUrl)){
+            imagesUrl = new ArrayList<>();
+        }
+        detailResponse.setImagesUrl(imagesUrl);
+
+        return detailResponse;
     }
 
     /**

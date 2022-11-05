@@ -11,6 +11,7 @@ import com.cohelp.server.mapper.ImageMapper;
 import com.cohelp.server.utils.ResultUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 
@@ -43,7 +44,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
     @Override
     public ArrayList<String> getImageList(IdAndType idAndType) {
         //判断参数合法性
-        if(ObjectUtils.anyNull(idAndType)){
+        if(idAndType == null){
             return null;
         }
         Integer type = idAndType.getType();
@@ -58,7 +59,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
                 .eq("image_state",0);
         List<Image> images = getBaseMapper().selectList(imageQueryWrapper);
         ArrayList<String> imagesUrl = new ArrayList<>();
-        if(ObjectUtils.anyNull(images)){
+        if(images != null && !CollectionUtils.isEmpty(images)){
             for (Image image : images){
                 imagesUrl.add(image.getImageUrl());
             }

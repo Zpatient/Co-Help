@@ -1,5 +1,6 @@
 package com.cohelp.server.service;
 
+import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -37,5 +38,5 @@ public interface ActivityService extends IService<Activity> {
      * @param dayNum
      * @return
      */
-    Result<List<ActivityVO>> listByCondition(Integer conditionType, Integer dayNum);
+    Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum);
 }

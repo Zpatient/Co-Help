@@ -20,8 +20,8 @@ public class CollectController {
     @Autowired
     CollectService collectService;
     @RequestMapping("/getcollectlist")
-    public Result getCollectList(@RequestBody HistoryAndCollectRequest collectRequest){
-        return collectService.getCollectList(collectRequest);
+    public Result listCollect(@RequestBody HistoryAndCollectRequest collectRequest){
+        return collectService.listCollect(collectRequest);
     }
     @RequestMapping("/insertcollectrecord")
     public Result insertCollectRecord(@RequestBody Collect collect){

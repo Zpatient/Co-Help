@@ -17,7 +17,6 @@ import org.wltea.analyzer.core.IKSegmenter;
 import org.wltea.analyzer.core.Lexeme;
 
 import javax.annotation.Resource;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -297,7 +296,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public Result getRemarkList(IdAndType idAndType) {
+    public Result listRemark(IdAndType idAndType) {
         //判断参数合法性
         if(ObjectUtils.anyNull(idAndType)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");

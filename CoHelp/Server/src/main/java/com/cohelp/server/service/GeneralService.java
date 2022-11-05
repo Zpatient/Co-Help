@@ -45,6 +45,6 @@ public interface GeneralService{
      * @param remarkRequest
      * @return com.cohelp.server.model.domain.Result
      */
-    Result getRemarkList(IdAndType idAndType);
+    Result listRemark(IdAndType idAndType);
 
 }

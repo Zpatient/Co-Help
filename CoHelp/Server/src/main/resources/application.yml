@@ -10,8 +10,8 @@ spring:
   # MailConfig
   mail:
     host: smtp.qq.com
-    username: 3132701082@qq.com
-    password: dcxswjojxzgideac
+    username: 2280867329@qq.com
+    password: hfntazmljtjdeccb
     port: 587
 
   # ImageConfig

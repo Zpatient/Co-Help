@@ -30,8 +30,6 @@ import java.util.List;
 @Import(org.springframework.mail.javamail.JavaMailSenderImpl.class)
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${prop.upload-folder}")
-    private String UPLOAD_FOLDER;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -61,13 +59,5 @@ public class WebConfig implements WebMvcConfigurer {
                 );
     }
 
-    /**
-     * 前端通过 /image/图片名 即可访问服务端的文件
-     * @param registry
-     */
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**").addResourceLocations("file:" + UPLOAD_FOLDER);
-    }
 
 }

@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -53,6 +54,12 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
     @Resource
     private HelpMapper helpMapper;
 
+    @Resource
+    private FileUtils fileUtils;
+
+    @Value("${spring.tengxun.url}")
+    private String path;
+
     @Override
     public Result<Boolean> publishHelp(String helpJson, MultipartFile[] files) {
         if (StringUtils.isAnyBlank(helpJson)) {
@@ -78,11 +85,11 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         ArrayList<String> fileNameList = new ArrayList<>();
         if (files != null) {
             for (MultipartFile file : files) {
-                String fileName = FileUtils.fileUpload(file);
+                String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
                     return ResultUtil.fail("图片上传异常");
                 }
-                String url = "http://localhost:8080/image/" + fileName;
+                String url = path + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
                 image.setImageType(HELP.ordinal());
@@ -130,11 +137,11 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         ArrayList<String> fileNameList = new ArrayList<>();
         if (files != null) {
             for (MultipartFile file : files) {
-                String fileName = FileUtils.fileUpload(file);
+                String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
                     return ResultUtil.fail("图片上传异常");
                 }
-                String url = "http://localhost:8080/image/" + fileName;
+                String url = path + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
                 image.setImageType(HELP.ordinal());

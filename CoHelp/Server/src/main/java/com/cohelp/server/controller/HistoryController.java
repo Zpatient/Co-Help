@@ -20,8 +20,8 @@ public class HistoryController {
     @Autowired
     HistoryService historyService;
     @RequestMapping("/gethistorylist")
-    public Result getCollectList(@RequestBody HistoryAndCollectRequest historyRequest){
-        return historyService.getHistoryList(historyRequest);
+    public Result listCollect(@RequestBody HistoryAndCollectRequest historyRequest){
+        return historyService.listHistory(historyRequest);
     }
     @RequestMapping("/inserthistoryrecord")
     public Result insertCollectRecord(@RequestBody History history){

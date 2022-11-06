@@ -1,26 +1,33 @@
 package com.cohelp.server;
 
+import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.controller.UserController;
-import com.cohelp.server.model.domain.LoginRequest;
+import com.cohelp.server.mapper.ActivityMapper;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
-import com.cohelp.server.model.domain.RegisterRequest;
+import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
+import com.cohelp.server.model.entity.Image;
+import com.cohelp.server.service.impl.GeneralServiceImpl;
 import com.cohelp.server.utils.MailUtils;
 import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.cohelp.server.constant.PatternConstant.PHONE_NUMBER_PATTERN;
-import static com.cohelp.server.service.impl.UserServiceImpl.getAnimalSign;
 
 @SpringBootTest
 class ServerApplicationTests {
@@ -31,6 +38,11 @@ class ServerApplicationTests {
 
     @Resource
     private UserController userController;
+
+    @Resource
+    private ActivityMapper activityMapper;
+    @Resource
+    private GeneralServiceImpl generalServiceImpl;
 
     @Test
     void contextLoads() {
@@ -45,8 +57,13 @@ class ServerApplicationTests {
         // Matcher m = p.matcher(str);
         // System.out.println(m.matches());
 
-        boolean userAccountValid = RegexUtils.isUserAccountValid("123ekljl");
-        System.out.println(userAccountValid);
+        // boolean userAccountValid = RegexUtils.isUserAccountValid("123ekljl");
+        // System.out.println(userAccountValid);
+
+        IdAndType idAndType = new IdAndType();
+        idAndType.setType(1);
+        idAndType.setId(18);
+        System.out.println(ObjectUtils.anyNull(idAndType));
     }
 
     @Test
@@ -98,10 +115,30 @@ class ServerApplicationTests {
 
     @Test
     void test06() {
-        Help help = new Help();
-        help.setHelpTitle("互助");
-        System.out.println(help);
+        List<Activity> activityList = activityMapper.listByHot();
+        activityList.forEach(activity -> {
+            return;
+        });
+        System.out.println(1);
+
+        ArrayList<Activity> activities = new ArrayList<>();
+        activities.forEach(
+                activity -> {
+                    System.out.println(activity.getActivityTime());
+                    System.out.println(2);
+                }
+        );
+        System.out.println(3);
     }
+
+    @Test
+    void test07() {
+        System.out.println(Help.class.getName());
+        long l = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
+        System.out.println(l);
+
+    }
+
 
     @Test
     void sendmailtest(){
@@ -109,7 +146,7 @@ class ServerApplicationTests {
     }
 
     @Test
-    public void test(){
-
+    public void testTypeEnum(){
+        System.out.println(TypeEnum.isTopic(5));
     }
 }

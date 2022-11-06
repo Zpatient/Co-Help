@@ -24,4 +24,10 @@
         activity_comment,activity_label,activity_collect,
         activity_state,activity_create_time
     </sql>
+
+    <select id="listByHot" resultType="com.cohelp.server.model.entity.Activity">
+        select <include refid="Base_Column_List"></include>
+        from activity
+        order by (4*activity_like+3*activity_comment+3*activity_collect) desc
+    </select>
 </mapper>

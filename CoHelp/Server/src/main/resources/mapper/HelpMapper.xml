@@ -24,4 +24,10 @@
         help_collect,help_comment,help_label,
         help_state,help_create_time
     </sql>
+
+    <select id="listByHot" resultType="com.cohelp.server.model.entity.Help">
+        select <include refid="Base_Column_List"></include>
+        from help
+        order by (4*help_like+3*help_comment+3*help_collect) desc
+    </select>
 </mapper>

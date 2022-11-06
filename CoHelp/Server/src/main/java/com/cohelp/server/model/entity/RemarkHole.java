@@ -6,7 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 树洞评论表
@@ -20,47 +23,40 @@ public class RemarkHole implements Serializable {
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
-
     /**
      * 评论内容
      */
     private String remarkContent;
-
     /**
      * 评论树洞id
      */
     private Integer remarkHoleId;
-
-    /**
-     * 评论点赞量
-     */
-    private Integer remarkLike;
-
     /**
      * 评论对象id
      */
     private Integer remarkTargetId;
-
+    /**
+     * 评论点赞量
+     */
+    private Integer remarkLike;
     /**
      * 顶层id（评论链的根id）
      */
     private Integer topId;
-
     /**
      * 评论对象是否为树洞（0：否 1：是）
      */
     private Integer targetIsHole;
-
     /**
      * 评论拥有者id
      */
     private Integer remarkOwnerId;
-
     /**
      * 评论发布时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date remarkTime;
-
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 

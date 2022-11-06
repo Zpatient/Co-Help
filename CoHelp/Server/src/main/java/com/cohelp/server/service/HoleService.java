@@ -1,12 +1,13 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.HoleResponse;
+import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Hole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.vo.HoleVO;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author jianping5
@@ -31,4 +32,10 @@ public interface HoleService extends IService<Hole> {
      */
     Result updateHole(String holeJson, MultipartFile[] files);
 
+    /**
+     * 根据条件筛选树洞
+     * @param conditionType
+     * @return
+     */
+    Result<List<DetailResponse>> listByCondition(Integer conditionType);
 }

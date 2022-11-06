@@ -43,6 +43,9 @@ public class WebConfig implements WebMvcConfigurer {
                         "/user/getuseremail",
                         "/user/sendconfirmcode",
                         "/user/changepassword",
+                        "/general/getdetail",
+                        "/general/search",
+                        "/general/getremarklist",
                         // "/help/publish",
                         // "/activity/publish",
                         // "/hole/publish",
@@ -51,7 +54,10 @@ public class WebConfig implements WebMvcConfigurer {
                         // "/hole/update",
                         // "/user/deletepub",
                         // "/user/searchpub",
-                        "/image/**"
+                        "/image/**",
+
+                        //暂时排除拦截，开发完成后移除
+                        "/inform/submitinform"
                 );
     }
 

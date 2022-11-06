@@ -1,11 +1,12 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.HelpResponse;
-import com.cohelp.server.model.domain.HoleResponse;
-import com.cohelp.server.model.domain.Result;
+import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.Hole;
+import com.cohelp.server.model.vo.HelpVO;
+import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.HelpService;
 import com.cohelp.server.service.HoleService;
+import com.cohelp.server.utils.ResultUtil;
 import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.awt.peer.ChoicePeer;
+import java.util.List;
+
+import static com.cohelp.server.constant.StatusCode.ERROR_PARAMS;
 
 /**
  * 树洞发布控制器
@@ -37,6 +41,15 @@ public class HoleController {
     public Result updateHole(@RequestParam(name="hole") String holeJson,
                                            @RequestParam(name="file", required = false) MultipartFile[] files) {
         return holeService.updateHole(holeJson, files);
+    }
+
+    @PostMapping("/list")
+    public Result<List<DetailResponse>> listByCondition(@RequestBody HoleListRequest holeListRequest) {
+        if (holeListRequest == null) {
+            return ResultUtil.fail(ERROR_PARAMS);
+        }
+        Integer conditionType = holeListRequest.getConditionType();
+        return holeService.listByCondition(conditionType);
     }
 
 }

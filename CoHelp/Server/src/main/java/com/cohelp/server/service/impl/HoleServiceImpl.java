@@ -2,16 +2,21 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.model.domain.HoleResponse;
+import com.cohelp.server.model.domain.DetailResponse;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.vo.HelpVO;
+import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.HoleService;
 import com.cohelp.server.mapper.HoleMapper;
 import com.cohelp.server.service.ImageService;
+import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -19,22 +24,30 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeConstant.HOLE_TYPE;
+import static com.cohelp.server.constant.TypeEnum.HELP;
+import static com.cohelp.server.constant.TypeEnum.HOLE;
 
 /**
 * @author jianping5
 * @description 针对表【hole(树洞表)】的数据库操作Service实现
 * @createDate 2022-10-21 21:26:01
 */
-@Service
+@Service("holeService")
 public class HoleServiceImpl
         extends ServiceImpl<HoleMapper, Hole>
     implements HoleService{
 
     @Resource
     private ImageService imageService;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private HoleMapper holeMapper;
 
     @Override
     public Result<Boolean> publishHole(String holeJson, MultipartFile[] files) {
@@ -70,7 +83,7 @@ public class HoleServiceImpl
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(HOLE_TYPE);
+                image.setImageType(HOLE.ordinal());
                 image.setImageSrcId(hole.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);
@@ -106,7 +119,7 @@ public class HoleServiceImpl
         }
         // 删除之前该树洞相关的图片
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("image_type", HOLE_TYPE).eq("image_src_id", hole.getId());
+        queryWrapper.eq("image_type", HOLE.ordinal()).eq("image_src_id", hole.getId());
         boolean remove = imageService.remove(queryWrapper);
         if (!remove) {
             return ResultUtil.fail("删除失败");
@@ -122,7 +135,7 @@ public class HoleServiceImpl
                 String url = "http://localhost:8080/image/" + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
-                image.setImageType(HOLE_TYPE);
+                image.setImageType(HOLE.ordinal());
                 image.setImageSrcId(hole.getId());
                 image.setImageUrl(url);
                 boolean save1 = imageService.save(image);
@@ -136,6 +149,84 @@ public class HoleServiceImpl
             return ResultUtil.fail("修改失败");
         }
         return ResultUtil.ok("修改成功");
+    }
+
+    @Override
+    public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
+        if (conditionType == null) {
+            return ResultUtil.fail(ERROR_PARAMS);
+        }
+        // 创建活动视图体数组
+        List<DetailResponse> detailResponseList = new ArrayList<>();
+
+        // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
+        if (conditionType == 0) {
+            List<Hole> holeList = holeMapper.listByHot();
+            if (holeList == null) {
+                return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
+            }
+            holeList.forEach(hole ->
+                    detailResponseList.add(getDetailResponse(hole))
+            );
+        }
+
+        // 按时间排序
+        if (conditionType == 1) {
+            //  按发布时间排序
+            QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
+            holeQueryWrapper.orderByDesc("hole_create_time");
+            List<Hole> holeList = holeMapper.selectList(holeQueryWrapper);
+            if (holeList == null) {
+                return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
+            }
+            holeList.forEach(hole ->
+                    detailResponseList.add(getDetailResponse(hole))
+            );
+        }
+        return ResultUtil.ok(detailResponseList);
+    }
+
+
+    /**
+     * 获取 DetailResponse
+     * @param hole
+     * @return
+     */
+    public DetailResponse getDetailResponse(Hole hole) {
+        DetailResponse detailResponse = new DetailResponse();
+        // 注入 ActivityVO
+        HoleVO holeVO = traverseHole(hole);
+        detailResponse.setHoleVO(holeVO);
+
+        // 注入发布者图片
+        String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();
+        detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+
+        //获取该话题对应的的图片URL列表
+        IdAndType idAndType = new IdAndType();
+        idAndType.setType(HOLE.ordinal());
+        idAndType.setId(hole.getId());
+        ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
+        if(ObjectUtils.anyNull(imagesUrl)){
+            imagesUrl = new ArrayList<>();
+        }
+        detailResponse.setImagesUrl(imagesUrl);
+
+        return detailResponse;
+    }
+
+    /**
+     * 遍历树洞，将树洞信息和对应发布者部分信息注入到树洞视图体中
+     * @param hole
+     * @return
+     */
+    public HoleVO traverseHole(Hole hole) {
+        HoleVO holeVO = new HoleVO();
+        BeanUtils.copyProperties(hole, holeVO);
+        User user = userService.getById(hole.getHoleOwnerId());
+        holeVO.setAvatar(user.getAvatar());
+        holeVO.setUserName(user.getUserName());
+        return holeVO;
     }
 
 }

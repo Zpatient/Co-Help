@@ -39,6 +39,11 @@ public class StatusCode {
     public static final String ERROR_PARAMS = "414";
 
     /**
+     * 系统错误
+     */
+    public static final String ERROR_SYSTEM = "500";
+
+    /**
      * 登录拦截器（请求被拦截-> 返回状态码 -> 跳转登录页面）
      * 清空本地cookie
      */

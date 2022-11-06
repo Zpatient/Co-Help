@@ -10,8 +10,8 @@ spring:
   # MailConfig
   mail:
     host: smtp.qq.com
-    username: 3132701082@qq.com
-    password: dcxswjojxzgideac
+    username: 2280867329@qq.com
+    password: hfntazmljtjdeccb
     port: 587
 
   # ImageConfig
@@ -19,5 +19,7 @@ spring:
     multipart:
       max-file-size: 50MB
       max-request-size: 50MB
+  main:
+    allow-circular-references: true
 prop:
   upload-folder: C:/Users/靑/Desktop/项目/Co-Help/CoHelp/Server/image/

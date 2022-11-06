@@ -1,7 +1,7 @@
 package com.cohelp.server.utils;
 
+import com.cohelp.server.model.domain.EmailSender;
 import com.cohelp.server.model.domain.Mail;
-import com.cohelp.server.model.entity.EmailSender;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -58,7 +58,7 @@ public class MailUtils {
            //设置邮件
            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
            //发件人
-           simpleMailMessage.setFrom(javaMailSender.getUsername());
+           simpleMailMessage.setFrom("Co-Help<"+javaMailSender.getUsername()+">");
            //收件人
            simpleMailMessage.setTo(sendTo.split(","));
            //主题

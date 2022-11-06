@@ -3,9 +3,9 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/cohelp?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
-    username: 'root'
-    password: '011205'
+    url: jdbc:mysql://sh-cynosdbmysql-grp-eovdqrbo.sql.tencentcdb.com:23292/cohelp?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+    username: 'cohelp'
+    password: 'cohelp123456..'
 
   # MailConfig
   mail:
@@ -23,3 +23,6 @@ spring:
     allow-circular-references: true
 prop:
   upload-folder: C:/Users/靑/Desktop/项目/Co-Help/CoHelp/Server/image/
+
+server:
+  port: 9090

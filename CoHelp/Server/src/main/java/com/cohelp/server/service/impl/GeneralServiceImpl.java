@@ -64,7 +64,7 @@ public class GeneralServiceImpl implements GeneralService {
         //判断请求哪种话题的详情并执行相应操作
         if(TypeEnum.isActivity(type)){
             Activity activity = activityService.getBaseMapper().selectById(id);
-            if(ObjectUtils.anyNull(activity)){
+            if(!ObjectUtils.anyNull(activity)){
                 ActivityServiceImpl activityServiceImpl = (ActivityServiceImpl)activityService;
                 ActivityVO activityVO = activityServiceImpl.traverseActivity(activity);
                 String publisherAvatarUrl = imageService.getById(activityVO.getAvatar()).getImageUrl();
@@ -81,7 +81,7 @@ public class GeneralServiceImpl implements GeneralService {
         }
         else if(TypeEnum.isHelp(type)){
             Help help = helpService.getById(id);
-            if(ObjectUtils.anyNull(help)){
+            if(!ObjectUtils.anyNull(help)){
                 HelpServiceImpl helpServiceImpl = (HelpServiceImpl)helpService;
                 HelpVO helpVO = helpServiceImpl.traverseHelp(help);
                 String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();
@@ -97,7 +97,7 @@ public class GeneralServiceImpl implements GeneralService {
         }
         else {
             Hole hole = holeService.getById(id);
-            if(ObjectUtils.anyNull(hole)) {
+            if(!ObjectUtils.anyNull(hole)) {
                 HoleServiceImpl holeServiceImpl = (HoleServiceImpl)holeService;
                 HoleVO holeVO = holeServiceImpl.traverseHole(hole);
                 String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();

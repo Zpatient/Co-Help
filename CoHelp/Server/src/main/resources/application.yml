@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cohelp?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
     username: 'root'
-    password: '011205'
+    password: '123456'
 
   # MailConfig
   mail:
@@ -21,5 +21,10 @@ spring:
       max-request-size: 50MB
   main:
     allow-circular-references: true
-prop:
-  upload-folder: C:/Users/靑/Desktop/项目/Co-Help/CoHelp/Server/image/
+
+  tengxun:
+    SecretId: 'AKIDmQrFmuHRN7f18B493ormU1gFkAWioleQ'
+    SecretKey: 'gDznqdJuhUGzXzH2gBXnwvlR5Z4RiohU'
+    region: 'ap-shanghai'
+    url: 'https://jp-typora-1310703557.cos.ap-shanghai.myqcloud.com/'
+    bucketName: 'jp-typora-1310703557'

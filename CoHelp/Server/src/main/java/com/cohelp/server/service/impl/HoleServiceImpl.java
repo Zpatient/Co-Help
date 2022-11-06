@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,6 +50,12 @@ public class HoleServiceImpl
     @Resource
     private HoleMapper holeMapper;
 
+    @Resource
+    private FileUtils fileUtils;
+
+    @Value("${spring.tengxun.url}")
+    private String path;
+
     @Override
     public Result<Boolean> publishHole(String holeJson, MultipartFile[] files) {
         if (StringUtils.isBlank(holeJson)) {
@@ -76,11 +83,11 @@ public class HoleServiceImpl
         ArrayList<String> fileNameList = new ArrayList<>();
         if (files != null) {
             for (MultipartFile file : files) {
-                String fileName = FileUtils.fileUpload(file);
+                String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
                     return ResultUtil.fail("图片上传异常");
                 }
-                String url = "http://localhost:8080/image/" + fileName;
+                String url = path + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
                 image.setImageType(HOLE.ordinal());
@@ -128,11 +135,11 @@ public class HoleServiceImpl
         ArrayList<String> fileNameList = new ArrayList<>();
         if (files != null) {
             for (MultipartFile file : files) {
-                String fileName = FileUtils.fileUpload(file);
+                String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
                     return ResultUtil.fail("图片上传异常");
                 }
-                String url = "http://localhost:8080/image/" + fileName;
+                String url = path + fileName;
                 fileNameList.add(fileName);
                 Image image = new Image();
                 image.setImageType(HOLE.ordinal());

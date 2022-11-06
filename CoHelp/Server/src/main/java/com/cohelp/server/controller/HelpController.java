@@ -1,12 +1,8 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.Help;
-import com.cohelp.server.model.vo.ActivityVO;
-import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.service.HelpService;
 import com.cohelp.server.utils.ResultUtil;
-import org.springframework.boot.autoconfigure.session.RedisSessionProperties;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

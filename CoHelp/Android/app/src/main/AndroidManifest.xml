@@ -71,6 +71,30 @@
             android:name="com.cohelp.task_for_stu.ui.activity.user.RegisterActivity"
             android:exported="false" />
         <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.ActSummaryActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.MutualSummaryActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.ReportActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.MutualReleaseActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.TreeholeReleaseActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.TreeholeSummaryActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.EventReleaseActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.cohelp.task_for_stu.ui.activity.user.DetailActivity"
+            android:exported="false" />
+        <activity
             android:name="com.cohelp.task_for_stu.ui.activity.user.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Task_for_stu">

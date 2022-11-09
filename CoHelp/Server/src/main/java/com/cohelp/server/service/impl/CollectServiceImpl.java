@@ -7,14 +7,17 @@ import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.CollectMapper;
 import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.Collect;
-import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.entity.*;
+import com.cohelp.server.service.ActivityService;
 import com.cohelp.server.service.CollectService;
+import com.cohelp.server.service.HelpService;
+import com.cohelp.server.service.HoleService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +31,12 @@ import static com.cohelp.server.constant.StatusCode.*;
 @Service
 public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     implements CollectService{
+    @Resource
+    ActivityService activityService;
+    @Resource
+    HelpService helpService;
+    @Resource
+    HoleService holeService;
 
     @Override
     public Result listCollect(HistoryAndCollectRequest collectRequest) {
@@ -76,6 +85,16 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
             return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //返回数据库操作结果
         boolean bool = saveOrUpdate(collect);
+        if(TypeEnum.isActivity(topicType)){
+            Activity activity = activityService.getById(topicId);
+            activity.setActivityCollect(activity.getActivityCollect()+1);
+        }else if(TypeEnum.isHelp(topicType)){
+            Help help = helpService.getById(topicId);
+            help.setHelpCollect(help.getHelpCollect()+1);
+        }else {
+            Hole hole = holeService.getById(topicId);
+            hole.setHoleCollect(hole.getHoleCollect()+1);
+        }
         if(bool)
             return ResultUtil.ok(SUCCESS_REQUEST,"记录插入/更新成功！");
         else
@@ -96,7 +115,19 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         if(!userId.equals(user.getId()))
             return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //返回数据库操作结果
+        Integer topicType = getById(id).getTopicType();
+        Integer topicId = getById(id).getTopicId();
         boolean bool = removeById(id);
+        if(TypeEnum.isActivity(topicType)){
+            Activity activity = activityService.getById(topicId);
+            activity.setActivityCollect(activity.getActivityCollect()-1);
+        }else if(TypeEnum.isHelp(topicType)){
+            Help help = helpService.getById(topicId);
+            help.setHelpCollect(help.getHelpCollect()-1);
+        }else {
+            Hole hole = holeService.getById(topicId);
+            hole.setHoleCollect(hole.getHoleCollect()-1);
+        }
         if(bool)
             return ResultUtil.ok(SUCCESS_REQUEST,"记录删除成功！");
         else

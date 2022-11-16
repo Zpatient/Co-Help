@@ -1,4 +1,4 @@
-package com.cohelp.task_for_stu.net.domain;
+package com.cohelp.task_for_stu.net.model.domain;
 
 import lombok.Data;
 

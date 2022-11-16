@@ -1,8 +1,8 @@
-package com.cohelp.task_for_stu.net.domain;
+package com.cohelp.task_for_stu.net.model.domain;
 
-import com.cohelp.server.model.vo.ActivityVO;
-import com.cohelp.server.model.vo.HelpVO;
-import com.cohelp.server.model.vo.HoleVO;
+import com.cohelp.task_for_stu.net.model.vo.ActivityVO;
+import com.cohelp.task_for_stu.net.model.vo.HelpVO;
+import com.cohelp.task_for_stu.net.model.vo.HoleVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

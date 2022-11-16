@@ -1,8 +1,9 @@
-package com.cohelp.task_for_stu.net.domain;
+package com.cohelp.task_for_stu.net.model.domain;
 
-import com.cohelp.server.model.entity.RemarkActivity;
-import com.cohelp.server.model.entity.RemarkHelp;
-import com.cohelp.server.model.entity.RemarkHole;
+import com.cohelp.task_for_stu.net.model.entity.RemarkActivity;
+import com.cohelp.task_for_stu.net.model.entity.RemarkHelp;
+import com.cohelp.task_for_stu.net.model.entity.RemarkHole;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

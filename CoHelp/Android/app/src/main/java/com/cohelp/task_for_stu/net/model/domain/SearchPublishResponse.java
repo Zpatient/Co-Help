@@ -1,8 +1,9 @@
-package com.cohelp.task_for_stu.net.domain;
+package com.cohelp.task_for_stu.net.model.domain;
 
-import com.cohelp.server.model.entity.Activity;
-import com.cohelp.server.model.entity.Help;
-import com.cohelp.server.model.entity.Hole;
+import com.cohelp.task_for_stu.net.model.entity.Activity;
+import com.cohelp.task_for_stu.net.model.entity.Help;
+import com.cohelp.task_for_stu.net.model.entity.Hole;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

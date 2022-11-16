@@ -1,25 +1,27 @@
-package com.cohelp.task_for_stu.net.domain;
+package com.cohelp.task_for_stu.net.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author zgy
- * @create 2022-11-03 15:07
+ * @create 2022-10-26 15:53
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IdAndTypeList implements Serializable {
-    /**
-     * 存储话题id和type的Map
-     */
-    List<IdAndType> idAndTypeList;
+public class IdAndType implements Serializable {
 
+    /**
+     * 话题ID
+     */
+    private Integer id;
+    /**
+     * 话题类型
+     */
+    private Integer type;
     private static final long serialVersionUID = 1L;
 }

@@ -1,4 +1,4 @@
-package com.cohelp.task_for_stu.net.domain;
+package com.cohelp.task_for_stu.net.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,6 +17,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class LoginRequest implements Serializable {
 
+    private String userAccount;
+
     public String getUserAccount() {
         return userAccount;
     }
@@ -32,8 +34,6 @@ public class LoginRequest implements Serializable {
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
     }
-
-    private String userAccount;
 
     private String userPassword;
 

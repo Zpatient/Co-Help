@@ -12,6 +12,11 @@ public class OKHttp {
     OkHttpClient client;
     Request request;
     Response response;
+    public Response getResponse() {
+        return response;
+    }
+
+
     public void sendRequest(String ip,String requestBody){
         client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/json");
@@ -23,6 +28,8 @@ public class OKHttp {
                 .build();
         try {
             response = client.newCall(request).execute();
+            System.out.println(1);
+            System.out.println(response);
         } catch (IOException e) {
             e.printStackTrace();
         }

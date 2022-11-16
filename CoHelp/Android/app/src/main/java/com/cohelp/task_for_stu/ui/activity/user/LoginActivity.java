@@ -8,10 +8,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cohelp.task_for_stu.R;
+import com.cohelp.task_for_stu.bean.User;
 import com.cohelp.task_for_stu.biz.UserBiz;
 import com.cohelp.task_for_stu.net.OKHttpTools.OKHttp;
 import com.cohelp.task_for_stu.net.OKHttpTools.ToJsonString;
-import com.cohelp.task_for_stu.net.domain.LoginRequest;
+import com.cohelp.task_for_stu.net.model.domain.LoginRequest;
 import com.cohelp.task_for_stu.ui.activity.BaseActivity;
 import com.cohelp.task_for_stu.utils.T;
 import com.google.gson.Gson;
@@ -66,11 +67,43 @@ public class LoginActivity extends BaseActivity {
                     return;
                 }
                 else{
-                    String loginMessage = ToJsonString.toJson(loginRequest);
-                    OKHttp okHttp = new OKHttp();
-                    okHttp.sendRequest("43.143.90.226:9090/user/login",loginMessage);
+                    new Thread(()->{
+                        OkHttpClient client = new OkHttpClient();
+                        MediaType mediaType = MediaType.parse("application/json");
+                        RequestBody body = RequestBody.create(mediaType, "{\r\n    \"userAccount\":\"1234567890\",\r\n    \"userPassword\":\"1234567990\"\r\n}");
+                        Request request = new Request.Builder()
+                                .url("http://43.143.90.226:9090/user/login")
+                                .method("POST", body)
+                                .addHeader("Content-Type", "application/json")
+                                .addHeader("Cookie", "JSESSIONID=F5897AFD64247CDF2941737F626E9075")
+                                .build();
+                        try {
+                            System.out.println(1);
+                            Response response = client.newCall(request).execute();
+                            System.out.println(2);
+                            System.out.println(response.header("Set-Cookie"));
+                            System.out.println(response.body().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+//                        String loginMessage = ToJsonString.toJson(loginRequest);
+//                        OKHttp okHttp = new OKHttp();
+//                        okHttp.sendRequest("http://43.143.90.226:9090/user/login",loginMessage);
+//                        String res = null;
+//                        try {
+//                            System.out.println(okHttp.getResponse());
+//                            res = okHttp.getResponse().body().string();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        Gson gson = new Gson();
+//                        User user = gson.fromJson(res, User.class);
+//                        System.out.println(user);
+                    }).start();
+
                 }
-//                startLoadingProgress();
+
+                //startLoadingProgress();
 //                userBiz.login(userName, passWord, new CommonCallback<User>() {
 //                    @Override
 //                    public void onError(Exception e) {

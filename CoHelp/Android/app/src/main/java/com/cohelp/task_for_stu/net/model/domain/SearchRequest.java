@@ -1,27 +1,27 @@
-package com.cohelp.task_for_stu.net.domain;
+package com.cohelp.task_for_stu.net.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zgy
- * @create 2022-10-26 15:53
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IdAndType implements Serializable {
+public class SearchRequest implements Serializable {
+    /**
+     * 搜索关键词
+     */
+    private String key;
+    /**
+     * 搜索类型
+     */
+    private List<Integer> types;
 
-    /**
-     * 话题ID
-     */
-    private Integer id;
-    /**
-     * 话题类型
-     */
-    private Integer type;
     private static final long serialVersionUID = 1L;
 }

@@ -88,32 +88,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/dialog_bottomsheet_rl_title"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/dialog_bottomsheet_shape">
 
-                <ImageView
-                    android:id="@+id/dialog_bottomsheet_iv_close"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
-                    android:padding="5dp"
-                    android:src="@drawable/img_close" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@id/dialog_bottomsheet_iv_close"
-                    android:text="评论"
-                    android:textColor="#333"
-                    android:textSize="16sp" />
-
-            </RelativeLayout>
         </ScrollView>
 
         <LinearLayout

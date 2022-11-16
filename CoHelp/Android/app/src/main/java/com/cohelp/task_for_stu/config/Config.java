@@ -24,4 +24,7 @@ public class Config {
     public static final String NOT_PASSED="不通过";
     @SuppressLint("SimpleDateFormat")
     public static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    public static final String TASK_SOLVE = "NULL";
+    public static final String TASK_DOING_SOLVE = "2";
+    public static final String TASK_WAIT_SOLVE = "3";
 }

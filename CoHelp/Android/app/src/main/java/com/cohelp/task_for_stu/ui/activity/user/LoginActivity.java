@@ -9,7 +9,21 @@ import android.widget.TextView;
 
 import com.cohelp.task_for_stu.R;
 import com.cohelp.task_for_stu.biz.UserBiz;
+import com.cohelp.task_for_stu.net.OKHttpTools.OKHttp;
+import com.cohelp.task_for_stu.net.OKHttpTools.ToJsonString;
+import com.cohelp.task_for_stu.net.domain.LoginRequest;
 import com.cohelp.task_for_stu.ui.activity.BaseActivity;
+import com.cohelp.task_for_stu.utils.T;
+import com.google.gson.Gson;
+import com.leon.lfilepickerlibrary.utils.StringUtils;
+
+import java.io.IOException;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 /**
@@ -22,6 +36,7 @@ public class LoginActivity extends BaseActivity {
     TextView toRegister;
     TextView toUserFound;
     UserBiz userBiz;
+    LoginRequest loginRequest;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,13 +58,18 @@ public class LoginActivity extends BaseActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                String userName = username.getText().toString();
-//                String passWord = password.getText().toString();
-//                if(StringUtils.isEmpty(userName) || StringUtils.isEmpty(passWord)){
-//                    T.showToast("密码或账号不能为空哦~");
-//                    return;
-//                }
+                  loginRequest = new LoginRequest();
+                  loginRequest.setUserAccount(username.getText().toString());
+                  loginRequest.setUserPassword( password.getText().toString());
+                if(StringUtils.isEmpty(loginRequest.getUserAccount()) || StringUtils.isEmpty(loginRequest.getUserPassword())){
+                    T.showToast("密码或账号不能为空哦~");
+                    return;
+                }
+                else{
+                    String loginMessage = ToJsonString.toJson(loginRequest);
+                    OKHttp okHttp = new OKHttp();
+                    okHttp.sendRequest("43.143.90.226:9090/user/login",loginMessage);
+                }
 //                startLoadingProgress();
 //                userBiz.login(userName, passWord, new CommonCallback<User>() {
 //                    @Override

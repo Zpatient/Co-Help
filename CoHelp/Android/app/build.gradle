@@ -49,5 +49,7 @@ dependencies {
     implementation files('libs/okhttputils-2_6_2.jar')
     implementation 'com.leon:lfilepickerlibrary:1.8.0'
     implementation "com.contrarywind:Android-PickerView:3.2.7"
-
+    implementation "com.google.code.gson:gson:2.7"
+    implementation "org.projectlombok:lombok:1.18.4"
 }
+

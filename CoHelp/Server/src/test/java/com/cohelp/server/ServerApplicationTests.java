@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
@@ -144,5 +145,11 @@ class ServerApplicationTests {
     @Test
     public void testTypeEnum(){
         System.out.println(TypeEnum.isTopic(5));
+    }
+
+    @Test
+    public void test08(){
+        String encryptedPassword = DigestUtils.md5DigestAsHex(("CoHelp" + "1234567890").getBytes());
+        System.out.println(encryptedPassword);
     }
 }

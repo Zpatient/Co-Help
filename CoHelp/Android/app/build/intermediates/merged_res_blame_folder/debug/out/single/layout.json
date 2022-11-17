@@ -1,0 +1,110 @@
+[
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\item_base_task.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\item_base_task.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_login.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_login.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\item_manager_user.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\item_manager_user.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_question_center.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_question_center.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_basic_info.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_basic_info.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_task_center.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_task_center.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\manager_buttom_users.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\manager_buttom_users.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\common_toolbar.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\common_toolbar.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_manager_user_details.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_manager_user_details.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_password_found.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_password_found.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_create_new_task.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_create_new_task.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_setting_user.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_setting_user.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_create_new_question.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_create_new_question.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\sa_toolbar.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\sa_toolbar.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_manager_create_new_user.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_manager_create_new_user.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_manager_task_center.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_manager_task_center.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_my_task.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_my_task.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_manager_question_center.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_manager_question_center.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_my_question.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_my_question.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\manager_buttom_question.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\manager_buttom_question.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\manager_buttom_task.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\manager_buttom_task.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\item_manager_base_task.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\item_manager_base_task.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_item_question_details.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_item_question_details.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_history.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_history.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_register.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_register.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_manager_user_center.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_manager_user_center.xml"
+    },
+    {
+        "merged": "D:\\Android Studio\\project\\Co-help\\app\\build\\intermediates\\incremental\\mergeDebugResources\\stripped.dir\\layout\\activity_task_detail.xml",
+        "source": "D:\\Android Studio\\project\\Co-help\\app\\src\\main\\res\\layout\\activity_task_detail.xml"
+    }
+]

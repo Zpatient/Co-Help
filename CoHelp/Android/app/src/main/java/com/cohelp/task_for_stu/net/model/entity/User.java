@@ -1,8 +1,6 @@
 package com.cohelp.task_for_stu.net.model.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 
 import lombok.Data;
@@ -76,7 +74,7 @@ public class User implements Serializable {
     /**
      * 用户创建时间
      */
-    private LocalDateTime userCreateTime;
+    private String userCreateTime;
 
     /**
      * 属相
@@ -193,6 +191,26 @@ public class User implements Serializable {
         this.avatar = avatar;
     }
 
+    public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, Integer age, String school, String userEmail, Integer userRole, Integer state, String userCreateTime, String animalSign) {
+        this.id = id;
+        this.userAccount = userAccount;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.avatar = avatar;
+        this.sex = sex;
+        this.phoneNumber = phoneNumber;
+        this.age = age;
+        this.school = school;
+        this.userEmail = userEmail;
+        this.userRole = userRole;
+        this.state = state;
+        this.userCreateTime = userCreateTime;
+        this.animalSign = animalSign;
+    }
+
+    public User() {
+    }
+
     public Integer getSex() {
         return sex;
     }
@@ -249,11 +267,11 @@ public class User implements Serializable {
         this.state = state;
     }
 
-    public LocalDateTime getUserCreateTime() {
+    public String getUserCreateTime() {
         return userCreateTime;
     }
 
-    public void setUserCreateTime(LocalDateTime userCreateTime) {
+    public void setUserCreateTime(String userCreateTime) {
         this.userCreateTime = userCreateTime;
     }
 

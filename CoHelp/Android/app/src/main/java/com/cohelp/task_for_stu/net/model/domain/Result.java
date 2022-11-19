@@ -1,8 +1,12 @@
 package com.cohelp.task_for_stu.net.model.domain;
 
-import lombok.Data;
+
+
+import com.cohelp.task_for_stu.utils.T;
 
 import java.io.Serializable;
+
+import lombok.Data;
 
 /**
  * 返回对象
@@ -10,12 +14,39 @@ import java.io.Serializable;
  * @author jianping5
  * @create 2022/10/10 20:24
  */
-@Data
+
 public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String code;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public Result() {
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     private T data;
 
@@ -45,4 +76,12 @@ public class Result<T> implements Serializable {
         this.data = data;
     }
 
+    @Override
+    public String toString() {
+        return "Result{" +
+                "code='" + code + '\'' +
+                ", data=" + data +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

@@ -5,7 +5,9 @@ import com.cohelp.server.model.domain.RemarkRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.SearchRequest;
 import com.cohelp.server.service.GeneralService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -35,7 +37,7 @@ public class GeneralController {
         return generalService.deleteRemark(idAndType);
     }
     @RequestMapping("/getremarklist")
-    public Result getremarklist(@RequestBody IdAndType idAndType){
-        return generalService.getRemarkList(idAndType);
+    public Result listRemark(@RequestBody IdAndType idAndType){
+        return generalService.listRemark(idAndType);
     }
 }

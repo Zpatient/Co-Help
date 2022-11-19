@@ -1,28 +1,25 @@
 package com.cohelp.server;
 
 import com.cohelp.server.constant.TypeEnum;
-import com.cohelp.server.controller.UserController;
 import com.cohelp.server.mapper.ActivityMapper;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
-import com.cohelp.server.model.entity.Image;
+import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.impl.GeneralServiceImpl;
 import com.cohelp.server.utils.MailUtils;
-import com.cohelp.server.utils.RegexUtils;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,7 +34,7 @@ class ServerApplicationTests {
     private Gson gson;
 
     @Resource
-    private UserController userController;
+    private ImageService imageService;
 
     @Resource
     private ActivityMapper activityMapper;
@@ -148,5 +145,11 @@ class ServerApplicationTests {
     @Test
     public void testTypeEnum(){
         System.out.println(TypeEnum.isTopic(5));
+    }
+
+    @Test
+    public void test08(){
+        String encryptedPassword = DigestUtils.md5DigestAsHex(("CoHelp" + "1234567890").getBytes());
+        System.out.println(encryptedPassword);
     }
 }

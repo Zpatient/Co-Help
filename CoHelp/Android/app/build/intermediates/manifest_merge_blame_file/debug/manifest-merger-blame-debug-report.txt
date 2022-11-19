@@ -1,0 +1,205 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.cohelp.task_for_stu"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络权限 -->
+11-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:6:5-67
+11-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:6:22-64
+12    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+12-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:7:5-81
+12-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:7:22-78
+13    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+13-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:12:5-80
+13-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:12:22-77
+14
+15    <application
+15-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:9:5-83:19
+16        android:name="com.cohelp.task_for_stu.TaskApplication"
+16-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:10:9-63
+17        android:allowBackup="true"
+17-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:11:9-35
+18        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+18-->[androidx.core:core:1.5.0] C:\Users\86176\.gradle\caches\transforms-3\a1605265a276ccaf05dba118648041ac\transformed\core-1.5.0\AndroidManifest.xml:24:18-86
+19        android:debuggable="true"
+20        android:icon="@mipmap/ic_launcher"
+20-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:12:9-43
+21        android:label="CO-help"
+21-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:13:9-32
+22        android:roundIcon="@mipmap/ic_launcher_round"
+22-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:14:9-54
+23        android:supportsRtl="true"
+23-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:15:9-35
+24        android:testOnly="true"
+25        android:theme="@style/Theme.Task_for_stu" >
+25-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:16:9-50
+26        <activity
+26-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:17:9-21:69
+27            android:name="com.cohelp.task_for_stu.ui.activity.user.HistoryActivity"
+27-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:18:13-84
+28            android:exported="false"
+28-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:19:13-37
+29            android:label="@string/title_activity_history"
+29-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:20:13-59
+30            android:theme="@style/Theme.Task_for_stu.NoActionBar" />
+30-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:21:13-66
+31        <activity
+31-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:22:9-24:40
+32            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerCreateNewUserActivity"
+32-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:23:13-100
+33            android:exported="false" />
+33-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:24:13-37
+34        <activity
+34-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:25:9-27:40
+35            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerUserDetailsActivity"
+35-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:26:13-98
+36            android:exported="false" />
+36-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:27:13-37
+37        <activity
+37-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:28:9-30:40
+38            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerUserCenterActivity"
+38-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:29:13-97
+39            android:exported="false" />
+39-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:30:13-37
+40        <activity
+40-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:31:9-33:40
+41            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerQuestionCenterActivity"
+41-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:32:13-101
+42            android:exported="false" />
+42-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:33:13-37
+43        <activity
+43-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:34:9-36:40
+44            android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerTaskCenterActivity"
+44-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:35:13-97
+45            android:exported="false" />
+45-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:36:13-37
+46        <activity
+46-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:37:9-39:40
+47            android:name="com.cohelp.task_for_stu.ui.activity.user.TaskDetailActivity"
+47-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:38:13-87
+48            android:exported="false" />
+48-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:39:13-37
+49        <activity
+49-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:40:9-42:40
+50            android:name="com.cohelp.task_for_stu.ui.activity.user.CreateNewTaskActivity"
+50-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:41:13-90
+51            android:exported="false" />
+51-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:42:13-37
+52        <activity
+52-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:43:9-45:40
+53            android:name="com.cohelp.task_for_stu.ui.activity.user.ItemQuestionDetailsActivity"
+53-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:44:13-96
+54            android:exported="false" />
+54-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:45:13-37
+55        <activity
+55-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:46:9-48:40
+56            android:name="com.cohelp.task_for_stu.ui.activity.user.CreateNewQuestionActivity"
+56-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:47:13-94
+57            android:exported="false" />
+57-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:48:13-37
+58        <activity
+58-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:49:9-51:40
+59            android:name="com.cohelp.task_for_stu.ui.activity.user.TaskCenterActivity"
+59-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:50:13-87
+60            android:exported="false" />
+60-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:51:13-37
+61        <activity
+61-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:52:9-54:40
+62            android:name="com.cohelp.task_for_stu.ui.activity.user.QuestionCenterActivity"
+62-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:53:13-91
+63            android:exported="false" />
+63-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:54:13-37
+64        <activity
+64-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:55:9-57:40
+65            android:name="com.cohelp.task_for_stu.ui.activity.user.MyQuestionActivity"
+65-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:56:13-87
+66            android:exported="false" />
+66-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:57:13-37
+67        <activity
+67-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:58:9-60:40
+68            android:name="com.cohelp.task_for_stu.ui.activity.user.MyTaskActivity"
+68-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:59:13-83
+69            android:exported="false" />
+69-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:60:13-37
+70        <activity
+70-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:61:9-63:40
+71            android:name="com.cohelp.task_for_stu.ui.activity.user.SettingUserActivity"
+71-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:62:13-88
+72            android:exported="false" />
+72-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:63:13-37
+73        <activity
+73-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:64:9-66:40
+74            android:name="com.cohelp.task_for_stu.ui.activity.user.BasicInfoActivity"
+74-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:65:13-86
+75            android:exported="false" />
+75-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:66:13-37
+76        <activity
+76-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:67:9-69:40
+77            android:name="com.cohelp.task_for_stu.ui.activity.user.PasswordFoundActivity"
+77-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:68:13-90
+78            android:exported="false" />
+78-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:69:13-37
+79        <activity
+79-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:70:9-72:40
+80            android:name="com.cohelp.task_for_stu.ui.activity.user.RegisterActivity"
+80-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:71:13-85
+81            android:exported="false" />
+81-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:72:13-37
+82        <activity
+82-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:73:9-82:20
+83            android:name="com.cohelp.task_for_stu.ui.activity.user.LoginActivity"
+83-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:74:13-82
+84            android:exported="true"
+84-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:75:13-36
+85            android:theme="@style/Theme.Task_for_stu" >
+85-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:76:13-54
+86            <intent-filter>
+86-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:77:13-81:29
+87                <action android:name="android.intent.action.MAIN" />
+87-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:78:17-69
+87-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:78:25-66
+88
+89                <category android:name="android.intent.category.LAUNCHER" />
+89-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:80:17-77
+89-->D:\Android Studio\project\Co-help\app\src\main\AndroidManifest.xml:80:27-74
+90            </intent-filter>
+91        </activity>
+92        <activity android:name="com.leon.lfilepickerlibrary.ui.LFilePickerActivity" />
+92-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:17:9-87
+92-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:17:19-84
+93
+94        <provider
+94-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:19:9-27:20
+95            android:name="androidx.core.content.FileProvider"
+95-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:20:13-62
+96            android:authorities="com.cohelp.task_for_stu.provider"
+96-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:21:13-60
+97            android:exported="false"
+97-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:22:13-37
+98            android:grantUriPermissions="true" >
+98-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:23:13-47
+99            <meta-data
+99-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:24:13-26:58
+100                android:name="android.support.FILE_PROVIDER_PATHS"
+100-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:25:17-67
+101                android:resource="@xml/provider_paths" />
+101-->[com.leon:lfilepickerlibrary:1.8.0] C:\Users\86176\.gradle\caches\transforms-3\ca5798d335acfcfcc4b640c5cac6c651\transformed\jetified-lfilepickerlibrary-1.8.0\AndroidManifest.xml:26:17-55
+102        </provider>
+103        <provider
+103-->[com.squareup.picasso:picasso:2.71828] C:\Users\86176\.gradle\caches\transforms-3\2561da8205f3b52a26325d391a17a1cb\transformed\jetified-picasso-2.71828\AndroidManifest.xml:8:9-11:40
+104            android:name="com.squareup.picasso.PicassoProvider"
+104-->[com.squareup.picasso:picasso:2.71828] C:\Users\86176\.gradle\caches\transforms-3\2561da8205f3b52a26325d391a17a1cb\transformed\jetified-picasso-2.71828\AndroidManifest.xml:9:13-64
+105            android:authorities="com.cohelp.task_for_stu.com.squareup.picasso"
+105-->[com.squareup.picasso:picasso:2.71828] C:\Users\86176\.gradle\caches\transforms-3\2561da8205f3b52a26325d391a17a1cb\transformed\jetified-picasso-2.71828\AndroidManifest.xml:10:13-72
+106            android:exported="false" />
+106-->[com.squareup.picasso:picasso:2.71828] C:\Users\86176\.gradle\caches\transforms-3\2561da8205f3b52a26325d391a17a1cb\transformed\jetified-picasso-2.71828\AndroidManifest.xml:11:13-37
+107    </application>
+108
+109</manifest>

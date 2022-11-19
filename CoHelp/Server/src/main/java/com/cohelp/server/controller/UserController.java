@@ -1,17 +1,12 @@
 package com.cohelp.server.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.beans.IntrospectionException;
-import java.util.ArrayList;
 
 /**
  * 用户信息控制器

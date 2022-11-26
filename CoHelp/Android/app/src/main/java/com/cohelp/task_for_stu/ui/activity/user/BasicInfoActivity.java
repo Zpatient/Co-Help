@@ -2,6 +2,9 @@ package com.cohelp.task_for_stu.ui.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,6 +19,7 @@ import com.cohelp.task_for_stu.biz.UserBiz;
 import com.cohelp.task_for_stu.config.Config;
 import com.cohelp.task_for_stu.listener.ClickListener;
 import com.cohelp.task_for_stu.net.CommonCallback;
+import com.cohelp.task_for_stu.net.model.domain.Result;
 import com.cohelp.task_for_stu.ui.CircleTransform;
 import com.cohelp.task_for_stu.ui.activity.BaseActivity;
 import com.cohelp.task_for_stu.utils.T;
@@ -37,9 +41,9 @@ public class BasicInfoActivity extends BaseActivity {
     LinearLayout questionCenter;
     LinearLayout TaskCenter;
     LinearLayout UserCenter;
-
-
     User user;
+
+    com.cohelp.task_for_stu.net.model.entity.User transferUser;
     UserBiz userBiz;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +67,10 @@ public class BasicInfoActivity extends BaseActivity {
         qs = findViewById(R.id.id_qs);
         tk = findViewById(R.id.id_tk);
         userBiz = new UserBiz();
+        Intent intent = getIntent();
+
+        transferUser = (com.cohelp.task_for_stu.net.model.entity.User) intent.getSerializableExtra("user");
+        nickname.setText(transferUser.getUserAccount());
 //        Picasso.get()
 //                .load(R.drawable.question)
 //                .placeholder(R.drawable.pictures_no)

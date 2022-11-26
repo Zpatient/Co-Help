@@ -2,6 +2,7 @@ package com.cohelp.task_for_stu.ui.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,10 +16,12 @@ import com.cohelp.task_for_stu.net.OKHttpTools.OKHttp;
 import com.cohelp.task_for_stu.net.OKHttpTools.ToJsonString;
 import com.cohelp.task_for_stu.net.model.domain.LoginRequest;
 import com.cohelp.task_for_stu.ui.activity.BaseActivity;
+import com.cohelp.task_for_stu.utils.SessionUtils;
 import com.cohelp.task_for_stu.utils.T;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.leon.lfilepickerlibrary.utils.StringUtils;
 
 import org.json.JSONException;
@@ -46,6 +49,8 @@ public class LoginActivity extends BaseActivity {
     TextView toUserFound;
     UserBiz userBiz;
     LoginRequest loginRequest;
+    User user;
+    OKHttp okHttp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,82 +72,16 @@ public class LoginActivity extends BaseActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                  loginRequest = new LoginRequest();
-                  loginRequest.setUserAccount(username.getText().toString());
-                  loginRequest.setUserPassword( password.getText().toString());
-                loginRequest.setUserAccount("1234567890");
-                loginRequest.setUserPassword( "1234567890");
-                if(StringUtils.isEmpty(loginRequest.getUserAccount()) || StringUtils.isEmpty(loginRequest.getUserPassword())){
-                    T.showToast("密码或账号不能为空哦~");
-                    return;
-                }
-                else{
-                    new Thread(()->{
-//                        OkHttpClient client = new OkHttpClient();
-//                        MediaType mediaType = MediaType.parse("application/json");
-//                        RequestBody body = RequestBody.create(mediaType, "{\r\n    \"userAccount\":\"1234567890\",\r\n    \"userPassword\":\"1234567990\"\r\n}");
-//                        Request request = new Request.Builder()
-//                                .url("http://43.143.90.226:9090/user/login")
-//                                .method("POST", body)
-//                                .addHeader("Content-Type", "application/json")
-//                                //.addHeader("Cookie", "JSESSIONID=F5897AFD64247CDF2941737F626E9075")
-//                                .build();
-//                        try {
-//                            //System.out.println(1);
-//                            Response response = client.newCall(request).execute();
-//                            //System.out.println(2);
-//                            System.out.println(response.header("Set-Cookie"));
-//                            System.out.println(response.body().string());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-                        String loginMessage = ToJsonString.toJson(loginRequest);
-                        OKHttp okHttp = new OKHttp();
-                        okHttp.sendRequest("http://43.143.90.226:9090/user/login",loginMessage);
-                        String res = null;
-                        try {
-                            System.out.println(okHttp.getResponse());
-                            res = okHttp.getResponse().body().string();
-                            //System.out.println(res);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        System.out.println(res);
-                        Gson gson = new Gson();
-                        try {
-                            JSONObject jsonObject = new JSONObject(res);
-                            String data = jsonObject.getString("data");
-                            User user = gson.fromJson(data, User.class);
-                            System.out.println(user.getUserAccount());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-//                        JsonObject jsonObject = new JsonObject(res);
-//                        User data = (User) map.get("data");
-                    }).start();
-
-                }
-
-                //startLoadingProgress();
-//                userBiz.login(userName, passWord, new CommonCallback<User>() {
-//                    @Override
-//                    public void onError(Exception e) {
-//                        stopLoadingProgress();
-//                        T.showToast(e.getMessage());
-//                    }
-//
-//                    @Override
-//                    public void onSuccess(User response) {
-//                        stopLoadingProgress();
-//                        T.showToast("登录成功~" + response.isManager());
-//                        UserInfoHolder.getInstance().setUser(response);
-//                        if(response.isManager()){
-//                            toManagerUserCenterActivity();
-//                        }else
-                        toBasicInfoActivity();
-//                    }
-//                });
-
+                    loginRequest = new LoginRequest();loginRequest.setUserAccount(username.getText().toString());loginRequest.setUserPassword( password.getText().toString());
+                    loginRequest.setUserAccount("1234567890");
+                    loginRequest.setUserPassword( "1234567890");
+                    if(StringUtils.isEmpty(loginRequest.getUserAccount()) || StringUtils.isEmpty(loginRequest.getUserPassword())){
+                        T.showToast("密码或账号不能为空哦~");
+                        return;
+                    }
+                    else{
+                        loginRequest();
+                    }
             }
         });
 
@@ -153,9 +92,50 @@ public class LoginActivity extends BaseActivity {
             }
         });
     }
+    private void loginRequest(){
+        new Thread(()->{
+            String loginMessage = ToJsonString.toJson(loginRequest);
+            okHttp = new OKHttp();
+            okHttp.sendRequest("http://43.143.90.226:9090/user/login",loginMessage,getSession());
+            String res = null;
+            try {
+                System.out.println(okHttp.getResponse());
+                res = okHttp.getResponse().body().string();
+                //System.out.println(res);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println(res);
+            Gson gson = new Gson();
+            Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>(){}.getType());
+            if (userResult == null){
+                T.showToast(userResult.getMessage());
+            }
+            else {
+                String cookieval = okHttp.getResponse().header("Set-Cookie");
+                SessionUtils.saveCookiePreference(this, cookieval);
+                System.out.println(cookieval);
+                user = userResult.getData();
+                toBasicInfoActivity();
+            }
+            //保存cookie
 
+
+        }).start();
+    }
+
+    private String  getSession(){
+            //...
+            return SessionUtils.getCookiePreference(this.getApplicationContext());
+    /* // 其他请求要将sessionId设置到请求头的Cookie属性中，让服务端区分客户端
+    SharedPreferences sharedPreferences = getSharedPreferences("login",MODE_PRIVATE);
+    // 获取文件中名为session对应的value（即sessionId），第二个参数是在第一个key值不存在的情况下的默认值
+    String sessionId = sharedPreferences.getString("session",""); */
+            //...
+    }
     private void toBasicInfoActivity() {
         Intent intent = new Intent(this,BasicInfoActivity.class);
+        intent.putExtra("user",user);
         startActivity(intent);
         finish();
     }

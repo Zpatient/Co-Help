@@ -1,5 +1,7 @@
 package com.cohelp.task_for_stu.net.OKHttpTools;
 
+import com.cohelp.task_for_stu.utils.SessionUtils;
+
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -17,22 +19,37 @@ public class OKHttp {
     }
 
 
-    public void sendRequest(String ip,String requestBody){
-        client = new OkHttpClient().newBuilder().build();
+    public void sendRequest(String ip,String requestBody) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, requestBody);
-        request = new Request.Builder()
+        Request request = new Request.Builder()
                 .url(ip)
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
                 .build();
         try {
             response = client.newCall(request).execute();
-            System.out.println(1);
-            System.out.println(response);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    public void sendRequest(String ip,String requestBody,String session) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(mediaType, requestBody);
+        Request request = new Request.Builder()
+                .url(ip)
+                .method("POST", body)
+                .addHeader("Cookie",session)
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

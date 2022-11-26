@@ -71,6 +71,8 @@ public class BasicInfoActivity extends BaseActivity {
 
         transferUser = (com.cohelp.task_for_stu.net.model.entity.User) intent.getSerializableExtra("user");
         nickname.setText(transferUser.getUserAccount());
+
+        //Thread thread = new
 //        Picasso.get()
 //                .load(R.drawable.question)
 //                .placeholder(R.drawable.pictures_no)

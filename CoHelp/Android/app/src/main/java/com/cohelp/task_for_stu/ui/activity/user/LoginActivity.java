@@ -3,6 +3,8 @@ package com.cohelp.task_for_stu.ui.activity.user;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,14 +53,62 @@ public class LoginActivity extends BaseActivity {
     LoginRequest loginRequest;
     User user;
     OKHttp okHttp;
+//    public  Handler handler = new Handler(){
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            Result<User> userResult = (Result<User>) msg.obj;
+//            switch (msg.what){
+//                case 1:
+//                    username.setText(userResult.getData().getUserAccount());
+//                    Log.e("ddddddd","Dddddddd");
+//                    break;
+//            }
+//        }
+//    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         setUpToolBar();
         setTitle("登录");
+//        new Thread(()-> {
+//            loginRequest = new LoginRequest();loginRequest.setUserAccount(username.getText().toString());loginRequest.setUserPassword( password.getText().toString());
+//            loginRequest.setUserAccount("1234567890");
+//            loginRequest.setUserPassword( "1234567890");
+//            String loginMessage = ToJsonString.toJson(loginRequest);
+//            okHttp = new OKHttp();
+//            okHttp.sendRequest("http://43.143.90.226:9090/user/login", loginMessage, getSession());
+//            String res = null;
+//            try {
+//                System.out.println(okHttp.getResponse());
+//                res = okHttp.getResponse().body().string();
+//                //System.out.println(res);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            System.out.println(res);
+//            Gson gson = new Gson();
+//            Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>() {
+//            }.getType());
+//            if (userResult == null) {
+//                T.showToast(userResult.getMessage());
+//            } else {
+//                Message message = new Message();
+//                message.obj=userResult;
+//                message.what=1;
+//                handler.sendMessage(message);
+//                String cookieval = okHttp.getResponse().header("Set-Cookie");
+//                SessionUtils.saveCookiePreference(this, cookieval);
+//                System.out.println(cookieval);
+//                user = userResult.getData();
+//               // toBasicInfoActivity();
+//            }
+//        }).start();
         initView();
         initEvent();
+
+            //保存cookie
     }
 
     private void initEvent() {

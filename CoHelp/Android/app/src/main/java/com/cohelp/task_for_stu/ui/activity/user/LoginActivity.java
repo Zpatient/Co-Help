@@ -53,6 +53,7 @@ public class LoginActivity extends BaseActivity {
     LoginRequest loginRequest;
     User user;
     OKHttp okHttp;
+
 //    public  Handler handler = new Handler(){
 //        @Override
 //        public void handleMessage(Message msg) {
@@ -123,8 +124,8 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                     loginRequest = new LoginRequest();loginRequest.setUserAccount(username.getText().toString());loginRequest.setUserPassword( password.getText().toString());
-                    loginRequest.setUserAccount("1234567890");
-                    loginRequest.setUserPassword( "1234567890");
+                    loginRequest.setUserAccount("1234567890");//debug
+                    loginRequest.setUserPassword( "1234567890");//debug
                     if(StringUtils.isEmpty(loginRequest.getUserAccount()) || StringUtils.isEmpty(loginRequest.getUserPassword())){
                         T.showToast("密码或账号不能为空哦~");
                         return;
@@ -164,6 +165,7 @@ public class LoginActivity extends BaseActivity {
             else {
                 String cookieval = okHttp.getResponse().header("Set-Cookie");
                 SessionUtils.saveCookiePreference(this, cookieval);
+
                 System.out.println(cookieval);
                 user = userResult.getData();
                 toBasicInfoActivity();

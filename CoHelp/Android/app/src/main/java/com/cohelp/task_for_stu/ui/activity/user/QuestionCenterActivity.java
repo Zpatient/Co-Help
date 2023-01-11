@@ -29,7 +29,9 @@ import com.leon.lfilepickerlibrary.utils.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
+问答中心
+ */
 public class QuestionCenterActivity extends BaseActivity {
     LinearLayout questionCenter;
     LinearLayout TaskCenter;

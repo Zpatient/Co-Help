@@ -35,6 +35,34 @@ public class OKHttp {
             e.printStackTrace();
         }
     }
+
+    public void sendGetRequest(String ip) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(ip)
+                .method("GET",null)
+                .build();
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void sendGetRequest(String ip,String session) {
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        Request request = new Request.Builder()
+                .url(ip)
+                .method("GET",null)
+                .addHeader("Cookie",session)
+                .build();
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void sendRequest(String ip,String requestBody,String session) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();

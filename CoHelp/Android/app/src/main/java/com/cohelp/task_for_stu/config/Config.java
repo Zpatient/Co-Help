@@ -8,8 +8,8 @@ public class Config {
     /**
      * 主机名应改为本机的ip地址（注意不要使用localhost）
      */
-    public static final String baseUrl = "http://192.168.1.22:8080/api/";
-    public static final String rsUrl = "http://192.168.1.22:8080/image/";
+    public static final String baseUrl = "http://43.143.90.226:9090/";
+    public static final String rsUrl = "http://43.143.90.226:9090/";
     public static final int IS_TASK = 0;
     public static final int IS_QUESTION = 1;
     public static final int IS_REPEAT = 2;

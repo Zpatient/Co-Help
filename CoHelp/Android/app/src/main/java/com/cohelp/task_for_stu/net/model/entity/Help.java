@@ -101,6 +101,23 @@ public class Help implements Serializable {
         this.helpCreateTime = helpCreateTime;
     }
 
+    public Help(Integer id, Integer helpOwnerId, String helpTitle, String helpDetail, Integer helpPaid, Integer helpLike, Integer helpCollect, Integer helpComment, String helpLabel, Integer helpState, Date helpCreateTime) {
+        this.id = id;
+        this.helpOwnerId = helpOwnerId;
+        this.helpTitle = helpTitle;
+        this.helpDetail = helpDetail;
+        this.helpPaid = helpPaid;
+        this.helpLike = helpLike;
+        this.helpCollect = helpCollect;
+        this.helpComment = helpComment;
+        this.helpLabel = helpLabel;
+        this.helpState = helpState;
+        this.helpCreateTime = helpCreateTime;
+    }
+
+    public Help() {
+    }
+
     /**
      * 主键
      */

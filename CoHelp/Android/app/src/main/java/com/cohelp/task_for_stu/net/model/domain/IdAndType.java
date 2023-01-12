@@ -23,5 +23,30 @@ public class IdAndType implements Serializable {
      * 话题类型
      */
     private Integer type;
-    private static final long serialVersionUID = 1L;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public IdAndType() {
+    }
+
+    public IdAndType(Integer id,Integer type) {
+        this.id = id;
+        this.type = type;
+    }
+
+//    private static final long serialVersionUID = 1L;
 }

@@ -19,6 +19,22 @@ public class ActivityListRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    public Integer getConditionType() {
+        return conditionType;
+    }
+
+    public void setConditionType(Integer conditionType) {
+        this.conditionType = conditionType;
+    }
+
+    public Integer getDayNum() {
+        return dayNum;
+    }
+
+    public void setDayNum(Integer dayNum) {
+        this.dayNum = dayNum;
+    }
+
     /**
      * 条件类型（0：热度 1：时间）
      */

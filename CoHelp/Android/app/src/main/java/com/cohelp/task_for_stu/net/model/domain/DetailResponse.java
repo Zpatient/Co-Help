@@ -38,4 +38,44 @@ public class DetailResponse implements Serializable {
      * 话题相关图片Url
      */
     ArrayList<String> imagesUrl;
+
+    public ActivityVO getActivityVO() {
+        return activityVO;
+    }
+
+    public void setActivityVO(ActivityVO activityVO) {
+        this.activityVO = activityVO;
+    }
+
+    public HelpVO getHelpVO() {
+        return helpVO;
+    }
+
+    public void setHelpVO(HelpVO helpVO) {
+        this.helpVO = helpVO;
+    }
+
+    public HoleVO getHoleVO() {
+        return holeVO;
+    }
+
+    public void setHoleVO(HoleVO holeVO) {
+        this.holeVO = holeVO;
+    }
+
+    public String getPublisherAvatarUrl() {
+        return publisherAvatarUrl;
+    }
+
+    public void setPublisherAvatarUrl(String publisherAvatarUrl) {
+        this.publisherAvatarUrl = publisherAvatarUrl;
+    }
+
+    public ArrayList<String> getImagesUrl() {
+        return imagesUrl;
+    }
+
+    public void setImagesUrl(ArrayList<String> imagesUrl) {
+        this.imagesUrl = imagesUrl;
+    }
 }

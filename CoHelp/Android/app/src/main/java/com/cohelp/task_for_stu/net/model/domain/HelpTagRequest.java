@@ -22,4 +22,12 @@ public class HelpTagRequest implements Serializable {
      * 标签
      */
     private String tag;
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
+    }
 }

@@ -22,6 +22,22 @@ public class Hole implements Serializable {
      */
     private Integer holeOwnerId;
 
+    public Hole() {
+    }
+
+    public Hole(Integer id, Integer holeOwnerId, String holeTitle, String holeDetail, Integer holeLike, Integer holeCollect, Integer holeComment, String holeLabel, Integer holeState, Date holeCreateTime) {
+        this.id = id;
+        this.holeOwnerId = holeOwnerId;
+        this.holeTitle = holeTitle;
+        this.holeDetail = holeDetail;
+        this.holeLike = holeLike;
+        this.holeCollect = holeCollect;
+        this.holeComment = holeComment;
+        this.holeLabel = holeLabel;
+        this.holeState = holeState;
+        this.holeCreateTime = holeCreateTime;
+    }
+
     /**
      * 树洞主题
      */

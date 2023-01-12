@@ -71,6 +71,23 @@ public class Activity implements Serializable {
      */
     private static final int typeNumber = 1;
 
+    public Activity() {
+    }
+
+    public Activity(Integer id, Integer activityOwnerId, String activityTitle, String activityDetail, LocalDateTime activityTime, Integer activityLike, Integer activityComment, String activityLabel, Integer activityCollect, Integer activityState, LocalDateTime activityCreateTime) {
+        this.id = id;
+        this.activityOwnerId = activityOwnerId;
+        this.activityTitle = activityTitle;
+        this.activityDetail = activityDetail;
+        this.activityTime = activityTime;
+        this.activityLike = activityLike;
+        this.activityComment = activityComment;
+        this.activityLabel = activityLabel;
+        this.activityCollect = activityCollect;
+        this.activityState = activityState;
+        this.activityCreateTime = activityCreateTime;
+    }
+
     public Integer getId() {
         return id;
     }

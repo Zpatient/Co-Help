@@ -63,6 +63,7 @@ public class OKHttp {
             e.printStackTrace();
         }
     }
+
     public void sendRequest(String ip,String requestBody,String session) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
@@ -80,4 +81,5 @@ public class OKHttp {
             e.printStackTrace();
         }
     }
+    public void sendTextRequest(String ip,String )
 }

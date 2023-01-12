@@ -23,4 +23,12 @@ public class HelpListRequest implements Serializable {
      * 条件类型（0：热度 1：时间 2：有偿 3：无偿）
      */
     private Integer conditionType;
+
+    public Integer getConditionType() {
+        return conditionType;
+    }
+
+    public void setConditionType(Integer conditionType) {
+        this.conditionType = conditionType;
+    }
 }

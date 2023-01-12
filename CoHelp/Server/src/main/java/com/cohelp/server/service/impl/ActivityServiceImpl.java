@@ -87,7 +87,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         }
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
@@ -134,12 +134,10 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
         queryWrapper.eq("image_type", ACTIVITY.ordinal()).eq("image_src_id", activity.getId());
         boolean remove = imageService.remove(queryWrapper);
-        if (!remove) {
-            return ResultUtil.fail("删除失败");
-        }
+
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {

@@ -81,7 +81,7 @@ public class HoleServiceImpl
         }
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
@@ -128,12 +128,10 @@ public class HoleServiceImpl
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
         queryWrapper.eq("image_type", HOLE.ordinal()).eq("image_src_id", hole.getId());
         boolean remove = imageService.remove(queryWrapper);
-        if (!remove) {
-            return ResultUtil.fail("删除失败");
-        }
+
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {

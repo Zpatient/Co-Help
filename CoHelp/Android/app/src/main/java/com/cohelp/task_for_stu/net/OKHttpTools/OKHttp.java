@@ -2,9 +2,11 @@ package com.cohelp.task_for_stu.net.OKHttpTools;
 
 import com.cohelp.task_for_stu.utils.SessionUtils;
 
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -22,7 +24,7 @@ public class OKHttp {
     public void sendRequest(String ip,String requestBody) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-        MediaType mediaType = MediaType.parse("application/json");
+        MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = RequestBody.create(mediaType, requestBody);
         Request request = new Request.Builder()
                 .url(ip)
@@ -67,7 +69,7 @@ public class OKHttp {
     public void sendRequest(String ip,String requestBody,String session) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-        MediaType mediaType = MediaType.parse("application/json");
+        MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = RequestBody.create(mediaType, requestBody);
         Request request = new Request.Builder()
                 .url(ip)
@@ -81,5 +83,22 @@ public class OKHttp {
             e.printStackTrace();
         }
     }
-    public void sendTextRequest(String ip,String )
+    public void sendTextRequest(String ip,String s,String cookie){
+        OkHttpClient client = new OkHttpClient().newBuilder()
+                .build();
+        MediaType mediaType = MediaType.parse("text/plain");
+        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("activity",s).build();
+
+         Request request = new Request.Builder()
+                 .url(ip)
+                 .addHeader("Cookie",cookie)
+                 .method("POST", body)
+                 .build();
+        try {
+            Response response = client.newCall(request).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

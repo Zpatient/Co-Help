@@ -18,7 +18,7 @@ public class UserBaseTest {
     LoginRequest loginRequest = new LoginRequest();
 
     @Test
-    public void getUserBase(){
+    public String getUserBase(){
         loginRequest.setUserAccount("1234567890");//debug
         loginRequest.setUserPassword( "1234567890");//debug
         String loginMessage = ToJsonString.toJson(loginRequest);
@@ -36,7 +36,8 @@ public class UserBaseTest {
         }
         Gson gson = new Gson();
         Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>(){}.getType());
-        System.out.println(userResult.getData());
+//        System.out.println(userResult.getData());
+        return cookieval;
     }
 
 }

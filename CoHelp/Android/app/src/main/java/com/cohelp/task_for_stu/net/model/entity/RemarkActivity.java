@@ -104,7 +104,7 @@ public class RemarkActivity implements Serializable {
         sb.append(", topId=").append(topId);
         sb.append(", targetIsActivity=").append(targetIsActivity);
         sb.append(", remarkOwnerId=").append(remarkOwnerId);
-        sb.append(", remarkTime=").append(remarkTime);
+        sb.append(", remarkTime=").append(remarkTime.getYear()+"-"+remarkTime.getSeconds()+"-"+remarkTime.getDay()+" "+remarkTime.getHours()+":"+remarkTime.getMinutes()+":"+remarkTime.getSeconds());
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

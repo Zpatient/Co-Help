@@ -19,11 +19,15 @@ public class ActivityTest {
     Activity activity;
     @Test
     public void activityPublish(){
+        UserBaseTest userBaseTest = new UserBaseTest();
+        String cookie = userBaseTest.getUserBase();
+        System.out.println(cookie);
         activity = new Activity(78,1,"nice","wow", LocalDateTime.now(),0,0,"",0,0,LocalDateTime.now());
         String act = gson.toJson(activity);
-        okHttp.sendRequest("http://43.143.90.226:9090/activity/publish",act);
-        String res = okHttp.getResponse().toString();
-        System.out.println(res);
+        okHttp.sendTextRequest("http://43.143.90.226:9090/activity/publish",act,cookie);
+
+//        String res = okHttp.getResponse().toString();
+        System.out.println(okHttp.getResponse());
     }
     @Test
     public void activityUpdate(){

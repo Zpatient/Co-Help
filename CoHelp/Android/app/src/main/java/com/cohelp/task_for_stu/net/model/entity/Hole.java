@@ -2,7 +2,7 @@ package com.cohelp.task_for_stu.net.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 
@@ -76,6 +76,7 @@ public class Hole implements Serializable {
     /**
      * 树洞发布时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date holeCreateTime;
 
     /**
@@ -226,4 +227,5 @@ public class Hole implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+
 }

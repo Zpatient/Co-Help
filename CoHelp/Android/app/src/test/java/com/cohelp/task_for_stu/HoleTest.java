@@ -17,30 +17,30 @@ public class HoleTest {
     Hole hole;
     @Test
     public void holePublish(){
-        hole = new Hole(78,1,"nice","wow", 0,0,0,0,"friend",0, new Date());
-        String act = gson.toJson(help);
-        okHttp.sendRequest("http://43.143.90.226:9090/help/publish",act);
-        String res = okHttp.getResponse().toString();
-        System.out.println(res);
-    }
-    @Test
-    public void holeUpdate(){
-        help = new Help(7,1,"nice","wow", 0,0,0,0,"friend",0, new Date());
-        String act = gson.toJson(help);
-        okHttp.sendRequest("http://43.143.90.226:9090/help/update",act);
-        String res = okHttp.getResponse().toString();
-        System.out.println(res);
-
-
-    }
-    @Test
-    public void holeList(){
-        HelpListRequest helpListRequest = new HelpListRequest();
-        helpListRequest.setConditionType(1);
-        String req = gson.toJson(helpListRequest);
-        okHttp.sendRequest("http://43.143.90.226:9090/help/list",req);
-        String res = okHttp.getResponse().toString();
-        System.out.println(res);
-
+////        hole = new Hole(78,1,"nice","wow", 0,0,0,0,"friend",0, new Date());
+//        String act = gson.toJson(hele);
+//        okHttp.sendRequest("http://43.143.90.226:9090/help/publish",act);
+//        String res = okHttp.getResponse().toString();
+//        System.out.println(res);
+//    }
+//    @Test
+//    public void holeUpdate(){
+//        help = new Help(7,1,"nice","wow", 0,0,0,0,"friend",0, new Date());
+//        String act = gson.toJson(hele);
+//        okHttp.sendRequest("http://43.143.90.226:9090/help/update",act);
+//        String res = okHttp.getResponse().toString();
+//        System.out.println(res);
+//
+//
+//    }
+//    @Test
+//    public void holeList(){
+//        HelpListRequest helpListRequest = new HelpListRequest();
+//        helpListRequest.setConditionType(1);
+//        String req = gson.toJson(helpListRequest);
+//        okHttp.sendRequest("http://43.143.90.226:9090/help/list",req);
+//        String res = okHttp.getResponse().toString();
+//        System.out.println(res);
+//
     }
 }

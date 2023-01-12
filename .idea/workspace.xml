@@ -11,11 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/constant/TypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/constant/TypeEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/Result.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/Result.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/RemarkHelp.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/RemarkHelp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/test/java/com/cohelp/server/ServerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/test/java/com/cohelp/server/ServerApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -700,7 +695,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

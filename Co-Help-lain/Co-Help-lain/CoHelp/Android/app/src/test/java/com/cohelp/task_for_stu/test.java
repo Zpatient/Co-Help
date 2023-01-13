@@ -141,7 +141,7 @@ public class test {
     }
 
 
-    //有问题------------
+    //有问题------------arraylist问题
     @Test
     public void search(){
         loginRequest.setUserAccount("1234567890");
@@ -174,7 +174,7 @@ public class test {
 
 
     }
-    //有问题-返回全空
+    //有问题-400-bad request--date转换问题
     @Test
     public void insertRemark(){
         loginRequest.setUserAccount("1234567890");
@@ -212,7 +212,7 @@ public class test {
         System.out.println("data:"+userResult);
     }
 
-    //返回全空
+    //返回全空--服务器错误-500
     @Test
     public void delRemark(){
         loginRequest.setUserAccount("1234567890");
@@ -238,11 +238,12 @@ public class test {
         String res = null;
         try {
             res = okHttp.getResponse().body().string();
+            System.out.println(res);
         } catch (IOException e) {
             e.printStackTrace();
         }
         Gson gson = new Gson();
-        Result<Activity> userResult = gson.fromJson(res,new TypeToken<Result<Object>>(){}.getType());
+        Result userResult = gson.fromJson(res,new TypeToken<Result<Object>>(){}.getType());
         System.out.println("data:"+userResult);
     }
 
@@ -256,8 +257,9 @@ public class test {
         String cookieval = okHttp.getResponse().header("Set-Cookie");
         System.out.println(cookieval);
 
-        remarkActivity.setId(1);
-        String getmark = ToJsonString.toJson(remarkActivity);
+        idAndType.setType(1);
+        idAndType.setId(1);
+        String getmark = ToJsonString.toJson(idAndType);
         okHttp.sendRequest("http://43.143.90.226:9090/general/insertremark",getmark,cookieval);
         String res = null;
         try {
@@ -272,7 +274,7 @@ public class test {
     }
 
 
-
+    //结构错误，应该是list问题
     @Test
     public void getCollect(){
         loginRequest.setUserAccount("1234567890");
@@ -300,6 +302,8 @@ public class test {
         }.getClass());
         System.out.println("data:"+result);
     }
+
+    //获取成功
 
     @Test
     public void getHistory(){
@@ -330,7 +334,7 @@ public class test {
 //        System.out.println("data:"+userResult);
     }
 
-
+    //时间格式问题
     @Test
     public void insertHistory(){
         loginRequest.setUserAccount("1234567890");
@@ -345,6 +349,7 @@ public class test {
         history.setTopicId(1);
         history.setTopicType(2);
         history.setUserId(1);
+        history.setViewTime(new Date());
 
         String inserthistory = ToJsonString.toJson(history);
         okHttp.sendRequest("http://43.143.90.226:9090/history/inserthistoryrecord",inserthistory,cookieval);
@@ -362,4 +367,52 @@ public class test {
 
     }
 
+    //返回空
+    @Test
+    public void delhistory(){
+        loginRequest.setUserAccount("1234567890");
+        loginRequest.setUserPassword("1234567890");
+        String loginMessage = ToJsonString.toJson(loginRequest);
+        okHttp.sendRequest("http://43.143.90.226:9090/user/login",loginMessage);
+        String cookieval = okHttp.getResponse().header("Set-Cookie");
+        System.out.println(cookieval);
+
+        okHttp.sendRequest("http://43.143.90.226:9090/history/deletehistoryrecord?id=1",cookieval);
+        String res = null;
+        try {
+            res = okHttp.getResponse().body().string();
+            System.out.println("res:"+res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Gson gson = new Gson();
+//        Result<History> userResult = gson.fromJson(res,new TypeToken<Result<History>>(){}.getType());
+        Result parseObject = JSON.parseObject(res, new Result<History>().getClass());
+        System.out.println(parseObject);
+    }
+
+    //返回空
+    @Test
+    public void remark(){
+        loginRequest.setUserAccount("1234567890");
+        loginRequest.setUserPassword("1234567890");
+        String loginMessage = ToJsonString.toJson(loginRequest);
+        okHttp.sendRequest("http://43.143.90.226:9090/user/login",loginMessage);
+        String cookieval = okHttp.getResponse().header("Set-Cookie");
+        System.out.println(cookieval);
+
+        okHttp.sendRequest("http://43.143.90.226:9090/remark/like/1/1",cookieval);
+        String res = null;
+        try {
+            res = okHttp.getResponse().body().string();
+            System.out.println("res:"+res);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        Gson gson = new Gson();
+//        Result<History> userResult = gson.fromJson(res,new TypeToken<Result<History>>(){}.getType());
+        Result parseObject = JSON.parseObject(res, new Result<RemarkActivity>().getClass());
+        System.out.println(parseObject);
+
+    }
 }

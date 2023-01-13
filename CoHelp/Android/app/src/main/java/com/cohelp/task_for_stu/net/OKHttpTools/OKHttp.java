@@ -16,17 +16,33 @@ public class OKHttp {
     OkHttpClient client;
     Request request;
     Response response;
+    RequestBody body;
     public Response getResponse() {
         return response;
     }
 
+    public Request getRequest() {
+        return request;
+    }
 
-    public void sendRequest(String ip,String requestBody) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
+    public void setRequest(Request request) {
+        this.request = request;
+    }
+
+    public RequestBody getBody() {
+        return body;
+    }
+
+    public void setBody(RequestBody body) {
+        this.body = body;
+    }
+
+    public void sendRequest(String ip, String requestBody) {
+         client = new OkHttpClient().newBuilder()
                 .build();
-        MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, requestBody);
-        Request request = new Request.Builder()
+        MediaType mediaType = MediaType.parse("application/json");
+         body = RequestBody.create(mediaType, requestBody);
+         request = new Request.Builder()
                 .url(ip)
                 .method("POST", body)
                 .addHeader("Content-Type", "application/json")
@@ -39,9 +55,9 @@ public class OKHttp {
     }
 
     public void sendGetRequest(String ip) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
+        client = new OkHttpClient().newBuilder()
                 .build();
-        Request request = new Request.Builder()
+        request = new Request.Builder()
                 .url(ip)
                 .method("GET",null)
                 .build();
@@ -52,9 +68,9 @@ public class OKHttp {
         }
     }
     public void sendGetRequest(String ip,String session) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
+        client = new OkHttpClient().newBuilder()
                 .build();
-        Request request = new Request.Builder()
+        request = new Request.Builder()
                 .url(ip)
                 .method("GET",null)
                 .addHeader("Cookie",session)
@@ -67,11 +83,11 @@ public class OKHttp {
     }
 
     public void sendRequest(String ip,String requestBody,String session) {
-        OkHttpClient client = new OkHttpClient().newBuilder()
+         client = new OkHttpClient().newBuilder()
                 .build();
-        MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, requestBody);
-        Request request = new Request.Builder()
+        MediaType mediaType = MediaType.parse("application/json");
+         body = RequestBody.create(mediaType, requestBody);
+         request = new Request.Builder()
                 .url(ip)
                 .method("POST", body)
                 .addHeader("Cookie",session)
@@ -84,19 +100,23 @@ public class OKHttp {
         }
     }
     public void sendTextRequest(String ip,String s,String cookie){
-        OkHttpClient client = new OkHttpClient().newBuilder()
+         client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("activity",s).build();
-
-         Request request = new Request.Builder()
+        body = new MultipartBody.Builder().setType(MultipartBody.ALTERNATIVE)
+                .addFormDataPart("activity",s)
+                .addFormDataPart("file","签名.PNG",
+                        RequestBody.create(MediaType.parse("application/octet-stream"),
+                                new File("/Users/lain/Pictures/lyh/签名.PNG")))
+                .build();
+        System.out.println(cookie.split(";")[0]);
+          request = new Request.Builder()
                  .url(ip)
-                 .addHeader("Cookie",cookie)
+                 .addHeader("Cookie",cookie.split(";")[0])
                  .method("POST", body)
                  .build();
         try {
-            Response response = client.newCall(request).execute();
+            response = client.newCall(request).execute();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -36,8 +36,29 @@ public class UserBaseTest {
         }
         Gson gson = new Gson();
         Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>(){}.getType());
-//        System.out.println(userResult.getData());
+        System.out.println(userResult.getData());
         return cookieval;
     }
+    @Test
+    public void getBase(){
+        loginRequest.setUserAccount("1234567890");//debug
+        loginRequest.setUserPassword( "1234567890");//debug
+        String loginMessage = ToJsonString.toJson(loginRequest);
 
+        okHttp.sendRequest("http://43.143.90.226:9090/user/login",loginMessage);
+        String cookieval = okHttp.getResponse().header("Set-Cookie");
+        System.out.println(cookieval);
+        okHttp.sendGetRequest("http://43.143.90.226:9090/user/current",cookieval);
+
+        String res = null;
+        try {
+            res = okHttp.getResponse().body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new Gson();
+        Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>(){}.getType());
+        System.out.println(userResult.getData());
+        return ;
+    }
 }

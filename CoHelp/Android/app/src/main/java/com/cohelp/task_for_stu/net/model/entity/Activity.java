@@ -1,7 +1,14 @@
 package com.cohelp.task_for_stu.net.model.entity;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import lombok.Data;
 
@@ -9,6 +16,7 @@ import lombok.Data;
  * 活动表
  * @TableName activity
  */
+@RequiresApi(api = Build.VERSION_CODES.O)
 @Data
 public class Activity implements Serializable {
     /**
@@ -34,6 +42,7 @@ public class Activity implements Serializable {
     /**
      * 活动时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime activityTime;
 
     /**
@@ -223,23 +232,20 @@ public class Activity implements Serializable {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", activityOwnerId=").append(activityOwnerId);
-        sb.append(", activityTitle=").append(activityTitle);
-        sb.append(", activityDetail=").append(activityDetail);
-        sb.append(", activityTime=").append(activityTime);
-        sb.append(", activityLike=").append(activityLike);
-        sb.append(", activityComment=").append(activityComment);
-        sb.append(", activityLabel=").append(activityLabel);
-        sb.append(", activityCollect=").append(activityCollect);
-        sb.append(", activityState=").append(activityState);
-        sb.append(", activityCreateTime=").append(activityCreateTime);
-        sb.append(", serialVersionUID=").append(serialVersionUID);
-        sb.append("]");
-        return sb.toString();
+
+        return "Activity{" +
+                "id=" + id +
+                ", activityOwnerId=" + activityOwnerId +
+                ", activityTitle='" + activityTitle + '\'' +
+                ", activityDetail='" + activityDetail + '\'' +
+                ", activityTime=" + activityTime +
+                ", activityLike=" + activityLike +
+                ", activityComment=" + activityComment +
+                ", activityLabel='" + activityLabel + '\'' +
+                ", activityCollect=" + activityCollect +
+                ", activityState=" + activityState +
+                ", activityCreateTime=" + activityCreateTime +
+                '}';
     }
+//    DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 }

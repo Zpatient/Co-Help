@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.mybutton">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:minSdkVersion="24" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyApplication"
+        android:usesCleartextTraffic="true"
+        tools:ignore="ObsoleteSdkInt"
+        tools:targetApi="m">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".BroadcastReceiver.MyReceiver1ctivity"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.Fragment_view_pager1.BottomNagActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.Fragment_view_pager.ViewPagerFragmentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ViewPagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.Fragment1.Container_cdActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Fragment.ContainerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_study.BActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity_study.AActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.PopupWindowActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.CustomDialogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ProgressActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.DialogActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ToastActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.WebViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".recyclerview.PuRecyclerViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".recyclerview.GridRecyclerViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".recyclerview.HorRecyclerViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".recyclerview.Linear_Rv_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".recyclerview.RecylerViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".gridview.GridViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".listview.ListViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.ImageViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.CheckBoxActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.RadioButtonActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.EditTextActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.TextViewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UI.UIActivity"
+            android:exported="false" />
+    </application>
+
+</manifest>

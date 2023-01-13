@@ -1,0 +1,26 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "My Application"
+include ':app'
+include ':myview'
+include ':mytextview'
+include ':mybutton'
+include ':mybroadcastreceiver'
+include ':myapplication1'
+include ':mybraodcastreceiver'
+include ':glidedemo'
+include ':network'
+include ':rxjava'
+include ':mydata'

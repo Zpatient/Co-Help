@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">倩倩子</string>
+    <string name="tv_1">倩倩子是猪（xiaokeai）</string>
+    <string name="tv_2">倩倩子是臭屁猪</string>
+    <string name="bt_1">点击</string>
+    <string name="bt_2">RadioButton</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

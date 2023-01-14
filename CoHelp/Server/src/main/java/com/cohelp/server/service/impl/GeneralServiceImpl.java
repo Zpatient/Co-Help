@@ -9,6 +9,7 @@ import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.*;
 import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -200,13 +201,19 @@ public class GeneralServiceImpl implements GeneralService {
             RemarkActivity remarkActivity = remarkRequest.getRemarkActivity();
             if(ObjectUtils.anyNull(remarkActivity))
                 return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-            //判断当前用户权限
-            Integer remarkOwnerId = remarkActivity.getRemarkOwnerId();
-            User user = UserHolder.getUser();
-            if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
-            //插入评论
-            boolean result = remarkActivityService.saveOrUpdate(remarkActivity);
+
+            // 设置评论用户者id
+            remarkActivity.setRemarkOwnerId(UserHolder.getUser().getId());
+
+            // 敏感词过滤
+            String remarkContent = remarkActivity.getRemarkContent();
+            if (SensitiveUtils.contains(remarkContent)) {
+                return ResultUtil.fail("文本涉及敏感词汇");
+            }
+
+            //插入评论（仅插入）
+            boolean result = remarkActivityService.save(remarkActivity);
+
             if(!result)
                 return ResultUtil.fail("评论失败！");
             else
@@ -216,13 +223,19 @@ public class GeneralServiceImpl implements GeneralService {
             RemarkHelp remarkHelp = remarkRequest.getRemarkHelp();
             if(ObjectUtils.anyNull(remarkHelp))
                 return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-            //判断当前用户权限
-            Integer remarkOwnerId = remarkHelp.getRemarkOwnerId();
-            User user = UserHolder.getUser();
-            if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
+
+            // 设置评论用户者id
+            remarkHelp.setRemarkOwnerId(UserHolder.getUser().getId());
+
+            // 敏感词过滤
+            String remarkContent = remarkHelp.getRemarkContent();
+            if (SensitiveUtils.contains(remarkContent)) {
+                return ResultUtil.fail("文本涉及敏感词汇");
+            }
+
             //插入评论
-            boolean result = remarkHelpService.saveOrUpdate(remarkHelp);
+            boolean result = remarkHelpService.save(remarkHelp);
+
             if(!result)
                 return ResultUtil.fail("评论失败！");
             else
@@ -232,13 +245,19 @@ public class GeneralServiceImpl implements GeneralService {
             RemarkHole remarkHole = remarkRequest.getRemarkHole();
             if(ObjectUtils.anyNull(remarkHole))
                 return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-            //判断当前用户权限
-            Integer remarkOwnerId = remarkHole.getRemarkOwnerId();
-            User user = UserHolder.getUser();
-            if(!remarkOwnerId.equals(user.getId()))
-                return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
+
+            // 设置评论用户者id
+            remarkHole.setRemarkOwnerId(UserHolder.getUser().getId());
+
+            // 敏感词过滤
+            String remarkContent = remarkHole.getRemarkContent();
+            if (SensitiveUtils.contains(remarkContent)) {
+                return ResultUtil.fail("文本涉及敏感词汇");
+            }
+
             //插入评论
-            boolean result = remarkHoleService.saveOrUpdate(remarkHole);
+            boolean result = remarkHoleService.save(remarkHole);
+
             if(!result)
                 return ResultUtil.fail("评论失败！");
             else

@@ -10,10 +10,7 @@ import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.*;
 import com.cohelp.server.mapper.UserMapper;
-import com.cohelp.server.utils.MailUtils;
-import com.cohelp.server.utils.RegexUtils;
-import com.cohelp.server.utils.ResultUtil;
-import com.cohelp.server.utils.UserHolder;
+import com.cohelp.server.utils.*;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -393,6 +390,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (!currentUser.getId().equals(user.getId())) {
             return ResultUtil.fail(ERROR_CHANGE_USER_INFO, false, "修改失败");
         }
+
+        // 敏感词过滤
+        String userName = user.getUserName();
+        if (SensitiveUtils.contains(userName)) {
+            return ResultUtil.fail("文本涉及敏感词汇");
+        }
+
+        // 检验邮箱格式
+
+        if (user.getUserEmail() != null && !RegexUtils.isEmailValid(user.getUserEmail())) {
+            return ResultUtil.fail(ERROR_PARAMS, "用户邮箱格式不规范");
+        }
+
+        // 检验手机号格式
+        if (user.getPhoneNumber() != null && !RegexUtils.isPhoneNumberValid(user.getPhoneNumber())) {
+            return ResultUtil.fail(ERROR_PARAMS, "用户手机号格式不规范");
+        }
+
         boolean b = this.updateById(user);
         if (b == false) {
             return ResultUtil.fail(ERROR_CHANGE_USER_INFO, false, "修改失败");

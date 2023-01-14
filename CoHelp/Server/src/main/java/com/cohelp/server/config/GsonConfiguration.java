@@ -1,12 +1,6 @@
 package com.cohelp.server.config;
 
-/**
- * @author jianping5
- * @createDate 2022/10/24 0:32
- */
-
 import com.google.gson.*;
-import org.springframework.boot.autoconfigure.web.ConditionalOnEnabledResourceChain;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -16,7 +16,9 @@ import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
+import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -68,6 +70,15 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             return ResultUtil.fail(ERROR_PARAMS, "请求参数错误");
         }
         Activity activity = gson.fromJson(activityJson, Activity.class);
+
+        // 判断是否包含敏感词
+        String activityLabel = activity.getActivityLabel();
+        String activityDetail = activity.getActivityDetail();
+        String activityTitle = activity.getActivityTitle();
+        if (SensitiveUtils.contains(activityLabel, activityDetail, activityTitle)) {
+            return ResultUtil.fail("文本涉及敏感词汇");
+        }
+
         if (StringUtils.isBlank(activity.getActivityTitle())) {
             return ResultUtil.fail("活动标题未填写");
         }
@@ -116,6 +127,15 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             return ResultUtil.fail(ERROR_PARAMS, "请求参数错误");
         }
         Activity activity = gson.fromJson(activityJson, Activity.class);
+
+        // 判断是否包含敏感词
+        String activityLabel = activity.getActivityLabel();
+        String activityDetail = activity.getActivityDetail();
+        String activityTitle = activity.getActivityTitle();
+        if (SensitiveUtils.contains(activityLabel, activityDetail, activityTitle)) {
+            return ResultUtil.fail("文本涉及敏感词汇");
+        }
+
         if (StringUtils.isBlank(activity.getActivityTitle())) {
             return ResultUtil.fail("活动标题未填写");
         }

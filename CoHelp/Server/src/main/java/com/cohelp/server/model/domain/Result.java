@@ -1,6 +1,7 @@
 package com.cohelp.server.model.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @create 2022/10/10 20:24
  */
 @Data
+@NoArgsConstructor
 public class Result<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;

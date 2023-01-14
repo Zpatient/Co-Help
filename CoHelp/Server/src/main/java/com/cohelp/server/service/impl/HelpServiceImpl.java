@@ -17,6 +17,7 @@ import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -67,6 +68,15 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         }
         Gson gson = new Gson();
         Help help = gson.fromJson(helpJson, Help.class);
+
+        // 判断是否包含敏感词
+        String helpLabel = help.getHelpLabel();
+        String helpDetail = help.getHelpDetail();
+        String helpTitle = help.getHelpTitle();
+        if (SensitiveUtils.contains(helpLabel, helpDetail, helpTitle)) {
+            return ResultUtil.fail("文本涉及敏感词汇");
+        }
+
         if (StringUtils.isBlank(help.getHelpTitle())) {
             return ResultUtil.fail("互助标题未填写");
         }
@@ -83,7 +93,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         }
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
@@ -114,6 +124,15 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         }
         Gson gson = new Gson();
         Help help = gson.fromJson(helpJson, Help.class);
+
+        // 判断是否包含敏感词
+        String helpLabel = help.getHelpLabel();
+        String helpDetail = help.getHelpDetail();
+        String helpTitle = help.getHelpTitle();
+        if (SensitiveUtils.contains(helpLabel, helpDetail, helpTitle)) {
+            return ResultUtil.fail("文本涉及敏感词汇");
+        }
+
         if (StringUtils.isBlank(help.getHelpTitle())) {
             return ResultUtil.fail("互助标题未填写");
         }
@@ -130,12 +149,10 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
         queryWrapper.eq("image_type", HELP.ordinal()).eq("image_src_id", help.getId());
         boolean remove = imageService.remove(queryWrapper);
-        if (!remove) {
-            return ResultUtil.fail("删除失败");
-        }
+
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
@@ -285,6 +302,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         helpVO.setUserName(user.getUserName());
         return helpVO;
     }
+
 }
 
 

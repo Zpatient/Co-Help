@@ -14,6 +14,7 @@ import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.ObjectUtils;
@@ -64,6 +65,14 @@ public class HoleServiceImpl
         Gson gson = new Gson();
         Hole hole = gson.fromJson(holeJson, Hole.class);
 
+        // 判断是否包含敏感词
+        String holeLabel = hole.getHoleLabel();
+        String holeTitle = hole.getHoleTitle();
+        String holeDetail = hole.getHoleDetail();
+        if (SensitiveUtils.contains(holeLabel, holeTitle, holeDetail)) {
+            return ResultUtil.fail("文本涉及敏感词汇");
+        }
+
         // 获取登录id，不需要判断是否已经登录，因为在controller中会进行登录拦截
         User user = UserHolder.getUser();
         int userId = user.getId();
@@ -81,7 +90,7 @@ public class HoleServiceImpl
         }
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
@@ -112,6 +121,15 @@ public class HoleServiceImpl
         // 校验树洞信息
         Gson gson = new Gson();
         Hole hole = gson.fromJson(holeJson, Hole.class);
+
+        // 判断是否包含敏感词
+        String holeLabel = hole.getHoleLabel();
+        String holeTitle = hole.getHoleTitle();
+        String holeDetail = hole.getHoleDetail();
+        if (SensitiveUtils.contains(holeLabel, holeTitle, holeDetail)) {
+            return ResultUtil.fail("文本涉及敏感词汇");
+        }
+
         if (StringUtils.isBlank(hole.getHoleTitle())) {
             return ResultUtil.fail("树洞标题未填写");
         }
@@ -128,12 +146,10 @@ public class HoleServiceImpl
         QueryWrapper<Image> queryWrapper = new QueryWrapper();
         queryWrapper.eq("image_type", HOLE.ordinal()).eq("image_src_id", hole.getId());
         boolean remove = imageService.remove(queryWrapper);
-        if (!remove) {
-            return ResultUtil.fail("删除失败");
-        }
+
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
-        if (files != null) {
+        if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {

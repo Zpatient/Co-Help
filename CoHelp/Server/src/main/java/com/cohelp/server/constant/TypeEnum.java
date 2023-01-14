@@ -2,7 +2,7 @@ package com.cohelp.server.constant;
 
 import org.apache.commons.lang3.ObjectUtils;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * @author zgy
@@ -102,10 +102,10 @@ public enum TypeEnum{
         else
             return false;
     }
-    public static Boolean isTopic(Collection<Integer> types){
+    public static Boolean isTopic(List<Integer> types){
         if(ObjectUtils.anyNull(types)||ObjectUtils.isEmpty(types))
             return false;
-        boolean flag = false;
+        boolean flag = true;
         for(Integer type : types){
             if(!isTopic(type))
                 flag = false;

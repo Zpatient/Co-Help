@@ -9,7 +9,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="" />
+    <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,7 +43,7 @@
     </favorite-branches>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="zgy" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,12 +87,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/CoHelp/Server/src/main/resources/application.yml" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/CoHelp/Server/src/main/resources" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CoHelp/Server" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.1507799" />
     <property name="project.structure.side.proportion" value="0.12378167" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -127,22 +129,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ServerApplicationTests.test05" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.cohelp.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.cohelp.server" />
-      <option name="MAIN_CLASS_NAME" value="com.cohelp.server.ServerApplicationTests" />
-      <option name="METHOD_NAME" value="test05" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ServerApplicationTests.test08" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -154,6 +140,22 @@
       <option name="PACKAGE_NAME" value="com.cohelp.server" />
       <option name="MAIN_CLASS_NAME" value="com.cohelp.server.ServerApplicationTests" />
       <option name="METHOD_NAME" value="test08" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerApplicationTests.test09" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cohelp.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cohelp.server" />
+      <option name="MAIN_CLASS_NAME" value="com.cohelp.server.ServerApplicationTests" />
+      <option name="METHOD_NAME" value="test09" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -220,20 +222,20 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.com.cohelp.server in server" />
-      <item itemvalue="JUnit.ServerApplicationTests.test05" />
       <item itemvalue="JUnit.ServerApplicationTests.test" />
       <item itemvalue="JUnit.ServerApplicationTests.testTypeEnum" />
       <item itemvalue="JUnit.ServerApplicationTests.testSeach" />
       <item itemvalue="JUnit.ServerApplicationTests.test08" />
+      <item itemvalue="JUnit.ServerApplicationTests.test09" />
       <item itemvalue="Spring Boot.ServerApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServerApplicationTests.test09" />
         <item itemvalue="JUnit.ServerApplicationTests.test08" />
         <item itemvalue="JUnit.ServerApplicationTests.testSeach" />
         <item itemvalue="JUnit.ServerApplicationTests.testTypeEnum" />
         <item itemvalue="JUnit.ServerApplicationTests.test" />
-        <item itemvalue="JUnit.ServerApplicationTests.test05" />
       </list>
     </recent_temporary>
   </component>
@@ -321,7 +323,30 @@
       <workItem from="1668845520997" duration="187000" />
       <workItem from="1668845724123" duration="20000" />
       <workItem from="1668845755910" duration="55000" />
-      <workItem from="1668846168368" duration="1299000" />
+      <workItem from="1668846168368" duration="882000" />
+      <workItem from="1669172510384" duration="1044000" />
+      <workItem from="1669698733152" duration="74000" />
+      <workItem from="1670142554721" duration="47000" />
+      <workItem from="1670204787797" duration="42000" />
+      <workItem from="1670483060652" duration="111000" />
+      <workItem from="1670485516403" duration="85000" />
+      <workItem from="1670732094705" duration="609000" />
+      <workItem from="1670738671890" duration="600000" />
+      <workItem from="1670739624597" duration="122000" />
+      <workItem from="1670922548173" duration="109000" />
+      <workItem from="1671156459951" duration="611000" />
+      <workItem from="1671341301954" duration="239000" />
+      <workItem from="1671541355997" duration="1163000" />
+      <workItem from="1673357251405" duration="706000" />
+      <workItem from="1673437363947" duration="5024000" />
+      <workItem from="1673515798675" duration="5255000" />
+    </task>
+    <task id="LOCAL-00018" summary="inform commit">
+      <created>1666277581616</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1666277581616</updated>
     </task>
     <task id="LOCAL-00019" summary="changepassword interfaces modified commit">
       <created>1666347345312</created>
@@ -659,14 +684,7 @@
       <option name="project" value="LOCAL" />
       <updated>1668671197793</updated>
     </task>
-    <task id="LOCAL-00067" summary="update datasource config">
-      <created>1668847356054</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1668847356054</updated>
-    </task>
-    <option name="localTasksCounter" value="68" />
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -677,7 +695,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
@@ -719,8 +749,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java</url>
-          <line>50</line>
-          <option name="timeStamp" value="3" />
+          <line>123</line>
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

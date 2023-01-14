@@ -1,9 +1,12 @@
 package com.cohelp.server;
 
+import com.alibaba.fastjson2.JSON;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.ActivityMapper;
+import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
+import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.service.ImageService;
@@ -152,4 +155,23 @@ class ServerApplicationTests {
         String encryptedPassword = DigestUtils.md5DigestAsHex(("CoHelp" + "1234567890").getBytes());
         System.out.println(encryptedPassword);
     }
+    @Test
+    public void test09(){
+        String res = "{\"code\":\"202\",\"data\":{\"activityVO\":{\"id\":1,\"activityOwnerId\":1,\"userName\":\"asd24\",\"avatar\":1,\"activityTitle\":\"不删测试\",\"activityDetail\":\"hello\",\"activityTime\":\"2022-11-15 23:00:00\",\"activityLike\":0,\"activityComment\":0,\"activityLabel\":null,\"activityCollect\":0,\"activityState\":0,\"activityCreateTime\":\"2020-11-13 20:20:00\"},\"helpVO\":null,\"holeVO\":null,\"publisherAvatarUrl\":\"https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb35189.png\",\"imagesUrl\":[]},\"message\":\"数据获取成功！\"}";
+
+        Gson gson = new Gson();
+        Result<DetailResponse> result = gson.fromJson(res, new Result<DetailResponse>().getClass());
+        System.out.println(result);
+        Result parseObject = JSON.parseObject(res, new Result<DetailResponse>().getClass());
+        System.out.println(parseObject);
+    }
+
+    @Test
+    public void test10() {
+
+    }
+
+
 }
+
+

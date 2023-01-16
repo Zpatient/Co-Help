@@ -1,6 +1,7 @@
 package com.cohelp.task_for_stu;
 
 import com.cohelp.task_for_stu.net.OKHttpTools.OKHttp;
+import com.cohelp.task_for_stu.net.gsonTools.GSON;
 import com.cohelp.task_for_stu.net.model.domain.ActivityListRequest;
 import com.cohelp.task_for_stu.net.model.domain.HelpListRequest;
 import com.cohelp.task_for_stu.net.model.domain.HelpTagRequest;
@@ -16,28 +17,30 @@ import java.util.Date;
 public class HelpTest {
     OKHttp okHttp  = new OKHttp();
     //    LoginRequest loginRequest = new LoginRequest();
-    Gson gson = new Gson();
+    Gson gson = new GSON().gsonSetter();
     Help help;
     @Test
     public void helpPublish(){
+        String cookie = new UserBaseTest().getUserBase();
         help = new Help(78,1,"nice","wow", 0,0,0,0,"friend",0, new Date());
         String act = gson.toJson(help);
-        okHttp.sendRequest("http://43.143.90.226:9090/help/publish",act);
+        System.out.println(act);
+        okHttp.sendMediaRequest("http://43.143.90.226:9090/help/publish","help",act,null,cookie);
         String res = okHttp.getResponse().toString();
         System.out.println(res);
     }
     @Test
     public void helpUpdate(){
+        String cookie = new UserBaseTest().getUserBase();
         help = new Help(7,1,"nice","wow", 0,0,0,0,"friend",0, new Date());
         String act = gson.toJson(help);
-        okHttp.sendRequest("http://43.143.90.226:9090/help/update",act);
+        okHttp.sendMediaRequest("http://43.143.90.226:9090/help/update","help",act,null,cookie);
         String res = okHttp.getResponse().toString();
         System.out.println(res);
-
-
     }
     @Test
     public void helpList(){
+        String cookie = new UserBaseTest().getUserBase();
         HelpListRequest helpListRequest = new HelpListRequest();
         helpListRequest.setConditionType(1);
         String req = gson.toJson(helpListRequest);
@@ -48,10 +51,11 @@ public class HelpTest {
     }
     @Test
     public void helpListTag(){
+        String cookie = new UserBaseTest().getUserBase();
         HelpTagRequest helpTagRequest = new HelpTagRequest();
         helpTagRequest.setTag("学习");
         String req = gson.toJson(helpTagRequest);
-        okHttp.sendRequest("http://43.143.90.226:9090/help/list/tag",req);
+        okHttp.sendRequest("http://43.143.90.226:9090/help/list/tag",req,cookie);
         String res = okHttp.getResponse().toString();
         System.out.println(res);
 

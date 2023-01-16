@@ -4,6 +4,8 @@ import com.cohelp.task_for_stu.utils.SessionUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -99,20 +101,26 @@ public class OKHttp {
             e.printStackTrace();
         }
     }
-    public void sendTextRequest(String ip,String s,String cookie){
+    public void sendMediaRequest(String ip, String contentType, String content, Map<String,String> nameAndPath,String cookie){
          client = new OkHttpClient().newBuilder()
                 .build();
         MediaType mediaType = MediaType.parse("text/plain");
-        body = new MultipartBody.Builder().setType(MultipartBody.ALTERNATIVE)
-                .addFormDataPart("activity",s)
-                .addFormDataPart("file","签名.PNG",
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.ALTERNATIVE);
+        builder.addFormDataPart(contentType,content);
+        if (nameAndPath!=null) {
+            Iterator<Map.Entry<String,String>> fileList = nameAndPath.entrySet().iterator();
+            while (fileList.hasNext()){
+                Map.Entry<String,String> entry = fileList.next();
+                builder.addFormDataPart("file",entry.getKey(),
                         RequestBody.create(MediaType.parse("application/octet-stream"),
-                                new File("/Users/lain/Pictures/lyh/签名.PNG")))
-                .build();
-        System.out.println(cookie.split(";")[0]);
-          request = new Request.Builder()
+                                new File(entry.getValue())));
+            }
+        }
+
+        body = builder.build();
+        request = new Request.Builder()
                  .url(ip)
-                 .addHeader("Cookie",cookie.split(";")[0])
+                 .addHeader("Cookie",cookie)
                  .method("POST", body)
                  .build();
         try {

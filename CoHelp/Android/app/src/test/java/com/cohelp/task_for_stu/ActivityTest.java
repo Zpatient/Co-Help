@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.cohelp.task_for_stu.net.OKHttpTools.OKHttp;
 import com.cohelp.task_for_stu.net.OKHttpTools.ToJsonString;
+import com.cohelp.task_for_stu.net.gsonTools.GSON;
 import com.cohelp.task_for_stu.net.model.domain.ActivityListRequest;
 import com.cohelp.task_for_stu.net.model.domain.DetailResponse;
 import com.cohelp.task_for_stu.net.model.domain.LoginRequest;
@@ -38,76 +39,11 @@ import okio.BufferedSink;
 public class ActivityTest {
     OKHttp okHttp  = new OKHttp();
     //    LoginRequest loginRequest = new LoginRequest();
-    Gson gson = g();
+    Gson gson = new GSON().gsonSetter();
     Activity activity;
     LoginRequest loginRequest = new LoginRequest();
-     public  Gson g(){
-            //序列化
-            final  JsonSerializer<LocalDateTime> jsonSerializerDateTime = (localDateTime, type, jsonSerializationContext)
-                    -> new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            final  JsonSerializer<LocalDate> jsonSerializerDate = (localDate, type, jsonSerializationContext)
-                    -> new JsonPrimitive(localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-            //反序列化
-            final  JsonDeserializer<LocalDateTime> jsonDeserializerDateTime = (jsonElement, type, jsonDeserializationContext)
-                    -> LocalDateTime.parse(jsonElement.getAsJsonPrimitive().getAsString(),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            final  JsonDeserializer<LocalDate> jsonDeserializerDate = (jsonElement, type, jsonDeserializationContext)
-                    -> LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString(),
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-                 return new GsonBuilder()
-                        .setPrettyPrinting()
-                        /* 更改先后顺序没有影响 */
-                        .registerTypeAdapter(LocalDateTime.class, jsonSerializerDateTime)
-                        .registerTypeAdapter(LocalDate.class, jsonSerializerDate)
-                        .registerTypeAdapter(LocalDateTime.class, jsonDeserializerDateTime)
-                        .registerTypeAdapter(LocalDate.class, jsonDeserializerDate)
-                        .create();
-    }
-    @Test
-    public void getBase(){
-        loginRequest.setUserAccount("1234567890");//debug
-        loginRequest.setUserPassword("1234567890");//debug
-        String loginMessage = ToJsonString.toJson(loginRequest);
 
-        okHttp.sendRequest("http://127.0.0.1:9090/user/login",loginMessage);
-        Response response = okHttp.getResponse();
-        String cookieval = okHttp.getResponse().header("Set-Cookie");
-        System.out.println(cookieval);
-        try {
-            System.out.println(okHttp.getResponse().body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        MediaType mediaType = MediaType.parse("text/plain");
-        RequestBody body = RequestBody.create(mediaType, "");
-        Request request = new Request.Builder()
-                .url("http://127.0.0.1:9090/user/current")
-                .method("GET", null)
-                .addHeader("Cookie", cookieval)
-                .build();
-        try {
-             response = client.newCall(request).execute();
-            System.out.println(response.body().string());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-//        okHttp.sendGetRequest("http://127.0.0.1:9090/user/current",cookieval);
-//
-//        String res = null;
-//        try {
-//            res = okHttp.getResponse().body().string();
-//            System.out.println(res);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Gson gson = new Gson();
-//        Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>(){}.getType());
-//        System.out.println(userResult);
-        return ;
-    }
     @Test
     public void activityPublish(){
 //        UserBaseTest userBaseTest = new UserBaseTest();
@@ -116,7 +52,6 @@ public class ActivityTest {
         loginRequest.setUserAccount("1234567890");//debug
         loginRequest.setUserPassword( "1234567890");//debug
         String loginMessage = ToJsonString.toJson(loginRequest);
-
         okHttp.sendRequest("http://43.143.90.226:9090/user/login",loginMessage);
         String cookieval = okHttp.getResponse().header("Set-Cookie");
         DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -125,6 +60,9 @@ public class ActivityTest {
         activity = new Activity(null,null,"nice","wow", LocalDateTime.now(),0,0,"",0,0,null);
 //        String act = gson.toJson(activity);
         String act = gson.toJson(activity);
+        Activity a2 = gson.fromJson(act,Activity.class);
+        System.out.println("a2="+a2.getActivityTime().toString().replace('T',' '));
+        System.out.println(a2);
 //        String act = "{\"activityTitle\":\"nice\",\"activityDetail\":\"wow\",\"activityTime\":\""+localDateTime+"\",\"activityLike\":0,\"activityComment\":0,\"activityLabel\":\"0\",\"activityCollect\":0,\"activityState\":0}";
         System.out.println(act);
 //        okHttp.sendTextRequest("http://43.143.90.226:9090/activity/publish",act,cookie);
@@ -161,19 +99,25 @@ public class ActivityTest {
         System.out.println(cookie);
         activity = new Activity(4,1,"nice","wow", LocalDateTime.now(),0,0,"",0,0,LocalDateTime.now());
         String act = gson.toJson(activity);
-        okHttp.sendTextRequest("http://43.143.90.226:9090/activity/update",act,cookie);
+        okHttp.sendMediaRequest("http://43.143.90.226:9090/activity/update","activity",act,null,cookie);
         String res = okHttp.getResponse().toString();
         System.out.println(res);
 
     }
     @Test
     public void activityList(){
+        String cookie = new UserBaseTest().getUserBase();
         ActivityListRequest activityListRequest = new ActivityListRequest();
         activityListRequest.setConditionType(1);
-        activityListRequest.setDayNum(100000);
+        activityListRequest.setDayNum(10000);
         String req = gson.toJson(activityListRequest);
-        okHttp.sendRequest("http://43.143.90.226:9090/activity/list",req);
-        String res = okHttp.getResponse().toString();
+        okHttp.sendRequest("http://43.143.90.226:9090/activity/list",req,cookie);
+        String res = null;
+        try {
+            res = okHttp.getResponse().body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println(res);
 //        Result<DetailResponse> result = gson.fromJson(res, new TypeToken<Result<DetailResponse>>(){}.getType());
 //        System.out.println(result.getData().getActivityVO());

@@ -1,5 +1,7 @@
 package com.cohelp.task_for_stu.net.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -171,6 +173,7 @@ public class Help implements Serializable {
     /**
      * 互助发布时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date helpCreateTime;
 
     /**

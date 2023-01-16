@@ -13,6 +13,7 @@ import com.google.gson.JsonSerializer;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class GSON {
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -22,6 +23,7 @@ public class GSON {
                 -> new JsonPrimitive(localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         final  JsonSerializer<LocalDate> jsonSerializerDate = (localDate, type, jsonSerializationContext)
                 -> new JsonPrimitive(localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+
         //反序列化
         final JsonDeserializer<LocalDateTime> jsonDeserializerDateTime = (jsonElement, type, jsonDeserializationContext)
                 -> LocalDateTime.parse(jsonElement.getAsJsonPrimitive().getAsString(),
@@ -31,6 +33,7 @@ public class GSON {
                 DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
         return new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .setPrettyPrinting()
                 /* 更改先后顺序没有影响 */
                 .registerTypeAdapter(LocalDateTime.class, jsonSerializerDateTime)

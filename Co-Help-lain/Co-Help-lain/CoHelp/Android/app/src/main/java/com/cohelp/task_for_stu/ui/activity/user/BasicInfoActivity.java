@@ -35,7 +35,11 @@ public class BasicInfoActivity extends BaseActivity {
     TextView nickname;
     TextView grade;
     TextView logOut;
-    TextView history;
+    TextView Browsing_history;
+    TextView Personal_homepage;
+    TextView Setting;
+    TextView Publish_manage;
+    TextView Collect;
     LinearLayout myTask;
     LinearLayout myQuestion;
     LinearLayout questionCenter;
@@ -63,9 +67,13 @@ public class BasicInfoActivity extends BaseActivity {
         questionCenter = findViewById(R.id.id_ll_questionCenter);
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
-        history = findViewById(R.id.id_tv_browsing_history);
         qs = findViewById(R.id.id_qs);
         tk = findViewById(R.id.id_tk);
+        Browsing_history = findViewById(R.id.id_tv_browsing_history);
+        Personal_homepage = findViewById(R.id.id_tv_personal_homepage);
+        Setting = findViewById(R.id.id_tv_setting);
+        Publish_manage = findViewById(R.id.id_tv_publish_manage);
+        Collect = findViewById(R.id.id_tv_mycollect);
         userBiz = new UserBiz();
         Intent intent = getIntent();
 
@@ -167,13 +175,28 @@ public class BasicInfoActivity extends BaseActivity {
                 toMyQuestionActivity();
             }
         });
-        history.setOnClickListener(new View.OnClickListener() {
+        Browsing_history.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toHistoryActivity();
             }
         });
-
+        Personal_homepage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { toPersonalHomepageActivity();}
+        });
+        Setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { toSettingActivity();}
+        });
+        Publish_manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { toPublishManageActivity();}
+        });
+        Collect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {toMyCollectActivity();}
+        });
     }
 
     private void toUserCenterActivity() {
@@ -220,6 +243,25 @@ public class BasicInfoActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    private void toPersonalHomepageActivity(){
+        Intent intent = new Intent(this,PersonalHomepageActivity.class);
+        startActivity(intent);
+    }
+
+    private void toSettingActivity(){
+        Intent intent = new Intent(this,SettingActivity.class);
+        startActivity(intent);
+    }
+
+    private void toPublishManageActivity(){
+        Intent intent = new Intent(this,PublishManageActivity.class);
+        startActivity(intent);
+    }
+
+    private void toMyCollectActivity(){
+        Intent intent = new Intent(this,MyCollectActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onDestroy() {

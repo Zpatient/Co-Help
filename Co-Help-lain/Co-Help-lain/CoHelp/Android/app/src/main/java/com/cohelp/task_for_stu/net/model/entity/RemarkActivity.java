@@ -52,7 +52,7 @@ public class RemarkActivity implements Serializable {
     /**
      * 评论发布时间
      */
-    private Date remarkTime;
+    private LocalDateTime remarkTime;
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -109,7 +109,7 @@ public class RemarkActivity implements Serializable {
         sb.append(", targetIsActivity=").append(targetIsActivity);
         sb.append(", remarkOwnerId=").append(remarkOwnerId);
 //        sb.append(", remarkTime=").append("2022-11-04 12:21:50");
-        sb.append(", remarkTime=").append(remarkTime.getYear()+"-"+remarkTime.getSeconds()+"-"+remarkTime.getDay()+" "+remarkTime.getHours()+":"+remarkTime.getMinutes()+":"+remarkTime.getSeconds());
+        sb.append(", remarkTime=").append(remarkTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
@@ -179,12 +179,12 @@ public class RemarkActivity implements Serializable {
         this.remarkOwnerId = remarkOwnerId;
     }
 
-    public Date getRemarkTime() {
+    public LocalDateTime getRemarkTime() {
         return remarkTime;
     }
 
 
-    public void setRemarkTime(Date remarkTime) {
+    public void setRemarkTime(LocalDateTime remarkTime) {
         this.remarkTime = remarkTime;
     }
 }

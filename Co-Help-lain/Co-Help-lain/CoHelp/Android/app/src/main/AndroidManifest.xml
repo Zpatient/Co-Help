@@ -4,22 +4,19 @@
     package="com.cohelp.task_for_stu">
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 网络权限 -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!-- SD卡读写权限 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- SD卡读写权限 -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:ignore="WrongManifestParent" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAG"
-        tools:ignore="WrongManifestParent" />
-    <!-- 在SD卡创建和删除文件的权限   -->
+        tools:ignore="WrongManifestParent" /> <!-- 在SD卡创建和删除文件的权限 -->
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
-        tools:ignore="ProtectedPermissions,WrongManifestParent" />
-    <!-- 允许访问网络，连接数据库   -->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <!--接入wifi状态-->
+        tools:ignore="ProtectedPermissions,WrongManifestParent" /> <!-- 允许访问网络，连接数据库 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 接入wifi状态 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
     <application
         android:name="com.cohelp.task_for_stu.TaskApplication"
         android:allowBackup="true"
@@ -29,11 +26,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Task_for_stu"
         android:usesCleartextTraffic="true"
-
         tools:ignore="ExtraText">
-
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.HistoryActivity"
+            android:name=".MyCollectActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PublishManageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Setting"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalHomepageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HistoryActivity"
             android:exported="false"
             android:label="@string/title_activity_history"
             android:theme="@style/Theme.Task_for_stu.NoActionBar" />
@@ -53,67 +63,67 @@
             android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerTaskCenterActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.TaskDetailActivity"
+            android:name=".TaskDetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.CreateNewTaskActivity"
+            android:name=".CreateNewTaskActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.ItemQuestionDetailsActivity"
+            android:name=".ItemQuestionDetailsActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.CreateNewQuestionActivity"
+            android:name=".CreateNewQuestionActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.TaskCenterActivity"
+            android:name=".TaskCenterActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.QuestionCenterActivity"
+            android:name=".QuestionCenterActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.MyQuestionActivity"
+            android:name=".MyQuestionActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.MyTaskActivity"
+            android:name=".MyTaskActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.SettingUserActivity"
+            android:name=".SettingUserActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.BasicInfoActivity"
+            android:name=".BasicInfoActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.PasswordFoundActivity"
+            android:name=".PasswordFoundActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.RegisterActivity"
+            android:name=".RegisterActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.ActSummaryActivity"
+            android:name=".ActSummaryActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.MutualSummaryActivity"
+            android:name=".MutualSummaryActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.ReportActivity"
+            android:name=".ReportActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.MutualReleaseActivity"
+            android:name=".MutualReleaseActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.TreeholeReleaseActivity"
+            android:name=".TreeholeReleaseActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.TreeholeSummaryActivity"
+            android:name=".TreeholeSummaryActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.EventReleaseActivity"
+            android:name=".EventReleaseActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.DetailActivity"
+            android:name=".DetailActivity"
             android:exported="false" />
         <activity
-            android:name="com.cohelp.task_for_stu.ui.activity.user.LoginActivity"
+            android:name=".LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Task_for_stu">
             <intent-filter>

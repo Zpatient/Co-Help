@@ -19,4 +19,28 @@ public class PublishDeleteRequest {
     private int ownerId;
 
     private int typeNumber;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
+
+    public int getTypeNumber() {
+        return typeNumber;
+    }
+
+    public void setTypeNumber(int typeNumber) {
+        this.typeNumber = typeNumber;
+    }
 }

@@ -1,6 +1,9 @@
 package com.cohelp.task_for_stu.net.model.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -36,7 +39,8 @@ public class Collect implements Serializable {
     /**
      * 收藏时间
      */
-    private Date collectTime;
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime collectTime;
 
 
     public Integer getId() {
@@ -71,11 +75,11 @@ public class Collect implements Serializable {
         this.topicId = topicId;
     }
 
-    public Date getCollectTime() {
+    public LocalDateTime getCollectTime() {
         return collectTime;
     }
 
-    public void setCollectTime(Date collectTime) {
+    public void setCollectTime(LocalDateTime collectTime) {
         this.collectTime = collectTime;
     }
 

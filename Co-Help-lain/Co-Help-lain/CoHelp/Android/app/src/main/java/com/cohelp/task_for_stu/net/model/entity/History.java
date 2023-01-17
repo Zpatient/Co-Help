@@ -1,6 +1,9 @@
 package com.cohelp.task_for_stu.net.model.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.Data;
@@ -63,18 +66,19 @@ public class History implements Serializable {
         this.topicId = topicId;
     }
 
-    public Date getViewTime() {
+    public LocalDateTime getViewTime() {
         return viewTime;
     }
 
-    public void setViewTime(Date viewTime) {
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    public void setViewTime(LocalDateTime viewTime) {
         this.viewTime = viewTime;
     }
 
     /**
      * 查看/浏览时间
      */
-    private Date viewTime;
+    private LocalDateTime viewTime;
 
     private static final long serialVersionUID = 1L;
 

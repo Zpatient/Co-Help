@@ -5,11 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.TopicLike;
-import com.cohelp.server.model.entity.Activity;
-import com.cohelp.server.model.entity.Help;
-import com.cohelp.server.model.entity.Hole;
-import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.ActivityService;
 import com.cohelp.server.service.HelpService;
 import com.cohelp.server.service.HoleService;
@@ -85,7 +81,7 @@ public class TopicLikeServiceImpl extends ServiceImpl<TopicLikeMapper, TopicLike
             UpdateWrapper<TopicLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", activity.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.ACTIVITY.ordinal());
+            likeUpdateWrapper.eq("topic_type", TypeEnum.ACTIVITY.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {
@@ -155,7 +151,7 @@ public class TopicLikeServiceImpl extends ServiceImpl<TopicLikeMapper, TopicLike
             UpdateWrapper<TopicLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", help.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.HELP.ordinal());
+            likeUpdateWrapper.eq("topic_type", TypeEnum.HELP.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {
@@ -225,7 +221,7 @@ public class TopicLikeServiceImpl extends ServiceImpl<TopicLikeMapper, TopicLike
             UpdateWrapper<TopicLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", hole.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.HOLE.ordinal());
+            likeUpdateWrapper.eq("topic_type", TypeEnum.HOLE.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {

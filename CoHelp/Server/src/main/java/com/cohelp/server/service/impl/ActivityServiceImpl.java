@@ -2,7 +2,6 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
@@ -12,13 +11,13 @@ import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.service.ActivityService;
 import com.cohelp.server.mapper.ActivityMapper;
+import com.cohelp.server.service.GeneralService;
 import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
-import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +59,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
     @Resource
     private FileUtils fileUtils;
+
+    @Resource
+    private GeneralService generalService;
 
     @Value("${spring.tengxun.url}")
     private String path;
@@ -188,6 +190,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
     @Override
     public Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum) {
 
+        List<Integer> userIdList = generalService.getUserIdList();
+
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
@@ -196,7 +200,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Activity> activityList = activityMapper.listByHot();
+            List<Activity> activityList = activityMapper.listByHot(userIdList);
             if (activityList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
             }
@@ -211,6 +215,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             if (dayNum == null) {
                 QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
                 activityQueryWrapper.orderByDesc("activity_create_time");
+                activityQueryWrapper.in("activity_owner_id", userIdList);
                 List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
                 if (activityList == null) {
                     return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
@@ -223,6 +228,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             if (dayNum != null) {
                 QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
                 activityQueryWrapper.orderByAsc("activity_time");
+                activityQueryWrapper.in("activity_owner_id", userIdList);
                 List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
                 if (activityList == null) {
                     return ResultUtil.fail(ERROR_PARAMS, "暂无活动");

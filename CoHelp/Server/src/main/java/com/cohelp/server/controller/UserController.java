@@ -4,6 +4,7 @@ import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -76,5 +77,9 @@ public class UserController {
         return userService.userLogout(request);
     }
 
+    @PostMapping("/changeAvatar")
+    public Result<Boolean> changeAvatar(@RequestParam(name = "file") MultipartFile file) {
+        return userService.changeAvatar(file);
+    }
 
 }

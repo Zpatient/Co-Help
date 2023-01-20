@@ -6,6 +6,7 @@ import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.util.DigestUtils;
 
 import java.util.List;
 
@@ -36,5 +37,13 @@ public class SensitiveWordTest {
 
         boolean contains = SensitiveUtils.contains(text, text1);
         System.out.println(contains);
+    }
+
+    @Test
+    void test2() {
+        String SALT = "CoHelp";
+
+        String encryptedPassword = DigestUtils.md5DigestAsHex((SALT + "1234567890").getBytes());
+        System.out.println(encryptedPassword);
     }
 }

@@ -3,21 +3,19 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.mapper.ActivityMapper;
-import com.cohelp.server.mapper.ImageMapper;
+import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.*;
-import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.utils.*;
-import com.google.gson.Gson;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.omg.CORBA.PRIVATE_MEMBER;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.util.pattern.PathPattern;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import static com.cohelp.server.constant.NumberConstant.*;
 import static com.cohelp.server.constant.StatusCode.*;
 import static com.cohelp.server.constant.TypeConstant.*;
+import static com.cohelp.server.constant.TypeEnum.USER;
 
 /**
 * @description 针对表【user(用户表)】的数据库操作Service实现
@@ -49,6 +48,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private ImageService imageService;
+
+    @Resource
+    private FileUtils fileUtils;
+
+    @Value("${spring.tengxun.url}")
+    private String path;
+
+    @Resource
+    private UserService userService;
 
 
 
@@ -126,12 +134,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setSex(user.getSex());
         safetyUser.setPhoneNumber(user.getPhoneNumber());
         safetyUser.setAge(user.getAge());
-        safetyUser.setSchool(user.getSchool());
         safetyUser.setUserRole(user.getUserRole());
         safetyUser.setState(user.getState());
         safetyUser.setUserCreateTime(user.getUserCreateTime());
         safetyUser.setUserEmail(user.getUserEmail());
         safetyUser.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - user.getAge()));
+        safetyUser.setTeamId(user.getTeamId());
 
         return safetyUser;
     }
@@ -277,10 +285,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (null == user){
             return ResultUtil.fail(ERROR_GET_DATA,"用户不存在！");
         }
-        else if (null != (email = user.getUserEmail()))
+        else if (null != (email = user.getUserEmail())) {
             return ResultUtil.ok(SUCCESS_GET_DATA,email,"邮箱获取成功！");
-        else
+        }
+        else {
             return ResultUtil.fail(ERROR_GET_DATA,"邮箱获取失败！");
+        }
     }
 
     @Override
@@ -301,10 +311,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         //发送验证码
         String message = "您的验证码是："+confirmCode.toString()+"。请妥善保管验证码，谨防泄露，如非本人操作请忽略！";
         boolean status = MailUtils.sendMail(new Mail("Co-Help验证码", message), userEmail);
-        if(status)
+        if (status) {
             return ResultUtil.ok(SUCCESS_REQUEST,"验证码发送成功！");
-        else
+        }
+        else {
             return ResultUtil.fail(ERROR_REQUEST,"验证码发送失败！");
+        }
     }
 
     @Override
@@ -526,6 +538,50 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
 
         return ResultUtil.ok(new SearchPublishResponse(activityList, helpList, holeList));
+    }
+
+    @Override
+    public Result<Boolean> changeAvatar(MultipartFile file) {
+
+        User user = UserHolder.getUser();
+
+        // 上传图片获取url
+        if (file != null && !"".equals(file.getOriginalFilename())) {
+            String fileName = fileUtils.fileUpload(file);
+            if (StringUtils.isBlank(fileName)) {
+                return ResultUtil.fail("图片上传异常");
+            }
+            String url = path + fileName;
+            Image image = new Image();
+            image.setImageType(USER.ordinal());
+            image.setImageSrcId(user.getId());
+            image.setImageUrl(url);
+            boolean save1 = imageService.save(image);
+            if (!save1) {
+                return ResultUtil.fail(ERROR_SAVE_IMAGE, "图片保存失败");
+            }
+
+            // 查找新图片的 id
+            QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+            imageQueryWrapper.eq("image_url", url);
+            Image newImage = imageService.getOne(imageQueryWrapper);
+            Integer newImageId = newImage.getId();
+
+            System.out.println(newImageId);
+
+            // 设置到当前用户
+            // user.setAvatar(newImageId);
+            UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
+            userUpdateWrapper.eq("id", user.getId());
+            userUpdateWrapper.set("avatar", newImageId);
+            boolean update = userService.update(userUpdateWrapper);
+            if (update) {
+                return ResultUtil.ok("修改图片成功");
+            }
+            return ResultUtil.fail("修改图片失败");
+        }
+
+        return ResultUtil.fail("未上传图片");
     }
 
 }

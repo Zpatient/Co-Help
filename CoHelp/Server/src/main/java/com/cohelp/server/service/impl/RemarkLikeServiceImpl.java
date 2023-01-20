@@ -76,7 +76,7 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             UpdateWrapper<RemarkLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", remarkActivity.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.ACTIVITY.ordinal());
+            likeUpdateWrapper.eq("topic_type", TypeEnum.ACTIVITY.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {
@@ -144,7 +144,7 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             UpdateWrapper<RemarkLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", remarkHelp.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.HELP.ordinal());
+            likeUpdateWrapper.eq("topic_type", TypeEnum.HELP.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {
@@ -212,7 +212,7 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             UpdateWrapper<RemarkLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", remarkHole.getId());
-            likeQueryWrapper.eq("topic_type", TypeEnum.HOLE.ordinal());
+            likeUpdateWrapper.eq("topic_type", TypeEnum.HOLE.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {

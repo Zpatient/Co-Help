@@ -115,7 +115,8 @@ class ServerApplicationTests {
 
     @Test
     void test06() {
-        List<Activity> activityList = activityMapper.listByHot();
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        List<Activity> activityList = activityMapper.listByHot(integerArrayList);
         activityList.forEach(activity -> {
             return;
         });

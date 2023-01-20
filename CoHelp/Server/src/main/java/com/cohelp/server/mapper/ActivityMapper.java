@@ -2,6 +2,7 @@ package com.cohelp.server.mapper;
 
 import com.cohelp.server.model.entity.Activity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cohelp.server.model.entity.Inform;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +17,10 @@ public interface ActivityMapper extends BaseMapper<Activity> {
 
     /**
      * 根据热度查询（4*点赞+3*评论+3*收藏）
+     * @param userIdList
      * @return
      */
-    List<Activity> listByHot();
+    List<Activity> listByHot(List<Integer> userIdList);
 
 }
 

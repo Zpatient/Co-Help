@@ -1,9 +1,9 @@
 package com.cohelp.server.service;
 
 import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.stereotype.Service;
+import com.cohelp.server.model.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -91,4 +91,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result searchPublish(String userAccount);
+
+    /**
+     * 修改头像
+     * @param file
+     * @return
+     */
+    Result<Boolean> changeAvatar(MultipartFile file);
 }

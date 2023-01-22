@@ -190,6 +190,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
     @Override
     public Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum) {
 
+        // 获取同团体的用户 id 数组
         List<Integer> userIdList = generalService.getUserIdList();
 
         if (conditionType == null) {

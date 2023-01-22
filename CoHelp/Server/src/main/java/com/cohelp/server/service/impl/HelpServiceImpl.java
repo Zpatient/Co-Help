@@ -9,6 +9,7 @@ import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Image;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.HelpVO;
+import com.cohelp.server.service.GeneralService;
 import com.cohelp.server.service.HelpService;
 import com.cohelp.server.mapper.HelpMapper;
 import com.cohelp.server.service.ImageService;
@@ -52,6 +53,9 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
     @Resource
     private HelpMapper helpMapper;
+
+    @Resource
+    private GeneralService generalService;
 
     @Resource
     private FileUtils fileUtils;
@@ -178,6 +182,10 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
     @Override
     public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
+
+        // 获取同团体的用户 id 数组
+        List<Integer> userIdList = generalService.getUserIdList();
+
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
@@ -186,7 +194,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Help> helpList = helpMapper.listByHot();
+            List<Help> helpList = helpMapper.listByHot(userIdList);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
@@ -200,6 +208,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
             //  按发布时间排序
             QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
             helpQueryWrapper.orderByDesc("help_create_time");
+            helpQueryWrapper.in("help_owner_id", userIdList);
             List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
@@ -213,6 +222,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         if (conditionType == 2) {
             QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
             helpQueryWrapper.eq("help_paid", 1);
+            helpQueryWrapper.in("help_owner_id", userIdList);
             List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无有偿互助");
@@ -226,6 +236,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         if (conditionType == 3) {
             QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
             helpQueryWrapper.eq("help_paid", 0);
+            helpQueryWrapper.in("help_owner_id", userIdList);
             List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无无偿互助");
@@ -239,13 +250,20 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
     @Override
     public Result<List<DetailResponse>> listByTag(String tag) {
+
+        // 获取同团体的用户 id 数组
+        List<Integer> userIdList = generalService.getUserIdList();
+
         if (tag == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建互助视图体数组
         List<DetailResponse> detailResponseList = new ArrayList<>();
 
-        List<Help> helpList = this.list();
+        // 查询当前团体内的所有活动
+        QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
+        helpQueryWrapper.in("help_owner_id", userIdList);
+        List<Help> helpList = this.list(helpQueryWrapper);
         if (helpList == null) {
             return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
         }

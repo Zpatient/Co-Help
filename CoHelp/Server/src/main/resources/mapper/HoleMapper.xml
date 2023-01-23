@@ -33,4 +33,18 @@
         </foreach>
         order by (4*hole_like+3*hole_comment+3*hole_collect) desc
     </select>
+    <select id="search" resultType="com.cohelp.server.model.entity.Hole">
+        select <include refid="Base_Column_List"></include>
+        from hole
+        where hole_owner_id = #{userId} and (
+        hole_title like CONCAT(CONCAT('%', #{key}), '%')
+        or hole_detail like CONCAT(CONCAT('%', #{key}), '%')
+        or hole_label like CONCAT(CONCAT('%', #{key}), '%')
+        <foreach collection="keywords" item="keyword" open=" " close=" " separator=" ">
+            or hole_title like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+            or hole_detail like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+            or hole_label like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+        </foreach>
+        )
+    </select>
 </mapper>

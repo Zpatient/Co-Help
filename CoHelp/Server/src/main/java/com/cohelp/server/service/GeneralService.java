@@ -1,9 +1,6 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.IdAndType;
-import com.cohelp.server.model.domain.RemarkRequest;
-import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.domain.SearchRequest;
+import com.cohelp.server.model.domain.*;
 
 import java.util.List;
 
@@ -48,11 +45,16 @@ public interface GeneralService{
      * @return com.cohelp.server.model.domain.Result
      */
     Result listRemark(IdAndType idAndType);
-
     /**
      * 返回组织用户 Id 数组
      * @return
      */
     List<Integer> getUserIdList();
+    /**
+     * 根据Id和Type列表获取话题详情
+     * @param idAndTypes Id和Type列表
+     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     */
+    List<DetailResponse> listDetailResponse(List<IdAndType> idAndTypes);
 
 }

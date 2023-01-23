@@ -1,7 +1,7 @@
 package com.cohelp.server.mapper;
 
-import com.cohelp.server.model.entity.Hole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cohelp.server.model.entity.Hole;
 
 import java.util.List;
 
@@ -19,6 +19,8 @@ public interface HoleMapper extends BaseMapper<Hole> {
      * @return
      */
     List<Hole> listByHot(List<Integer> userIdList);
+
+    List<Hole> search(Integer userId, String key, String[] keywords);
 }
 
 

@@ -1,10 +1,8 @@
 package com.cohelp.server.mapper;
 
-import com.cohelp.server.model.entity.Activity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cohelp.server.model.entity.Inform;
+import com.cohelp.server.model.entity.Activity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +19,8 @@ public interface ActivityMapper extends BaseMapper<Activity> {
      * @return
      */
     List<Activity> listByHot(List<Integer> userIdList);
+
+    List<Activity> search(Integer userId,String key,String[] keywords);
 
 }
 

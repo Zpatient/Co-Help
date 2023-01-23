@@ -1,6 +1,4 @@
 package com.cohelp.server.service.impl;
-import java.time.LocalDateTime;
-import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -20,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.Random;
 
 import static com.cohelp.server.constant.NumberConstant.*;
 import static com.cohelp.server.constant.StatusCode.*;
@@ -138,7 +138,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setState(user.getState());
         safetyUser.setUserCreateTime(user.getUserCreateTime());
         safetyUser.setUserEmail(user.getUserEmail());
-        safetyUser.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - user.getAge()));
         safetyUser.setTeamId(user.getTeamId());
 
         return safetyUser;
@@ -245,7 +244,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setUserName(RandomStringUtils.random(12, true, true));
         user.setAvatar(1);
         user.setAge(18);
-        user.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - 18));
         return user;
     }
 

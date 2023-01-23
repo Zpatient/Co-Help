@@ -5,19 +5,19 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.CollectMapper;
+import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.HistoryAndCollectRequest;
+import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
-import com.cohelp.server.service.ActivityService;
-import com.cohelp.server.service.CollectService;
-import com.cohelp.server.service.HelpService;
-import com.cohelp.server.service.HoleService;
+import com.cohelp.server.service.*;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +37,8 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     HelpService helpService;
     @Resource
     HoleService holeService;
+    @Resource
+    GeneralService generalService;
 
     @Override
     public Result listCollect(HistoryAndCollectRequest collectRequest) {
@@ -63,7 +65,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         }
         else{
             List<Collect> records = collectPage.getRecords();
-            return ResultUtil.returnResult(SUCCESS_GET_DATA,records,"数据获取成功！");
+            List<IdAndType> idAndTypeList = getIdAndTypeList(records);
+            List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
+            return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据获取成功！");
         }
     }
     @Override
@@ -83,6 +87,15 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         User user = UserHolder.getUser();
         if(!userId.equals(user.getId()))
             return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
+        //判断该收藏记录是否已存在
+        QueryWrapper<Collect> queryWrapper = new QueryWrapper<Collect>()
+                .eq("user_id", userId)
+                .eq("topic_type", topicType)
+                .eq("topic_id", topicId);
+        Collect oldCollect = getOne(queryWrapper);
+        if(oldCollect!=null){
+            collect.setId(oldCollect.getId());
+        }
         //返回数据库操作结果
         boolean bool = saveOrUpdate(collect);
         if(TypeEnum.isActivity(topicType)){
@@ -132,6 +145,19 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
             return ResultUtil.ok(SUCCESS_REQUEST,"记录删除成功！");
         else
             return ResultUtil.fail(ERROR_REQUEST,"记录删除失败！");
+    }
+    private List<IdAndType> getIdAndTypeList(List<Collect> collectList){
+        if(collectList==null) return null;
+        List<IdAndType> idAndTypes = new ArrayList<IdAndType>();
+        for(Collect collect : collectList){
+            Integer topicType = collect.getTopicType();
+            Integer topicId = collect.getTopicId();
+            IdAndType idAndType = new IdAndType();
+            idAndType.setId(topicId);
+            idAndType.setType(topicType);
+            idAndTypes.add(idAndType);
+        }
+        return idAndTypes;
     }
 }
 

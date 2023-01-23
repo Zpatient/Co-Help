@@ -34,4 +34,18 @@
         </foreach>
         order by (4*help_like+3*help_comment+3*help_collect) desc
     </select>
+    <select id="search" resultType="com.cohelp.server.model.entity.Help">
+        select <include refid="Base_Column_List"></include>
+        from help
+        where help_owner_id = #{userId} and (
+        help_title like CONCAT(CONCAT('%', #{key}), '%')
+        or help_detail like CONCAT(CONCAT('%', #{key}), '%')
+        or help_label like CONCAT(CONCAT('%', #{key}), '%')
+        <foreach collection="keywords" item="keyword" open=" " close=" " separator=" ">
+            or help_title like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+            or help_detail like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+            or help_label like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+        </foreach>
+        )
+    </select>
 </mapper>

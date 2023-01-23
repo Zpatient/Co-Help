@@ -34,4 +34,18 @@
         </foreach>
         order by (4*activity_like+3*activity_comment+3*activity_collect) desc
     </select>
+    <select id="search" resultType="com.cohelp.server.model.entity.Activity">
+        select <include refid="Base_Column_List"></include>
+        from activity
+        where activity_owner_id = #{userId} and (
+        activity_title like CONCAT(CONCAT('%', #{key}), '%')
+        or activity_detail like CONCAT(CONCAT('%', #{key}), '%')
+        or activity_label like CONCAT(CONCAT('%', #{key}), '%')
+        <foreach collection="keywords" item="keyword" open=" " close=" " separator=" ">
+            or activity_title like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+            or activity_detail like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+            or activity_label like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
+        </foreach>
+        )
+    </select>
 </mapper>

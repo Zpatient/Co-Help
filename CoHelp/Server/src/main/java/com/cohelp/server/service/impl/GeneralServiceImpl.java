@@ -2,6 +2,9 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cohelp.server.constant.TypeEnum;
+import com.cohelp.server.mapper.ActivityMapper;
+import com.cohelp.server.mapper.HelpMapper;
+import com.cohelp.server.mapper.HoleMapper;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.ActivityVO;
@@ -35,9 +38,15 @@ public class GeneralServiceImpl implements GeneralService {
     @Resource
     ActivityService activityService;
     @Resource
+    ActivityMapper activityMapper;
+    @Resource
     HelpService helpService;
     @Resource
+    HelpMapper helpMapper;
+    @Resource
     HoleService holeService;
+    @Resource
+    HoleMapper holeMapper;
     @Resource
     ImageService imageService;
     @Resource
@@ -46,7 +55,8 @@ public class GeneralServiceImpl implements GeneralService {
     RemarkHelpService remarkHelpService;
     @Resource
     RemarkHoleService remarkHoleService;
-
+    @Resource
+    HistoryService historyService;
     @Resource
     private UserService userService;
 
@@ -77,7 +87,19 @@ public class GeneralServiceImpl implements GeneralService {
                 detailResponse.setActivityVO(activityVO);
                 detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
                 detailResponse.setImagesUrl(imagesUrl);
-
+                //插入历史记录
+                QueryWrapper<History> queryWrapper = new QueryWrapper<History>()
+                        .eq("user_id", UserHolder.getUser().getId())
+                        .eq("topic_type", type)
+                        .eq("topic_id",id);
+                History oldHistory = historyService.getOne(queryWrapper);
+                if(oldHistory==null){
+                    History history = new History();
+                    history.setUserId(UserHolder.getUser().getId());
+                    history.setTopicType(type);
+                    history.setTopicId(id);
+                    historyService.saveOrUpdate(history);
+                }
                 return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,"数据获取成功！");
             }
             else{
@@ -94,6 +116,19 @@ public class GeneralServiceImpl implements GeneralService {
                 detailResponse.setHelpVO(helpVO);
                 detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
                 detailResponse.setImagesUrl(imagesUrl);
+                //插入历史记录
+                QueryWrapper<History> queryWrapper = new QueryWrapper<History>()
+                        .eq("user_id", UserHolder.getUser().getId())
+                        .eq("topic_type", type)
+                        .eq("topic_id",id);
+                History oldHistory = historyService.getOne(queryWrapper);
+                if(oldHistory==null){
+                    History history = new History();
+                    history.setUserId(UserHolder.getUser().getId());
+                    history.setTopicType(type);
+                    history.setTopicId(id);
+                    historyService.saveOrUpdate(history);
+                }
                 return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,"数据获取成功！");
             }
             else{
@@ -110,6 +145,19 @@ public class GeneralServiceImpl implements GeneralService {
                 detailResponse.setHoleVO(holeVO);
                 detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
                 detailResponse.setImagesUrl(imagesUrl);
+                //插入历史记录
+                QueryWrapper<History> queryWrapper = new QueryWrapper<History>()
+                        .eq("user_id", UserHolder.getUser().getId())
+                        .eq("topic_type", type)
+                        .eq("topic_id",id);
+                History oldHistory = historyService.getOne(queryWrapper);
+                if(oldHistory==null){
+                    History history = new History();
+                    history.setUserId(UserHolder.getUser().getId());
+                    history.setTopicType(type);
+                    history.setTopicId(id);
+                    historyService.saveOrUpdate(history);
+                }
                 return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse, "数据获取成功");
             }
             else{
@@ -129,65 +177,74 @@ public class GeneralServiceImpl implements GeneralService {
         if(!TypeEnum.isTopic(types)|| StringUtils.isBlank(key)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
+        //获取用户所在组织成员Id列表
+        List<Integer> userIdList = getUserIdList();
         //查询数据
-        IdAndTypeList idAndTypes = new IdAndTypeList();
-        List<IdAndType> idAndTypeList = new ArrayList<>();
         String[] keywords = getKeywords(key).split(",");
-        for(Integer type : types){
-            if(TypeEnum.isActivity(type)){
-                QueryWrapper<Activity> queryWrapper = new QueryWrapper<Activity>()
-                        .select("id")
-                        .like("activity_title",key)
-                        .or().like("activity_detail",key)
-                        .or().like("activity_label",key);
-                for(String keyword : keywords){
-                    queryWrapper.or().like("activity_title",keyword)
-                            .or().like("activity_detail",keyword)
-                            .or().like("activity_label",keyword);
+        List<IdAndType> idAndTypeList = new ArrayList<>();
+        for(Integer userId : userIdList){
+            for(Integer type : types){
+                if(TypeEnum.isActivity(type)){
+//                    QueryWrapper<Activity> queryWrapper = new QueryWrapper<Activity>()
+//                            .select("id")
+//                            .eq("activity_owner_id",userId)
+//                            .like("activity_title",key)
+//                            .or().like("activity_detail",key)
+//                            .or().like("activity_label",key);
+//                    for(String keyword : keywords){
+//                        queryWrapper.or().like("activity_title",keyword)
+//                                .or().like("activity_detail",keyword)
+//                                .or().like("activity_label",keyword);
+//                    }
+//                    List<Activity> activityList = activityService.list(queryWrapper);
+                    List<Activity> activityList = activityMapper.search(userId, key, keywords);
+                    for(Activity activity:activityList){
+                        Integer id = activity.getId();
+                        idAndTypeList.add(new IdAndType(id,type));
+                    }
                 }
-                List<Activity> activityList = activityService.list(queryWrapper);
-                for(Activity activity:activityList){
-                    Integer id = activity.getId();
-                    idAndTypeList.add(new IdAndType(id,type));
+                else if(TypeEnum.isHelp(type)){
+//                    QueryWrapper<Help> queryWrapper = new QueryWrapper<Help>()
+//                            .select("id")
+//                            .eq("help_owner_id",userId)
+//                            .like("help_title",key)
+//                            .or().like("help_detail",key)
+//                            .or().like("help_label",key);
+//                    for(String keyword : keywords){
+//                        queryWrapper.or().like("help_title",keyword)
+//                                .or().like("help_detail",keyword)
+//                                .or().like("help_label",keyword);
+//                    }
+//                    List<Help> helpList = helpService.list(queryWrapper);
+                    List<Help> helpList = helpMapper.search(userId, key, keywords);
+                    for(Help help:helpList) {
+                        Integer id = help.getId();
+                        idAndTypeList.add(new IdAndType(id,type));
+                    }
                 }
-            }
-            else if(TypeEnum.isHelp(type)){
-                QueryWrapper<Help> queryWrapper = new QueryWrapper<Help>()
-                        .select("id")
-                        .like("help_title",key)
-                        .or().like("help_detail",key)
-                        .or().like("help_label",key);
-                for(String keyword : keywords){
-                    queryWrapper.or().like("help_title",keyword)
-                            .or().like("help_detail",keyword)
-                            .or().like("help_label",keyword);
-                }
-                List<Help> helpList = helpService.list(queryWrapper);
-                for(Help help:helpList) {
-                    Integer id = help.getId();
-                    idAndTypeList.add(new IdAndType(id,type));
-                }
-            }
-            else{
-                QueryWrapper<Hole> queryWrapper = new QueryWrapper<Hole>()
-                        .select("id")
-                        .like("hole_title",key)
-                        .or().like("hole_detail",key)
-                        .or().like("hole_label",key);
-                for(String keyword : keywords){
-                    queryWrapper.or().like("hole_title",keyword)
-                            .or().like("hole_detail",keyword)
-                            .or().like("hole_label",keyword);
-                }
-                List<Hole> holeList = holeService.list(queryWrapper);
-                for(Hole hole:holeList) {
-                    Integer id = hole.getId();
-                    idAndTypeList.add(new IdAndType(id,type));
+                else{
+//                    QueryWrapper<Hole> queryWrapper = new QueryWrapper<Hole>()
+//                            .select("id")
+//                            .eq("hole_owner_id",userId)
+//                            .like("hole_title",key)
+//                            .or().like("hole_detail",key)
+//                            .or().like("hole_label",key);
+//                    for(String keyword : keywords){
+//                        queryWrapper.or().like("hole_title",keyword)
+//                                .or().like("hole_detail",keyword)
+//                                .or().like("hole_label",keyword);
+//                    }
+//                    List<Hole> holeList = holeService.list(queryWrapper);
+                    List<Hole> holeList = holeMapper.search(userId, key, keywords);
+                    for(Hole hole:holeList) {
+                        Integer id = hole.getId();
+                        idAndTypeList.add(new IdAndType(id,type));
+                    }
                 }
             }
         }
-        idAndTypes.setIdAndTypeList(idAndTypeList);
-        return ResultUtil.ok(SUCCESS_GET_DATA, idAndTypes,"数据查询成功！");
+        List<DetailResponse> detailResponses = listDetailResponse(idAndTypeList);
+        return ResultUtil.ok(SUCCESS_GET_DATA, detailResponses,"数据查询成功！");
     }
 
     @Override
@@ -217,11 +274,29 @@ public class GeneralServiceImpl implements GeneralService {
 
             //插入评论（仅插入）
             boolean result = remarkActivityService.save(remarkActivity);
-
-            if(!result)
+            if(!result){
                 return ResultUtil.fail("评论失败！");
-            else
+            }
+            else{
+                QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
+                        .eq("user_id",UserHolder.getUser().getId())
+                        .eq("topic_type",TypeEnum.ACTIVITY.ordinal())
+                        .eq("topic_id",remarkActivity.getRemarkActivityId());
+                History oldHistory = historyService.getOne(historyQueryWrapper);
+                if(oldHistory!=null){
+                    oldHistory.setIsInvolved(1);
+                    historyService.saveOrUpdate(oldHistory);
+                }
+                else{
+                    History history = new History();
+                    history.setUserId(UserHolder.getUser().getId());
+                    history.setTopicType(TypeEnum.ACTIVITY.ordinal());
+                    history.setTopicId(remarkActivity.getRemarkActivityId());
+                    history.setIsInvolved(1);
+                    historyService.saveOrUpdate(history);
+                }
                 return ResultUtil.fail("评论成功！");
+            }
         }
         else if(TypeEnum.isHelp(type)){
             RemarkHelp remarkHelp = remarkRequest.getRemarkHelp();
@@ -242,13 +317,30 @@ public class GeneralServiceImpl implements GeneralService {
 
             if(!result)
                 return ResultUtil.fail("评论失败！");
-            else
+            else {
+                QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
+                        .eq("user_id", UserHolder.getUser().getId())
+                        .eq("topic_type", TypeEnum.HELP.ordinal())
+                        .eq("topic_id", remarkHelp.getRemarkHelpId());
+                History oldHistory = historyService.getOne(historyQueryWrapper);
+                if (oldHistory != null) {
+                    oldHistory.setIsInvolved(1);
+                    historyService.saveOrUpdate(oldHistory);
+                } else {
+                    History history = new History();
+                    history.setUserId(UserHolder.getUser().getId());
+                    history.setTopicType(TypeEnum.HELP.ordinal());
+                    history.setTopicId(remarkHelp.getRemarkHelpId());
+                    history.setIsInvolved(1);
+                    historyService.saveOrUpdate(history);
+                }
                 return ResultUtil.fail("评论成功！");
+            }
         }
-        else{
+        else {
             RemarkHole remarkHole = remarkRequest.getRemarkHole();
-            if(ObjectUtils.anyNull(remarkHole))
-                return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
+            if (ObjectUtils.anyNull(remarkHole))
+                return ResultUtil.fail(ERROR_PARAMS, "参数不合法");
 
             // 设置评论用户者id
             remarkHole.setRemarkOwnerId(UserHolder.getUser().getId());
@@ -262,12 +354,29 @@ public class GeneralServiceImpl implements GeneralService {
             //插入评论
             boolean result = remarkHoleService.save(remarkHole);
 
-            if(!result)
+            if (!result)
                 return ResultUtil.fail("评论失败！");
-            else
+            else {
+                QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
+                        .eq("user_id", UserHolder.getUser().getId())
+                        .eq("topic_type", TypeEnum.HOLE.ordinal())
+                        .eq("topic_id", remarkHole.getRemarkHoleId());
+                History oldHistory = historyService.getOne(historyQueryWrapper);
+                if (oldHistory != null) {
+                    oldHistory.setIsInvolved(1);
+                    historyService.saveOrUpdate(oldHistory);
+                }
+                else{
+                    History history = new History();
+                    history.setUserId(UserHolder.getUser().getId());
+                    history.setTopicType(TypeEnum.HOLE.ordinal());
+                    history.setTopicId(remarkHole.getRemarkHoleId());
+                    history.setIsInvolved(1);
+                    historyService.saveOrUpdate(history);
+                }
                 return ResultUtil.fail("评论成功！");
+            }
         }
-
     }
 
     @Override
@@ -389,5 +498,66 @@ public class GeneralServiceImpl implements GeneralService {
         }
 
         return userIdList;
+    }
+
+    @Override
+    public List<DetailResponse> listDetailResponse(List<IdAndType> idAndTypes) {
+        if(idAndTypes==null) return null;
+        List<DetailResponse> detailResponses = new ArrayList<>();
+        for(IdAndType idAndType : idAndTypes){
+            Integer type = idAndType.getType();
+            Integer id = idAndType.getId();
+            if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
+                continue;
+            }
+            //获取该话题对应的的图片URL列表
+            ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
+            if(ObjectUtils.anyNull(imagesUrl)){
+                imagesUrl = new ArrayList<>();
+            }
+            //判断请求哪种话题的详情并执行相应操作
+            if(TypeEnum.isActivity(type)){
+                Activity activity = activityService.getBaseMapper().selectById(id);
+                if(!ObjectUtils.anyNull(activity)){
+                    ActivityServiceImpl activityServiceImpl = (ActivityServiceImpl)activityService;
+                    ActivityVO activityVO = activityServiceImpl.traverseActivity(activity);
+                    String publisherAvatarUrl = imageService.getById(activityVO.getAvatar()).getImageUrl();
+                    DetailResponse detailResponse = new DetailResponse();
+                    detailResponse.setActivityVO(activityVO);
+                    detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+                    detailResponse.setImagesUrl(imagesUrl);
+                    detailResponses.add(detailResponse);
+                }
+            }
+            else if(TypeEnum.isHelp(type)){
+                Help help = helpService.getById(id);
+                if(!ObjectUtils.anyNull(help)){
+                    HelpServiceImpl helpServiceImpl = (HelpServiceImpl)helpService;
+                    HelpVO helpVO = helpServiceImpl.traverseHelp(help);
+                    String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();
+                    DetailResponse detailResponse = new DetailResponse();
+                    detailResponse.setHelpVO(helpVO);
+                    detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+                    detailResponse.setImagesUrl(imagesUrl);
+                    detailResponse.setImagesUrl(imagesUrl);
+                    detailResponses.add(detailResponse);
+                }
+            }
+            else {
+                Hole hole = holeService.getById(id);
+                if(!ObjectUtils.anyNull(hole)) {
+                    HoleServiceImpl holeServiceImpl = (HoleServiceImpl)holeService;
+                    HoleVO holeVO = holeServiceImpl.traverseHole(hole);
+                    String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();
+                    DetailResponse detailResponse = new DetailResponse();
+                    detailResponse.setHoleVO(holeVO);
+                    detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+                    detailResponse.setImagesUrl(imagesUrl);
+                    detailResponse.setImagesUrl(imagesUrl);
+                    detailResponses.add(detailResponse);
+                }
+            }
+        }
+        return detailResponses;
     }
 }

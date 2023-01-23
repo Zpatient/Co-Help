@@ -34,7 +34,7 @@
         order by (4*hole_like+3*hole_comment+3*hole_collect) desc
     </select>
     <select id="search" resultType="com.cohelp.server.model.entity.Hole">
-        select <include refid="Base_Column_List"></include>
+        select id
         from hole
         where hole_owner_id = #{userId} and (
         hole_title like CONCAT(CONCAT('%', #{key}), '%')

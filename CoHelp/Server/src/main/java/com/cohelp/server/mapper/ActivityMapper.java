@@ -11,6 +11,7 @@ import java.util.List;
 * @createDate 2022-10-21 21:22:49
 * @Entity com.cohelp.server.model.entity.Activity
 */
+
 public interface ActivityMapper extends BaseMapper<Activity> {
 
     /**

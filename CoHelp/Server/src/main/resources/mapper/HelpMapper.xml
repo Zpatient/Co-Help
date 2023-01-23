@@ -35,7 +35,7 @@
         order by (4*help_like+3*help_comment+3*help_collect) desc
     </select>
     <select id="search" resultType="com.cohelp.server.model.entity.Help">
-        select <include refid="Base_Column_List"></include>
+        select id
         from help
         where help_owner_id = #{userId} and (
         help_title like CONCAT(CONCAT('%', #{key}), '%')

@@ -185,18 +185,6 @@ public class GeneralServiceImpl implements GeneralService {
         for(Integer userId : userIdList){
             for(Integer type : types){
                 if(TypeEnum.isActivity(type)){
-//                    QueryWrapper<Activity> queryWrapper = new QueryWrapper<Activity>()
-//                            .select("id")
-//                            .eq("activity_owner_id",userId)
-//                            .like("activity_title",key)
-//                            .or().like("activity_detail",key)
-//                            .or().like("activity_label",key);
-//                    for(String keyword : keywords){
-//                        queryWrapper.or().like("activity_title",keyword)
-//                                .or().like("activity_detail",keyword)
-//                                .or().like("activity_label",keyword);
-//                    }
-//                    List<Activity> activityList = activityService.list(queryWrapper);
                     List<Activity> activityList = activityMapper.search(userId, key, keywords);
                     for(Activity activity:activityList){
                         Integer id = activity.getId();
@@ -204,18 +192,6 @@ public class GeneralServiceImpl implements GeneralService {
                     }
                 }
                 else if(TypeEnum.isHelp(type)){
-//                    QueryWrapper<Help> queryWrapper = new QueryWrapper<Help>()
-//                            .select("id")
-//                            .eq("help_owner_id",userId)
-//                            .like("help_title",key)
-//                            .or().like("help_detail",key)
-//                            .or().like("help_label",key);
-//                    for(String keyword : keywords){
-//                        queryWrapper.or().like("help_title",keyword)
-//                                .or().like("help_detail",keyword)
-//                                .or().like("help_label",keyword);
-//                    }
-//                    List<Help> helpList = helpService.list(queryWrapper);
                     List<Help> helpList = helpMapper.search(userId, key, keywords);
                     for(Help help:helpList) {
                         Integer id = help.getId();
@@ -223,18 +199,6 @@ public class GeneralServiceImpl implements GeneralService {
                     }
                 }
                 else{
-//                    QueryWrapper<Hole> queryWrapper = new QueryWrapper<Hole>()
-//                            .select("id")
-//                            .eq("hole_owner_id",userId)
-//                            .like("hole_title",key)
-//                            .or().like("hole_detail",key)
-//                            .or().like("hole_label",key);
-//                    for(String keyword : keywords){
-//                        queryWrapper.or().like("hole_title",keyword)
-//                                .or().like("hole_detail",keyword)
-//                                .or().like("hole_label",keyword);
-//                    }
-//                    List<Hole> holeList = holeService.list(queryWrapper);
                     List<Hole> holeList = holeMapper.search(userId, key, keywords);
                     for(Hole hole:holeList) {
                         Integer id = hole.getId();

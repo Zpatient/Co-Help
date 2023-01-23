@@ -10,34 +10,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson2_fastjson2_2_0_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson2_fastjson2_extension_2_0_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_2_0_9.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_houbb_heaven_0_1_154.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_houbb_nlp_common_0_0_4.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_houbb_opencc4j_1_7_2.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_houbb_sensitive_word_0_2_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_1_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apiguardian_apiguardian_api_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HistoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/config/WebConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/GeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/GeneralController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/ActivityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/ActivityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/HelpMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/HelpMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/HoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/HoleMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/History.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/History.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/GeneralService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/GeneralService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HistoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CollectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CollectServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HistoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HistoryServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/RemarkLikeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/RemarkLikeServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/ActivityMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/ActivityMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HelpMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HelpMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HoleMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/test/java/com/cohelp/server/SensitiveWordTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,8 +91,8 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
-    <property name="RequestMappingsPanelWidth0" value="75" />
-    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelWidth0" value="15" />
+    <property name="RequestMappingsPanelWidth1" value="15" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -372,14 +355,7 @@
       <workItem from="1673681360566" duration="180000" />
       <workItem from="1673873591362" duration="2920000" />
       <workItem from="1674220247392" duration="1213000" />
-      <workItem from="1674455074524" duration="30242000" />
-    </task>
-    <task id="LOCAL-00018" summary="inform commit">
-      <created>1666277581616</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1666277581616</updated>
+      <workItem from="1674455074524" duration="36031000" />
     </task>
     <task id="LOCAL-00019" summary="changepassword interfaces modified commit">
       <created>1666347345312</created>
@@ -717,7 +693,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668671197793</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="update search and history interfaces">
+      <created>1674504966318</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1674504966319</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -749,7 +732,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="changePassword second Commit" />
     <MESSAGE value="changePassword third Commit" />
     <MESSAGE value="changePassword fourth Commit" />
     <MESSAGE value="changePassword fifth Commit" />
@@ -774,7 +756,8 @@
     <MESSAGE value="modify remark impl" />
     <MESSAGE value="modify methods name" />
     <MESSAGE value="update datasource config" />
-    <option name="LAST_COMMIT_MESSAGE" value="update datasource config" />
+    <MESSAGE value="update search and history interfaces" />
+    <option name="LAST_COMMIT_MESSAGE" value="update search and history interfaces" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -782,7 +765,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/RemarkLikeServiceImpl.java</url>
-          <line>75</line>
+          <line>74</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>

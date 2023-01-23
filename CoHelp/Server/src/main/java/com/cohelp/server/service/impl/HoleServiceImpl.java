@@ -8,6 +8,7 @@ import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
+import com.cohelp.server.service.GeneralService;
 import com.cohelp.server.service.HoleService;
 import com.cohelp.server.mapper.HoleMapper;
 import com.cohelp.server.service.ImageService;
@@ -50,6 +51,9 @@ public class HoleServiceImpl
 
     @Resource
     private HoleMapper holeMapper;
+
+    @Resource
+    private GeneralService generalService;
 
     @Resource
     private FileUtils fileUtils;
@@ -176,6 +180,10 @@ public class HoleServiceImpl
 
     @Override
     public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
+
+        // 获取同团体的用户 id 数组
+        List<Integer> userIdList = generalService.getUserIdList();
+
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
@@ -184,7 +192,7 @@ public class HoleServiceImpl
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Hole> holeList = holeMapper.listByHot();
+            List<Hole> holeList = holeMapper.listByHot(userIdList);
             if (holeList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
@@ -198,6 +206,7 @@ public class HoleServiceImpl
             //  按发布时间排序
             QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
             holeQueryWrapper.orderByDesc("hole_create_time");
+            holeQueryWrapper.in("hole_owner_id", userIdList);
             List<Hole> holeList = holeMapper.selectList(holeQueryWrapper);
             if (holeList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");

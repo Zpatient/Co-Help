@@ -11,20 +11,23 @@
             <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
             <result property="avatar" column="avatar" jdbcType="INTEGER"/>
             <result property="sex" column="sex" jdbcType="TINYINT"/>
-            <result property="phoneNumber" column="phoneNumber" jdbcType="VARCHAR"/>
-            <result property="age" column="age" jdbcType="INTEGER"/>
-            <result property="school" column="school" jdbcType="VARCHAR"/>
+            <result property="phoneNumber" column="phone_number" jdbcType="VARCHAR"/>
+            <result property="userEmail" column="user_email" jdbcType="VARCHAR"/>
             <result property="userRole" column="user_role" jdbcType="TINYINT"/>
             <result property="state" column="state" jdbcType="TINYINT"/>
             <result property="userCreateTime" column="user_create_time" jdbcType="TIMESTAMP"/>
+            <result property="age" column="age" jdbcType="INTEGER"/>
+            <result property="teamId" column="team_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,use_account,user_name,
+        id,user_account,user_name,
         user_password,avatar,sex,
-        phoneNumber,age,school,
-        user_role,state,user_create_time
+        phone_number,user_email,user_role,
+        state,user_create_time,age,
+        team_id
     </sql>
+
     <select id="getEmailByUserAccount" resultType="java.lang.String">
         select user_email from user where user_account = #{userAcount}
     </select>

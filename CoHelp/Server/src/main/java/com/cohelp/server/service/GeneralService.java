@@ -5,6 +5,8 @@ import com.cohelp.server.model.domain.RemarkRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.SearchRequest;
 
+import java.util.List;
+
 /**
  * @author zgy
  * @create 2022-10-23 15:43
@@ -46,5 +48,11 @@ public interface GeneralService{
      * @return com.cohelp.server.model.domain.Result
      */
     Result listRemark(IdAndType idAndType);
+
+    /**
+     * 返回组织用户 Id 数组
+     * @return
+     */
+    List<Integer> getUserIdList();
 
 }

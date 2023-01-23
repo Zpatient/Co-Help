@@ -28,6 +28,10 @@
     <select id="listByHot" resultType="com.cohelp.server.model.entity.Help">
         select <include refid="Base_Column_List"></include>
         from help
+        where help_owner_id in
+        <foreach collection="userIdList" item="id" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
         order by (4*help_like+3*help_comment+3*help_collect) desc
     </select>
 </mapper>

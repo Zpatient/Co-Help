@@ -46,6 +46,10 @@ public class GeneralServiceImpl implements GeneralService {
     RemarkHelpService remarkHelpService;
     @Resource
     RemarkHoleService remarkHoleService;
+
+    @Resource
+    private UserService userService;
+
     @Override
     public Result getDetail(IdAndType idAndType) {
         //判断参数合法性
@@ -365,5 +369,25 @@ public class GeneralServiceImpl implements GeneralService {
             buffer.setLength(buffer.length() - 1);
         }
         return buffer.toString();
+    }
+
+    @Override
+    public List<Integer> getUserIdList() {
+        // 获取当前用户的组织id
+        User currentUser = UserHolder.getUser();
+        Integer teamId = currentUser.getTeamId();
+
+        // 获取该组织的所有成员
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("team_id", teamId).or().eq("team_id", 1);
+        List<User> userList = userService.list(queryWrapper);
+
+        // 获取该组织的所有成员的 id 数组
+        List<Integer> userIdList = new ArrayList<>();
+        for (User user : userList) {
+            userIdList.add(user.getId());
+        }
+
+        return userIdList;
     }
 }

@@ -15,9 +15,10 @@ public interface HoleMapper extends BaseMapper<Hole> {
 
     /**
      * 根据热度排序查询树洞
+     * @param userIdList
      * @return
      */
-    List<Hole> listByHot();
+    List<Hole> listByHot(List<Integer> userIdList);
 }
 
 

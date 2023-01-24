@@ -33,12 +33,10 @@ import java.util.List;
     首页
  */
 public class TaskCenterActivity extends BaseActivity {
-    LinearLayout questionCenter;
+    LinearLayout HelpCenter;
     LinearLayout TaskCenter;
+    LinearLayout HoleCenter;
     LinearLayout UserCenter;
-    TextView act;
-    TextView help;
-    TextView tree;
     EditText searchedContent;
     ImageView searchBtn;
     SwipeRefreshLayout eSwipeRefreshLayout;
@@ -64,10 +62,10 @@ public class TaskCenterActivity extends BaseActivity {
             }
         });
 
-        questionCenter.setOnClickListener(new View.OnClickListener() {
+        HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toQuestionCenterActivity();
+                toHelpCenterActivity();
             }
         });
 
@@ -84,6 +82,10 @@ public class TaskCenterActivity extends BaseActivity {
                 toUserCenterActivity();
             }
         });
+        HoleCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {toHoleCenterActivity();}
+        });
 
 //        all.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -93,69 +95,69 @@ public class TaskCenterActivity extends BaseActivity {
 //            }
 //        });
 
-        help.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 展示互助
-                startLoadingProgress();
-                taskBiz.searchByState(Config.TASK_HELP, new CommonCallback<List<Task>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(List<Task> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
-        tree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 展示树洞界面
-                startLoadingProgress();
-                taskBiz.searchByState(Config.TASK_TREE, new CommonCallback<List<Task>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(List<Task> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
-        act.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 展示活动页面
-                startLoadingProgress();
-                taskBiz.searchByState(Config.TASK_ACTIVITY, new CommonCallback<List<Task>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(List<Task> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询成功!");
-                        updateList(response);
-                    }
-                });
-            }
-        });
+//        help.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 展示互助
+//                startLoadingProgress();
+//                taskBiz.searchByState(Config.TASK_HELP, new CommonCallback<List<Task>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<Task> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
+//        tree.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 展示树洞界面
+//                startLoadingProgress();
+//                taskBiz.searchByState(Config.TASK_TREE, new CommonCallback<List<Task>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<Task> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
+//        act.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 展示活动页面
+//                startLoadingProgress();
+//                taskBiz.searchByState(Config.TASK_ACTIVITY, new CommonCallback<List<Task>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<Task> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询成功!");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -241,12 +243,13 @@ public class TaskCenterActivity extends BaseActivity {
     }
 
     private void initView() {
-        questionCenter = findViewById(R.id.id_ll_questionCenter);
+        HoleCenter = findViewById(R.id.id_ll_holeCenter);
+        HelpCenter = findViewById(R.id.id_ll_helpCenter);
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
-        act = findViewById(R.id.id_tv_activity);
-        help = findViewById(R.id.id_tv_help);
-        tree = findViewById(R.id.id_tv_treehole);
+//        act = findViewById(R.id.id_tv_activity);
+//        help = findViewById(R.id.id_tv_help);
+//        tree = findViewById(R.id.id_tv_treehole);
         searchedContent = findViewById(R.id.id_et_search);
         searchBtn = findViewById(R.id.id_iv_search);
         eSwipeRefreshLayout = findViewById(R.id.id_swiperefresh);
@@ -275,9 +278,12 @@ public class TaskCenterActivity extends BaseActivity {
         finish();
     }
 
-    private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+    private void toHelpCenterActivity() {
+        Intent intent = new Intent(this, HelpCenterActivity.class);
         startActivity(intent);
         finish();
+    }
+    private void toHoleCenterActivity(){
+
     }
 }

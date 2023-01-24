@@ -1,7 +1,5 @@
 package com.cohelp.task_for_stu.ui.activity.user;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -75,7 +73,7 @@ public class PublishManageActivity extends BaseActivity {
     }
 
     private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+        Intent intent = new Intent(this, HelpCenterActivity.class);
         startActivity(intent);
         finish();
     }

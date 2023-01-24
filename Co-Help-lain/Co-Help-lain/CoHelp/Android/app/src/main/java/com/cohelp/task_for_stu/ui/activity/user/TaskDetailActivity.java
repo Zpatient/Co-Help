@@ -305,7 +305,7 @@ public class TaskDetailActivity extends BaseActivity {
     }
 
     private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+        Intent intent = new Intent(this, HelpCenterActivity.class);
         startActivity(intent);
         finish();
     }

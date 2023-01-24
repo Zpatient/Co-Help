@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyTaskActivity extends BaseActivity {
-    LinearLayout questionCenter;
+    LinearLayout HoleCenter;
+    LinearLayout HelpCenter;
     LinearLayout TaskCenter;
     LinearLayout UserCenter;
     TextView all;
@@ -47,11 +48,15 @@ public class MyTaskActivity extends BaseActivity {
 
     private void initEvent() {
 
-        questionCenter.setOnClickListener(new View.OnClickListener() {
+        HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toQuestionCenterActivity();
+                toHelpCenterActivity();
             }
+        });
+        HoleCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {toHoleCenterActivity();}
         });
 
         TaskCenter.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +153,8 @@ public class MyTaskActivity extends BaseActivity {
     }
 
     private void initView() {
-        questionCenter = findViewById(R.id.id_ll_questionCenter);
+        HelpCenter = findViewById(R.id.id_ll_helpCenter);
+        HoleCenter = findViewById(R.id.id_ll_holeCenter);
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
         all = findViewById(R.id.id_tv_all);
@@ -174,8 +180,14 @@ public class MyTaskActivity extends BaseActivity {
         finish();
     }
 
-    private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+    private void toHelpCenterActivity() {
+        Intent intent = new Intent(this, HelpCenterActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void toHoleCenterActivity(){
+        Intent intent = new Intent(this,HoleCenterActivity.class);
         startActivity(intent);
         finish();
     }

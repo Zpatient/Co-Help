@@ -23,7 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyQuestionActivity extends BaseActivity {
-    LinearLayout questionCenter;
+    LinearLayout HoleCenter;
+    LinearLayout HelpCenter;
     LinearLayout TaskCenter;
     LinearLayout UserCenter;
     TextView all;
@@ -39,7 +40,7 @@ public class MyQuestionActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_question);
         setUpToolBar();
-        setTitle("我的问答");
+        setTitle("我的参与");
         initView();
         initEvent();
         loadAll();
@@ -47,7 +48,7 @@ public class MyQuestionActivity extends BaseActivity {
 
     private void initEvent() {
 
-        questionCenter.setOnClickListener(new View.OnClickListener() {
+        HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toQuestionCenterActivity();
@@ -148,7 +149,8 @@ public class MyQuestionActivity extends BaseActivity {
     }
 
     private void initView() {
-        questionCenter = findViewById(R.id.id_ll_questionCenter);
+        HelpCenter = findViewById(R.id.id_ll_helpCenter);
+        HoleCenter = findViewById(R.id.id_ll_holeCenter);
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
 
@@ -176,7 +178,7 @@ public class MyQuestionActivity extends BaseActivity {
     }
 
     private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+        Intent intent = new Intent(this, HelpCenterActivity.class);
         startActivity(intent);
         finish();
     }

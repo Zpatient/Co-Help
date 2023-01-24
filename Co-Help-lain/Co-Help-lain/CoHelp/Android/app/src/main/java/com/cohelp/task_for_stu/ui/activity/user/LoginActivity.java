@@ -74,7 +74,9 @@ public class LoginActivity extends BaseActivity {
         setUpToolBar();
         setTitle("登录");
 //        new Thread(()-> {
-//            loginRequest = new LoginRequest();loginRequest.setUserAccount(username.getText().toString());loginRequest.setUserPassword( password.getText().toString());
+//            loginRequest = new LoginRequest();
+//            loginRequest.setUserAccount(username.getText().toString());
+//            loginRequest.setUserPassword( password.getText().toString());
 //            loginRequest.setUserAccount("1234567890");
 //            loginRequest.setUserPassword( "1234567890");
 //            String loginMessage = ToJsonString.toJson(loginRequest);
@@ -123,9 +125,11 @@ public class LoginActivity extends BaseActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    loginRequest = new LoginRequest();loginRequest.setUserAccount(username.getText().toString());loginRequest.setUserPassword( password.getText().toString());
-                    loginRequest.setUserAccount("1234567890");//debug
-                    loginRequest.setUserPassword( "1234567890");//debug
+//                    loginRequest = new LoginRequest();
+//                    loginRequest.setUserAccount(username.getText().toString());
+//                    loginRequest.setUserPassword( password.getText().toString());
+//                    loginRequest.setUserAccount("1234567890");//debug
+//                    loginRequest.setUserPassword( "1234567890");//debug
                     if(StringUtils.isEmpty(loginRequest.getUserAccount()) || StringUtils.isEmpty(loginRequest.getUserPassword())){
                         T.showToast("密码或账号不能为空哦~");
                         return;

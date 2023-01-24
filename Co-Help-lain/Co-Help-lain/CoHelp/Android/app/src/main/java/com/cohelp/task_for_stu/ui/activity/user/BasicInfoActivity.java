@@ -2,9 +2,6 @@ package com.cohelp.task_for_stu.ui.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,7 +16,6 @@ import com.cohelp.task_for_stu.biz.UserBiz;
 import com.cohelp.task_for_stu.config.Config;
 import com.cohelp.task_for_stu.listener.ClickListener;
 import com.cohelp.task_for_stu.net.CommonCallback;
-import com.cohelp.task_for_stu.net.model.domain.Result;
 import com.cohelp.task_for_stu.ui.CircleTransform;
 import com.cohelp.task_for_stu.ui.activity.BaseActivity;
 import com.cohelp.task_for_stu.utils.T;
@@ -30,8 +26,6 @@ import com.squareup.picasso.Picasso;
  */
 public class BasicInfoActivity extends BaseActivity {
     ImageView icon;
-    ImageView qs;
-    ImageView tk;
     TextView nickname;
     TextView grade;
     TextView logOut;
@@ -40,11 +34,13 @@ public class BasicInfoActivity extends BaseActivity {
     TextView Setting;
     TextView Publish_manage;
     TextView Collect;
-    LinearLayout myTask;
-    LinearLayout myQuestion;
-    LinearLayout questionCenter;
+    ImageView myTask;
+    ImageView myQuestion;
+    ImageView myCollect;
     LinearLayout TaskCenter;
     LinearLayout UserCenter;
+    LinearLayout HelpCenter;
+    LinearLayout HoleCenter;
     User user;
 
     com.cohelp.task_for_stu.net.model.entity.User transferUser;
@@ -62,18 +58,16 @@ public class BasicInfoActivity extends BaseActivity {
         nickname = findViewById(R.id.id_tv_nickname);
         grade = findViewById(R.id.id_tv_grade);
         logOut = findViewById(R.id.id_tv_logout);
-        myTask = findViewById(R.id.id_ll_myTask);
-        myQuestion = findViewById(R.id.id_ll_myQuestion);
-        questionCenter = findViewById(R.id.id_ll_questionCenter);
+        myTask = findViewById(R.id.id_mytask);
+        myQuestion = findViewById(R.id.id_myQuestion);
+        myCollect = findViewById(R.id.id_mycollect);
+        HoleCenter = findViewById(R.id.id_ll_holeCenter);
+        HelpCenter = findViewById(R.id.id_ll_helpCenter);
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
-        qs = findViewById(R.id.id_qs);
-        tk = findViewById(R.id.id_tk);
+
         Browsing_history = findViewById(R.id.id_tv_browsing_history);
         Personal_homepage = findViewById(R.id.id_tv_personal_homepage);
-        Setting = findViewById(R.id.id_tv_setting);
-        Publish_manage = findViewById(R.id.id_tv_publish_manage);
-        Collect = findViewById(R.id.id_tv_mycollect);
         userBiz = new UserBiz();
         Intent intent = getIntent();
 
@@ -135,13 +129,16 @@ public class BasicInfoActivity extends BaseActivity {
             }
         });
 
-        questionCenter.setOnClickListener(new View.OnClickListener() {
+        HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toQuestionCenterActivity();
+                toHelpCenterActivity();
             }
         });
-
+        HoleCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {toHoleCenterActivity();}
+        });
         TaskCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -211,10 +208,13 @@ public class BasicInfoActivity extends BaseActivity {
         finish();
     }
 
-    private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+    private void toHelpCenterActivity() {
+        Intent intent = new Intent(this, HelpCenterActivity.class);
         startActivity(intent);
         finish();
+    }
+    private void toHoleCenterActivity(){
+
     }
 
     private void toMyQuestionActivity() {

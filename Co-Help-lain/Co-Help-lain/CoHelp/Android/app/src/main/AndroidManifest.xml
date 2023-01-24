@@ -28,22 +28,25 @@
         android:usesCleartextTraffic="true"
         tools:ignore="ExtraText">
         <activity
-            android:name=".MyCollectActivity"
+            android:name=".ui.activity.user.HoleCenterActivity"
             android:exported="false" />
         <activity
-            android:name=".PublishManageActivity"
+            android:name=".ui.activity.user.MyCollectActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".ui.activity.user.PublishManageActivity"
             android:exported="false" />
         <activity
-            android:name=".Setting"
+            android:name=".ui.activity.user.SettingActivity"
             android:exported="false" />
         <activity
-            android:name=".PersonalHomepageActivity"
+            android:name=".ui.activity.user.SettingUserActivity"
             android:exported="false" />
         <activity
-            android:name=".HistoryActivity"
+            android:name=".ui.activity.user.PersonalHomepageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.user.HistoryActivity"
             android:exported="false"
             android:label="@string/title_activity_history"
             android:theme="@style/Theme.Task_for_stu.NoActionBar" />
@@ -63,67 +66,64 @@
             android:name="com.cohelp.task_for_stu.ui.activity.manager.ManagerTaskCenterActivity"
             android:exported="false" />
         <activity
-            android:name=".TaskDetailActivity"
+            android:name=".ui.activity.user.TaskDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateNewTaskActivity"
+            android:name=".ui.activity.user.CreateNewTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".ItemQuestionDetailsActivity"
+            android:name=".ui.activity.user.ItemQuestionDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".CreateNewQuestionActivity"
+            android:name=".ui.activity.user.CreateNewQuestionActivity"
             android:exported="false" />
         <activity
-            android:name=".TaskCenterActivity"
+            android:name=".ui.activity.user.TaskCenterActivity"
             android:exported="false" />
         <activity
-            android:name=".QuestionCenterActivity"
+            android:name=".ui.activity.user.HelpCenterActivity"
             android:exported="false" />
         <activity
-            android:name=".MyQuestionActivity"
+            android:name=".ui.activity.user.MyQuestionActivity"
             android:exported="false" />
         <activity
-            android:name=".MyTaskActivity"
+            android:name=".ui.activity.user.MyTaskActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingUserActivity"
+            android:name=".ui.activity.user.BasicInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".BasicInfoActivity"
+            android:name=".ui.activity.user.PasswordFoundActivity"
             android:exported="false" />
         <activity
-            android:name=".PasswordFoundActivity"
+            android:name=".ui.activity.user.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.activity.user.ActSummaryActivity"
             android:exported="false" />
         <activity
-            android:name=".ActSummaryActivity"
+            android:name=".ui.activity.user.MutualSummaryActivity"
             android:exported="false" />
         <activity
-            android:name=".MutualSummaryActivity"
+            android:name=".ui.activity.user.ReportActivity"
             android:exported="false" />
         <activity
-            android:name=".ReportActivity"
+            android:name=".ui.activity.user.MutualReleaseActivity"
             android:exported="false" />
         <activity
-            android:name=".MutualReleaseActivity"
+            android:name=".ui.activity.user.TreeholeReleaseActivity"
             android:exported="false" />
         <activity
-            android:name=".TreeholeReleaseActivity"
+            android:name=".ui.activity.user.TreeholeSummaryActivity"
             android:exported="false" />
         <activity
-            android:name=".TreeholeSummaryActivity"
+            android:name=".ui.activity.user.EventReleaseActivity"
             android:exported="false" />
         <activity
-            android:name=".EventReleaseActivity"
+            android:name=".ui.activity.user.DetailActivity"
             android:exported="false" />
         <activity
-            android:name=".DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activity.user.LoginActivity"
             android:exported="true"
             android:theme="@style/Theme.Task_for_stu">
             <intent-filter>

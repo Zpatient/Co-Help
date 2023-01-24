@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.activity.user.HelpCenterActivity">
-   <include layout="@layout/sa_toolbar"
+    <include layout="@layout/sa_toolbar"
         />
 
     <RelativeLayout
@@ -34,63 +34,63 @@
 
     </RelativeLayout>
 
-<!--    <LinearLayout-->
-<!--        android:layout_marginTop="15sp"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_gravity="center"-->
-<!--        android:layout_height="wrap_content">-->
-<!--        <TextView-->
-<!--            android:id="@+id/id_tv_activity"-->
-<!--            android:text="活动"-->
-<!--            android:textColor="#1296db"-->
-<!--            android:gravity="center"-->
-<!--            android:textStyle="bold"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
-<!--        <View-->
-<!--            android:layout_width="1dp"-->
+    <!--    <LinearLayout-->
+    <!--        android:layout_marginTop="15sp"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:layout_height="wrap_content">-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/id_tv_activity"-->
+    <!--            android:text="活动"-->
+    <!--            android:textColor="#1296db"-->
+    <!--            android:gravity="center"-->
+    <!--            android:textStyle="bold"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"/>-->
+    <!--        <View-->
+    <!--            android:layout_width="1dp"-->
 
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/lfile_gray"/>-->
-<!--        <TextView-->
-<!--            android:id="@+id/id_tv_help"-->
-<!--            android:textColor="#1296db"-->
-<!--            android:textStyle="bold"-->
-<!--           android:gravity="center"-->
-<!--            android:text="互助"-->
-<!--            android:layout_weight="1"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
-<!--        <View-->
-<!--            android:layout_width="1dp"-->
-<!--            android:layout_marginLeft="0dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@color/lfile_lightgray"/>-->
-<!--        <TextView-->
-<!--            android:id="@+id/id_tv_treehole"-->
-<!--            android:textColor="#1296db"-->
-<!--            android:textStyle="bold"-->
-<!--            android:gravity="center"-->
-<!--            android:layout_weight="1"-->
-<!--            android:text="树洞"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"/>-->
-<!--&lt;!&ndash;        <View&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="1dp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_marginLeft="25sp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:background="@color/lfile_lightgray"/>&ndash;&gt;-->
-<!--&lt;!&ndash;        <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;            android:id="@+id/id_tv_doing"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:textColor="#1296db"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:textStyle="bold"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:text="进行中"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_marginLeft="25sp"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:layout_height="wrap_content"/>&ndash;&gt;-->
-<!--    </LinearLayout>-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@color/lfile_gray"/>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/id_tv_help"-->
+    <!--            android:textColor="#1296db"-->
+    <!--            android:textStyle="bold"-->
+    <!--           android:gravity="center"-->
+    <!--            android:text="互助"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"/>-->
+    <!--        <View-->
+    <!--            android:layout_width="1dp"-->
+    <!--            android:layout_marginLeft="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@color/lfile_lightgray"/>-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/id_tv_treehole"-->
+    <!--            android:textColor="#1296db"-->
+    <!--            android:textStyle="bold"-->
+    <!--            android:gravity="center"-->
+    <!--            android:layout_weight="1"-->
+    <!--            android:text="树洞"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"/>-->
+    <!--&lt;!&ndash;        <View&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_width="1dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_marginLeft="25sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:background="@color/lfile_lightgray"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:id="@+id/id_tv_doing"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:textColor="#1296db"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:textStyle="bold"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:text="进行中"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_marginLeft="25sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_height="wrap_content"/>&ndash;&gt;-->
+    <!--    </LinearLayout>-->
 
 
     <com.cohelp.task_for_stu.ui.view.SwipeRefreshLayout

@@ -1,7 +1,5 @@
 package com.cohelp.task_for_stu.ui.activity.user;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +10,8 @@ import com.cohelp.task_for_stu.ui.activity.BaseActivity;
 
 public class PersonalHomepageActivity extends BaseActivity {
 
-    LinearLayout questionCenter;
+    LinearLayout HoleCenter;
+    LinearLayout HelpCenter;
     LinearLayout TaskCenter;
     LinearLayout UserCenter;
 
@@ -23,17 +22,22 @@ public class PersonalHomepageActivity extends BaseActivity {
         setUpToolBar();
         initView();
         initEvent();
-        setTitle("浏览记录");
+        setTitle("个人主页");
     }
 
 
     private void initEvent(){
 
-        questionCenter.setOnClickListener(new View.OnClickListener() {
+        HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toQuestionCenterActivity();
+                toHelpCenterActivity();
             }
+        });
+
+        HoleCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {toHoleCenterActivity();}
         });
 
         TaskCenter.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +59,8 @@ public class PersonalHomepageActivity extends BaseActivity {
 
 
     private void initView() {
-        questionCenter = findViewById(R.id.id_ll_questionCenter);
+        HelpCenter = findViewById(R.id.id_ll_helpCenter);
+        HoleCenter =findViewById(R.id.id_ll_holeCenter);
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
 
@@ -74,8 +79,13 @@ public class PersonalHomepageActivity extends BaseActivity {
         finish();
     }
 
-    private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+    private void toHelpCenterActivity() {
+        Intent intent = new Intent(this, HelpCenterActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    private void toHoleCenterActivity() {
+        Intent intent = new Intent(this, HoleCenterActivity.class);
         startActivity(intent);
         finish();
     }

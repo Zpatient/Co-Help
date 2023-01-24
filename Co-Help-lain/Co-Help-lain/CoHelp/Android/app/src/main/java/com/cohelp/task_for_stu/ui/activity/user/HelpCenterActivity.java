@@ -32,9 +32,10 @@ import java.util.List;
 /*
 问答中心
  */
-public class QuestionCenterActivity extends BaseActivity {
-    LinearLayout questionCenter;
+public class HelpCenterActivity extends BaseActivity {
+    LinearLayout HelpCenter;
     LinearLayout TaskCenter;
+    LinearLayout HoleCenter;
     LinearLayout UserCenter;
     TextView all;
     TextView waitedSolve;
@@ -50,10 +51,10 @@ public class QuestionCenterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_center);
+        setContentView(R.layout.activity_help_center);
         initView();
         initEvent();
-        setTitle("问答中心");
+        setTitle("互助");
     }
 
     private void initEvent() {
@@ -64,10 +65,10 @@ public class QuestionCenterActivity extends BaseActivity {
             }
         });
 
-        questionCenter.setOnClickListener(new View.OnClickListener() {
+        HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                toQuestionCenterActivity();
+                toHelpCenterActivity();
             }
         });
 
@@ -76,6 +77,11 @@ public class QuestionCenterActivity extends BaseActivity {
             public void onClick(View view) {
                 toTaskCenterActivity();
             }
+        });
+
+        HoleCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {toHoleCenterActivity();}
         });
 
         UserCenter.setOnClickListener(new View.OnClickListener() {
@@ -215,12 +221,13 @@ public class QuestionCenterActivity extends BaseActivity {
     }
 
     private void initView() {
-        questionCenter = findViewById(R.id.id_ll_questionCenter);
+        HoleCenter = findViewById(R.id.id_ll_holeCenter);
+        HelpCenter = findViewById(R.id.id_ll_helpCenter);
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
         all = findViewById(R.id.id_tv_all);
-        waitedSolve = findViewById(R.id.id_tv_waitedSolve);
-        solved = findViewById(R.id.id_tv_solved);
+//        waitedSolve = findViewById(R.id.id_tv_waitedSolve);
+//        solved = findViewById(R.id.id_tv_solved);
         searchedContent = findViewById(R.id.id_et_search);
         searchBtn = findViewById(R.id.id_iv_search);
         eSwipeRefreshLayout = findViewById(R.id.id_swiperefresh);
@@ -255,10 +262,15 @@ public class QuestionCenterActivity extends BaseActivity {
         finish();
     }
 
-    private void toQuestionCenterActivity() {
-        Intent intent = new Intent(this,QuestionCenterActivity.class);
+    private void toHelpCenterActivity() {
+        Intent intent = new Intent(this, HelpCenterActivity.class);
         startActivity(intent);
         finish();
     }
 
+    private void toHoleCenterActivity(){
+        Intent intent = new Intent(this, HoleCenterActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

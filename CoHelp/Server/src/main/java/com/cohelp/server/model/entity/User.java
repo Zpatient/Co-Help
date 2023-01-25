@@ -4,10 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
 
 /**
  * 用户表
@@ -82,8 +81,35 @@ public class User implements Serializable {
      */
     private Integer teamId;
 
+    public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, String userEmail, Integer userRole, Integer state, Date userCreateTime, Integer age, Integer teamId, String animalSign) {
+        this.id = id;
+        this.userAccount = userAccount;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.avatar = avatar;
+        this.sex = sex;
+        this.phoneNumber = phoneNumber;
+        this.userEmail = userEmail;
+        this.userRole = userRole;
+        this.state = state;
+        this.userCreateTime = userCreateTime;
+        this.age = age;
+        this.teamId = teamId;
+        this.animalSign = animalSign;
+    }
+
+    /**
+     * 生肖
+     */
+    @TableField(exist = false)
+    private String animalSign;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
+
+    public User() {
+
+    }
 
     @Override
     public boolean equals(Object that) {

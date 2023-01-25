@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-212.5457.46">
+    <data-source name="cohelp" uuid="d5e362cd-7ee4-452d-88ab-36bf2de716b2">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>

@@ -9,7 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
+    <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="update history and search interfaces">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-01-25_21_29_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-01-25_21_29__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-01-25_21_30_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-01-25_21_30_[Changes]1/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-01-25_21_30__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2023-01-25_21_30__Changes_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2023-01-14_15_22_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2023-01-14_15_22__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2023-01-23_14_26_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_2023-01-23_14_26__Changes_.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-01-25_21_30_[Changes]/shelved.patch" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2023-01-25_21_30__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -340,13 +354,7 @@
       <workItem from="1673357251405" duration="706000" />
       <workItem from="1673437363947" duration="5024000" />
       <workItem from="1673515798675" duration="5255000" />
-    </task>
-    <task id="LOCAL-00019" summary="changepassword interfaces modified commit">
-      <created>1666347345312</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1666347345312</updated>
+      <workItem from="1674654181019" duration="301000" />
     </task>
     <task id="LOCAL-00020" summary="submitinform commit">
       <created>1666663571419</created>
@@ -684,7 +692,14 @@
       <option name="project" value="LOCAL" />
       <updated>1674653697677</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="update history and search interfaces">
+      <created>1674653826398</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1674653826398</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

@@ -20,7 +20,7 @@ application.yml
 *.iws
 *.iml
 *.ipr
-**/.idea
+!**/.idea
 
 ### NetBeans ###
 /nbproject/private/

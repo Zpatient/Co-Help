@@ -10,17 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/UserMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/config/WebConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/GeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/GeneralController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/ActivityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/ActivityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/GeneralService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/GeneralService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/ActivityMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/ActivityMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HelpMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HelpMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HoleMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/HoleMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -91,11 +81,10 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
-    <property name="RequestMappingsPanelWidth0" value="15" />
-    <property name="RequestMappingsPanelWidth1" value="15" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/CoHelp/Server/src/main/resources/application.yml" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/CoHelp/Server" />
@@ -107,7 +96,6 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\maven_workspace\Co-Help\CoHelp\Server\src\main\resources" />
       <recent name="D:\java_workspace\Co-Help\CoHelp\Server\src\main\resources" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -352,10 +340,13 @@
       <workItem from="1673357251405" duration="706000" />
       <workItem from="1673437363947" duration="5024000" />
       <workItem from="1673515798675" duration="5255000" />
-      <workItem from="1673681360566" duration="180000" />
-      <workItem from="1673873591362" duration="2920000" />
-      <workItem from="1674220247392" duration="1213000" />
-      <workItem from="1674455074524" duration="36031000" />
+    </task>
+    <task id="LOCAL-00018" summary="inform commit">
+      <created>1666277581616</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1666277581616</updated>
     </task>
     <task id="LOCAL-00019" summary="changepassword interfaces modified commit">
       <created>1666347345312</created>
@@ -693,14 +684,7 @@
       <option name="project" value="LOCAL" />
       <updated>1668671197793</updated>
     </task>
-    <task id="LOCAL-00067" summary="update search and history interfaces">
-      <created>1674504966318</created>
-      <option name="number" value="00067" />
-      <option name="presentableId" value="LOCAL-00067" />
-      <option name="project" value="LOCAL" />
-      <updated>1674504966319</updated>
-    </task>
-    <option name="localTasksCounter" value="68" />
+    <option name="localTasksCounter" value="67" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -732,6 +716,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="changePassword second Commit" />
     <MESSAGE value="changePassword third Commit" />
     <MESSAGE value="changePassword fourth Commit" />
     <MESSAGE value="changePassword fifth Commit" />
@@ -756,8 +741,7 @@
     <MESSAGE value="modify remark impl" />
     <MESSAGE value="modify methods name" />
     <MESSAGE value="update datasource config" />
-    <MESSAGE value="update search and history interfaces" />
-    <option name="LAST_COMMIT_MESSAGE" value="update search and history interfaces" />
+    <option name="LAST_COMMIT_MESSAGE" value="update datasource config" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

@@ -1,0 +1,167 @@
+Index: CoHelp/Server/src/main/java/com/cohelp/server/mapper/TeamMapper.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cohelp.server.mapper;\r\n\r\nimport com.cohelp.server.model.entity.Team;\r\nimport com.baomidou.mybatisplus.core.mapper.BaseMapper;\r\n\r\n/**\r\n* @author jianping5\r\n* @description 针对表【team(组织表)】的数据库操作Mapper\r\n* @createDate 2023-01-22 17:54:40\r\n* @Entity com.cohelp.server.model.entity.Team\r\n*/\r\npublic interface TeamMapper extends BaseMapper<Team> {\r\n\r\n}\r\n\r\n\r\n\r\n\r\n
+===================================================================
+diff --git a/CoHelp/Server/src/main/java/com/cohelp/server/mapper/TeamMapper.java b/CoHelp/Server/src/main/java/com/cohelp/server/mapper/TeamMapper.java
+--- a/CoHelp/Server/src/main/java/com/cohelp/server/mapper/TeamMapper.java	
++++ b/CoHelp/Server/src/main/java/com/cohelp/server/mapper/TeamMapper.java	
+@@ -4,9 +4,9 @@
+ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+ 
+ /**
+-* @author jianping5
++* @author 县城之子丶
+ * @description 针对表【team(组织表)】的数据库操作Mapper
+-* @createDate 2023-01-22 17:54:40
++* @createDate 2023-01-24 04:20:04
+ * @Entity com.cohelp.server.model.entity.Team
+ */
+ public interface TeamMapper extends BaseMapper<Team> {
+Index: CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeamServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cohelp.server.service.impl;\r\n\r\nimport com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;\r\nimport com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;\r\nimport com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;\r\nimport com.cohelp.server.model.domain.Result;\r\nimport com.cohelp.server.model.entity.Team;\r\nimport com.cohelp.server.model.entity.User;\r\nimport com.cohelp.server.service.TeamService;\r\nimport com.cohelp.server.mapper.TeamMapper;\r\nimport com.cohelp.server.service.UserService;\r\nimport com.cohelp.server.utils.ResultUtil;\r\nimport com.cohelp.server.utils.UserHolder;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport javax.annotation.Resource;\r\nimport java.util.List;\r\n\r\n/**\r\n* @author jianping5\r\n* @description 针对表【team(组织表)】的数据库操作Service实现\r\n* @createDate 2023-01-22 17:54:40\r\n*/\r\n@Service\r\npublic class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>\r\n    implements TeamService{\r\n\r\n    @Resource\r\n    private TeamService teamService;\r\n\r\n    @Resource\r\n    private UserService userService;\r\n\r\n    @Override\r\n    public Result<List<Team>> fuzzyQuery(String teamName) {\r\n\r\n        // 模糊查询所有团体\r\n        QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();\r\n        teamQueryWrapper.like(\"team_name\", teamName);\r\n        List<Team> teamList = teamService.list(teamQueryWrapper);\r\n\r\n        return ResultUtil.ok(teamList);\r\n    }\r\n\r\n    @Override\r\n    public Result<Boolean> changeTeam(Integer conditionType, Integer teamId) {\r\n\r\n        // 参数校验\r\n        if (conditionType != 0 && conditionType != 1 && teamId <= 0) {\r\n            return ResultUtil.fail(false, \"参数错误\");\r\n        }\r\n\r\n        // 获取当前登录用户 id\r\n        User user = UserHolder.getUser();\r\n        Integer userId = user.getId();\r\n\r\n        // 构造器\r\n        UpdateWrapper<User> teamUpdateWrapper = new UpdateWrapper<>();\r\n\r\n        // 加入组织\r\n        if (conditionType == 0) {\r\n            // 判断组织是否存在\r\n            QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();\r\n            teamQueryWrapper.eq(\"id\", teamId);\r\n            Team team = teamService.getOne(teamQueryWrapper);\r\n            if (team == null) {\r\n                return ResultUtil.fail(false, \"抱歉！该组织不存在\");\r\n            }\r\n\r\n            // 修改用户的组织\r\n            teamUpdateWrapper.eq(\"id\", userId);\r\n            teamUpdateWrapper.set(\"team_id\", teamId);\r\n            boolean update = userService.update(teamUpdateWrapper);\r\n            if (!update) {\r\n                return ResultUtil.fail(false, \"加入组织失败\");\r\n            }\r\n        }\r\n\r\n        // 退出组织\r\n        if (conditionType == 1) {\r\n            // 修改用户的组织\r\n            teamUpdateWrapper.eq(\"id\", userId);\r\n            teamUpdateWrapper.set(\"team_id\", 1);\r\n            boolean update = userService.update(teamUpdateWrapper);\r\n            if (!update) {\r\n                return ResultUtil.fail(false, \"退出组织失败\");\r\n            }\r\n        }\r\n\r\n        return ResultUtil.ok( true,\"成功修改组织\");\r\n    }\r\n\r\n}\r\n\r\n\r\n\r\n\r\n
+===================================================================
+diff --git a/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeamServiceImpl.java b/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeamServiceImpl.java
+--- a/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeamServiceImpl.java	
++++ b/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeamServiceImpl.java	
+@@ -1,95 +1,20 @@
+ package com.cohelp.server.service.impl;
+ 
+-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+-import com.cohelp.server.model.domain.Result;
+ import com.cohelp.server.model.entity.Team;
+-import com.cohelp.server.model.entity.User;
+ import com.cohelp.server.service.TeamService;
+ import com.cohelp.server.mapper.TeamMapper;
+-import com.cohelp.server.service.UserService;
+-import com.cohelp.server.utils.ResultUtil;
+-import com.cohelp.server.utils.UserHolder;
+ import org.springframework.stereotype.Service;
+ 
+-import javax.annotation.Resource;
+-import java.util.List;
+-
+ /**
+-* @author jianping5
++* @author 县城之子丶
+ * @description 针对表【team(组织表)】的数据库操作Service实现
+-* @createDate 2023-01-22 17:54:40
++* @createDate 2023-01-24 04:20:04
+ */
+ @Service
+ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
+     implements TeamService{
+ 
+-    @Resource
+-    private TeamService teamService;
+-
+-    @Resource
+-    private UserService userService;
+-
+-    @Override
+-    public Result<List<Team>> fuzzyQuery(String teamName) {
+-
+-        // 模糊查询所有团体
+-        QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
+-        teamQueryWrapper.like("team_name", teamName);
+-        List<Team> teamList = teamService.list(teamQueryWrapper);
+-
+-        return ResultUtil.ok(teamList);
+-    }
+-
+-    @Override
+-    public Result<Boolean> changeTeam(Integer conditionType, Integer teamId) {
+-
+-        // 参数校验
+-        if (conditionType != 0 && conditionType != 1 && teamId <= 0) {
+-            return ResultUtil.fail(false, "参数错误");
+-        }
+-
+-        // 获取当前登录用户 id
+-        User user = UserHolder.getUser();
+-        Integer userId = user.getId();
+-
+-        // 构造器
+-        UpdateWrapper<User> teamUpdateWrapper = new UpdateWrapper<>();
+-
+-        // 加入组织
+-        if (conditionType == 0) {
+-            // 判断组织是否存在
+-            QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
+-            teamQueryWrapper.eq("id", teamId);
+-            Team team = teamService.getOne(teamQueryWrapper);
+-            if (team == null) {
+-                return ResultUtil.fail(false, "抱歉！该组织不存在");
+-            }
+-
+-            // 修改用户的组织
+-            teamUpdateWrapper.eq("id", userId);
+-            teamUpdateWrapper.set("team_id", teamId);
+-            boolean update = userService.update(teamUpdateWrapper);
+-            if (!update) {
+-                return ResultUtil.fail(false, "加入组织失败");
+-            }
+-        }
+-
+-        // 退出组织
+-        if (conditionType == 1) {
+-            // 修改用户的组织
+-            teamUpdateWrapper.eq("id", userId);
+-            teamUpdateWrapper.set("team_id", 1);
+-            boolean update = userService.update(teamUpdateWrapper);
+-            if (!update) {
+-                return ResultUtil.fail(false, "退出组织失败");
+-            }
+-        }
+-
+-        return ResultUtil.ok( true,"成功修改组织");
+-    }
+-
+ }
+ 
+ 
+Index: CoHelp/Server/src/main/java/com/cohelp/server/service/TeamService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.cohelp.server.service;\r\n\r\nimport com.cohelp.server.model.domain.Result;\r\nimport com.cohelp.server.model.entity.Team;\r\nimport com.baomidou.mybatisplus.extension.service.IService;\r\n\r\nimport java.util.List;\r\n\r\n/**\r\n* @author jianping5\r\n* @description 针对表【team(组织表)】的数据库操作Service\r\n* @createDate 2023-01-22 17:54:40\r\n*/\r\npublic interface TeamService extends IService<Team> {\r\n\r\n    /**\r\n     * 根据输入的关键词进行模糊查询\r\n     * @param teamName\r\n     * @return\r\n     */\r\n    Result<List<Team>> fuzzyQuery(String teamName);\r\n\r\n    /**\r\n     * 更改团体\r\n     * @param conditionType\r\n     * @param teamId\r\n     * @return\r\n     */\r\n    Result<Boolean> changeTeam(Integer conditionType, Integer teamId);\r\n}\r\n
+===================================================================
+diff --git a/CoHelp/Server/src/main/java/com/cohelp/server/service/TeamService.java b/CoHelp/Server/src/main/java/com/cohelp/server/service/TeamService.java
+--- a/CoHelp/Server/src/main/java/com/cohelp/server/service/TeamService.java	
++++ b/CoHelp/Server/src/main/java/com/cohelp/server/service/TeamService.java	
+@@ -1,30 +1,13 @@
+ package com.cohelp.server.service;
+ 
+-import com.cohelp.server.model.domain.Result;
+ import com.cohelp.server.model.entity.Team;
+ import com.baomidou.mybatisplus.extension.service.IService;
+ 
+-import java.util.List;
+-
+ /**
+-* @author jianping5
++* @author 县城之子丶
+ * @description 针对表【team(组织表)】的数据库操作Service
+-* @createDate 2023-01-22 17:54:40
++* @createDate 2023-01-24 04:20:04
+ */
+ public interface TeamService extends IService<Team> {
+ 
+-    /**
+-     * 根据输入的关键词进行模糊查询
+-     * @param teamName
+-     * @return
+-     */
+-    Result<List<Team>> fuzzyQuery(String teamName);
+-
+-    /**
+-     * 更改团体
+-     * @param conditionType
+-     * @param teamId
+-     * @return
+-     */
+-    Result<Boolean> changeTeam(Integer conditionType, Integer teamId);
+ }

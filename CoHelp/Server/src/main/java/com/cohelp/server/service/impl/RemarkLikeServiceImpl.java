@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
+import com.cohelp.server.mapper.RemarkLikeMapper;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.RemarkActivityService;
 import com.cohelp.server.service.RemarkHelpService;
 import com.cohelp.server.service.RemarkHoleService;
 import com.cohelp.server.service.RemarkLikeService;
-import com.cohelp.server.mapper.RemarkLikeMapper;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.StatusCode.ERROR_SYSTEM;
 
 /**
 * @author zgy
@@ -144,7 +143,7 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             UpdateWrapper<RemarkLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", remarkHelp.getId());
-            likeUpdateWrapper.eq("topic_type", TypeEnum.HELP.ordinal());
+            likeQueryWrapper.eq("topic_type", TypeEnum.HELP.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {
@@ -212,7 +211,7 @@ public class RemarkLikeServiceImpl extends ServiceImpl<RemarkLikeMapper, RemarkL
             UpdateWrapper<RemarkLike> likeUpdateWrapper = new UpdateWrapper<>();
             likeUpdateWrapper.eq("user_id", loginUserId);
             likeUpdateWrapper.eq("topic_id", remarkHole.getId());
-            likeUpdateWrapper.eq("topic_type", TypeEnum.HOLE.ordinal());
+            likeQueryWrapper.eq("topic_type", TypeEnum.HOLE.ordinal());
 
             // 之前未点赞（但有记录）
             if (like.getIsLiked() == 0) {

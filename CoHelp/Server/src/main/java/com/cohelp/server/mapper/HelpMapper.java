@@ -1,7 +1,7 @@
 package com.cohelp.server.mapper;
 
-import com.cohelp.server.model.entity.Help;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cohelp.server.model.entity.Help;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ public interface HelpMapper extends BaseMapper<Help> {
      * @return
      */
     List<Help> listByHot(List<Integer> userIdList);
+    List<Help> search(Integer userId, String key, String[] keywords);
 
 }
 

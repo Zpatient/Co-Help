@@ -35,4 +35,11 @@ public interface HistoryService extends IService<History> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result deleteHistoryRecord(Integer id);
+    /**
+     * 获取用户参与评论的话题
+     * @param currentUserId 当前用户Id
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result listInvolvedRecord(Integer currentUserId);
+
 }

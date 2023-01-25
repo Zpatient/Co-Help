@@ -3,12 +3,12 @@ package com.cohelp.server.controller;
 import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.History;
+import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.HistoryService;
+import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author zgy
@@ -20,15 +20,21 @@ public class HistoryController {
     @Autowired
     HistoryService historyService;
     @RequestMapping("/gethistorylist")
-    public Result listCollect(@RequestBody HistoryAndCollectRequest historyRequest){
+    public Result listHistory(@RequestBody HistoryAndCollectRequest historyRequest){
         return historyService.listHistory(historyRequest);
     }
     @RequestMapping("/inserthistoryrecord")
-    public Result insertCollectRecord(@RequestBody History history){
+    public Result insertHistoryRecord(@RequestBody History history){
         return historyService.insertHistoryRecord(history);
     }
     @RequestMapping("/deletehistoryrecord")
-    public Result deleteCollectRecord(@RequestParam Integer id){
+    public Result deleteHistoryRecord(@RequestParam Integer id){
         return historyService.deleteHistoryRecord(id);
+    }
+    @GetMapping("/getinvolvedlist")
+    public Result listInvolved(){
+        User user = UserHolder.getUser();
+        if(user==null) return ResultUtil.fail("用户未登录！");
+        return historyService.listInvolvedRecord(user.getId());
     }
 }

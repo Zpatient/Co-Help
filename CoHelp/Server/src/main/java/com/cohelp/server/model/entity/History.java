@@ -4,12 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * 浏览记录表
@@ -42,9 +40,12 @@ public class History implements Serializable {
     /**
      * 查看/浏览时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date viewTime;
+
+    /**
+     * 是否参与话题讨论（0:未参与 1：已参与）
+     */
+    private Integer isInvolved;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -65,7 +66,8 @@ public class History implements Serializable {
             && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
             && (this.getTopicType() == null ? other.getTopicType() == null : this.getTopicType().equals(other.getTopicType()))
             && (this.getTopicId() == null ? other.getTopicId() == null : this.getTopicId().equals(other.getTopicId()))
-            && (this.getViewTime() == null ? other.getViewTime() == null : this.getViewTime().equals(other.getViewTime()));
+            && (this.getViewTime() == null ? other.getViewTime() == null : this.getViewTime().equals(other.getViewTime()))
+            && (this.getIsInvolved() == null ? other.getIsInvolved() == null : this.getIsInvolved().equals(other.getIsInvolved()));
     }
 
     @Override
@@ -77,6 +79,7 @@ public class History implements Serializable {
         result = prime * result + ((getTopicType() == null) ? 0 : getTopicType().hashCode());
         result = prime * result + ((getTopicId() == null) ? 0 : getTopicId().hashCode());
         result = prime * result + ((getViewTime() == null) ? 0 : getViewTime().hashCode());
+        result = prime * result + ((getIsInvolved() == null) ? 0 : getIsInvolved().hashCode());
         return result;
     }
 
@@ -91,6 +94,7 @@ public class History implements Serializable {
         sb.append(", topicType=").append(topicType);
         sb.append(", topicId=").append(topicId);
         sb.append(", viewTime=").append(viewTime);
+        sb.append(", isInvolved=").append(isInvolved);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

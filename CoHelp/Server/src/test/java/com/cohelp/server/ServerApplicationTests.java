@@ -1,7 +1,6 @@
 package com.cohelp.server;
 
 import com.alibaba.fastjson2.JSON;
-import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.ActivityMapper;
 import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
@@ -146,10 +145,6 @@ class ServerApplicationTests {
         MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");
     }
 
-    @Test
-    public void testTypeEnum(){
-        System.out.println(TypeEnum.isTopic(5));
-    }
 
     @Test
     public void test08(){

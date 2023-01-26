@@ -81,6 +81,12 @@ public class User implements Serializable {
      */
     private Integer teamId;
 
+    /**
+     * 组织名
+     */
+    @TableField(exist = false)
+    private String teamName;
+
     public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, String userEmail, Integer userRole, Integer state, Date userCreateTime, Integer age, Integer teamId, String animalSign) {
         this.id = id;
         this.userAccount = userAccount;

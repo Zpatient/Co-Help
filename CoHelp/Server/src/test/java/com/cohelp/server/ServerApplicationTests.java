@@ -6,7 +6,6 @@ import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.impl.GeneralServiceImpl;
@@ -21,8 +20,6 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -114,21 +111,21 @@ class ServerApplicationTests {
 
     @Test
     void test06() {
-        ArrayList<Integer> integerArrayList = new ArrayList<>();
-        List<Activity> activityList = activityMapper.listByHot(integerArrayList);
-        activityList.forEach(activity -> {
-            return;
-        });
-        System.out.println(1);
-
-        ArrayList<Activity> activities = new ArrayList<>();
-        activities.forEach(
-                activity -> {
-                    System.out.println(activity.getActivityTime());
-                    System.out.println(2);
-                }
-        );
-        System.out.println(3);
+//        ArrayList<Integer> integerArrayList = new ArrayList<>();
+//        List<Activity> activityList = activityMapper.listByHot(integerArrayList);
+//        activityList.forEach(activity -> {
+//            return;
+//        });
+//        System.out.println(1);
+//
+//        ArrayList<Activity> activities = new ArrayList<>();
+//        activities.forEach(
+//                activity -> {
+//                    System.out.println(activity.getActivityTime());
+//                    System.out.println(2);
+//                }
+//        );
+//        System.out.println(3);
     }
 
     @Test

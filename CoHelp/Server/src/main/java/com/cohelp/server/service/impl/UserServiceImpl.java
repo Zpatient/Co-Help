@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -57,6 +58,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private TeamService teamService;
 
 
 
@@ -139,7 +143,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setUserCreateTime(user.getUserCreateTime());
         safetyUser.setUserEmail(user.getUserEmail());
         safetyUser.setTeamId(user.getTeamId());
-
+        safetyUser.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - user.getAge()));
+        safetyUser.setTeamName(teamService.getById(user.getTeamId()).getTeamName());
         return safetyUser;
     }
 

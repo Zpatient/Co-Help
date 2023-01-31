@@ -30,11 +30,11 @@ import com.leon.lfilepickerlibrary.utils.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 /*
-    首页
+    活动
  */
 public class TaskCenterActivity extends BaseActivity {
     LinearLayout HelpCenter;
-    LinearLayout TaskCenter;
+    LinearLayout ActivityCenter;
     LinearLayout HoleCenter;
     LinearLayout UserCenter;
     EditText searchedContent;
@@ -69,7 +69,7 @@ public class TaskCenterActivity extends BaseActivity {
             }
         });
 
-        TaskCenter.setOnClickListener(new View.OnClickListener() {
+        ActivityCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toTaskCenterActivity();
@@ -158,45 +158,45 @@ public class TaskCenterActivity extends BaseActivity {
 //                });
 //            }
 //        });
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 从服务端搜索
-                String s = searchedContent.getText().toString();
-                if(!StringUtils.isEmpty(s)){
-                    T.showToast("查询的标题不能为空哦~");
-                }
-                startLoadingProgress();
-                taskBiz.searchByTitle(s, new CommonCallback<List<Task>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(List<Task> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
-
-        eSwipeRefreshLayout.setOnRefreshListener(new SwipeRefresh.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadAll();
-            }
-        });
-
-        eSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
-            @Override
-            public void onPullUpRefresh() {
-                loadAll();
-            }
-        });
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 从服务端搜索
+//                String s = searchedContent.getText().toString();
+//                if(!StringUtils.isEmpty(s)){
+//                    T.showToast("查询的标题不能为空哦~");
+//                }
+//                startLoadingProgress();
+//                taskBiz.searchByTitle(s, new CommonCallback<List<Task>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<Task> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
+//
+//        eSwipeRefreshLayout.setOnRefreshListener(new SwipeRefresh.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                loadAll();
+//            }
+//        });
+//
+//        eSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
+//            @Override
+//            public void onPullUpRefresh() {
+//                loadAll();
+//            }
+//        });
     }
 
     private void toCreateNewTaskActivity() {
@@ -245,23 +245,23 @@ public class TaskCenterActivity extends BaseActivity {
     private void initView() {
         HoleCenter = findViewById(R.id.id_ll_holeCenter);
         HelpCenter = findViewById(R.id.id_ll_helpCenter);
-        TaskCenter = findViewById(R.id.id_ll_taskCenter);
+        ActivityCenter = findViewById(R.id.id_ll_activityCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
 //        act = findViewById(R.id.id_tv_activity);
 //        help = findViewById(R.id.id_tv_help);
 //        tree = findViewById(R.id.id_tv_treehole);
-        searchedContent = findViewById(R.id.id_et_search);
-        searchBtn = findViewById(R.id.id_iv_search);
-        eSwipeRefreshLayout = findViewById(R.id.id_swiperefresh);
-        eRecyclerView = findViewById(R.id.id_recyclerview);
-        eSwipeRefreshLayout.setMode(SwipeRefresh.Mode.BOTH);
-        eSwipeRefreshLayout.setColorSchemeColors(Color.RED,Color.BLACK,Color.YELLOW,Color.GREEN);
-        taskBiz = new TaskBiz();
-        taskList = new ArrayList<>();
-        taskAdapter = new TaskAdapter(this,taskList);
-        eRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        eRecyclerView.setAdapter(taskAdapter);
-        loadAll();
+//        searchedContent = findViewById(R.id.id_et_search);
+//        searchBtn = findViewById(R.id.id_iv_search);
+//        eSwipeRefreshLayout = findViewById(R.id.id_swiperefresh);
+//        eRecyclerView = findViewById(R.id.id_recyclerview);
+//        eSwipeRefreshLayout.setMode(SwipeRefresh.Mode.BOTH);
+//        eSwipeRefreshLayout.setColorSchemeColors(Color.RED,Color.BLACK,Color.YELLOW,Color.GREEN);
+//        taskBiz = new TaskBiz();
+//        taskList = new ArrayList<>();
+//        taskAdapter = new TaskAdapter(this,taskList);
+//        eRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        eRecyclerView.setAdapter(taskAdapter);
+//        loadAll();
     }
 
 
@@ -284,6 +284,8 @@ public class TaskCenterActivity extends BaseActivity {
         finish();
     }
     private void toHoleCenterActivity(){
-
+        Intent intent = new Intent(this, HoleCenterActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

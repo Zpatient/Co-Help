@@ -85,4 +85,142 @@ public class ActivityVO implements Serializable {
      */
     private LocalDateTime activityCreateTime;
 
+    @Override
+    public String toString() {
+        return "ActivityVO{" +
+                "id=" + id +
+                ", activityOwnerId=" + activityOwnerId +
+                ", userName='" + userName + '\'' +
+                ", avatar=" + avatar +
+                ", activityTitle='" + activityTitle + '\'' +
+                ", activityDetail='" + activityDetail + '\'' +
+                ", activityTime=" + activityTime +
+                ", activityLike=" + activityLike +
+                ", activityComment=" + activityComment +
+                ", activityLabel='" + activityLabel + '\'' +
+                ", activityCollect=" + activityCollect +
+                ", activityState=" + activityState +
+                ", activityCreateTime=" + activityCreateTime +
+                '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getActivityOwnerId() {
+        return activityOwnerId;
+    }
+
+    public void setActivityOwnerId(Integer activityOwnerId) {
+        this.activityOwnerId = activityOwnerId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Integer getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Integer avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getActivityTitle() {
+        return activityTitle;
+    }
+
+    public void setActivityTitle(String activityTitle) {
+        this.activityTitle = activityTitle;
+    }
+
+    public String getActivityDetail() {
+        return activityDetail;
+    }
+
+    public void setActivityDetail(String activityDetail) {
+        this.activityDetail = activityDetail;
+    }
+
+    public LocalDateTime getActivityTime() {
+        return activityTime;
+    }
+
+    public void setActivityTime(LocalDateTime activityTime) {
+        this.activityTime = activityTime;
+    }
+
+    public Integer getActivityLike() {
+        return activityLike;
+    }
+
+    public void setActivityLike(Integer activityLike) {
+        this.activityLike = activityLike;
+    }
+
+    public Integer getActivityComment() {
+        return activityComment;
+    }
+
+    public void setActivityComment(Integer activityComment) {
+        this.activityComment = activityComment;
+    }
+
+    public String getActivityLabel() {
+        return activityLabel;
+    }
+
+    public void setActivityLabel(String activityLabel) {
+        this.activityLabel = activityLabel;
+    }
+
+    public Integer getActivityCollect() {
+        return activityCollect;
+    }
+
+    public void setActivityCollect(Integer activityCollect) {
+        this.activityCollect = activityCollect;
+    }
+
+    public Integer getActivityState() {
+        return activityState;
+    }
+
+    public void setActivityState(Integer activityState) {
+        this.activityState = activityState;
+    }
+
+    public LocalDateTime getActivityCreateTime() {
+        return activityCreateTime;
+    }
+
+    public void setActivityCreateTime(LocalDateTime activityCreateTime) {
+        this.activityCreateTime = activityCreateTime;
+    }
+
+    public ActivityVO(Integer id, Integer activityOwnerId, String userName, Integer avatar, String activityTitle, String activityDetail, LocalDateTime activityTime, Integer activityLike, Integer activityComment, String activityLabel, Integer activityCollect, Integer activityState, LocalDateTime activityCreateTime) {
+        this.id = id;
+        this.activityOwnerId = activityOwnerId;
+        this.userName = userName;
+        this.avatar = avatar;
+        this.activityTitle = activityTitle;
+        this.activityDetail = activityDetail;
+        this.activityTime = activityTime;
+        this.activityLike = activityLike;
+        this.activityComment = activityComment;
+        this.activityLabel = activityLabel;
+        this.activityCollect = activityCollect;
+        this.activityState = activityState;
+        this.activityCreateTime = activityCreateTime;
+    }
 }

@@ -69,56 +69,56 @@ public class MyQuestionActivity extends BaseActivity {
             }
         });
 
-        all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                loadAll();
-            }
-        });
-        //todo 展示回复的问题，需要重新写业务方法
-        repeated.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startLoadingProgress();
-                questionBiz.getAllMyQuestionRepeated(UserInfoHolder.getInstance().geteUser().getId(),new CommonCallback<List<Question>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onSuccess(List<Question> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询任务数据成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
-
-        asked.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startLoadingProgress();
-                questionBiz.getAllMyQuestionAsked(UserInfoHolder.getInstance().geteUser().getId(),new CommonCallback<List<Question>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @SuppressLint("NotifyDataSetChanged")
-                    @Override
-                    public void onSuccess(List<Question> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询问答数据成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
+//        all.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                loadAll();
+//            }
+//        });
+//        //todo 展示回复的问题，需要重新写业务方法
+//        repeated.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startLoadingProgress();
+//                questionBiz.getAllMyQuestionRepeated(UserInfoHolder.getInstance().geteUser().getId(),new CommonCallback<List<Question>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @SuppressLint("NotifyDataSetChanged")
+//                    @Override
+//                    public void onSuccess(List<Question> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询任务数据成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
+//
+//        asked.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startLoadingProgress();
+//                questionBiz.getAllMyQuestionAsked(UserInfoHolder.getInstance().geteUser().getId(),new CommonCallback<List<Question>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @SuppressLint("NotifyDataSetChanged")
+//                    @Override
+//                    public void onSuccess(List<Question> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询问答数据成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
     }
 
     private void loadAll() {
@@ -154,15 +154,15 @@ public class MyQuestionActivity extends BaseActivity {
         TaskCenter = findViewById(R.id.id_ll_taskCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
 
-        all = findViewById(R.id.id_tv_all);
-        repeated = findViewById(R.id.id_tv_repeated);
-        asked = findViewById(R.id.id_tv_asked);
-        eRecyclerView = findViewById(R.id.id_recyclerview);
-        questionBiz = new QuestionBiz();
-        questionList = new ArrayList<>();
-        questionAdapter = new QuestionAdapter(this, questionList);
-        eRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        eRecyclerView.setAdapter(questionAdapter);
+//        all = findViewById(R.id.id_tv_all);
+//        repeated = findViewById(R.id.id_tv_repeated);
+//        asked = findViewById(R.id.id_tv_asked);
+//        eRecyclerView = findViewById(R.id.id_recyclerview);
+//        questionBiz = new QuestionBiz();
+//        questionList = new ArrayList<>();
+//        questionAdapter = new QuestionAdapter(this, questionList);
+//        eRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        eRecyclerView.setAdapter(questionAdapter);
     }
 
     private void toUserCenterActivity() {

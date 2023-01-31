@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.activity.user.HelpCenterActivity">
+    tools:context=".ui.activity.user.HoleCenterActivity">
     <include layout="@layout/sa_toolbar"
         />
 
@@ -130,14 +130,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/task_bottom_chosed" />
+                android:src="@drawable/task_bottom" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="活动"
-                android:textColor="#1296db"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -153,14 +152,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/task_bottom_chosed" />
+                android:src="@drawable/task_bottom" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="互助"
-                android:textColor="#1296db"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -176,12 +174,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/question_bottom" />
+                android:src="@drawable/question_bottom_chosed" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="#1296db"
                 android:text="树洞"
                 android:textStyle="bold" />
         </LinearLayout>

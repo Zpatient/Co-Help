@@ -3,6 +3,7 @@ package com.cohelp.task_for_stu;
 import com.alibaba.fastjson.JSON;
 import com.cohelp.task_for_stu.net.OKHttpTools.OKHttp;
 import com.cohelp.task_for_stu.net.OKHttpTools.ToJsonString;
+import com.cohelp.task_for_stu.net.gsonTools.GSON;
 import com.cohelp.task_for_stu.net.model.domain.DetailResponse;
 import com.cohelp.task_for_stu.net.model.domain.HistoryAndCollectRequest;
 import com.cohelp.task_for_stu.net.model.domain.IdAndType;
@@ -13,12 +14,10 @@ import com.cohelp.task_for_stu.net.model.domain.RemarkRequest;
 import com.cohelp.task_for_stu.net.model.domain.Result;
 import com.cohelp.task_for_stu.net.model.domain.SearchPublishResponse;
 import com.cohelp.task_for_stu.net.model.domain.SearchRequest;
-import com.cohelp.task_for_stu.net.model.entity.Activity;
 import com.cohelp.task_for_stu.net.model.entity.Collect;
 import com.cohelp.task_for_stu.net.model.entity.History;
 import com.cohelp.task_for_stu.net.model.entity.RemarkActivity;
 import com.cohelp.task_for_stu.net.model.entity.User;
-import com.cohelp.task_for_stu.utils.SessionUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -26,12 +25,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.AbstractList;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import lombok.Data;
 
 public class test {
     OKHttp okHttp  = new OKHttp();
@@ -76,6 +71,7 @@ public class test {
         Gson gson = new Gson();
         Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>(){}.getType());
         System.out.println(userResult.getData());
+        System.out.println("Result"+userResult.getData());
     }
 
 

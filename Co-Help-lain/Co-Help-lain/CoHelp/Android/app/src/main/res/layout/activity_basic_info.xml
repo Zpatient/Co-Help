@@ -242,14 +242,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/task_bottom_chosed" />
+                android:src="@drawable/task_bottom" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="活动"
-                android:textColor="#1296db"
+
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -265,14 +265,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/task_bottom_chosed" />
+                android:src="@drawable/task_bottom" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="互助"
-                android:textColor="#1296db"
+
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -309,12 +309,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/user_bottom" />
+                android:src="@drawable/user_bottom_chosed" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textColor="#1296db"
                 android:text="个人中心"
                 android:textStyle="bold" />
         </LinearLayout>

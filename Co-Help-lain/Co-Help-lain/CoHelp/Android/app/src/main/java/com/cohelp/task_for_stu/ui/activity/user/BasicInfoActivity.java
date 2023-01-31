@@ -31,13 +31,13 @@ public class BasicInfoActivity extends BaseActivity {
     TextView logOut;
     TextView Browsing_history;
     TextView Personal_homepage;
-    TextView Setting;
-    TextView Publish_manage;
-    TextView Collect;
+//    TextView Setting;
+//    TextView Publish_manage;
+//    TextView Collect;
     ImageView myTask;
     ImageView myQuestion;
     ImageView myCollect;
-    LinearLayout TaskCenter;
+    LinearLayout ActivityCenter;
     LinearLayout UserCenter;
     LinearLayout HelpCenter;
     LinearLayout HoleCenter;
@@ -63,7 +63,7 @@ public class BasicInfoActivity extends BaseActivity {
         myCollect = findViewById(R.id.id_mycollect);
         HoleCenter = findViewById(R.id.id_ll_holeCenter);
         HelpCenter = findViewById(R.id.id_ll_helpCenter);
-        TaskCenter = findViewById(R.id.id_ll_taskCenter);
+        ActivityCenter = findViewById(R.id.id_ll_activityCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
 
         Browsing_history = findViewById(R.id.id_tv_browsing_history);
@@ -71,8 +71,8 @@ public class BasicInfoActivity extends BaseActivity {
         userBiz = new UserBiz();
         Intent intent = getIntent();
 
-        transferUser = (com.cohelp.task_for_stu.net.model.entity.User) intent.getSerializableExtra("user");
-        nickname.setText(transferUser.getUserAccount());
+//        transferUser = (com.cohelp.task_for_stu.net.model.entity.User) intent.getSerializableExtra("user");
+//        nickname.setText(transferUser.getUserAccount());
 
         //Thread thread = new
 //        Picasso.get()
@@ -122,12 +122,12 @@ public class BasicInfoActivity extends BaseActivity {
 
     private void initEvent() {
 
-        setToolbar(R.drawable.setting, new ClickListener() {
-            @Override
-            public void click() {
-                toSettingUserActivity();
-            }
-        });
+//        setToolbar(R.drawable.setting, new ClickListener() {
+//            @Override
+//            public void click() {
+//                toSettingUserActivity();
+//            }
+//        });
 
         HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +139,7 @@ public class BasicInfoActivity extends BaseActivity {
             @Override
             public void onClick(View v) {toHoleCenterActivity();}
         });
-        TaskCenter.setOnClickListener(new View.OnClickListener() {
+        ActivityCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toTaskCenterActivity();
@@ -152,48 +152,48 @@ public class BasicInfoActivity extends BaseActivity {
                 toUserCenterActivity();
             }
         });
-        logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toLoginActivity();
-            }
-        });
-
-        myTask.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toMyTaskActivity();
-            }
-        });
-
-        myQuestion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toMyQuestionActivity();
-            }
-        });
-        Browsing_history.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                toHistoryActivity();
-            }
-        });
-        Personal_homepage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { toPersonalHomepageActivity();}
-        });
-        Setting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { toSettingActivity();}
-        });
-        Publish_manage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { toPublishManageActivity();}
-        });
-        Collect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {toMyCollectActivity();}
-        });
+//        logOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                toLoginActivity();
+//            }
+//        });
+//
+//        myTask.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                toMyTaskActivity();
+//            }
+//        });
+//
+//        myQuestion.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                toMyQuestionActivity();
+//            }
+//        });
+//        Browsing_history.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                toHistoryActivity();
+//            }
+//        });
+//        Personal_homepage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) { toPersonalHomepageActivity();}
+//        });
+//        Setting.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) { toSettingActivity();}
+//        });
+//        Publish_manage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) { toPublishManageActivity();}
+//        });
+//        Collect.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {toMyCollectActivity();}
+//        });
     }
 
     private void toUserCenterActivity() {
@@ -214,7 +214,9 @@ public class BasicInfoActivity extends BaseActivity {
         finish();
     }
     private void toHoleCenterActivity(){
-
+        Intent intent = new Intent(this, HoleCenterActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void toMyQuestionActivity() {

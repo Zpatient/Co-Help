@@ -14,15 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cohelp.task_for_stu.R;
 import com.cohelp.task_for_stu.config.Config;
 //import com.cohelp.task_for_stu.ui.activity.user.TaskDetailActivity;
+import com.cohelp.task_for_stu.net.model.vo.ActivityVO;
+import com.cohelp.task_for_stu.ui.activity.user.TaskDetailActivity;
 import com.cohelp.task_for_stu.ui.vo.Task;
 
 import java.util.List;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskItemViewHolder>  {
-    List<Task> taskList;
+    List<ActivityVO> taskList;
     Context context;
     private LayoutInflater eInflater;
-    public TaskAdapter(Context context, List<Task> taskList) {
+    public TaskAdapter(Context context, List<ActivityVO> taskList) {
         this.context = context;
         this.taskList = taskList;
         this.eInflater = LayoutInflater.from(context);
@@ -40,16 +42,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskItemViewHo
                 @Override
                 public void onClick(View view) {
                     //TODO 跳转到任务详情页
-                    Task task = taskList.get(getLayoutPosition());
-                    if(task.getContext().getCurrentState().equals(Config.NOT_PASSED)){
-                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                        builder.setTitle("审核信息");
-                        builder.setMessage("您的任务审核不通过，原因："+task.getContext().getStateMsg());
-                        builder.setPositiveButton("知道了",null);
-                        builder.show();
-                    }else{
+                    ActivityVO task = taskList.get(getLayoutPosition());
+
 //                    TaskDetailActivity.launch(view.getContext(),task);
-                    }
+//                    if(task.getContext().getCurrentState().equals(Config.NOT_PASSED)){
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+//                        builder.setTitle("审核信息");
+//                        builder.setMessage("您的任务审核不通过，原因："+task.getContext().getStateMsg());
+//                        builder.setPositiveButton("知道了",null);
+//                        builder.show();
+//                    }else{
+////                    TaskDetailActivity.launch(view.getContext(),task);
+//                    }
 
                 }
             });
@@ -71,12 +75,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskItemViewHo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull TaskAdapter.TaskItemViewHolder holder, int position) {
-        Task task = taskList.get(position);
-        holder.title.setText(task.getContext().getTitle());
-        holder.author.setText(task.getPostedUser().getNickName());
-        holder.content.setText(task.getContext().getContentDesc());
-        holder.grade.setText("完成+"+task.getContext().getReward());
-        holder.state.setText("("+task.getContext().getCurrentState()+")");
+        ActivityVO task = taskList.get(position);
+//        holder.title.setText(task.getContext().getTitle());
+//        holder.author.setText(task.getPostedUser().getNickName());
+//        holder.content.setText(task.getContext().getContentDesc());
+//        holder.grade.setText("完成+"+task.getContext().getReward());
+//        holder.state.setText("("+task.getContext().getCurrentState()+")");
     }
 
     @Override

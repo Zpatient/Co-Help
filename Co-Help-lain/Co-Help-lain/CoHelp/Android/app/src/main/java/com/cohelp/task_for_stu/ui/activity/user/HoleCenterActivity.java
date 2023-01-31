@@ -24,7 +24,7 @@ import java.util.List;
 
 public class HoleCenterActivity extends BaseActivity {
     LinearLayout HelpCenter;
-    LinearLayout TaskCenter;
+    LinearLayout ActivityCenter;
     LinearLayout HoleCenter;
     LinearLayout UserCenter;
     EditText searchedContent;
@@ -42,12 +42,12 @@ public class HoleCenterActivity extends BaseActivity {
 
     }
     private void initEvent() {
-//        setToolbar(R.drawable.common_add, new ClickListener() {
-//            @Override
-//            public void click() {
-//                toCreateNewTaskActivity();
-//            }
-//        });
+        setToolbar(R.drawable.common_add, new ClickListener() {
+            @Override
+            public void click() {
+                toCreateNewTaskActivity();
+            }
+        });
 
         HelpCenter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class HoleCenterActivity extends BaseActivity {
             }
         });
 
-        TaskCenter.setOnClickListener(new View.OnClickListener() {
+        ActivityCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toTaskCenterActivity();
@@ -74,15 +74,15 @@ public class HoleCenterActivity extends BaseActivity {
             public void onClick(View v) {toHoleCenterActivity();}
         });
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 从服务端搜索
-                String s = searchedContent.getText().toString();
-                if(!StringUtils.isEmpty(s)){
-                    T.showToast("查询的标题不能为空哦~");
-                }
-                startLoadingProgress();
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 从服务端搜索
+//                String s = searchedContent.getText().toString();
+//                if(!StringUtils.isEmpty(s)){
+//                    T.showToast("查询的标题不能为空哦~");
+//                }
+//                startLoadingProgress();
 //                taskBiz.searchByTitle(s, new CommonCallback<List<Task>>() {
 //                    @Override
 //                    public void onError(Exception e) {
@@ -97,31 +97,36 @@ public class HoleCenterActivity extends BaseActivity {
 //                        updateList(response);
 //                    }
 //                });
-            }
-        });
+//            }
+//        });
 
-        eSwipeRefreshLayout.setOnRefreshListener(new SwipeRefresh.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-//                loadAll();
-            }
-        });
-
-        eSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
-            @Override
-            public void onPullUpRefresh() {
-//                loadAll();
-            }
-        });
+//        eSwipeRefreshLayout.setOnRefreshListener(new SwipeRefresh.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+////                loadAll();
+//            }
+//        });
+//
+//        eSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
+//            @Override
+//            public void onPullUpRefresh() {
+////                loadAll();
+//            }
+//        });
 
     }
 
     private void initView(){
         HoleCenter = findViewById(R.id.id_ll_holeCenter);
         HelpCenter = findViewById(R.id.id_ll_helpCenter);
-        TaskCenter = findViewById(R.id.id_ll_taskCenter);
+        ActivityCenter = findViewById(R.id.id_ll_activityCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
 
+    }
+
+    private void toCreateNewTaskActivity() {
+        Intent intent = new Intent(this,CreateNewTaskActivity.class);
+        startActivityForResult(intent,1001);
     }
 
     private void toUserCenterActivity() {

@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class HelpCenterActivity extends BaseActivity {
     LinearLayout HelpCenter;
-    LinearLayout TaskCenter;
+    LinearLayout ActivityCenter;
     LinearLayout HoleCenter;
     LinearLayout UserCenter;
     TextView all;
@@ -61,7 +61,7 @@ public class HelpCenterActivity extends BaseActivity {
         setToolbar(R.drawable.common_add, new ClickListener() {
             @Override
             public void click() {
-                toCreateNewQuestionActivity();
+                toCreateNewTaskActivity();
             }
         });
 
@@ -72,7 +72,7 @@ public class HelpCenterActivity extends BaseActivity {
             }
         });
 
-        TaskCenter.setOnClickListener(new View.OnClickListener() {
+        ActivityCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toTaskCenterActivity();
@@ -91,97 +91,97 @@ public class HelpCenterActivity extends BaseActivity {
             }
         });
 
-        all.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 展示全部状态（除未审核的信息）
-                loadAll();
-            }
-        });
-
-        waitedSolve.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 展示待解决的问题
-                startLoadingProgress();
-                questionBiz.searchByState(Config.QUESTION_WAIT_SOLVE, new CommonCallback<List<Question>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(List<Question> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
-
-        solved.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 展示已解决的问题
-                startLoadingProgress();
-                questionBiz.searchByState(Config.USER_PASSED, new CommonCallback<List<Question>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(List<Question> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
-
-        searchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO 从服务端搜索
-                String s = searchedContent.getText().toString();
-                if(!StringUtils.isEmpty(s)){
-                    T.showToast("查询的标题不能为空哦~");
-                }
-                startLoadingProgress();
-                questionBiz.searchByTitle(s, new CommonCallback<List<Question>>() {
-                    @Override
-                    public void onError(Exception e) {
-                        stopLoadingProgress();
-                        T.showToast(e.getMessage());
-                    }
-
-                    @Override
-                    public void onSuccess(List<Question> response) {
-                        stopLoadingProgress();
-                        T.showToast("查询成功！");
-                        updateList(response);
-                    }
-                });
-            }
-        });
-
-        eSwipeRefreshLayout.setOnRefreshListener(new SwipeRefresh.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                loadAll();
-            }
-        });
-
-        eSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
-            @Override
-            public void onPullUpRefresh() {
-                loadAll();
-            }
-        });
+//        all.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 展示全部状态（除未审核的信息）
+//                loadAll();
+//            }
+//        });
+//
+//        waitedSolve.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 展示待解决的问题
+//                startLoadingProgress();
+//                questionBiz.searchByState(Config.QUESTION_WAIT_SOLVE, new CommonCallback<List<Question>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<Question> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
+//
+//        solved.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 展示已解决的问题
+//                startLoadingProgress();
+//                questionBiz.searchByState(Config.USER_PASSED, new CommonCallback<List<Question>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<Question> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
+//
+//        searchBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO 从服务端搜索
+//                String s = searchedContent.getText().toString();
+//                if(!StringUtils.isEmpty(s)){
+//                    T.showToast("查询的标题不能为空哦~");
+//                }
+//                startLoadingProgress();
+//                questionBiz.searchByTitle(s, new CommonCallback<List<Question>>() {
+//                    @Override
+//                    public void onError(Exception e) {
+//                        stopLoadingProgress();
+//                        T.showToast(e.getMessage());
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(List<Question> response) {
+//                        stopLoadingProgress();
+//                        T.showToast("查询成功！");
+//                        updateList(response);
+//                    }
+//                });
+//            }
+//        });
+//
+//        eSwipeRefreshLayout.setOnRefreshListener(new SwipeRefresh.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                loadAll();
+//            }
+//        });
+//
+//        eSwipeRefreshLayout.setOnPullUpRefreshListener(new SwipeRefreshLayout.OnPullUpRefreshListener() {
+//            @Override
+//            public void onPullUpRefresh() {
+//                loadAll();
+//            }
+//        });
     }
 
     private void loadAll() {
@@ -223,31 +223,31 @@ public class HelpCenterActivity extends BaseActivity {
     private void initView() {
         HoleCenter = findViewById(R.id.id_ll_holeCenter);
         HelpCenter = findViewById(R.id.id_ll_helpCenter);
-        TaskCenter = findViewById(R.id.id_ll_taskCenter);
+        ActivityCenter = findViewById(R.id.id_ll_activityCenter);
         UserCenter = findViewById(R.id.id_ll_userCenter);
-        all = findViewById(R.id.id_tv_all);
+//        all = findViewById(R.id.id_tv_all);
 //        waitedSolve = findViewById(R.id.id_tv_waitedSolve);
 //        solved = findViewById(R.id.id_tv_solved);
-        searchedContent = findViewById(R.id.id_et_search);
-        searchBtn = findViewById(R.id.id_iv_search);
-        eSwipeRefreshLayout = findViewById(R.id.id_swiperefresh);
-        eRecyclerView = findViewById(R.id.id_recyclerview);
-
-        eSwipeRefreshLayout.setMode(SwipeRefresh.Mode.BOTH);
-        eSwipeRefreshLayout.setColorSchemeColors(Color.RED,Color.BLACK,Color.YELLOW,Color.GREEN);
-        questionBiz = new QuestionBiz();
-        questionList = new ArrayList<>();
-        questionAdapter = new QuestionAdapter(this,questionList);
-        eRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        eRecyclerView.setAdapter(questionAdapter);
-        loadAll();
+//        searchedContent = findViewById(R.id.id_et_search);
+//        searchBtn = findViewById(R.id.id_iv_search);
+//        eSwipeRefreshLayout = findViewById(R.id.id_swiperefresh);
+//        eRecyclerView = findViewById(R.id.id_recyclerview);
+//
+//        eSwipeRefreshLayout.setMode(SwipeRefresh.Mode.BOTH);
+//        eSwipeRefreshLayout.setColorSchemeColors(Color.RED,Color.BLACK,Color.YELLOW,Color.GREEN);
+//        questionBiz = new QuestionBiz();
+//        questionList = new ArrayList<>();
+//        questionAdapter = new QuestionAdapter(this,questionList);
+//        eRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        eRecyclerView.setAdapter(questionAdapter);
+//        loadAll();
     }
 
-    private void toCreateNewQuestionActivity() {
-        Intent intent = new Intent(this,CreateNewQuestionActivity.class);
+    private void toCreateNewTaskActivity() {
+        //TODO 创建新任务
+        Intent intent = new Intent(this,CreateNewTaskActivity.class);
         startActivityForResult(intent,1001);
     }
-
 
 
     private void toUserCenterActivity() {

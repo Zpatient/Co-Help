@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cohelp.task_for_stu.R;
+import com.cohelp.task_for_stu.net.gsonTools.GSON;
 import com.cohelp.task_for_stu.net.model.domain.Result;
 import com.cohelp.task_for_stu.net.model.entity.User;
 import com.cohelp.task_for_stu.biz.UserBiz;
@@ -125,11 +126,11 @@ public class LoginActivity extends BaseActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                    loginRequest = new LoginRequest();
-//                    loginRequest.setUserAccount(username.getText().toString());
-//                    loginRequest.setUserPassword( password.getText().toString());
-//                    loginRequest.setUserAccount("1234567890");//debug
-//                    loginRequest.setUserPassword( "1234567890");//debug
+                    loginRequest = new LoginRequest();
+                    loginRequest.setUserAccount(username.getText().toString());
+                    loginRequest.setUserPassword( password.getText().toString());
+                    loginRequest.setUserAccount("1234567890");//debug
+                    loginRequest.setUserPassword( "1234567890");//debug
                     if(StringUtils.isEmpty(loginRequest.getUserAccount()) || StringUtils.isEmpty(loginRequest.getUserPassword())){
                         T.showToast("密码或账号不能为空哦~");
                         return;
@@ -161,7 +162,10 @@ public class LoginActivity extends BaseActivity {
                 e.printStackTrace();
             }
             System.out.println(res);
-            Gson gson = new Gson();
+            Gson gson = null;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                gson = new GSON().gsonSetter();
+            }
             Result<User> userResult = gson.fromJson(res, new TypeToken<Result<User>>(){}.getType());
             if (userResult == null){
                 T.showToast(userResult.getMessage());

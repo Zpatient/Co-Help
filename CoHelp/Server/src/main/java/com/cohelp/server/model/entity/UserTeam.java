@@ -10,37 +10,37 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 组织表
- * @TableName team
+ * 用户组织表
+ * @TableName user_team
  */
-@TableName(value ="team")
+@TableName(value ="user_team")
 @Data
-public class Team implements Serializable {
+public class UserTeam implements Serializable {
     /**
-     * 
+     * 主键
      */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
-     * 组织名
+     * 用户id
      */
-    private String teamName;
+    private Integer userId;
 
     /**
-     * 组织创建人ID
+     * 目标组织id
      */
-    private Integer teamCreator;
+    private Integer targetTeamId;
 
     /**
-     * 创建时间
+     * 加入状态（0：待审批，1：同意，2：不同意）
+     */
+    private Integer joinState;
+
+    /**
+     * 
      */
     private Date createTime;
-
-    /**
-     * 审批状态（0:待审批 1:同意 2:不同意）
-     */
-    private Integer createState;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -56,12 +56,12 @@ public class Team implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Team other = (Team) that;
+        UserTeam other = (UserTeam) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getTeamName() == null ? other.getTeamName() == null : this.getTeamName().equals(other.getTeamName()))
-            && (this.getTeamCreator() == null ? other.getTeamCreator() == null : this.getTeamCreator().equals(other.getTeamCreator()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getCreateState() == null ? other.getCreateState() == null : this.getCreateState().equals(other.getCreateState()));
+            && (this.getUserId() == null ? other.getUserId() == null : this.getUserId().equals(other.getUserId()))
+            && (this.getTargetTeamId() == null ? other.getTargetTeamId() == null : this.getTargetTeamId().equals(other.getTargetTeamId()))
+            && (this.getJoinState() == null ? other.getJoinState() == null : this.getJoinState().equals(other.getJoinState()))
+            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override
@@ -69,10 +69,10 @@ public class Team implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getTeamName() == null) ? 0 : getTeamName().hashCode());
-        result = prime * result + ((getTeamCreator() == null) ? 0 : getTeamCreator().hashCode());
+        result = prime * result + ((getUserId() == null) ? 0 : getUserId().hashCode());
+        result = prime * result + ((getTargetTeamId() == null) ? 0 : getTargetTeamId().hashCode());
+        result = prime * result + ((getJoinState() == null) ? 0 : getJoinState().hashCode());
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getCreateState() == null) ? 0 : getCreateState().hashCode());
         return result;
     }
 
@@ -83,10 +83,10 @@ public class Team implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", teamName=").append(teamName);
-        sb.append(", teamCreator=").append(teamCreator);
+        sb.append(", userId=").append(userId);
+        sb.append(", targetTeamId=").append(targetTeamId);
+        sb.append(", joinState=").append(joinState);
         sb.append(", createTime=").append(createTime);
-        sb.append(", createState=").append(createState);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

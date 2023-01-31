@@ -8,11 +8,12 @@
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="teamName" column="team_name" jdbcType="VARCHAR"/>
             <result property="teamCreator" column="team_creator" jdbcType="INTEGER"/>
-            <result property="createTime" column="create_Time" jdbcType="TIMESTAMP"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="createState" column="create_state" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,team_name,team_creator,
-        create_Time
+        create_time,create_state
     </sql>
 </mapper>

@@ -1,12 +1,13 @@
 package com.cohelp.server;
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
 import com.cohelp.server.mapper.ActivityMapper;
-import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Help;
+import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.impl.GeneralServiceImpl;
 import com.cohelp.server.utils.MailUtils;
@@ -151,15 +152,13 @@ class ServerApplicationTests {
     @Test
     public void test09(){
         String res = "{\"code\":\"202\",\"data\":{\"activityVO\":{\"id\":1,\"activityOwnerId\":1,\"userName\":\"asd24\",\"avatar\":1,\"activityTitle\":\"不删测试\",\"activityDetail\":\"hello\",\"activityTime\":\"2022-11-15 23:00:00\",\"activityLike\":0,\"activityComment\":0,\"activityLabel\":null,\"activityCollect\":0,\"activityState\":0,\"activityCreateTime\":\"2020-11-13 20:20:00\"},\"helpVO\":null,\"holeVO\":null,\"publisherAvatarUrl\":\"https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb35189.png\",\"imagesUrl\":[]},\"message\":\"数据获取成功！\"}";
-
-        Gson gson = new Gson();
-        Result<DetailResponse> result = gson.fromJson(res, new Result<DetailResponse>().getClass());
-        System.out.println(result);
-        Result parseObject = JSON.parseObject(res, new Result<DetailResponse>().getClass());
-        System.out.println(parseObject);
     }
-
-
+    @Test
+    void test(){
+        String s = "{\"code\":\"201\",\"data\":{\"id\":1,\"userAccount\":\"1234567890\",\"userName\":\"超级管理员\",\"userPassword\":null,\"avatar\":1,\"sex\":1,\"phoneNumber\":\"19121755640\",\"userEmail\":\"2712748478@qq.com\",\"userRole\":2,\"state\":0,\"userCreateTime\":\"2023-01-20 21:56:42\",\"age\":18,\"teamId\":1,\"teamName\":\"默认\",\"animalSign\":\"鸡\"},\"message\":\"登录成功\"}";
+        Result<User> user = JSON.parseObject(s, new TypeReference<Result<User>>(){});
+        System.out.println(user);
+    }
 }
 
 

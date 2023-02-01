@@ -1,8 +1,8 @@
 package com.cohelp.server.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Team;
-import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
 
@@ -27,4 +27,10 @@ public interface TeamService extends IService<Team> {
      * @return
      */
     Result<Boolean> changeTeam(Integer conditionType, Integer teamId);
+    /**
+     * 创建新组织
+     * @param team 待插入的组织
+     * @return java.lang.Boolean
+     */
+    String insertTeam(Team team);
 }

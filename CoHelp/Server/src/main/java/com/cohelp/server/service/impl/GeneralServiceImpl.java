@@ -463,7 +463,23 @@ public class GeneralServiceImpl implements GeneralService {
 
         return userIdList;
     }
+    @Override
+    public List<Integer> getUserIdList(Integer teamId) {
+        if(teamId==null) return null;
 
+        // 获取该组织的所有成员
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("team_id", teamId).or().eq("team_id", 1);
+        List<User> userList = userService.list(queryWrapper);
+
+        // 获取该组织的所有成员的 id 数组
+        List<Integer> userIdList = new ArrayList<>();
+        for (User user : userList) {
+            userIdList.add(user.getId());
+        }
+
+        return userIdList;
+    }
     @Override
     public List<DetailResponse> listDetailResponse(List<IdAndType> idAndTypes) {
         if(idAndTypes==null) return null;
@@ -523,5 +539,75 @@ public class GeneralServiceImpl implements GeneralService {
             }
         }
         return detailResponses;
+    }
+
+    @Override
+    public TopicNumber getCurrentDayPublish(Integer teamId) {
+        if(teamId==null){
+            return null;
+        }
+        //获取组织成员用户Id
+        List<Integer> userIdList = getUserIdList(teamId);
+        //查询话题发布数
+        TopicNumber topicNumber = new TopicNumber();
+        long activityCurrentDayPublish = 0;
+        long helpCurrentDayPublish = 0;
+        long holeCurrentDayPublish = 0;
+        for(Integer id : userIdList){
+            //查当天活动发布数
+            activityCurrentDayPublish += activityMapper.getCurrentDayPublish(id);
+            //查当天互助发布数
+            helpCurrentDayPublish += helpMapper.getCurrentDayPublish(id);
+            //查当天树洞发布数
+            holeCurrentDayPublish += holeMapper.getCurrentDayPublish(id);
+        }
+        //保存当天活动发布数
+        ArrayList<Integer> activityNumber = new ArrayList<>();
+        activityNumber.add(new Long(activityCurrentDayPublish).intValue());
+        topicNumber.setActivityNumber(activityNumber);
+        //保存当天互助发布数
+        ArrayList<Integer> helpNumber = new ArrayList<>();
+        helpNumber.add(new Long(helpCurrentDayPublish).intValue());
+        topicNumber.setHelpNumber(helpNumber);
+        //保存当天树洞发布数
+        ArrayList<Integer> holeNumber = new ArrayList<>();
+        holeNumber.add(new Long(holeCurrentDayPublish).intValue());
+        topicNumber.setHoleNumber(holeNumber);
+        return topicNumber;
+    }
+
+    @Override
+    public TopicNumber getCurrentYearPublish(Integer teamId) {
+        if(teamId==null){
+            return null;
+        }
+        //获取组织成员用户Id
+        List<Integer> userIdList = getUserIdList(teamId);
+        //查询话题发布数
+        TopicNumber topicNumber = new TopicNumber();
+        ArrayList<Integer> activityNumber = new ArrayList<>();
+        ArrayList<Integer> helpNumber = new ArrayList<>();
+        ArrayList<Integer> holeNumber = new ArrayList<>();
+        for(int month = 1;month <= 12;month++){
+            long activityPublish = 0;
+            long helpPublish = 0;
+            long holePublish = 0;
+            for(Integer id : userIdList){
+                //查活动发布数
+                activityPublish += activityMapper.getMonthPublish(id,month);
+                //查互助发布数
+                helpPublish += helpMapper.getMonthPublish(id,month);
+                //查树洞发布数
+                holePublish += holeMapper.getMonthPublish(id,month);
+            }
+            //依次保存本年度第month月的话题发布数
+            activityNumber.add(new Long(activityPublish).intValue());
+            helpNumber.add(new Long(helpPublish).intValue());
+            holeNumber.add(new Long(holePublish).intValue());
+        }
+        topicNumber.setActivityNumber(activityNumber);
+        topicNumber.setHelpNumber(helpNumber);
+        topicNumber.setHoleNumber(holeNumber);
+        return topicNumber;
     }
 }

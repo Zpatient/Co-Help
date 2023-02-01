@@ -51,10 +51,26 @@ public interface GeneralService{
      */
     List<Integer> getUserIdList();
     /**
+     * 返回组织用户 Id 数组
+     * @return
+     */
+    List<Integer> getUserIdList(Integer teamId);
+    /**
      * 根据Id和Type列表获取话题详情
      * @param idAndTypes Id和Type列表
      * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
      */
     List<DetailResponse> listDetailResponse(List<IdAndType> idAndTypes);
-
+    /**
+     * 获取当天指定组织的话题发布量
+     * @param teamId 组织Id
+     * @return com.cohelp.server.model.domain.TopicNumber
+     */
+    TopicNumber getCurrentDayPublish(Integer teamId);
+    /**
+     * 获取本年度指定组织的话题发布量
+     * @param teamId 组织Id
+     * @return com.cohelp.server.model.domain.TopicNumber
+     */
+    TopicNumber getCurrentYearPublish(Integer teamId);
 }

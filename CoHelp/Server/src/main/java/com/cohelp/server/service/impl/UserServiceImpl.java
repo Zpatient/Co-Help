@@ -1,7 +1,9 @@
 package com.cohelp.server.service.impl;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.model.domain.*;
@@ -20,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static com.cohelp.server.constant.NumberConstant.*;
@@ -585,6 +588,72 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         return ResultUtil.fail("未上传图片");
+    }
+
+    @Override
+    public List<User> listTeamUser(Integer teamId,Integer currentPage,Integer pageSize) {
+        if(teamId==null){
+            return null;
+        }
+        //分页查询数据
+        Page<User> userPage = getBaseMapper().selectPage(new Page<>(currentPage, pageSize),
+                new QueryWrapper<User>().eq("team_id",teamId));
+        List<User> users = userPage.getRecords();
+        ArrayList<User> safetyUsers = new ArrayList<>();
+        for(User user : users){
+            User safetyUser = getSafetyUser(user);
+            safetyUsers.add(safetyUser);
+        }
+        return safetyUsers;
+    }
+
+    @Override
+    public String adminUserInfo(User user) {
+        // 敏感词过滤
+        String userName = user.getUserName();
+        if (SensitiveUtils.contains(userName)) {
+            return "文本涉及敏感词汇";
+        }
+        // 判断组织是否存在
+        QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
+        teamQueryWrapper.eq("id", user.getTeamId());
+        Team team = teamService.getOne(teamQueryWrapper);
+        if (team == null) {
+            return "抱歉！该组织不存在";
+        }
+        // 检验邮箱格式
+        if (user.getUserEmail() != null && !RegexUtils.isEmailValid(user.getUserEmail())) {
+            return "用户邮箱格式不规范";
+        }
+
+        // 检验手机号格式
+        if (user.getPhoneNumber() != null && !RegexUtils.isPhoneNumberValid(user.getPhoneNumber())) {
+            return "用户手机号格式不规范";
+        }
+
+        //修改用户资料
+        boolean b = this.updateById(user);
+        if (b == false) {
+            return "修改失败!";
+        }
+        return "修改成功！";
+    }
+
+    @Override
+    public List<User> listUserByName(Integer teamId, Integer currentPage, Integer pageSize, String key) {
+        if(teamId==null){
+            return null;
+        }
+        //分页查询数据
+        Page<User> userPage = getBaseMapper().selectPage(new Page<>(currentPage, pageSize),
+                new QueryWrapper<User>().eq("team_id",teamId).like("user_name",key));
+        List<User> users = userPage.getRecords();
+        ArrayList<User> safetyUsers = new ArrayList<>();
+        for(User user : users){
+            User safetyUser = getSafetyUser(user);
+            safetyUsers.add(safetyUser);
+        }
+        return safetyUsers;
     }
 
 }

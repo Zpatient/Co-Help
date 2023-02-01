@@ -1,11 +1,12 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.*;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author jianping5
@@ -98,4 +99,29 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result<Boolean> changeAvatar(MultipartFile file);
+
+    /**
+     * 查询某组织所有成员信息
+     * @param teamId 组织id
+     * @param currentPage 当前页码
+     * @param pageSize m每页数据最大个数
+     * @return java.util.List<com.cohelp.server.model.entity.User>
+     */
+    List<User> listTeamUser(Integer teamId,Integer currentPage,Integer pageSize);
+    /**
+     * 管理用户信息
+     * @param user 待修改的用户信息
+     * @return java.lang.Boolean
+     */
+    String adminUserInfo(User user);
+    /**
+     * 根据昵称搜索某组织成员
+     * @param teamId 组织id
+     * @param currentPage 当前页码
+     * @param pageSize m每页数据最大个数
+     * @param key 关键词
+     * @return java.util.List<com.cohelp.server.model.entity.User>
+     */
+    List<User> listUserByName(Integer teamId,Integer currentPage,Integer pageSize,String key);
+
 }

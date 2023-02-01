@@ -3,12 +3,14 @@ package com.cohelp.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.mapper.TeamMapper;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Team;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.entity.UserTeam;
 import com.cohelp.server.service.TeamService;
-import com.cohelp.server.mapper.TeamMapper;
 import com.cohelp.server.service.UserService;
+import com.cohelp.server.service.UserTeamService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.springframework.stereotype.Service;
@@ -30,6 +32,9 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private UserTeamService userTeamService;
 
     @Override
     public Result<List<Team>> fuzzyQuery(String teamName) {
@@ -68,11 +73,19 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
             }
 
             // 修改用户的组织
-            teamUpdateWrapper.eq("id", userId);
-            teamUpdateWrapper.set("team_id", teamId);
-            boolean update = userService.update(teamUpdateWrapper);
+            QueryWrapper<UserTeam> userTeamQueryWrapper = new QueryWrapper<>();
+            userTeamQueryWrapper.eq("user_id",userId)
+                    .eq("join_state",0);
+            UserTeam userTeam = userTeamService.getOne(userTeamQueryWrapper,false);
+            if(userTeam==null){
+                userTeam = new UserTeam();
+            }
+            userTeam.setUserId(userId);
+            userTeam.setTargetTeamId(teamId);
+            userTeam.setJoinState(0);
+            boolean update = userTeamService.saveOrUpdate(userTeam);
             if (!update) {
-                return ResultUtil.fail(false, "加入组织失败");
+                return ResultUtil.fail(false, "申请失败");
             }
         }
 
@@ -88,6 +101,26 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
         }
 
         return ResultUtil.ok( true,"成功修改组织");
+    }
+
+    @Override
+    public String insertTeam(Team team) {
+        if(team==null){
+            return null;
+        }
+        // 判断组织是否存在
+        QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
+        teamQueryWrapper.eq("team_name", team.getTeamName());
+        Team oldTeam = teamService.getOne(teamQueryWrapper);
+        if (oldTeam != null) {
+            return "组织名已存在，换个名字试试！";
+        }
+        team.setCreateState(0);
+        boolean b = teamService.saveOrUpdate(team);
+        if(b){
+            return "组织创建申请提交成功！";
+        }
+        return "组织创建申请提交失败！";
     }
 
 }

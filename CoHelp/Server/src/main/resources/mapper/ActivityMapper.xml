@@ -26,7 +26,7 @@
     </sql>
 
     <select id="listByHot" resultType="com.cohelp.server.model.entity.Activity">
-        select id
+        select <include refid="Base_Column_List"></include>
         from activity
         where activity_owner_id in
         <foreach collection="userIdList" item="id" open="(" close=")" separator=",">
@@ -47,5 +47,18 @@
             or activity_label like CONCAT(CONCAT('%', #{keyword,jdbcType=VARCHAR}), '%')
         </foreach>
         )
+    </select>
+    <select id="getCurrentDayPublish" resultType="java.lang.Long">
+        select count(*)
+        from activity
+        where activity_owner_id = #{userId} and
+        date_format(activity_create_time,'%Y-%m-%d') = CURDATE()
+    </select>
+    <select id="getMonthPublish" resultType="java.lang.Long">
+        select count(*)
+        from activity
+        where activity_owner_id = #{userId} and
+            YEAR(activity_create_time) = EXTRACT(YEAR FROM NOW()) and
+            MONTH(activity_create_time) = #{month}
     </select>
 </mapper>

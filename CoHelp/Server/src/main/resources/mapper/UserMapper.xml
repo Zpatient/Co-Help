@@ -31,4 +31,7 @@
     <select id="getEmailByUserAccount" resultType="java.lang.String">
         select user_email from user where user_account = #{userAcount}
     </select>
+<!--    <select id="listTeamUser" resultType="com.cohelp.server.model.entity.User">-->
+<!--        select * from user where team_id = #{teamId};-->
+<!--    </select>-->
 </mapper>

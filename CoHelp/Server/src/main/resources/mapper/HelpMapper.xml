@@ -48,4 +48,18 @@
         </foreach>
         )
     </select>
+    <select id="getCurrentDayPublish" resultType="java.lang.Long">
+        select count(*)
+        from help
+        where help_owner_id = #{userId} and
+            date_format(help_create_time,'%Y-%m-%d') = CURDATE()
+    </select>
+    <select id="getMonthPublish" resultType="java.lang.Long">
+        select count(*)
+        from help
+        where help_owner_id = #{userId} and
+                  YEAR(help_create_time) = EXTRACT(YEAR FROM NOW()) and
+            MONTH(help_create_time) = #{month}
+    </select>
+
 </mapper>

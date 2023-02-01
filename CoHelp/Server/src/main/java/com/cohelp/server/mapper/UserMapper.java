@@ -1,7 +1,7 @@
 package com.cohelp.server.mapper;
 
-import com.cohelp.server.model.entity.User;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cohelp.server.model.entity.User;
 
 /**
 * @author jianping5
@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 public interface UserMapper extends BaseMapper<User> {
 
     String getEmailByUserAccount (String userAccount);
-
+//    List<User>  listTeamUser(Integer teamId);
 }
 
 

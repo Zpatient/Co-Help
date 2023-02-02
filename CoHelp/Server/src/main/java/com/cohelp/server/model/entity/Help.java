@@ -71,6 +71,11 @@ public class Help implements Serializable {
     private Integer helpState;
 
     /**
+     * 组织id
+     */
+    private Integer teamId;
+
+    /**
      * 互助发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

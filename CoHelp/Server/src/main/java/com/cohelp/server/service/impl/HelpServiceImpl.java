@@ -89,6 +89,10 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         User user = UserHolder.getUser();
         int userId = user.getId();
         help.setHelpOwnerId(userId);
+
+        // 设置对应的组织id到活动中
+        help.setTeamId(user.getTeamId());
+
         boolean save = this.save(help);
         if (!save) {
             return ResultUtil.fail(ERROR_SAVE_HELP, "互助发布失败");
@@ -183,8 +187,9 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
     @Override
     public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
 
-        // 获取同团体的用户 id 数组
-        List<Integer> userIdList = generalService.getUserIdList();
+        // 获取当前登录用户的组织id
+        User user = UserHolder.getUser();
+        Integer teamId = user.getTeamId();
 
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
@@ -194,7 +199,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Help> helpList = helpMapper.listByHot(userIdList);
+            List<Help> helpList = helpMapper.listByHot(teamId);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
@@ -208,7 +213,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
             //  按发布时间排序
             QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
             helpQueryWrapper.orderByDesc("help_create_time");
-            helpQueryWrapper.in("help_owner_id", userIdList);
+            helpQueryWrapper.eq("team_id", teamId);
+            helpQueryWrapper.eq("help_state", 0);
             List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
@@ -222,7 +228,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         if (conditionType == 2) {
             QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
             helpQueryWrapper.eq("help_paid", 1);
-            helpQueryWrapper.in("help_owner_id", userIdList);
+            helpQueryWrapper.eq("team_id", teamId);
+            helpQueryWrapper.eq("help_state", 0);
             List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无有偿互助");
@@ -236,7 +243,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         if (conditionType == 3) {
             QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
             helpQueryWrapper.eq("help_paid", 0);
-            helpQueryWrapper.in("help_owner_id", userIdList);
+            helpQueryWrapper.eq("team_id", teamId);
+            helpQueryWrapper.eq("help_state", 0);
             List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无无偿互助");
@@ -251,8 +259,10 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
     @Override
     public Result<List<DetailResponse>> listByTag(String tag) {
 
-        // 获取同团体的用户 id 数组
-        List<Integer> userIdList = generalService.getUserIdList();
+        // 获取当前登录用户的组织id
+        User user = UserHolder.getUser();
+        Integer teamId = user.getTeamId();
+
 
         if (tag == null) {
             return ResultUtil.fail(ERROR_PARAMS);
@@ -262,7 +272,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
         // 查询当前团体内的所有活动
         QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
-        helpQueryWrapper.in("help_owner_id", userIdList);
+        helpQueryWrapper.eq("team_id", teamId);
+        helpQueryWrapper.eq("help_state", 0);
         List<Help> helpList = this.list(helpQueryWrapper);
         if (helpList == null) {
             return ResultUtil.fail(ERROR_PARAMS, "暂无互助");

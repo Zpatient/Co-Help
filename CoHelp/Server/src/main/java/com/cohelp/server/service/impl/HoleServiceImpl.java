@@ -88,7 +88,12 @@ public class HoleServiceImpl
         }
         // 设置当前用户id到hole中
         hole.setHoleOwnerId(userId);
+
+        // 设置对应的组织id到活动中
+        hole.setTeamId(user.getTeamId());
+
         boolean save = this.save(hole);
+
         if (!save) {
             return ResultUtil.fail(ERROR_SAVE_HOLE, "树洞发布失败");
         }
@@ -181,8 +186,9 @@ public class HoleServiceImpl
     @Override
     public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
 
-        // 获取同团体的用户 id 数组
-        List<Integer> userIdList = generalService.getUserIdList();
+        // 获取当前登录用户的组织id
+        User user = UserHolder.getUser();
+        Integer teamId = user.getTeamId();
 
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
@@ -192,7 +198,7 @@ public class HoleServiceImpl
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Hole> holeList = holeMapper.listByHot(userIdList);
+            List<Hole> holeList = holeMapper.listByHot(teamId);
             if (holeList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
@@ -206,7 +212,8 @@ public class HoleServiceImpl
             //  按发布时间排序
             QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
             holeQueryWrapper.orderByDesc("hole_create_time");
-            holeQueryWrapper.in("hole_owner_id", userIdList);
+            holeQueryWrapper.eq("team_id", teamId);
+            holeQueryWrapper.eq("hole_state", 0);
             List<Hole> holeList = holeMapper.selectList(holeQueryWrapper);
             if (holeList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");

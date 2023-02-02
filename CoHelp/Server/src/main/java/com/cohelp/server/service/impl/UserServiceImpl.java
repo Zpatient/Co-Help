@@ -417,7 +417,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         }
 
         // 检验邮箱格式
-
         if (user.getUserEmail() != null && !RegexUtils.isEmailValid(user.getUserEmail())) {
             return ResultUtil.fail(ERROR_PARAMS, "用户邮箱格式不规范");
         }

@@ -16,10 +16,11 @@ public interface ActivityMapper extends BaseMapper<Activity> {
 
     /**
      * 根据热度查询（4*点赞+3*评论+3*收藏）
-     * @param userIdList
+     * @param teamId
      * @return
      */
-    List<Activity> listByHot(List<Integer> userIdList);
+    List<Activity> listByHot(Integer teamId);
+
     /**
      * 根据关键词搜索某人发布的活动
      * @param userId 用户Id

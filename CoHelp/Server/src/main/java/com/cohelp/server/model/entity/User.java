@@ -4,12 +4,14 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import net.bytebuddy.asm.Advice;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * 用户表
@@ -92,7 +94,7 @@ public class User implements Serializable {
     @TableField(exist = false)
     private String teamName;
 
-    public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, String userEmail, Integer userRole, Integer state, Date userCreateTime, Integer age, Integer teamId, String teamName, String animalSign) {
+    public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, String userEmail, Integer userRole, Integer state, Date userCreateTime, Integer age, Integer teamId, String animalSign) {
         this.id = id;
         this.userAccount = userAccount;
         this.userName = userName;
@@ -106,7 +108,6 @@ public class User implements Serializable {
         this.userCreateTime = userCreateTime;
         this.age = age;
         this.teamId = teamId;
-        this.teamName = teamName;
         this.animalSign = animalSign;
     }
 

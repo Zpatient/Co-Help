@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import lombok.Data;
 import java.util.Objects;
 
 /**
@@ -54,16 +55,21 @@ public class Team implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return Objects.equals(id, team.id) && Objects.equals(teamName, team.teamName) && Objects.equals(teamCreator, team.teamCreator) && Objects.equals(createTime, team.createTime) && Objects.equals(createState, team.createState) && Objects.equals(creatorName, team.creatorName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, teamName, teamCreator, createTime, createState, creatorName);
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Team other = (Team) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+                && (this.getTeamName() == null ? other.getTeamName() == null : this.getTeamName().equals(other.getTeamName()))
+                && (this.getTeamCreator() == null ? other.getTeamCreator() == null : this.getTeamCreator().equals(other.getTeamCreator()))
+                && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()));
     }
 
     @Override

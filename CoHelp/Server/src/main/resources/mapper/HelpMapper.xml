@@ -16,22 +16,21 @@
             <result property="helpLabel" column="help_label" jdbcType="VARCHAR"/>
             <result property="helpState" column="help_state" jdbcType="TINYINT"/>
             <result property="helpCreateTime" column="help_create_time" jdbcType="TIMESTAMP"/>
+            <result property="teamId" column="team_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,help_owner_id,help_title,
         help_detail,help_paid,help_like,
         help_collect,help_comment,help_label,
-        help_state,help_create_time
+        help_state,help_create_time,team_id
     </sql>
 
     <select id="listByHot" resultType="com.cohelp.server.model.entity.Help">
         select <include refid="Base_Column_List"></include>
         from help
-        where help_owner_id in
-        <foreach collection="userIdList" item="id" open="(" close=")" separator=",">
-            #{id,jdbcType=INTEGER}
-        </foreach>
+        where team_id = #{teamId} and
+        help_state = 0
         order by (4*help_like+3*help_comment+3*help_collect) desc
     </select>
     <select id="search" resultType="com.cohelp.server.model.entity.Help">

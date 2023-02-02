@@ -71,6 +71,11 @@ public class Activity implements Serializable {
     private Integer activityState;
 
     /**
+     * 组织id
+     */
+    private Integer teamId;
+
+    /**
      * 活动发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

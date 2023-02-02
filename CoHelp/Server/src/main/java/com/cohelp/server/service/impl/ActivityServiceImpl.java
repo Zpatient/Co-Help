@@ -94,6 +94,10 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         User user = UserHolder.getUser();
         int userId = user.getId();
         activity.setActivityOwnerId(userId);
+
+        // 设置对应的组织id到活动中
+        activity.setTeamId(user.getTeamId());
+
         boolean save = this.save(activity);
         if (!save) {
             return ResultUtil.fail(ERROR_SAVE_HELP, "活动发布失败");
@@ -190,8 +194,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
     @Override
     public Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum) {
 
-        // 获取同团体的用户 id 数组
-        List<Integer> userIdList = generalService.getUserIdList();
+        // 获取当前登录用户的组织id
+        User user = UserHolder.getUser();
+        Integer teamId = user.getTeamId();
 
         if (conditionType == null) {
             return ResultUtil.fail(ERROR_PARAMS);
@@ -201,7 +206,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Activity> activityList = activityMapper.listByHot(userIdList);
+            List<Activity> activityList = activityMapper.listByHot(teamId);
             if (activityList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
             }
@@ -216,7 +221,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             if (dayNum == null) {
                 QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
                 activityQueryWrapper.orderByDesc("activity_create_time");
-                activityQueryWrapper.in("activity_owner_id", userIdList);
+                activityQueryWrapper.eq("team_id", teamId);
+                activityQueryWrapper.eq("activity_state", 0);
                 List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
                 if (activityList == null) {
                     return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
@@ -229,7 +235,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             if (dayNum != null) {
                 QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
                 activityQueryWrapper.orderByAsc("activity_time");
-                activityQueryWrapper.in("activity_owner_id", userIdList);
+                activityQueryWrapper.eq("team_id", teamId);
+                activityQueryWrapper.eq("activity_state", 0);
                 List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
                 if (activityList == null) {
                     return ResultUtil.fail(ERROR_PARAMS, "暂无活动");

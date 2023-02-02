@@ -33,4 +33,17 @@ public interface TeamService extends IService<Team> {
      * @return java.lang.Boolean
      */
     String insertTeam(Team team);
+
+    /**
+     * 获取某待审批的组织创建申请
+     * @param teamName 组织名称
+     * @return java.util.List<com.cohelp.server.model.entity.UserTeam>
+     */
+    List<Team> listNotApproved(Integer currentPage, Integer pageSize);
+    /**
+     * 更新指定加入组织申请
+     * @param team 已处理的team
+     * @return java.lang.String
+     */
+    String adminTeam(Team team);
 }

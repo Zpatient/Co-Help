@@ -1,5 +1,6 @@
 package com.cohelp.server.controller;
 
+import com.cohelp.server.constant.StatusCode;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.TeamUpdateRequest;
 import com.cohelp.server.model.entity.Team;
@@ -7,6 +8,7 @@ import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.TeamService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -68,6 +70,33 @@ public class TeamController {
         String s = teamService.insertTeam(team);
         return ResultUtil.ok(s);
     }
-
+    @GetMapping("/listnotapproved")
+    public Result<List<Team>> listNotApproved(@RequestParam Integer page,@RequestParam Integer limit){
+        if(ObjectUtils.anyNull(page,limit)){
+            return ResultUtil.fail("参数不能为空！");
+        }
+        User currentUser = UserHolder.getUser();
+        if(currentUser==null||!currentUser.getUserRole().equals(2)){
+            return ResultUtil.fail("未登录或权限不足！");
+        }
+        List<Team> teams = teamService.listNotApproved(page, limit);
+        if(teams!=null){
+            return ResultUtil.ok(StatusCode.SUCCESS_GET_DATA,teams,"数据获取成功");
+        }else {
+            return ResultUtil.fail("数据获取失败！");
+        }
+    }
+    @PostMapping("/adminteam")
+    public Result adminTeam(@RequestBody Team team){
+        if(ObjectUtils.anyNull(team)){
+            return ResultUtil.fail("参数不能为空！");
+        }
+        User currentUser = UserHolder.getUser();
+        if(currentUser==null||(!currentUser.getUserRole().equals(1)&&!currentUser.getUserRole().equals(2))){
+            return ResultUtil.fail("未登录或权限不足！");
+        }
+        String result = teamService.adminTeam(team);
+        return ResultUtil.ok(result);
+    }
 
 }

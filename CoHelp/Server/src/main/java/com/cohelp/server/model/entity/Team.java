@@ -4,10 +4,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 组织表
@@ -35,6 +38,8 @@ public class Team implements Serializable {
     /**
      * 创建时间
      */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private Date createTime;
 
     /**
@@ -43,37 +48,22 @@ public class Team implements Serializable {
     private Integer createState;
 
     @TableField(exist = false)
+    private String creatorName;
+
+    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
     @Override
-    public boolean equals(Object that) {
-        if (this == that) {
-            return true;
-        }
-        if (that == null) {
-            return false;
-        }
-        if (getClass() != that.getClass()) {
-            return false;
-        }
-        Team other = (Team) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getTeamName() == null ? other.getTeamName() == null : this.getTeamName().equals(other.getTeamName()))
-            && (this.getTeamCreator() == null ? other.getTeamCreator() == null : this.getTeamCreator().equals(other.getTeamCreator()))
-            && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
-            && (this.getCreateState() == null ? other.getCreateState() == null : this.getCreateState().equals(other.getCreateState()));
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return Objects.equals(id, team.id) && Objects.equals(teamName, team.teamName) && Objects.equals(teamCreator, team.teamCreator) && Objects.equals(createTime, team.createTime) && Objects.equals(createState, team.createState) && Objects.equals(creatorName, team.creatorName);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getTeamName() == null) ? 0 : getTeamName().hashCode());
-        result = prime * result + ((getTeamCreator() == null) ? 0 : getTeamCreator().hashCode());
-        result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
-        result = prime * result + ((getCreateState() == null) ? 0 : getCreateState().hashCode());
-        return result;
+        return Objects.hash(id, teamName, teamCreator, createTime, createState, creatorName);
     }
 
     @Override
@@ -87,6 +77,7 @@ public class Team implements Serializable {
         sb.append(", teamCreator=").append(teamCreator);
         sb.append(", createTime=").append(createTime);
         sb.append(", createState=").append(createState);
+        sb.append(", creatorName=").append(creatorName);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

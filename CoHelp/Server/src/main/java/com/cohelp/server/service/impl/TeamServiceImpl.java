@@ -2,6 +2,7 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.TeamMapper;
 import com.cohelp.server.model.domain.Result;
@@ -13,6 +14,7 @@ import com.cohelp.server.service.UserService;
 import com.cohelp.server.service.UserTeamService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -72,7 +74,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
                 return ResultUtil.fail(false, "抱歉！该组织不存在");
             }
 
-            // 修改用户的组织
+            // 提交加入申请
             QueryWrapper<UserTeam> userTeamQueryWrapper = new QueryWrapper<>();
             userTeamQueryWrapper.eq("user_id",userId)
                     .eq("join_state",0);
@@ -121,6 +123,64 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
             return "组织创建申请提交成功！";
         }
         return "组织创建申请提交失败！";
+    }
+
+    @Override
+    public List<Team> listNotApproved(Integer currentPage, Integer pageSize) {
+        if(ObjectUtils.anyNull(currentPage,pageSize)){
+            return null;
+        }
+        //分页查询数据
+        Page<Team> teamPage = getBaseMapper().selectPage(new Page<>(currentPage, pageSize),
+                new QueryWrapper<Team>().eq("create_state",0));
+        List<Team> records = teamPage.getRecords();
+        for(Team team:records){
+            if(team!=null){
+                Integer userId = team.getTeamCreator();
+                User user = userService.getById(userId);
+                if(user!=null){
+                    team.setCreatorName(user.getUserName());
+                }else {
+                    team.setCreatorName("用户不存在！");
+                }
+            }
+        }
+        return records;
+    }
+
+    @Override
+    public String adminTeam(Team team) {
+        if(team==null||team.getId()==null) {
+            return "参数为空！";
+        }
+        // 判断申请是否存在
+        QueryWrapper<Team> teamQueryWrapper = new QueryWrapper<>();
+        teamQueryWrapper.eq("id", team.getId()).eq("create_state",0);
+        Team one = getOne(teamQueryWrapper);
+        if (one == null) {
+            return "抱歉，申请不存在！";
+        }
+        //更新用户信息
+        if(team.getCreateState()!=null&&team.getCreateState().equals(1)){
+            Integer userId=one.getTeamCreator();
+            User user = userService.getById(userId);
+            if(user==null){
+                return "申请人不存在！";
+            }
+            user.setTeamId(one.getId());
+            user.setUserRole(1);
+            boolean update = userService.saveOrUpdate(user);
+            if(!update){
+                return "申请人权限修改失败!";
+            }
+        }
+        //更新申请审批状态
+        boolean b = this.updateById(team);
+        if (b == false) {
+            return "组织信息更新失败!";
+        }else {
+            return "组织信息更新成功！";
+        }
     }
 
 }

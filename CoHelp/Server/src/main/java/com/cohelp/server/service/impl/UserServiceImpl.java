@@ -10,6 +10,7 @@ import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.*;
 import com.cohelp.server.utils.*;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -592,7 +593,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public List<User> listTeamUser(Integer teamId,Integer currentPage,Integer pageSize) {
-        if(teamId==null){
+        if(teamId==null|| ObjectUtils.anyNull(currentPage,pageSize)){
             return null;
         }
         //分页查询数据
@@ -641,7 +642,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public List<User> listUserByName(Integer teamId, Integer currentPage, Integer pageSize, String key) {
-        if(teamId==null){
+        if(teamId==null|| ObjectUtils.anyNull(currentPage,pageSize)){
             return null;
         }
         //分页查询数据

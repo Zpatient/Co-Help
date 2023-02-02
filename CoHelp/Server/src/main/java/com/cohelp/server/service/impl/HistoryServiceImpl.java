@@ -19,6 +19,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -75,7 +76,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         Integer topicId = history.getTopicId();
         Integer topicType = history.getTopicType();
         Integer userId = history.getUserId();
-        Date historyTime = history.getViewTime();
+        LocalDateTime historyTime = history.getViewTime();
         if(ObjectUtils.anyNull(topicId,userId,historyTime)||!TypeEnum.isTopic(topicType)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }

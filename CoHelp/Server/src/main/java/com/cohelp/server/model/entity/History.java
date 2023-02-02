@@ -9,6 +9,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -44,7 +45,7 @@ public class History implements Serializable {
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
-    private Date viewTime;
+    private LocalDateTime viewTime;
 
     /**
      * 是否参与话题讨论（0:未参与 1：已参与）

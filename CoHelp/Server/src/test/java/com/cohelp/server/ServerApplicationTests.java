@@ -144,6 +144,18 @@ class ServerApplicationTests {
         MailUtils.sendMail(new Mail("Test","给爷成功？"),"2939814223@qq.com");
     }
 
+    @Test
+    public void test10(){
+
+        String res = "{\"code\":\"201\",\"data\":{\"id\":1,\"userAccount\":\"1234567890\",\"userName\":\"超级管理员\",\"userPassword\":null,\"avatar\":1,\"sex\":1,\"phoneNumber\":\"19121755640\",\"userEmail\":\"2712748478@qq.com\",\"userRole\":2,\"state\":0,\"userCreateTime\":\"2023-01-20 21:56:42\",\"age\":18,\"teamId\":1,\"teamName\":\"默认\",\"animalSign\":\"鸡\"},\"message\":\"登录成功\"}";
+        Gson gson = new Gson();
+        Result<User> result = gson.fromJson(res, new Result<User>().getClass());
+        System.out.println(result);
+        Result parseObject = JSON.parseObject(res, new Result<User>().getClass());
+        User data = (User) parseObject.getData();
+        System.out.println(data);
+    }
+
 
     @Test
     public void test08(){

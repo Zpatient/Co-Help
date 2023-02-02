@@ -15,10 +15,10 @@ public interface HelpMapper extends BaseMapper<Help> {
 
     /**
      * 根据热度排序查询互助
-     * @param userIdList
+     * @param teamId
      * @return
      */
-    List<Help> listByHot(List<Integer> userIdList);
+    List<Help> listByHot(Integer teamId);
     /**
      * 根据关键词搜索某人发布的互助
      * @param userId 用户Id

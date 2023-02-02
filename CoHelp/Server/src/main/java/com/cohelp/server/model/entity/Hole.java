@@ -66,6 +66,11 @@ public class Hole implements Serializable {
     private Integer holeState;
 
     /**
+     * 组织id
+     */
+    private Integer teamId;
+
+    /**
      * 树洞发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

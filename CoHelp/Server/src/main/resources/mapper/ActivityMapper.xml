@@ -16,22 +16,21 @@
             <result property="activityCollect" column="activity_collect" jdbcType="INTEGER"/>
             <result property="activityState" column="activity_state" jdbcType="TINYINT"/>
             <result property="activityCreateTime" column="activity_create_time" jdbcType="TIMESTAMP"/>
+            <result property="teamId" column="team_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,activity_owner_id,activity_title,
         activity_detail,activity_time,activity_like,
         activity_comment,activity_label,activity_collect,
-        activity_state,activity_create_time
+        activity_state,activity_create_time,team_id
     </sql>
 
     <select id="listByHot" resultType="com.cohelp.server.model.entity.Activity">
         select <include refid="Base_Column_List"></include>
         from activity
-        where activity_owner_id in
-        <foreach collection="userIdList" item="id" open="(" close=")" separator=",">
-        #{id,jdbcType=INTEGER}
-        </foreach>
+        where team_id = #{teamId} and
+        activity_state = 0
         order by (4*activity_like+3*activity_comment+3*activity_collect) desc
     </select>
     <select id="search" resultType="com.cohelp.server.model.entity.Activity">

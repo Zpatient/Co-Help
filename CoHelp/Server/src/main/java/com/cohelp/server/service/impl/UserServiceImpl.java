@@ -75,6 +75,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public Result userLogin(LoginRequest loginRequest, HttpServletRequest request) {
+
         // 1. 检验格式
         if (loginRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS, "请求参数为空");
@@ -116,6 +117,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         User user = this.getOne(queryWrapper);
         if (user == null) {
             return ResultUtil.fail(ERROR_LOGIN, "账号密码不匹配");
+        }
+
+        // 校验用户状态
+        Integer state = user.getState();
+        if (state != 0) {
+            return ResultUtil.fail("账号异常");
         }
 
         // 3. 除去敏感信息

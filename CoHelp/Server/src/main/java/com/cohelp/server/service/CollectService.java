@@ -1,9 +1,9 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Collect;
+import com.cohelp.server.model.entity.User;
 
 /**
 * @author zgy
@@ -19,7 +19,7 @@ public interface CollectService extends IService<Collect> {
      * @param collectRequest 收藏记录查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result listCollect(HistoryAndCollectRequest collectRequest);
+    Result listCollect(User user);
     /**
      * 根据Collect对象插入收藏记录
      * @author: ZGY

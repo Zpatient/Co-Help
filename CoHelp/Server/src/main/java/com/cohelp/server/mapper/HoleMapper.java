@@ -26,7 +26,7 @@ public interface HoleMapper extends BaseMapper<Hole> {
      * @param keywords 分词结果
      * @return java.util.List<com.cohelp.server.model.entity.Activity>
      */
-    List<Hole> search(Integer userId, String key, String[] keywords);
+    List<Hole> search(Integer teamId, String key, String[] keywords);
 
 
     /**

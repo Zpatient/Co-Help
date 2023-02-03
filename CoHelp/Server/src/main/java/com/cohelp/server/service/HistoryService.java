@@ -1,9 +1,9 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.History;
+import com.cohelp.server.model.entity.User;
 
 /**
 * @author jianping5
@@ -18,7 +18,7 @@ public interface HistoryService extends IService<History> {
      * @param historyRequest 浏览记录查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result listHistory(HistoryAndCollectRequest historyRequest);
+    Result listHistory(User user);
     /**
      * 根据History对象插入浏览记录
      * @author: ZGY

@@ -1,6 +1,5 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.History;
 import com.cohelp.server.model.entity.User;
@@ -20,8 +19,9 @@ public class HistoryController {
     @Autowired
     HistoryService historyService;
     @RequestMapping("/gethistorylist")
-    public Result listHistory(@RequestBody HistoryAndCollectRequest historyRequest){
-        return historyService.listHistory(historyRequest);
+    public Result listHistory(){
+        User user = UserHolder.getUser();
+        return historyService.listHistory(user);
     }
     @RequestMapping("/inserthistoryrecord")
     public Result insertHistoryRecord(@RequestBody History history){

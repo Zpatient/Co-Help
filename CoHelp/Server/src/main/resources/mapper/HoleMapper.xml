@@ -35,7 +35,8 @@
     <select id="search" resultType="com.cohelp.server.model.entity.Hole">
         select id
         from hole
-        where hole_owner_id = #{userId} and (
+        where team_id = #{teamId} and
+        hole_state = 0  and (
         hole_title like CONCAT(CONCAT('%', #{key}), '%')
         or hole_detail like CONCAT(CONCAT('%', #{key}), '%')
         or hole_label like CONCAT(CONCAT('%', #{key}), '%')

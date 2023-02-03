@@ -23,12 +23,12 @@ public interface ActivityMapper extends BaseMapper<Activity> {
 
     /**
      * 根据关键词搜索某人发布的活动
-     * @param userId 用户Id
+     * @param teamId 用户Id
      * @param key 关键词
      * @param keywords 分词结果
      * @return java.util.List<com.cohelp.server.model.entity.Activity>
      */
-    List<Activity> search(Integer userId,String key,String[] keywords);
+    List<Activity> search(Integer teamId,String key,String[] keywords);
 
     /**
      * 查询用户当天发布的活动数

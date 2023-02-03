@@ -1,12 +1,10 @@
 package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.HistoryMapper;
 import com.cohelp.server.model.domain.DetailResponse;
-import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.History;
@@ -21,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
@@ -38,34 +35,12 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
     @Resource
     GeneralService generalService;
     @Override
-    public Result listHistory(HistoryAndCollectRequest historyRequest) {
-        //判断参数合法性
-        if(ObjectUtils.anyNull(historyRequest)){
-            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
-        }
-        Integer userId = historyRequest.getUserId();
-        Integer pageNum = historyRequest.getPageNum();
-        Integer recordMaxNum = historyRequest.getRecordMaxNum();
-        if(ObjectUtils.anyNull(userId,pageNum,recordMaxNum)){
-            return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-        }
-        //判断当前用户权限
-        User user = UserHolder.getUser();
-        if(!userId.equals(user.getId()))
-            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
-        //分页查询数据
-        Page<History> historyPage = getBaseMapper().selectPage(new Page<>(pageNum, recordMaxNum),
-                new QueryWrapper<History>().eq("user_id",userId).select().orderByDesc("view_time"));
+    public Result listHistory(User user) {
         //返回查询结果
-        if(ObjectUtils.anyNull(historyPage)){
-            return ResultUtil.fail(ERROR_GET_DATA,"数据查询失败！");
-        }
-        else{
-            List<History> records = historyPage.getRecords();
-            List<IdAndType> idAndTypeList = getIdAndTypeList(records);
-            List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
-            return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据获取成功！");
-        }
+        List<History> records = list(new QueryWrapper<History>().eq("user_id",user.getId()).select().orderByDesc("view_time"));
+        List<IdAndType> idAndTypeList = getIdAndTypeList(records);
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(user.getTeamId(),idAndTypeList);
+        return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据查询成功");
     }
     @Override
     public Result insertHistoryRecord(History history) {

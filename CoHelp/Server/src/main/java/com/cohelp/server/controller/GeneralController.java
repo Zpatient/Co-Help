@@ -7,9 +7,11 @@ import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.SUCCESS_GET_DATA;
 
@@ -63,5 +65,40 @@ public class GeneralController {
         Integer teamId = user.getTeamId();
         TopicNumber currentYearPublish = generalService.getCurrentYearPublish(teamId);
         return ResultUtil.ok(SUCCESS_GET_DATA,currentYearPublish,"查询成功！");
+    }
+
+    @RequestMapping("/listtopics")
+    public Result<List<DetailResponse>> listTopics(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type){
+        User user = UserHolder.getUser();
+        List<DetailResponse> detailResponses = generalService.listTopics(page, limit, user.getTeamId(), type);
+        return ResultUtil.ok(detailResponses);
+    }
+    @RequestMapping("/searchtopics")
+    public Result<List<DetailResponse>> searchTopics(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type,@RequestParam String key){
+        User user = UserHolder.getUser();
+        List<DetailResponse> detailResponses = generalService.searchTopics(page, limit, user.getTeamId(), type,key);
+        return ResultUtil.ok(detailResponses);
+    }
+    @RequestMapping("/changetopic")
+    public Result changeTopic(@RequestBody ChangeTopic changeTopic){
+        String s = generalService.changeTopic(changeTopic.getType(), changeTopic.getActivity(), changeTopic.getHelp(), changeTopic.getHole());
+        return ResultUtil.ok(s);
+    }
+    @RequestMapping("/listremarks")
+    public Result<List<DetailRemark>> listRemarks(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type){
+        User user = UserHolder.getUser();
+        List<DetailRemark> detailRemarks = generalService.listRemarks(page, limit, user.getTeamId(), type);
+        return ResultUtil.ok(detailRemarks);
+    }
+    @RequestMapping("/searchremarks")
+    public Result<List<DetailRemark>> searchRemarks(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type,@RequestParam String key){
+        User user = UserHolder.getUser();
+        List<DetailRemark> detailRemarks = generalService.searchRemarks(page, limit, user.getTeamId(), type,key);
+        return ResultUtil.ok(detailRemarks);
+    }
+    @RequestMapping("/changetopic")
+    public Result deleteRemark(@RequestParam Integer id,@RequestParam Integer type){
+        String s = generalService.deleteRemark(type, id);
+        return ResultUtil.ok(s);
     }
 }

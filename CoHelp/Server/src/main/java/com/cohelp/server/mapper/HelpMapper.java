@@ -26,7 +26,7 @@ public interface HelpMapper extends BaseMapper<Help> {
      * @param keywords 分词结果
      * @return java.util.List<com.cohelp.server.model.entity.Activity>
      */
-    List<Help> search(Integer userId, String key, String[] keywords);
+    List<Help> search(Integer teamId, String key, String[] keywords);
     /**
      * 查询用户当天发布的互助数
      * @param userId 用户Id

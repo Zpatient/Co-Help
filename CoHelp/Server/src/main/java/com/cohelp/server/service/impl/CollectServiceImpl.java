@@ -1,12 +1,10 @@
 package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.CollectMapper;
 import com.cohelp.server.model.domain.DetailResponse;
-import com.cohelp.server.model.domain.HistoryAndCollectRequest;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
@@ -41,34 +39,12 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     GeneralService generalService;
 
     @Override
-    public Result listCollect(HistoryAndCollectRequest collectRequest) {
-        //判断参数合法性
-        if(ObjectUtils.anyNull(collectRequest)){
-            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
-        }
-        Integer userId = collectRequest.getUserId();
-        Integer pageNum = collectRequest.getPageNum();
-        Integer recordMaxNum = collectRequest.getRecordMaxNum();
-        if(ObjectUtils.anyNull(userId,pageNum,recordMaxNum)){
-            return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
-        }
-        //判断当前用户权限
-        User user = UserHolder.getUser();
-        if(!userId.equals(user.getId()))
-            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
-        //分页查询数据
-        Page<Collect> collectPage = getBaseMapper().selectPage(new Page<>(pageNum, recordMaxNum),
-                new QueryWrapper<Collect>().eq("user_id",userId).select().orderByDesc("collect_time"));
+    public Result listCollect(User user) {
         //返回查询结果
-        if(ObjectUtils.anyNull(collectPage)){
-            return ResultUtil.fail(ERROR_GET_DATA,"数据查询失败！");
-        }
-        else{
-            List<Collect> records = collectPage.getRecords();
-            List<IdAndType> idAndTypeList = getIdAndTypeList(records);
-            List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
-            return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据获取成功！");
-        }
+        List<Collect> records = list(new QueryWrapper<Collect>().eq("user_id",user.getId()).select().orderByDesc("collect_time"));
+        List<IdAndType> idAndTypeList = getIdAndTypeList(records);
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(user.getTeamId(),idAndTypeList);
+        return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据查询成功！");
     }
     @Override
     public Result insertCollectRecord(Collect collect) {

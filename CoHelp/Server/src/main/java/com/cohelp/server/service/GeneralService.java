@@ -1,6 +1,9 @@
 package com.cohelp.server.service;
 
 import com.cohelp.server.model.domain.*;
+import com.cohelp.server.model.entity.Activity;
+import com.cohelp.server.model.entity.Help;
+import com.cohelp.server.model.entity.Hole;
 
 import java.util.List;
 
@@ -51,6 +54,57 @@ public interface GeneralService{
      */
     List<Integer> getUserIdList();
     /**
+     * 查询某组织指定类型的所有话题
+     * @param page 目标页码
+     * @param limit 页面最大数据条数
+     * @param teamId 组织Id
+     * @param type 类型
+     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     */
+    List<DetailResponse> listTopics(Integer page,Integer limit,Integer teamId,Integer type);
+    /**
+     * 搜索某组织某类型话题的标签、标题中包含关键字的所有话题
+     * @param teamId 组织Id
+     * @param key 关键字
+     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     */
+    List<DetailResponse> searchTopics(Integer page,Integer limit,Integer teamId,Integer type,String key);
+    /**
+     * 更改话题信息
+     * @param type 话题类型
+     * @param activity 待更改的活动
+     * @param help 待更改的互助
+     * @param hole 待更改的树洞
+     * @return java.lang.String
+     */
+    String changeTopic(Integer type,Activity activity, Help help, Hole hole);
+   /**
+    * 查询某组织指定类型的所有话题的评论
+    * @param page 目标页码
+    * @param limit 页面最大数据条数
+    * @param teamId 组织Id
+    * @param type 类型
+    * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+    */
+    List<DetailRemark> listRemarks(Integer page,Integer limit,Integer teamId,Integer type);
+    /**
+     * 搜索某组织某类型话题评论的内容中包含关键字的所有评论
+     * @param page 目标页码
+     * @param limit 页面最大数据条数
+     * @param teamId 组织Id
+     * @param type 类型
+     * @param key 关键字
+     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     */
+    List<DetailRemark> searchRemarks(Integer page,Integer limit,Integer teamId,Integer type,String key);
+    /**
+     * 删除指定评论
+     * @param type 类型
+     * @param id ID
+     * @return java.lang.String
+     */
+    String deleteRemark(Integer type, Integer id);
+    /**
      * 返回组织用户 Id 数组
      * @return
      */
@@ -61,6 +115,13 @@ public interface GeneralService{
      * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
      */
     List<DetailResponse> listDetailResponse(List<IdAndType> idAndTypes);
+    /**
+     * 根据Id和Type列表获取指定组织的话题详情
+     * @param teamId 组织id
+     * @param idAndTypes Id和Type列表
+     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     */
+    List<DetailResponse> listDetailResponse(Integer teamId,List<IdAndType> idAndTypes);
     /**
      * 获取当天指定组织的话题发布量
      * @param teamId 组织Id

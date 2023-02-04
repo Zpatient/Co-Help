@@ -140,7 +140,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      * @param user
      * @return
      */
-    private User getSafetyUser(User user) {
+    @Override
+    public User getSafetyUser(User user) {
         User safetyUser = new User();
         safetyUser.setId(user.getId());
         safetyUser.setUserAccount(user.getUserAccount());

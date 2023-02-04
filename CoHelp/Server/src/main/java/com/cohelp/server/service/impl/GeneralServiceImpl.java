@@ -7,6 +7,7 @@ import com.cohelp.server.mapper.*;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.ActivityVO;
+import com.cohelp.server.model.vo.DetailRemark;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.*;
@@ -606,11 +607,11 @@ public class GeneralServiceImpl implements GeneralService {
     public List<DetailRemark> listRemarks(Integer page, Integer limit, Integer teamId, Integer type) {
         ArrayList<DetailRemark> detailRemarks = new ArrayList<>();
         //判断参数合法性
-        if(ObjectUtils.anyNull(teamId,type)||!TypeEnum.isTopic(type)){
+        if(ObjectUtils.anyNull(teamId,type)||!TypeEnum.isRemark(type)){
             return detailRemarks;
         }
         //针对不同类型的评论进行相应查询
-        if(TypeEnum.isActivity(type)){
+        if(TypeEnum.isRemarkActivity(type)){
             List<Activity> records = activityService.list(new QueryWrapper<Activity>().eq("team_id", teamId));
             if ((records!=null)){
                 for(Activity activity:records){
@@ -635,7 +636,7 @@ public class GeneralServiceImpl implements GeneralService {
                 }
             }
         }
-        else if(TypeEnum.isHelp(type)){
+        else if(TypeEnum.isRemarkHelp(type)){
             List<Help> records = helpService.list(new QueryWrapper<Help>().eq("team_id", teamId));
             if ((records!=null)){
                 for(Help help:records){
@@ -693,11 +694,11 @@ public class GeneralServiceImpl implements GeneralService {
     public List<DetailRemark> searchRemarks(Integer page, Integer limit, Integer teamId, Integer type, String key) {
         ArrayList<DetailRemark> detailRemarks = new ArrayList<>();
         //判断参数合法性
-        if(ObjectUtils.anyNull(teamId,type,key)||!TypeEnum.isTopic(type)||key.equals("")){
+        if(ObjectUtils.anyNull(teamId,type,key)||!TypeEnum.isRemark(type)||key.equals("")){
             return detailRemarks;
         }
         //针对不同类型的评论进行相应查询
-        if(TypeEnum.isActivity(type)){
+        if(TypeEnum.isRemarkActivity(type)){
             List<Activity> records = activityService.list(new QueryWrapper<Activity>().eq("team_id", teamId));
             if ((records!=null)){
                 for(Activity activity:records){
@@ -722,7 +723,7 @@ public class GeneralServiceImpl implements GeneralService {
                 }
             }
         }
-        else if(TypeEnum.isHelp(type)){
+        else if(TypeEnum.isRemarkHelp(type)){
             List<Help> records = helpService.list(new QueryWrapper<Help>().eq("team_id", teamId));
             if ((records!=null)){
                 for(Help help:records){
@@ -779,11 +780,11 @@ public class GeneralServiceImpl implements GeneralService {
     @Override
     public String deleteRemark(Integer type, Integer id) {
         //检验参数合法性
-        if(ObjectUtils.anyNull(type,id)||!TypeEnum.isTopic(type)){
+        if(ObjectUtils.anyNull(type,id)||!TypeEnum.isRemark(type)){
             return "参数不合法！";
         }
         //针对不同类型的话题进行相应删除
-        if(TypeEnum.isActivity(type)){
+        if(TypeEnum.isRemarkActivity(type)){
             RemarkActivity byId = remarkActivityService.getById(id);
             if(byId==null){
                 return "删除成功！";
@@ -795,7 +796,7 @@ public class GeneralServiceImpl implements GeneralService {
                 return "删除成功！";
             }
         }
-        else if(TypeEnum.isHelp(type)){
+        else if(TypeEnum.isRemarkHelp(type)){
             RemarkHelp byId = remarkHelpService.getById(id);
             if(byId==null){
                 return "删除成功！";
@@ -837,75 +838,151 @@ public class GeneralServiceImpl implements GeneralService {
         }
         return userIdList;
     }
+
     @Override
-    public List<DetailResponse> listDetailResponse(List<IdAndType> idAndTypes) {
+    public DetailRemark  getDetailRemark(IdAndType idAndType) {
+        if(idAndType==null) return null;
+        Integer type = idAndType.getType();
+        Integer id = idAndType.getId();
+        if(!TypeEnum.isRemark(type)|| ObjectUtils.anyNull(id)){
+            return null;
+        }
+        DetailRemark detailRemark = new DetailRemark();
+        //判断请求哪种话题的评论并执行相应操作
+        if(TypeEnum.isRemarkActivity(type)){
+            RemarkActivity remarkActivity = remarkActivityMapper.selectById(id);
+            if (remarkActivity==null){
+                return null;
+            }
+            User user = userService.getById(remarkActivity.getRemarkOwnerId());
+            if(user!=null){
+                detailRemark.setOwnerName(user.getUserName());
+            }
+            Activity activity = activityService.getById(remarkActivity.getRemarkActivityId());
+            if(activity!=null){
+                detailRemark.setTopicTitle(activity.getActivityTitle());
+            }
+            detailRemark.setType(type);
+            detailRemark.setId(remarkActivity.getId());
+            detailRemark.setContent(remarkActivity.getRemarkContent());
+            detailRemark.setRemarkTime(remarkActivity.getRemarkTime());
+            detailRemark.setLike(remarkActivity.getRemarkLike());
+        }
+        else if(TypeEnum.isRemarkHelp(type)){
+            RemarkHelp remarkHelp = remarkHelpMapper.selectById(id);
+            if (remarkHelp==null){
+                return null;
+            }
+            User user = userService.getById(remarkHelp.getRemarkOwnerId());
+            if(user!=null){
+                detailRemark.setOwnerName(user.getUserName());
+            }
+            Help help = helpService.getById(remarkHelp.getRemarkHelpId());
+            if(help!=null){
+                detailRemark.setTopicTitle(help.getHelpTitle());
+            }
+            detailRemark.setType(type);
+            detailRemark.setId(remarkHelp.getId());
+            detailRemark.setContent(remarkHelp.getRemarkContent());
+            detailRemark.setRemarkTime(remarkHelp.getRemarkTime());
+            detailRemark.setLike(remarkHelp.getRemarkLike());
+        }
+        else {
+            RemarkHole remarkHole = remarkHoleMapper.selectById(id);
+            if (remarkHole==null){
+                return null;
+            }
+            User user = userService.getById(remarkHole.getRemarkOwnerId());
+            if(user!=null){
+                detailRemark.setOwnerName(user.getUserName());
+            }
+            Hole hole = holeService.getById(remarkHole.getRemarkHoleId());
+            if(hole!=null){
+                detailRemark.setTopicTitle(hole.getHoleTitle());
+            }
+            detailRemark.setType(type);
+            detailRemark.setId(remarkHole.getId());
+            detailRemark.setContent(remarkHole.getRemarkContent());
+            detailRemark.setRemarkTime(remarkHole.getRemarkTime());
+            detailRemark.setLike(remarkHole.getRemarkLike());
+        }
+        return detailRemark;
+    }
+    @Override
+    public DetailResponse getDetailResponse(IdAndType idAndType) {
+        if(idAndType==null){
+            return null;
+        }
+        Integer type = idAndType.getType();
+        Integer id = idAndType.getId();
+        if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
+            return null;
+        }
+        DetailResponse detailResponse = new DetailResponse();
+        //获取该话题对应的的图片URL列表
+        ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
+        if(ObjectUtils.anyNull(imagesUrl)){
+            imagesUrl = new ArrayList<>();
+        }
+        //判断请求哪种话题的详情并执行相应操作
+        if(TypeEnum.isActivity(type)){
+            Activity activity = activityService.getBaseMapper().selectById(id);
+            if(!ObjectUtils.anyNull(activity)){
+                ActivityServiceImpl activityServiceImpl = (ActivityServiceImpl)activityService;
+                ActivityVO activityVO = activityServiceImpl.traverseActivity(activity);
+                String publisherAvatarUrl = imageService.getById(activityVO.getAvatar()).getImageUrl();
+                detailResponse.setActivityVO(activityVO);
+                detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+                detailResponse.setImagesUrl(imagesUrl);
+            }else{
+                return null;
+            }
+        }
+        else if(TypeEnum.isHelp(type)){
+            Help help = helpService.getById(id);
+            if(!ObjectUtils.anyNull(help)){
+                HelpServiceImpl helpServiceImpl = (HelpServiceImpl)helpService;
+                HelpVO helpVO = helpServiceImpl.traverseHelp(help);
+                String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();
+                detailResponse.setHelpVO(helpVO);
+                detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+                detailResponse.setImagesUrl(imagesUrl);
+                detailResponse.setImagesUrl(imagesUrl);
+            }else {
+                return null;
+            }
+        }
+        else {
+            Hole hole = holeService.getById(id);
+            if(!ObjectUtils.anyNull(hole)) {
+                HoleServiceImpl holeServiceImpl = (HoleServiceImpl)holeService;
+                HoleVO holeVO = holeServiceImpl.traverseHole(hole);
+                String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();
+                detailResponse.setHoleVO(holeVO);
+                detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
+                detailResponse.setImagesUrl(imagesUrl);
+                detailResponse.setImagesUrl(imagesUrl);
+            }else {
+                return null;
+            }
+        }
+        return detailResponse;
+    }
+
+    @Override
+    public List<DetailResponse>  listDetailResponse(List<IdAndType> idAndTypes) {
         if(idAndTypes==null) return null;
         List<DetailResponse> detailResponses = new ArrayList<>();
-        for(IdAndType idAndType : idAndTypes){
-            Integer type = idAndType.getType();
-            Integer id = idAndType.getId();
-            if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
+        for(IdAndType idAndType : idAndTypes) {
+            DetailResponse detailResponse = getDetailResponse(idAndType);
+            if (detailResponse == null) {
                 continue;
             }
-            //获取该话题对应的的图片URL列表
-            ArrayList<String> imagesUrl = imageService.getImageList(idAndType);
-            if(ObjectUtils.anyNull(imagesUrl)){
-                imagesUrl = new ArrayList<>();
-            }
-            //判断请求哪种话题的详情并执行相应操作
-            if(TypeEnum.isActivity(type)){
-                Activity activity = activityService.getBaseMapper().selectById(id);
-                if(!ObjectUtils.anyNull(activity)){
-                    if(activity.getActivityState().equals(1)){
-                        continue;
-                    }
-                    ActivityServiceImpl activityServiceImpl = (ActivityServiceImpl)activityService;
-                    ActivityVO activityVO = activityServiceImpl.traverseActivity(activity);
-                    String publisherAvatarUrl = imageService.getById(activityVO.getAvatar()).getImageUrl();
-                    DetailResponse detailResponse = new DetailResponse();
-                    detailResponse.setActivityVO(activityVO);
-                    detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
-                    detailResponse.setImagesUrl(imagesUrl);
-                    detailResponses.add(detailResponse);
-                }
-            }
-            else if(TypeEnum.isHelp(type)){
-                Help help = helpService.getById(id);
-                if(!ObjectUtils.anyNull(help)){
-                    if(help.getHelpState().equals(1)){
-                        continue;
-                    }
-                    HelpServiceImpl helpServiceImpl = (HelpServiceImpl)helpService;
-                    HelpVO helpVO = helpServiceImpl.traverseHelp(help);
-                    String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();
-                    DetailResponse detailResponse = new DetailResponse();
-                    detailResponse.setHelpVO(helpVO);
-                    detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
-                    detailResponse.setImagesUrl(imagesUrl);
-                    detailResponse.setImagesUrl(imagesUrl);
-                    detailResponses.add(detailResponse);
-                }
-            }
-            else {
-                Hole hole = holeService.getById(id);
-                if(!ObjectUtils.anyNull(hole)) {
-                    if(hole.getHoleState().equals(1)){
-                        continue;
-                    }
-                    HoleServiceImpl holeServiceImpl = (HoleServiceImpl)holeService;
-                    HoleVO holeVO = holeServiceImpl.traverseHole(hole);
-                    String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();
-                    DetailResponse detailResponse = new DetailResponse();
-                    detailResponse.setHoleVO(holeVO);
-                    detailResponse.setPublisherAvatarUrl(publisherAvatarUrl);
-                    detailResponse.setImagesUrl(imagesUrl);
-                    detailResponse.setImagesUrl(imagesUrl);
-                    detailResponses.add(detailResponse);
-                }
-            }
+            detailResponses.add(detailResponse);
         }
         return detailResponses;
     }
+
     @Override
     public List<DetailResponse> listDetailResponse(Integer teamId,List<IdAndType> idAndTypes) {
         if(idAndTypes==null) return null;

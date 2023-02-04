@@ -6,17 +6,18 @@
 
     <resultMap id="BaseResultMap" type="com.cohelp.server.model.entity.Inform">
             <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="informType" column="inform_type" jdbcType="VARCHAR"/>
             <result property="informerId" column="informer_id" jdbcType="INTEGER"/>
+            <result property="informType" column="inform_type" jdbcType="VARCHAR"/>
             <result property="informContent" column="inform_content" jdbcType="VARCHAR"/>
             <result property="informedInstanceId" column="informed_instance_id" jdbcType="INTEGER"/>
             <result property="informedInstanceType" column="informed_instance_type" jdbcType="INTEGER"/>
             <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="teamId" column="team_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,inform_type,informer_id,
+        id,informer_id,inform_type,
         inform_content,informed_instance_id,informed_instance_type,
-        create_time
+        create_time,team_id
     </sql>
 </mapper>

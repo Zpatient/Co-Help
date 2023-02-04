@@ -1,10 +1,13 @@
 package com.cohelp.server.controller;
 
+import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.DetailRemark;
 import com.cohelp.server.service.GeneralService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -85,19 +88,27 @@ public class GeneralController {
         return ResultUtil.ok(s);
     }
     @RequestMapping("/listremarks")
-    public Result<List<DetailRemark>> listRemarks(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type){
+    public Result<List<DetailRemark>> listRemarks(@RequestParam Integer page, @RequestParam Integer limit, @RequestParam Integer type){
         User user = UserHolder.getUser();
+        //判断参数合法性
+        if(ObjectUtils.anyNull(type)||!TypeEnum.isRemark(type)){
+            return ResultUtil.fail("类型不合法！");
+        }
         List<DetailRemark> detailRemarks = generalService.listRemarks(page, limit, user.getTeamId(), type);
         return ResultUtil.ok(detailRemarks);
     }
     @RequestMapping("/searchremarks")
     public Result<List<DetailRemark>> searchRemarks(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type,@RequestParam String key){
         User user = UserHolder.getUser();
+        //判断参数合法性
+        if(ObjectUtils.anyNull(type)||!TypeEnum.isRemark(type)){
+            return ResultUtil.fail("类型不合法！");
+        }
         List<DetailRemark> detailRemarks = generalService.searchRemarks(page, limit, user.getTeamId(), type,key);
         return ResultUtil.ok(detailRemarks);
     }
-    @RequestMapping("/changetopic")
-    public Result deleteRemark(@RequestParam Integer id,@RequestParam Integer type){
+    @RequestMapping("/removeremark")
+    public Result removeRemark(@RequestParam Integer id,@RequestParam Integer type){
         String s = generalService.deleteRemark(type, id);
         return ResultUtil.ok(s);
     }

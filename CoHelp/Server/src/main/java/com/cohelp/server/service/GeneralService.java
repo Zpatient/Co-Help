@@ -4,6 +4,7 @@ import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Hole;
+import com.cohelp.server.model.vo.DetailRemark;
 
 import java.util.List;
 
@@ -36,15 +37,14 @@ public interface GeneralService{
     Result insertRemark(RemarkRequest remarkRequest);
     /**
      * 删除评论
-     * @author: ZGY
-     * @param remarkRequest
+     * @param idAndType
      * @return com.cohelp.server.model.domain.Result
      */
     Result deleteRemark(IdAndType idAndType);
     /**
      * 获取评论
      * @author: ZGY
-     * @param remarkRequest
+     * @param idAndType
      * @return com.cohelp.server.model.domain.Result
      */
     Result listRemark(IdAndType idAndType);
@@ -86,7 +86,7 @@ public interface GeneralService{
     * @param type 类型
     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
     */
-    List<DetailRemark> listRemarks(Integer page,Integer limit,Integer teamId,Integer type);
+    List<DetailRemark> listRemarks(Integer page, Integer limit, Integer teamId, Integer type);
     /**
      * 搜索某组织某类型话题评论的内容中包含关键字的所有评论
      * @param page 目标页码
@@ -109,6 +109,18 @@ public interface GeneralService{
      * @return
      */
     List<Integer> getUserIdList(Integer teamId);
+    /**
+     * 根据Id和Type获取评论详情
+     * @param idAndType 评论话题的类型及Id
+     * @return java.util.List<com.cohelp.server.model.vo.DetailRemark>
+     */
+    DetailRemark  getDetailRemark(IdAndType idAndType);
+    /**
+     * 根据Id和Type获取话详情
+     * @param idAndType 话题的类型及Id
+     * @return com.cohelp.server.model.domain.DetailResponse
+     */
+    DetailResponse getDetailResponse(IdAndType idAndType);
     /**
      * 根据Id和Type列表获取话题详情
      * @param idAndTypes Id和Type列表

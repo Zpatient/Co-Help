@@ -1,4 +1,4 @@
-package com.cohelp.server.model.domain;
+package com.cohelp.server.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

@@ -1,8 +1,13 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.Result;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.domain.IdAndType;
+import com.cohelp.server.model.domain.Result;
+import com.cohelp.server.model.domain.UserOrTopicOrRemark;
 import com.cohelp.server.model.entity.Inform;
+import com.cohelp.server.model.vo.InformVO;
+
+import java.util.List;
 
 /**
  * @author zgy
@@ -10,5 +15,28 @@ import com.cohelp.server.model.entity.Inform;
  * @createDate 2022-10-20 18:15:55
  */
 public interface InformService extends IService<Inform> {
-    public Result submitInform(Inform inform);
+   Result submitInform(Inform inform);
+
+    /**
+     * 查询某组织所有举报
+     * @param page 目标页码
+     * @param limit 页面最大数据条数
+     * @param teamId 组织Id
+     * @return java.util.List<com.cohelp.server.model.vo.InformVO>
+     */
+    List<InformVO> listInforms(Integer page, Integer limit, Integer teamId);
+
+    /**
+     * 删除指定举报
+     * @param id ID
+     * @return java.lang.String
+     */
+    String deleteInform(Integer id);
+    /**
+     * 获取举报对象
+     * @param idAndType id和类型
+     * @return com.cohelp.server.model.domain.UserOrTopicOrRemark
+     */
+    UserOrTopicOrRemark getInformTarget(IdAndType idAndType);
+
 }

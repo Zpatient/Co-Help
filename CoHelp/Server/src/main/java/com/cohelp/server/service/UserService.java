@@ -124,4 +124,6 @@ public interface UserService extends IService<User> {
      */
     List<User> listUserByName(Integer teamId,Integer currentPage,Integer pageSize,String key);
 
+    User getSafetyUser(User user);
+
 }

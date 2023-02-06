@@ -79,6 +79,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // 1. 检验格式
         if (loginRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS, "请求参数为空");
+
         }
         String userAccount = loginRequest.getUserAccount();
         String userPassword = loginRequest.getUserPassword();

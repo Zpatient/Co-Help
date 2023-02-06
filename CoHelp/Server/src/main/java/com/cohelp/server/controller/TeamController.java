@@ -40,6 +40,12 @@ public class TeamController {
             return ResultUtil.fail("参数错误");
         }
 
+        // 判断是否为管理员
+        User currentUser = UserHolder.getUser();
+        if (currentUser.getUserRole() != 0) {
+            return ResultUtil.fail("管理员不能更改组织");
+        }
+
         // 获取参数
         Integer conditionType = teamUpdateRequest.getConditionType();
         Integer teamId = teamUpdateRequest.getTeamId();

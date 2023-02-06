@@ -41,7 +41,7 @@ public interface TeamService extends IService<Team> {
      */
     List<Team> listNotApproved(Integer currentPage, Integer pageSize);
     /**
-     * 更新指定加入组织申请
+     * 更新指定创建组织申请
      * @param team 已处理的team
      * @return java.lang.String
      */

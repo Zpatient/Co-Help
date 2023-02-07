@@ -24,6 +24,7 @@ import org.wltea.analyzer.core.Lexeme;
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.StringReader;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,6 +107,9 @@ public class GeneralServiceImpl implements GeneralService {
                     history.setTopicType(type);
                     history.setTopicId(id);
                     historyService.saveOrUpdate(history);
+                }else {
+                    oldHistory.setViewTime(LocalDateTime.now());
+                    historyService.saveOrUpdate(oldHistory);
                 }
                 return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,"数据获取成功！");
             }

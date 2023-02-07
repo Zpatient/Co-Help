@@ -1,9 +1,8 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.entity.UserTeam;
-
-import java.util.List;
 
 /**
 * @author 县城之子丶
@@ -16,7 +15,7 @@ public interface UserTeamService extends IService<UserTeam> {
      * @param teamName 组织名称
      * @return java.util.List<com.cohelp.server.model.entity.UserTeam>
      */
-    List<UserTeam> listUserTeam(Integer teamId,Integer currentPage,Integer pageSize);
+    PageResponse<UserTeam> listUserTeam(Integer teamId, Integer currentPage, Integer pageSize);
     /**
      * 更新指定加入组织申请
      * @param userTeam 已处理的userTeam

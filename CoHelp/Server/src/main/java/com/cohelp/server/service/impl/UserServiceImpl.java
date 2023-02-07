@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserMapper;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.*;
@@ -600,7 +601,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public List<User> listTeamUser(Integer teamId,Integer currentPage,Integer pageSize) {
+    public PageResponse<User> listTeamUser(Integer teamId,Integer currentPage,Integer pageSize) {
         if(teamId==null|| ObjectUtils.anyNull(currentPage,pageSize)){
             return null;
         }
@@ -613,7 +614,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             User safetyUser = getSafetyUser(user);
             safetyUsers.add(safetyUser);
         }
-        return safetyUsers;
+        PageResponse<User> userPageResponse = new PageResponse<>();
+        userPageResponse.setResult(safetyUsers);
+        long total = userPage.getTotal();
+        userPageResponse.setTotal(total);
+        return userPageResponse;
     }
 
     @Override
@@ -649,7 +654,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public List<User> listUserByName(Integer teamId, Integer currentPage, Integer pageSize, String key) {
+    public PageResponse<User> listUserByName(Integer teamId, Integer currentPage, Integer pageSize, String key) {
         if(teamId==null|| ObjectUtils.anyNull(currentPage,pageSize)){
             return null;
         }
@@ -662,7 +667,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             User safetyUser = getSafetyUser(user);
             safetyUsers.add(safetyUser);
         }
-        return safetyUsers;
+        PageResponse<User> userPageResponse = new PageResponse<>();
+        userPageResponse.setResult(safetyUsers);
+        long total = userPage.getTotal();
+        userPageResponse.setTotal(total);
+        return userPageResponse;
     }
 
 }

@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserTeamMapper;
+import com.cohelp.server.model.PageResponse;
+import com.cohelp.server.model.entity.Team;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.entity.UserTeam;
+import com.cohelp.server.service.TeamService;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.service.UserTeamService;
 import org.apache.commons.lang3.ObjectUtils;
@@ -24,9 +27,11 @@ public class UserTeamServiceImpl extends ServiceImpl<UserTeamMapper, UserTeam>
     implements UserTeamService{
     @Resource
     UserService userService;
+    @Resource
+    TeamService teamService;
 
     @Override
-    public List<UserTeam> listUserTeam(Integer teamId,Integer currentPage,Integer pageSize) {
+    public PageResponse<UserTeam> listUserTeam(Integer teamId, Integer currentPage, Integer pageSize) {
         if( ObjectUtils.anyNull(teamId,currentPage,pageSize)) return null;
         //分页查询数据
         Page<UserTeam> userTeamPage = getBaseMapper().selectPage(new Page<>(currentPage, pageSize),
@@ -35,6 +40,12 @@ public class UserTeamServiceImpl extends ServiceImpl<UserTeamMapper, UserTeam>
         for(UserTeam userTeam:records){
             if(userTeam!=null){
                 Integer userId = userTeam.getUserId();
+                Team team = teamService.getById(teamId);
+                if(team!=null){
+                    userTeam.setTeamName(team.getTeamName());
+                }else {
+                    userTeam.setTeamName("组织不存在！");
+                }
                 User user = userService.getById(userId);
                 if(user!=null){
                     userTeam.setUserName(user.getUserName());
@@ -43,7 +54,7 @@ public class UserTeamServiceImpl extends ServiceImpl<UserTeamMapper, UserTeam>
                 }
             }
         }
-        return records;
+        return new PageResponse<UserTeam>(records,userTeamPage.getTotal());
     }
 
     @Override

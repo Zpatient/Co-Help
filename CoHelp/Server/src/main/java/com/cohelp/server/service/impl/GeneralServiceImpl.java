@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.*;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.ActivityVO;
@@ -474,18 +475,20 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<DetailResponse> listTopics(Integer page,Integer limit,Integer teamId, Integer type) {
+    public PageResponse<DetailResponse> listTopics(Integer page, Integer limit, Integer teamId, Integer type) {
         ArrayList<DetailResponse> detailResponses = new ArrayList<>();
         ArrayList<IdAndType> idAndTypes = new ArrayList<>();
+        Long aLong = null;
         //判断参数合法性
         if(ObjectUtils.anyNull(teamId,type)||!TypeEnum.isTopic(type)){
-            return detailResponses;
+            return new PageResponse<DetailResponse>(detailResponses,new Long(0));
         }
         //针对不同类型的话题进行相应查询
         if(TypeEnum.isActivity(type)){
             Page<Activity> activityPage = activityMapper.selectPage(new Page<Activity>(page, limit),
                     new QueryWrapper<Activity>().eq("team_id", teamId));
             List<Activity> records = activityPage.getRecords();
+            aLong = new Long(activityPage.getTotal());
             for(Activity activity:records){
                 Integer id = activity.getId();
                 idAndTypes.add(new IdAndType(id,type));
@@ -495,6 +498,7 @@ public class GeneralServiceImpl implements GeneralService {
             Page<Help> helpPage = helpMapper.selectPage(new Page<Help>(page, limit),
                     new QueryWrapper<Help>().eq("team_id", teamId));
             List<Help> records = helpPage.getRecords();
+            aLong = new Long(helpPage.getTotal());
             for(Help help:records){
                 Integer id = help.getId();
                 idAndTypes.add(new IdAndType(id,type));
@@ -504,6 +508,7 @@ public class GeneralServiceImpl implements GeneralService {
             Page<Hole> holePage = holeMapper.selectPage(new Page<Hole>(page, limit),
                     new QueryWrapper<Hole>().eq("team_id", teamId));
             List<Hole> records = holePage.getRecords();
+            aLong = new Long(holePage.getTotal());
             for(Hole hole:records){
                 Integer id = hole.getId();
                 idAndTypes.add(new IdAndType(id,type));
@@ -511,16 +516,17 @@ public class GeneralServiceImpl implements GeneralService {
         }
         //返回查询结果
         List<DetailResponse> list = listDetailResponse(idAndTypes);
-        return list;
+        return new PageResponse<DetailResponse>(list,aLong);
     }
 
     @Override
-    public List<DetailResponse> searchTopics(Integer page,Integer limit,Integer teamId,Integer type, String key) {
+    public PageResponse<DetailResponse> searchTopics(Integer page,Integer limit,Integer teamId,Integer type, String key) {
         ArrayList<DetailResponse> detailResponses = new ArrayList<>();
         ArrayList<IdAndType> idAndTypes = new ArrayList<>();
+        Long aLong = null;
         //判断参数合法性
         if(ObjectUtils.anyNull(teamId,type,key)||!TypeEnum.isTopic(type)||key.equals("")){
-            return detailResponses;
+            return new PageResponse<DetailResponse>(detailResponses,new Long(0));
         }
         //针对不同类型的话题进行相应搜索
         if(TypeEnum.isActivity(type)){
@@ -528,6 +534,7 @@ public class GeneralServiceImpl implements GeneralService {
                     new QueryWrapper<Activity>().eq("team_id", teamId)
                             .and(o->o.like("activity_title",key).or().like("activity_label",key)));
             List<Activity> records = activityPage.getRecords();
+            aLong = new Long(activityPage.getTotal());
             for(Activity activity:records){
                 Integer id = activity.getId();
                 idAndTypes.add(new IdAndType(id,type));
@@ -538,6 +545,7 @@ public class GeneralServiceImpl implements GeneralService {
                     new QueryWrapper<Help>().eq("team_id", teamId)
                             .and(o->o.like("help_title",key).or().like("help_label",key)));
             List<Help> records = helpPage.getRecords();
+            aLong = new Long(helpPage.getTotal());
             for(Help help:records){
                 Integer id = help.getId();
                 idAndTypes.add(new IdAndType(id,type));
@@ -548,6 +556,7 @@ public class GeneralServiceImpl implements GeneralService {
                     new QueryWrapper<Hole>().eq("team_id", teamId)
                             .and(o->o.like("hole_title",key).or().like("hole_label",key)));
             List<Hole> records = holePage.getRecords();
+            aLong = new Long(holePage.getTotal());
             for(Hole hole:records){
                 Integer id = hole.getId();
                 idAndTypes.add(new IdAndType(id,type));
@@ -555,7 +564,7 @@ public class GeneralServiceImpl implements GeneralService {
         }
         //返回搜索结果
         List<DetailResponse> list = listDetailResponse(idAndTypes);
-        return list;
+        return new PageResponse<DetailResponse>(list,aLong);
     }
 
     @Override
@@ -604,11 +613,12 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public List<DetailRemark> listRemarks(Integer page, Integer limit, Integer teamId, Integer type) {
+    public PageResponse<DetailRemark> listRemarks(Integer page, Integer limit, Integer teamId, Integer type) {
         ArrayList<DetailRemark> detailRemarks = new ArrayList<>();
+        Long aLong = new Long(0);
         //判断参数合法性
         if(ObjectUtils.anyNull(teamId,type)||!TypeEnum.isRemark(type)){
-            return detailRemarks;
+            return new PageResponse<DetailRemark>(detailRemarks,new Long(0));
         }
         //针对不同类型的评论进行相应查询
         if(TypeEnum.isRemarkActivity(type)){
@@ -619,6 +629,7 @@ public class GeneralServiceImpl implements GeneralService {
                     Page<RemarkActivity> remarks = remarkActivityMapper.selectPage(new Page<RemarkActivity>(page, limit),
                             new QueryWrapper<RemarkActivity>().eq("remark_activity_id", id));
                     List<RemarkActivity> remarksRecords = remarks.getRecords();
+                    aLong += remarks.getTotal();
                     for(RemarkActivity remarkActivity:remarksRecords){
                         DetailRemark detailRemark = new DetailRemark();
                         User user = userService.getById(remarkActivity.getRemarkOwnerId());
@@ -644,6 +655,7 @@ public class GeneralServiceImpl implements GeneralService {
                     Page<RemarkHelp> remarks = remarkHelpMapper.selectPage(new Page<RemarkHelp>(page, limit),
                             new QueryWrapper<RemarkHelp>().eq("remark_help_id", id));
                     List<RemarkHelp> remarksRecords = remarks.getRecords();
+                    aLong += remarks.getTotal();
                     for(RemarkHelp remarkHelp:remarksRecords){
                         DetailRemark detailRemark = new DetailRemark();
                         User user = userService.getById(remarkHelp.getRemarkOwnerId());
@@ -669,6 +681,7 @@ public class GeneralServiceImpl implements GeneralService {
                     Page<RemarkHole> remarks = remarkHoleMapper.selectPage(new Page<RemarkHole>(page, limit),
                             new QueryWrapper<RemarkHole>().eq("remark_hole_id", id));
                     List<RemarkHole> remarksRecords = remarks.getRecords();
+                    aLong += remarks.getTotal();
                     for(RemarkHole remarkHole:remarksRecords){
                         DetailRemark detailRemark = new DetailRemark();
                         User user = userService.getById(remarkHole.getRemarkOwnerId());
@@ -687,15 +700,16 @@ public class GeneralServiceImpl implements GeneralService {
             }
         }
         //返回评论
-        return detailRemarks;
+        return new PageResponse<DetailRemark>(detailRemarks,aLong);
     }
 
     @Override
-    public List<DetailRemark> searchRemarks(Integer page, Integer limit, Integer teamId, Integer type, String key) {
+    public PageResponse<DetailRemark> searchRemarks(Integer page, Integer limit, Integer teamId, Integer type, String key) {
         ArrayList<DetailRemark> detailRemarks = new ArrayList<>();
+        Long aLong = new Long(0);
         //判断参数合法性
         if(ObjectUtils.anyNull(teamId,type,key)||!TypeEnum.isRemark(type)||key.equals("")){
-            return detailRemarks;
+            return new PageResponse<DetailRemark>(detailRemarks,new Long(0));
         }
         //针对不同类型的评论进行相应查询
         if(TypeEnum.isRemarkActivity(type)){
@@ -706,6 +720,7 @@ public class GeneralServiceImpl implements GeneralService {
                     Page<RemarkActivity> remarks = remarkActivityMapper.selectPage(new Page<RemarkActivity>(page, limit),
                             new QueryWrapper<RemarkActivity>().eq("remark_activity_id", id).like("remark_content",key));
                     List<RemarkActivity> remarksRecords = remarks.getRecords();
+                    aLong += remarks.getTotal();
                     for(RemarkActivity remarkActivity:remarksRecords){
                         DetailRemark detailRemark = new DetailRemark();
                         User user = userService.getById(remarkActivity.getRemarkOwnerId());
@@ -731,6 +746,7 @@ public class GeneralServiceImpl implements GeneralService {
                     Page<RemarkHelp> remarks = remarkHelpMapper.selectPage(new Page<RemarkHelp>(page, limit),
                             new QueryWrapper<RemarkHelp>().eq("remark_help_id", id).like("remark_content",key));
                     List<RemarkHelp> remarksRecords = remarks.getRecords();
+                    aLong += remarks.getTotal();
                     for(RemarkHelp remarkHelp:remarksRecords){
                         DetailRemark detailRemark = new DetailRemark();
                         User user = userService.getById(remarkHelp.getRemarkOwnerId());
@@ -756,6 +772,7 @@ public class GeneralServiceImpl implements GeneralService {
                     Page<RemarkHole> remarks = remarkHoleMapper.selectPage(new Page<RemarkHole>(page, limit),
                             new QueryWrapper<RemarkHole>().eq("remark_hole_id", id).like("remark_content",key));
                     List<RemarkHole> remarksRecords = remarks.getRecords();
+                    aLong += remarks.getTotal();
                     for(RemarkHole remarkHole:remarksRecords){
                         DetailRemark detailRemark = new DetailRemark();
                         User user = userService.getById(remarkHole.getRemarkOwnerId());
@@ -774,7 +791,7 @@ public class GeneralServiceImpl implements GeneralService {
             }
         }
         //返回评论
-        return detailRemarks;
+        return new PageResponse<DetailRemark>(detailRemarks,aLong);
     }
 
     @Override

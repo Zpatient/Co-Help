@@ -1,6 +1,7 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Team;
 
@@ -39,7 +40,7 @@ public interface TeamService extends IService<Team> {
      * @param teamName 组织名称
      * @return java.util.List<com.cohelp.server.model.entity.UserTeam>
      */
-    List<Team> listNotApproved(Integer currentPage, Integer pageSize);
+    PageResponse<Team> listNotApproved(Integer currentPage, Integer pageSize);
     /**
      * 更新指定创建组织申请
      * @param team 已处理的team

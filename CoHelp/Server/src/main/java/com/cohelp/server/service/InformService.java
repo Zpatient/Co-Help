@@ -1,13 +1,12 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.UserOrTopicOrRemark;
 import com.cohelp.server.model.entity.Inform;
 import com.cohelp.server.model.vo.InformVO;
-
-import java.util.List;
 
 /**
  * @author zgy
@@ -24,7 +23,7 @@ public interface InformService extends IService<Inform> {
      * @param teamId 组织Id
      * @return java.util.List<com.cohelp.server.model.vo.InformVO>
      */
-    List<InformVO> listInforms(Integer page, Integer limit, Integer teamId);
+    PageResponse<InformVO> listInforms(Integer page, Integer limit, Integer teamId);
 
     /**
      * 删除指定举报

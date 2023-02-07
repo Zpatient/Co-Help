@@ -1,6 +1,7 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.constant.TypeEnum;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.DetailRemark;
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.SUCCESS_GET_DATA;
 
@@ -71,15 +71,15 @@ public class GeneralController {
     }
 
     @RequestMapping("/listtopics")
-    public Result<List<DetailResponse>> listTopics(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type){
+    public Result<PageResponse<DetailResponse>> listTopics(@RequestParam Integer page, @RequestParam Integer limit, @RequestParam Integer type){
         User user = UserHolder.getUser();
-        List<DetailResponse> detailResponses = generalService.listTopics(page, limit, user.getTeamId(), type);
+        PageResponse<DetailResponse> detailResponses = generalService.listTopics(page, limit, user.getTeamId(), type);
         return ResultUtil.ok(detailResponses);
     }
     @RequestMapping("/searchtopics")
-    public Result<List<DetailResponse>> searchTopics(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type,@RequestParam String key){
+    public Result<PageResponse<DetailResponse>> searchTopics(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type,@RequestParam String key){
         User user = UserHolder.getUser();
-        List<DetailResponse> detailResponses = generalService.searchTopics(page, limit, user.getTeamId(), type,key);
+        PageResponse<DetailResponse> detailResponses = generalService.searchTopics(page, limit, user.getTeamId(), type,key);
         return ResultUtil.ok(detailResponses);
     }
     @RequestMapping("/changetopic")
@@ -88,23 +88,23 @@ public class GeneralController {
         return ResultUtil.ok(s);
     }
     @RequestMapping("/listremarks")
-    public Result<List<DetailRemark>> listRemarks(@RequestParam Integer page, @RequestParam Integer limit, @RequestParam Integer type){
+    public Result<PageResponse<DetailRemark>> listRemarks(@RequestParam Integer page, @RequestParam Integer limit, @RequestParam Integer type){
         User user = UserHolder.getUser();
         //判断参数合法性
         if(ObjectUtils.anyNull(type)||!TypeEnum.isRemark(type)){
             return ResultUtil.fail("类型不合法！");
         }
-        List<DetailRemark> detailRemarks = generalService.listRemarks(page, limit, user.getTeamId(), type);
+        PageResponse<DetailRemark> detailRemarks = generalService.listRemarks(page, limit, user.getTeamId(), type);
         return ResultUtil.ok(detailRemarks);
     }
     @RequestMapping("/searchremarks")
-    public Result<List<DetailRemark>> searchRemarks(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type,@RequestParam String key){
+    public Result<PageResponse<DetailRemark>> searchRemarks(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam Integer type,@RequestParam String key){
         User user = UserHolder.getUser();
         //判断参数合法性
         if(ObjectUtils.anyNull(type)||!TypeEnum.isRemark(type)){
             return ResultUtil.fail("类型不合法！");
         }
-        List<DetailRemark> detailRemarks = generalService.searchRemarks(page, limit, user.getTeamId(), type,key);
+        PageResponse<DetailRemark> detailRemarks = generalService.searchRemarks(page, limit, user.getTeamId(), type,key);
         return ResultUtil.ok(detailRemarks);
     }
     @RequestMapping("/removeremark")

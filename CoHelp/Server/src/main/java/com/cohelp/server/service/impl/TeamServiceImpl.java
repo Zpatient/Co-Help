@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.TeamMapper;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Team;
 import com.cohelp.server.model.entity.User;
@@ -126,7 +127,7 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
     }
 
     @Override
-    public List<Team> listNotApproved(Integer currentPage, Integer pageSize) {
+    public PageResponse<Team> listNotApproved(Integer currentPage, Integer pageSize) {
         if(ObjectUtils.anyNull(currentPage,pageSize)){
             return null;
         }
@@ -145,7 +146,8 @@ public class TeamServiceImpl extends ServiceImpl<TeamMapper, Team>
                 }
             }
         }
-        return records;
+        PageResponse<Team> teamPageResponse = new PageResponse<>(records, teamPage.getTotal());
+        return teamPageResponse;
     }
 
     @Override

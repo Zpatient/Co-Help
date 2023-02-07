@@ -1,5 +1,6 @@
 package com.cohelp.server.service;
 
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
@@ -61,14 +62,14 @@ public interface GeneralService{
      * @param type 类型
      * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
      */
-    List<DetailResponse> listTopics(Integer page,Integer limit,Integer teamId,Integer type);
+    PageResponse<DetailResponse> listTopics(Integer page, Integer limit, Integer teamId, Integer type);
     /**
      * 搜索某组织某类型话题的标签、标题中包含关键字的所有话题
      * @param teamId 组织Id
      * @param key 关键字
      * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
      */
-    List<DetailResponse> searchTopics(Integer page,Integer limit,Integer teamId,Integer type,String key);
+    PageResponse<DetailResponse> searchTopics(Integer page,Integer limit,Integer teamId,Integer type,String key);
     /**
      * 更改话题信息
      * @param type 话题类型
@@ -86,7 +87,7 @@ public interface GeneralService{
     * @param type 类型
     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
     */
-    List<DetailRemark> listRemarks(Integer page, Integer limit, Integer teamId, Integer type);
+    PageResponse<DetailRemark> listRemarks(Integer page, Integer limit, Integer teamId, Integer type);
     /**
      * 搜索某组织某类型话题评论的内容中包含关键字的所有评论
      * @param page 目标页码
@@ -96,7 +97,7 @@ public interface GeneralService{
      * @param key 关键字
      * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
      */
-    List<DetailRemark> searchRemarks(Integer page,Integer limit,Integer teamId,Integer type,String key);
+    PageResponse<DetailRemark> searchRemarks(Integer page,Integer limit,Integer teamId,Integer type,String key);
     /**
      * 删除指定评论
      * @param type 类型

@@ -1,12 +1,12 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
 * @author jianping5
@@ -107,7 +107,7 @@ public interface UserService extends IService<User> {
      * @param pageSize m每页数据最大个数
      * @return java.util.List<com.cohelp.server.model.entity.User>
      */
-    List<User> listTeamUser(Integer teamId,Integer currentPage,Integer pageSize);
+    PageResponse<User> listTeamUser(Integer teamId, Integer currentPage, Integer pageSize);
     /**
      * 管理用户信息
      * @param user 待修改的用户信息
@@ -122,7 +122,7 @@ public interface UserService extends IService<User> {
      * @param key 关键词
      * @return java.util.List<com.cohelp.server.model.entity.User>
      */
-    List<User> listUserByName(Integer teamId,Integer currentPage,Integer pageSize,String key);
+    PageResponse<User> listUserByName(Integer teamId,Integer currentPage,Integer pageSize,String key);
 
     User getSafetyUser(User user);
 

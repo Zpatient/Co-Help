@@ -1,6 +1,7 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.constant.StatusCode;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.UserOrTopicOrRemark;
@@ -13,8 +14,6 @@ import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 投诉信息控制器
@@ -35,9 +34,9 @@ public class InformController {
         return informService.submitInform(inform);
     }
     @GetMapping("/listinforms")
-    public Result<List<InformVO>> listInforms(@RequestParam Integer page, @RequestParam Integer limit){
+    public Result<PageResponse<InformVO>> listInforms(@RequestParam Integer page, @RequestParam Integer limit){
         User user = UserHolder.getUser();
-        List<InformVO> informVOS = informService.listInforms(page, limit, user.getTeamId());
+        PageResponse<InformVO> informVOS = informService.listInforms(page, limit, user.getTeamId());
         return ResultUtil.ok(informVOS);
     }
     @RequestMapping("/deleteinform")

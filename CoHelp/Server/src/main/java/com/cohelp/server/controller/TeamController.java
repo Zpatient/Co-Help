@@ -1,6 +1,7 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.constant.StatusCode;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.TeamUpdateRequest;
 import com.cohelp.server.model.entity.Team;
@@ -77,7 +78,7 @@ public class TeamController {
         return ResultUtil.ok(s);
     }
     @GetMapping("/listnotapproved")
-    public Result<List<Team>> listNotApproved(@RequestParam Integer page,@RequestParam Integer limit){
+    public Result<PageResponse<Team>> listNotApproved(@RequestParam Integer page, @RequestParam Integer limit){
         if(ObjectUtils.anyNull(page,limit)){
             return ResultUtil.fail("参数不能为空！");
         }
@@ -85,7 +86,7 @@ public class TeamController {
         if(currentUser==null||!currentUser.getUserRole().equals(2)){
             return ResultUtil.fail("未登录或权限不足！");
         }
-        List<Team> teams = teamService.listNotApproved(page, limit);
+        PageResponse<Team> teams = teamService.listNotApproved(page, limit);
         if(teams!=null){
             return ResultUtil.ok(StatusCode.SUCCESS_GET_DATA,teams,"数据获取成功");
         }else {

@@ -1,5 +1,6 @@
 package com.cohelp.server.controller;
 
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;
@@ -10,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * 用户信息控制器
@@ -86,12 +86,12 @@ public class UserController {
     }
 
     @GetMapping("/listteamuser")
-    public Result<List<User>> listTeamUser(@RequestParam Integer page,@RequestParam Integer limit){
+    public Result<PageResponse<User>> listTeamUser(@RequestParam Integer page,@RequestParam Integer limit){
         User user = UserHolder.getUser();
         if(user==null){
             return ResultUtil.fail("未登录！");
         }
-        List<User> users = userService.listTeamUser(user.getTeamId(),page,limit);
+        PageResponse<User> users = userService.listTeamUser(user.getTeamId(),page,limit);
         return ResultUtil.ok(users);
     }
     @PostMapping("/adminuserinfo")
@@ -104,12 +104,12 @@ public class UserController {
         return ResultUtil.ok(result);
     }
     @GetMapping("/listuserbyname")
-    public Result<List<User>> listUserByName(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam String searchObj){
+    public Result<PageResponse<User>> listUserByName(@RequestParam Integer page,@RequestParam Integer limit,@RequestParam String searchObj){
         User user = UserHolder.getUser();
         if(user==null){
             return ResultUtil.fail("未登录！");
         }
-        List<User> users = userService.listUserByName(user.getTeamId(),page,limit,searchObj);
+        PageResponse<User> users = userService.listUserByName(user.getTeamId(),page,limit,searchObj);
         return ResultUtil.ok(users);
     }
 }

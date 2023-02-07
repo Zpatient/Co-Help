@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.InformMapper;
+import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
@@ -55,7 +56,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform>
     }
 
     @Override
-    public List<InformVO> listInforms(Integer page, Integer limit, Integer teamId) {
+    public PageResponse<InformVO> listInforms(Integer page, Integer limit, Integer teamId) {
         if(ObjectUtils.anyNull(page,limit,teamId)){
             return null;
         }
@@ -67,7 +68,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform>
             InformVO informVO = traverseInform(inform);
             informVOS.add(informVO);
         }
-        return informVOS;
+        return new PageResponse<InformVO>(informVOS,informPage.getTotal());
     }
 
     @Override

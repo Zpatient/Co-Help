@@ -140,6 +140,7 @@ public class InformServiceImpl extends ServiceImpl<InformMapper, Inform>
                 default: informVO.setInformedTypeStr("未知类型");
             }
         }
+        informVO.setInformTime(inform.getCreateTime());
         return informVO;
     }
 }

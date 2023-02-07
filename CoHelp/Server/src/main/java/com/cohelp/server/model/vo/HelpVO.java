@@ -80,6 +80,11 @@ public class HelpVO implements Serializable {
     private String helpLabel;
 
     /**
+     * 互助状态（0：正常 1：异常）
+     */
+    private Integer helpState;
+
+    /**
      * 互助发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

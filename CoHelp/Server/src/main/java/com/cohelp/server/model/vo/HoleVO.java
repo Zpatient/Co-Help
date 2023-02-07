@@ -69,6 +69,10 @@ public class HoleVO implements Serializable {
      */
     private String holeLabel;
 
+    /**
+     * 树洞状态（0：正常 1：异常）
+     */
+    private Integer holeState;
 
     /**
      * 树洞发布时间

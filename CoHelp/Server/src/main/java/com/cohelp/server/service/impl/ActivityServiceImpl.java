@@ -7,13 +7,11 @@ import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Image;
+import com.cohelp.server.model.entity.TopicLike;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.ActivityVO;
-import com.cohelp.server.service.ActivityService;
+import com.cohelp.server.service.*;
 import com.cohelp.server.mapper.ActivityMapper;
-import com.cohelp.server.service.GeneralService;
-import com.cohelp.server.service.ImageService;
-import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
@@ -62,6 +60,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
     @Resource
     private GeneralService generalService;
+
+    @Resource
+    private TopicLikeService topicLikeService;
 
     @Value("${spring.tengxun.url}")
     private String path;
@@ -263,6 +264,18 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         // 注入 ActivityVO
         ActivityVO activityVO = traverseActivity(activity);
         detailResponse.setActivityVO(activityVO);
+
+        // 注入点赞判定值
+        QueryWrapper<TopicLike> topicLikeQueryWrapper = new QueryWrapper<>();
+        topicLikeQueryWrapper.eq("user_id", activityVO.getActivityOwnerId())
+                .eq("topic_type", 1)
+                .eq("topic_id", activityVO.getId());
+        TopicLike topicLike = topicLikeService.getOne(topicLikeQueryWrapper);
+        if (topicLike == null) {
+            detailResponse.setIsLiked(0);
+        } else {
+            detailResponse.setIsLiked(topicLike.getIsLiked());
+        }
 
         // 注入发布者图片
         String publisherAvatarUrl = imageService.getById(activityVO.getAvatar()).getImageUrl();

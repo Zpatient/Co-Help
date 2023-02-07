@@ -33,6 +33,13 @@
         help_state = 0
         order by (4*help_like+3*help_comment+3*help_collect) desc
     </select>
+    <select id="listByHotAndTime" resultType="com.cohelp.server.model.entity.Help">
+        select <include refid="Base_Column_List"></include>
+        from help
+        where team_id = #{teamId} and
+        help_state = 0
+        order by 1000000*(4*help_like+3*help_comment+3*help_collect)+(TIMESTAMP(help_create_time)) desc
+    </select>
     <select id="search" resultType="com.cohelp.server.model.entity.Help">
         select id
         from help

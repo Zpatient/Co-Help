@@ -19,12 +19,20 @@ public interface HelpMapper extends BaseMapper<Help> {
      * @return
      */
     List<Help> listByHot(Integer teamId);
+
+    /**
+     * 根据热度和时间综合排序
+     * @param teamId
+     * @return
+     */
+    List<Help> listByHotAndTime(Integer teamId);
+
     /**
      * 根据关键词搜索某人发布的互助
-     * @param userId 用户Id
-     * @param key 关键词
-     * @param keywords 分词结果
-     * @return java.util.List<com.cohelp.server.model.entity.Activity>
+     * @param teamId
+     * @param key
+     * @param keywords
+     * @return
      */
     List<Help> search(Integer teamId, String key, String[] keywords);
     /**

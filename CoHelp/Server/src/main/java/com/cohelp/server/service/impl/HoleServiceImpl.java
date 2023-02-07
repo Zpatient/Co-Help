@@ -8,11 +8,8 @@ import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.model.vo.HoleVO;
-import com.cohelp.server.service.GeneralService;
-import com.cohelp.server.service.HoleService;
+import com.cohelp.server.service.*;
 import com.cohelp.server.mapper.HoleMapper;
-import com.cohelp.server.service.ImageService;
-import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
@@ -22,6 +19,7 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,6 +58,9 @@ public class HoleServiceImpl
 
     @Value("${spring.tengxun.url}")
     private String path;
+
+    @Resource
+    private TopicLikeService topicLikeService;
 
     @Override
     public Result<Boolean> publishHole(String holeJson, MultipartFile[] files) {
@@ -236,6 +237,18 @@ public class HoleServiceImpl
         // 注入 ActivityVO
         HoleVO holeVO = traverseHole(hole);
         detailResponse.setHoleVO(holeVO);
+
+        // 注入点赞判定值
+        QueryWrapper<TopicLike> topicLikeQueryWrapper = new QueryWrapper<>();
+        topicLikeQueryWrapper.eq("user_id", holeVO.getHoleOwnerId())
+                .eq("topic_type", 1)
+                .eq("topic_id", holeVO.getId());
+        TopicLike topicLike = topicLikeService.getOne(topicLikeQueryWrapper);
+        if (topicLike == null) {
+            detailResponse.setIsLiked(0);
+        } else {
+            detailResponse.setIsLiked(topicLike.getIsLiked());
+        }
 
         // 注入发布者图片
         String publisherAvatarUrl = imageService.getById(holeVO.getAvatar()).getImageUrl();

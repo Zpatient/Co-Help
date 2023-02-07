@@ -38,4 +38,9 @@ public class DetailResponse implements Serializable {
      * 话题相关图片Url
      */
     ArrayList<String> imagesUrl;
+
+    /**
+     * 是否被点赞
+     */
+    private Integer isLiked;
 }

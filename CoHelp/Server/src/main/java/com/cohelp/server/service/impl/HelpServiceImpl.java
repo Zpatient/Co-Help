@@ -8,13 +8,11 @@ import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Image;
+import com.cohelp.server.model.entity.TopicLike;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.HelpVO;
-import com.cohelp.server.service.GeneralService;
-import com.cohelp.server.service.HelpService;
+import com.cohelp.server.service.*;
 import com.cohelp.server.mapper.HelpMapper;
-import com.cohelp.server.service.ImageService;
-import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
@@ -63,6 +61,9 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
     @Value("${spring.tengxun.url}")
     private String path;
+
+    @Resource
+    private TopicLikeService topicLikeService;
 
     @Override
     public Result<Boolean> publishHelp(String helpJson, MultipartFile[] files) {
@@ -271,12 +272,9 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         // 创建互助视图体数组
         List<DetailResponse> detailResponseList = new ArrayList<>();
 
-        // 查询当前团体内的所有活动
-        QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
-        helpQueryWrapper.eq("team_id", teamId);
-        helpQueryWrapper.eq("help_state", 0);
-        helpQueryWrapper.orderByDesc("help_create_time");
-        List<Help> helpList = this.list(helpQueryWrapper);
+        // 查询当前团体内的所有活动(按热度和时间综合排序）
+        List<Help> helpList = helpMapper.listByHotAndTime(teamId);
+
         if (helpList == null) {
             return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
         }
@@ -317,9 +315,22 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
      */
     public DetailResponse getDetailResponse(Help help) {
         DetailResponse detailResponse = new DetailResponse();
-        // 注入 ActivityVO
+        // 注入 HelpVO
         HelpVO helpVO = traverseHelp(help);
         detailResponse.setHelpVO(helpVO);
+
+        // 注入点赞判定值
+        QueryWrapper<TopicLike> topicLikeQueryWrapper = new QueryWrapper<>();
+        topicLikeQueryWrapper.eq("user_id", helpVO.getHelpOwnerId())
+                .eq("topic_type", 1)
+                .eq("topic_id", helpVO.getId());
+        TopicLike topicLike = topicLikeService.getOne(topicLikeQueryWrapper);
+        if (topicLike == null) {
+            detailResponse.setIsLiked(0);
+        } else {
+            detailResponse.setIsLiked(topicLike.getIsLiked());
+        }
+
 
         // 注入发布者图片
         String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();

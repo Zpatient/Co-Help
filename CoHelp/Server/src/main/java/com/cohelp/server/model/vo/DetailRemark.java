@@ -45,4 +45,5 @@ public class DetailRemark {
      * 点赞量
      */
     private Integer like;
+
 }

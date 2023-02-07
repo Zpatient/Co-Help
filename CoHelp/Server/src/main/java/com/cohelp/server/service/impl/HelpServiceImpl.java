@@ -2,6 +2,7 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.constant.HelpTypeConstant;
 import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
@@ -274,10 +275,32 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
         helpQueryWrapper.eq("team_id", teamId);
         helpQueryWrapper.eq("help_state", 0);
+        helpQueryWrapper.orderByDesc("help_create_time");
         List<Help> helpList = this.list(helpQueryWrapper);
         if (helpList == null) {
             return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
         }
+
+        // 若查询全部
+        if (tag.equals(HelpTypeConstant.HELP_ALL)) {
+            for (Help help : helpList) {
+                detailResponseList.add(getDetailResponse(help));
+            }
+            return ResultUtil.ok(detailResponseList);
+        }
+
+        // 若查询其他
+        if (tag.equals(HelpTypeConstant.HELP_OTHER)) {
+            for (Help help : helpList) {
+                String helpTag = help.getHelpLabel();
+                if (helpTag != null && isTypeOther(helpTag)) {
+                    detailResponseList.add(getDetailResponse(help));
+                }
+            }
+            return ResultUtil.ok(detailResponseList);
+        }
+
+        // 若查询特定标签
         helpList.forEach(help -> {
             String helpTag = help.getHelpLabel();
             if (helpTag != null && helpTag.contains(tag)) {
@@ -328,6 +351,19 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         helpVO.setAvatar(user.getAvatar());
         helpVO.setUserName(user.getUserName());
         return helpVO;
+    }
+
+    /**
+     * 判断标签是否为其他
+     * @param tag
+     * @return
+     */
+    public boolean isTypeOther(String tag) {
+        if (!(tag.equals(HelpTypeConstant.HELP_TEAM) || tag.equals(HelpTypeConstant.HELP_FIND) ||
+        tag.equals(HelpTypeConstant.HELP_RUN) || tag.equals(HelpTypeConstant.HELP_PROBLEM))) {
+            return true;
+        }
+        return false;
     }
 
 }

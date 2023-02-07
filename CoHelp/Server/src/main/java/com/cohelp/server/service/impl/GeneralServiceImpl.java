@@ -107,9 +107,6 @@ public class GeneralServiceImpl implements GeneralService {
                     history.setTopicType(type);
                     history.setTopicId(id);
                     historyService.saveOrUpdate(history);
-                } else {
-                    oldHistory.setViewTime(LocalDateTime.now());
-                    historyService.saveOrUpdate(oldHistory);
                 }
                 return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse,"数据获取成功！");
             }

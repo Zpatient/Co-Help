@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.TeamMapper;
-import com.cohelp.server.model.PageResponse;
+import com.cohelp.server.model.domain.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Team;
 import com.cohelp.server.model.entity.User;

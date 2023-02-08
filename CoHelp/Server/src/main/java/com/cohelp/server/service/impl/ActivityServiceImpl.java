@@ -2,16 +2,13 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.model.domain.DetailResponse;
+import com.cohelp.server.mapper.ActivityMapper;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.Activity;
-import com.cohelp.server.model.entity.Image;
-import com.cohelp.server.model.entity.TopicLike;
-import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.ActivityVO;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.*;
-import com.cohelp.server.mapper.ActivityMapper;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
@@ -32,7 +29,7 @@ import java.util.List;
 
 import static com.cohelp.server.constant.NumberConstant.ONE_DAY_MILLI;
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeEnum.*;
+import static com.cohelp.server.constant.TypeEnum.ACTIVITY;
 
 /**
 * @author jianping5
@@ -63,6 +60,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
     @Resource
     private TopicLikeService topicLikeService;
+
+    @Resource
+    private CollectService collectService;
 
     @Value("${spring.tengxun.url}")
     private String path;
@@ -259,6 +259,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
      * @param activity
      * @return
      */
+    @Override
     public DetailResponse getDetailResponse(Activity activity) {
         DetailResponse detailResponse = new DetailResponse();
         // 注入 ActivityVO
@@ -275,6 +276,17 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             detailResponse.setIsLiked(0);
         } else {
             detailResponse.setIsLiked(topicLike.getIsLiked());
+        }
+        // 注入收藏判定值
+        QueryWrapper<Collect> collectQueryWrapper = new QueryWrapper<>();
+        collectQueryWrapper.eq("user_id", UserHolder.getUser().getId())
+                .eq("topic_type", 1)
+                .eq("topic_id", activityVO.getId());
+        Collect one = collectService.getOne(collectQueryWrapper);
+        if (one == null) {
+            detailResponse.setIsCollected(0);
+        } else {
+            detailResponse.setIsCollected(1);
         }
 
         // 注入发布者图片

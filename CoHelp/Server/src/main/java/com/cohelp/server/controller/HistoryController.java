@@ -35,6 +35,6 @@ public class HistoryController {
     public Result listInvolved(){
         User user = UserHolder.getUser();
         if(user==null) return ResultUtil.fail("用户未登录！");
-        return historyService.listInvolvedRecord(user.getId());
+        return historyService.listInvolvedRecord(user);
     }
 }

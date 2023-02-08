@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserMapper;
-import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.service.*;

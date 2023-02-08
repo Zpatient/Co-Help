@@ -1,4 +1,4 @@
-package com.cohelp.server.model;
+package com.cohelp.server.model.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

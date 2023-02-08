@@ -2,6 +2,7 @@ package com.cohelp.server.model.domain;
 
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.DetailRemark;
+import com.cohelp.server.model.vo.DetailResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

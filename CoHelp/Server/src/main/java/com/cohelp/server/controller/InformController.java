@@ -1,8 +1,8 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.constant.StatusCode;
-import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.IdAndType;
+import com.cohelp.server.model.domain.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.UserOrTopicOrRemark;
 import com.cohelp.server.model.entity.Inform;

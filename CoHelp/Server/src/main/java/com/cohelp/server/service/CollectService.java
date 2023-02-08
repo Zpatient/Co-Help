@@ -21,13 +21,13 @@ public interface CollectService extends IService<Collect> {
      */
     Result listCollect(User user);
     /**
-     * 根据Collect对象插入收藏记录
+     * 根据Collect对象插入/删除收藏记录
      * @author: ZGY
      * @date: 2022-10-26 22:52
      * @param collect 待插入的收藏记录
      * @return com.cohelp.server.model.domain.Result
      */
-    Result insertCollectRecord(Collect collect);
+    Result collectTopic(Collect collect);
     /**
      * 根据id删除指定收藏记录
      * @author: ZGY

@@ -2,14 +2,13 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.model.domain.DetailResponse;
+import com.cohelp.server.mapper.HoleMapper;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
-import com.cohelp.server.model.vo.HelpVO;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.model.vo.HoleVO;
 import com.cohelp.server.service.*;
-import com.cohelp.server.mapper.HoleMapper;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
@@ -19,7 +18,6 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeEnum.HELP;
 import static com.cohelp.server.constant.TypeEnum.HOLE;
 
 /**
@@ -55,6 +52,9 @@ public class HoleServiceImpl
 
     @Resource
     private FileUtils fileUtils;
+
+    @Resource
+    private CollectService collectService;
 
     @Value("${spring.tengxun.url}")
     private String path;
@@ -232,6 +232,7 @@ public class HoleServiceImpl
      * @param hole
      * @return
      */
+    @Override
     public DetailResponse getDetailResponse(Hole hole) {
         DetailResponse detailResponse = new DetailResponse();
         // 注入 ActivityVO
@@ -248,6 +249,18 @@ public class HoleServiceImpl
             detailResponse.setIsLiked(0);
         } else {
             detailResponse.setIsLiked(topicLike.getIsLiked());
+        }
+
+        // 注入收藏判定值
+        QueryWrapper<Collect> collectQueryWrapper = new QueryWrapper<>();
+        collectQueryWrapper.eq("user_id", UserHolder.getUser().getId())
+                .eq("topic_type", 1)
+                .eq("topic_id", holeVO.getId());
+        Collect one = collectService.getOne(collectQueryWrapper);
+        if (one == null) {
+            detailResponse.setIsCollected(0);
+        } else {
+            detailResponse.setIsCollected(1);
         }
 
         // 注入发布者图片

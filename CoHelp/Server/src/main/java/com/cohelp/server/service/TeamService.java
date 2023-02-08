@@ -1,7 +1,7 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cohelp.server.model.PageResponse;
+import com.cohelp.server.model.domain.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Team;
 

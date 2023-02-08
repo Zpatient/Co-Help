@@ -1,19 +1,14 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.Hole;
-import com.cohelp.server.model.vo.HelpVO;
-import com.cohelp.server.model.vo.HoleVO;
-import com.cohelp.server.service.HelpService;
+import com.cohelp.server.model.domain.HoleListRequest;
+import com.cohelp.server.model.domain.Result;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.HoleService;
 import com.cohelp.server.utils.ResultUtil;
-import com.sun.org.apache.xpath.internal.operations.Mult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.awt.peer.ChoicePeer;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.ERROR_PARAMS;

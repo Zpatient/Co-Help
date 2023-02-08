@@ -1,8 +1,5 @@
-package com.cohelp.server.model.domain;
+package com.cohelp.server.model.vo;
 
-import com.cohelp.server.model.vo.ActivityVO;
-import com.cohelp.server.model.vo.HelpVO;
-import com.cohelp.server.model.vo.HoleVO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,4 +40,8 @@ public class DetailResponse implements Serializable {
      * 是否被点赞
      */
     private Integer isLiked;
+    /**
+     * 是否被收藏
+     */
+    private Integer isCollected;
 }

@@ -1,9 +1,8 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.model.domain.ActivityListRequest;
-import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.vo.ActivityVO;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.ActivityService;
 import com.cohelp.server.utils.ResultUtil;
 import org.springframework.web.bind.annotation.*;

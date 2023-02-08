@@ -3,16 +3,13 @@ package com.cohelp.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.HelpTypeConstant;
-import com.cohelp.server.model.domain.DetailResponse;
+import com.cohelp.server.mapper.HelpMapper;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.Help;
-import com.cohelp.server.model.entity.Image;
-import com.cohelp.server.model.entity.TopicLike;
-import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.service.*;
-import com.cohelp.server.mapper.HelpMapper;
 import com.cohelp.server.utils.FileUtils;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
@@ -31,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeEnum.*;
+import static com.cohelp.server.constant.TypeEnum.HELP;
 
 /**
 * @author jianping5
@@ -58,6 +55,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
     @Resource
     private FileUtils fileUtils;
+    @Resource
+    private CollectService collectService;
 
     @Value("${spring.tengxun.url}")
     private String path;
@@ -313,6 +312,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
      * @param help
      * @return
      */
+    @Override
     public DetailResponse getDetailResponse(Help help) {
         DetailResponse detailResponse = new DetailResponse();
         // 注入 HelpVO
@@ -330,7 +330,17 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         } else {
             detailResponse.setIsLiked(topicLike.getIsLiked());
         }
-
+        // 注入收藏判定值
+        QueryWrapper<Collect> collectQueryWrapper = new QueryWrapper<>();
+        collectQueryWrapper.eq("user_id", UserHolder.getUser().getId())
+                .eq("topic_type", 1)
+                .eq("topic_id", helpVO.getId());
+        Collect one = collectService.getOne(collectQueryWrapper);
+        if (one == null) {
+            detailResponse.setIsCollected(0);
+        } else {
+            detailResponse.setIsCollected(1);
+        }
 
         // 注入发布者图片
         String publisherAvatarUrl = imageService.getById(helpVO.getAvatar()).getImageUrl();

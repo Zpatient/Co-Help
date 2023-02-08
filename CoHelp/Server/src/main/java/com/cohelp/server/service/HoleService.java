@@ -1,10 +1,9 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.domain.DetailResponse;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Hole;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.cohelp.server.model.vo.HoleVO;
+import com.cohelp.server.model.vo.DetailResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -38,4 +37,6 @@ public interface HoleService extends IService<Hole> {
      * @return
      */
     Result<List<DetailResponse>> listByCondition(Integer conditionType);
+
+    DetailResponse getDetailResponse(Hole hole);
 }

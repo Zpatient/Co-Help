@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserTeamMapper;
-import com.cohelp.server.model.PageResponse;
+import com.cohelp.server.model.domain.PageResponse;
 import com.cohelp.server.model.entity.Team;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.entity.UserTeam;

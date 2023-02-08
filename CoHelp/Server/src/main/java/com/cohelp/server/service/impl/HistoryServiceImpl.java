@@ -4,13 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.HistoryMapper;
-import com.cohelp.server.model.domain.DetailResponse;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.History;
-import com.cohelp.server.model.entity.User;
-import com.cohelp.server.service.GeneralService;
-import com.cohelp.server.service.HistoryService;
+import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.vo.DetailResponse;
+import com.cohelp.server.service.*;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
@@ -34,13 +32,77 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
 
     @Resource
     GeneralService generalService;
+    @Resource
+    ActivityService activityService;
+    @Resource
+    HelpService helpService;
+    @Resource
+    HoleService holeService;
     @Override
     public Result listHistory(User user) {
         //返回查询结果
         List<History> records = list(new QueryWrapper<History>().eq("user_id",user.getId()).select().orderByDesc("view_time"));
+        for(History history:records){
+            Integer topicId = history.getTopicId();
+            Integer topicType = history.getTopicType();
+            if(TypeEnum.isTopic(topicType)) continue;
+            if(TypeEnum.isActivity(topicType)){
+                Activity byId = activityService.getById(topicId);
+                if(!byId.getTeamId().equals(user.getTeamId())){
+                    records.remove(history);
+                }
+            }else if (TypeEnum.isHelp(topicType)){
+                Help byId = helpService.getById(topicId);
+                if(!byId.getTeamId().equals(user.getTeamId())){
+                    records.remove(history);
+                }
+            }else {
+                Hole byId = holeService.getById(topicId);
+                if(!byId.getTeamId().equals(user.getTeamId())){
+                    records.remove(history);
+                }
+            }
+        }
         List<IdAndType> idAndTypeList = getIdAndTypeList(records);
-        List<DetailResponse> detailResponses = generalService.listDetailResponse(user.getTeamId(),idAndTypeList);
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
         return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据查询成功");
+    }
+    @Override
+    public Result listInvolvedRecord(User user) {
+        if(user==null){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
+        }
+        QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
+                .eq("user_id", user.getId())
+                .eq("is_involved",1)
+                .select()
+                .orderByDesc("view_time");
+        List<History> records = list(historyQueryWrapper);
+        for(History history:records){
+            Integer topicId = history.getTopicId();
+            Integer topicType = history.getTopicType();
+            if(TypeEnum.isTopic(topicType)) continue;
+            if(TypeEnum.isActivity(topicType)){
+                Activity byId = activityService.getById(topicId);
+                if(!byId.getTeamId().equals(user.getTeamId())){
+                    records.remove(history);
+                }
+            }else if (TypeEnum.isHelp(topicType)){
+                Help byId = helpService.getById(topicId);
+                if(!byId.getTeamId().equals(user.getTeamId())){
+                    records.remove(history);
+                }
+            }else {
+                Hole byId = holeService.getById(topicId);
+                if(!byId.getTeamId().equals(user.getTeamId())){
+                    records.remove(history);
+                }
+            }
+        }
+        List<IdAndType> idAndTypeList = getIdAndTypeList(records);
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
+        if(detailResponses==null) return ResultUtil.fail("获取失败！");
+        return ResultUtil.ok(SUCCESS_GET_DATA,detailResponses,"数据获取成功！");
     }
     @Override
     public Result insertHistoryRecord(History history) {
@@ -50,15 +112,10 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         }
         Integer topicId = history.getTopicId();
         Integer topicType = history.getTopicType();
-        Integer userId = history.getUserId();
-        LocalDateTime historyTime = history.getViewTime();
-        if(ObjectUtils.anyNull(topicId,userId,historyTime)||!TypeEnum.isTopic(topicType)){
+        Integer userId = UserHolder.getUser().getId();
+        if(ObjectUtils.anyNull(topicId,userId)||!TypeEnum.isTopic(topicType)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
-        //判断当前用户权限
-        User user = UserHolder.getUser();
-        if(!userId.equals(user.getId()))
-            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //判断该历史记录是否已存在
         QueryWrapper<History> queryWrapper = new QueryWrapper<History>()
                 .eq("user_id", userId)
@@ -67,8 +124,10 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         History oldHistory = getOne(queryWrapper);
         if(oldHistory!=null){
             history.setId(oldHistory.getId());
+            history.setViewTime(LocalDateTime.now());
         }
         //返回数据库操作结果
+        history.setUserId(userId);
         boolean bool = saveOrUpdate(history);
         if(bool)
             return ResultUtil.ok(SUCCESS_REQUEST,"记录插入/更新成功！");
@@ -84,11 +143,6 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         if(ObjectUtils.anyNull(getById(id))){
             return ResultUtil.fail(ERROR_PARAMS,"记录不存在！");
         }
-        //判断当前用户权限
-        Integer userId = getById(id).getUserId();
-        User user = UserHolder.getUser();
-        if(!userId.equals(user.getId()))
-            return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
         //返回数据库操作结果
         boolean bool = removeById(id);
         if(bool)
@@ -97,22 +151,7 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
             return ResultUtil.fail(ERROR_REQUEST,"记录删除失败！");
     }
 
-    @Override
-    public Result listInvolvedRecord(Integer currentUserId) {
-        if(currentUserId==null){
-            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
-        }
-        QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
-                .eq("user_id", currentUserId)
-                .eq("is_involved",1)
-                .select()
-                .orderByDesc("view_time");
-        List<History> list = list(historyQueryWrapper);
-        List<IdAndType> idAndTypeList = getIdAndTypeList(list);
-        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
-        if(detailResponses==null) return ResultUtil.fail("获取失败！");
-        return ResultUtil.ok(SUCCESS_GET_DATA,detailResponses,"数据获取成功！");
-    }
+
     private List<IdAndType> getIdAndTypeList(List<History> historyList){
         if(historyList==null) return null;
         List<IdAndType> idAndTypes = new ArrayList<IdAndType>();

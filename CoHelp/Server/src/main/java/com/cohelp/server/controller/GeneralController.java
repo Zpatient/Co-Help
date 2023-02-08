@@ -1,10 +1,11 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.constant.TypeEnum;
-import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.DetailRemark;
+import com.cohelp.server.model.vo.DetailResponse;
+import com.cohelp.server.model.vo.RemarkVO;
 import com.cohelp.server.service.GeneralService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.SUCCESS_GET_DATA;
 
@@ -44,8 +46,9 @@ public class GeneralController {
         return generalService.deleteRemark(idAndType);
     }
     @RequestMapping("/getremarklist")
-    public Result listRemark(@RequestBody IdAndType idAndType){
-        return generalService.listRemark(idAndType);
+    public Result<List<RemarkVO>> listRemark(@RequestBody IdAndType idAndType){
+        User user = UserHolder.getUser();
+        return generalService.listRemark(idAndType,user.getId());
     }
 
     @RequestMapping("/getcurrentdaypublish")

@@ -1,6 +1,5 @@
 package com.cohelp.server.controller;
 
-import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.service.UserService;

@@ -1,11 +1,12 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.Activity;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Hole;
 import com.cohelp.server.model.vo.DetailRemark;
+import com.cohelp.server.model.vo.DetailResponse;
+import com.cohelp.server.model.vo.RemarkVO;
 
 import java.util.List;
 
@@ -48,7 +49,7 @@ public interface GeneralService{
      * @param idAndType
      * @return com.cohelp.server.model.domain.Result
      */
-    Result listRemark(IdAndType idAndType);
+    Result<List<RemarkVO>> listRemark(IdAndType idAndType,Integer userId);
     /**
      * 返回组织用户 Id 数组
      * @return
@@ -60,14 +61,14 @@ public interface GeneralService{
      * @param limit 页面最大数据条数
      * @param teamId 组织Id
      * @param type 类型
-     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     * @return java.util.List<com.cohelp.server.model.vo.DetailResponse>
      */
     PageResponse<DetailResponse> listTopics(Integer page, Integer limit, Integer teamId, Integer type);
     /**
      * 搜索某组织某类型话题的标签、标题中包含关键字的所有话题
      * @param teamId 组织Id
      * @param key 关键字
-     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     * @return java.util.List<com.cohelp.server.model.vo.DetailResponse>
      */
     PageResponse<DetailResponse> searchTopics(Integer page,Integer limit,Integer teamId,Integer type,String key);
     /**
@@ -85,7 +86,7 @@ public interface GeneralService{
     * @param limit 页面最大数据条数
     * @param teamId 组织Id
     * @param type 类型
-    * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+    * @return java.util.List<com.cohelp.server.model.vo.DetailResponse>
     */
     PageResponse<DetailRemark> listRemarks(Integer page, Integer limit, Integer teamId, Integer type);
     /**
@@ -95,7 +96,7 @@ public interface GeneralService{
      * @param teamId 组织Id
      * @param type 类型
      * @param key 关键字
-     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     * @return java.util.List<com.cohelp.server.model.vo.DetailResponse>
      */
     PageResponse<DetailRemark> searchRemarks(Integer page,Integer limit,Integer teamId,Integer type,String key);
     /**
@@ -119,22 +120,15 @@ public interface GeneralService{
     /**
      * 根据Id和Type获取话详情
      * @param idAndType 话题的类型及Id
-     * @return com.cohelp.server.model.domain.DetailResponse
+     * @return com.cohelp.server.model.vo.DetailResponse
      */
     DetailResponse getDetailResponse(IdAndType idAndType);
     /**
      * 根据Id和Type列表获取话题详情
      * @param idAndTypes Id和Type列表
-     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
+     * @return java.util.List<com.cohelp.server.model.vo.DetailResponse>
      */
     List<DetailResponse> listDetailResponse(List<IdAndType> idAndTypes);
-    /**
-     * 根据Id和Type列表获取指定组织的话题详情
-     * @param teamId 组织id
-     * @param idAndTypes Id和Type列表
-     * @return java.util.List<com.cohelp.server.model.domain.DetailResponse>
-     */
-    List<DetailResponse> listDetailResponse(Integer teamId,List<IdAndType> idAndTypes);
     /**
      * 获取当天指定组织的话题发布量
      * @param teamId 组织Id

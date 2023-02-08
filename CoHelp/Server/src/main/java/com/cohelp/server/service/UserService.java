@@ -1,7 +1,6 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cohelp.server.model.PageResponse;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
 import org.springframework.web.multipart.MultipartFile;

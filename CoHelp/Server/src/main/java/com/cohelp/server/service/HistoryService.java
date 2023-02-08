@@ -40,6 +40,6 @@ public interface HistoryService extends IService<History> {
      * @param currentUserId 当前用户Id
      * @return com.cohelp.server.model.domain.Result
      */
-    Result listInvolvedRecord(Integer currentUserId);
+    Result listInvolvedRecord(User user);
 
 }

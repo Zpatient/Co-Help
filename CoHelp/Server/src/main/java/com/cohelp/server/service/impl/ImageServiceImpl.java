@@ -3,17 +3,18 @@ package com.cohelp.server.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
+import com.cohelp.server.mapper.ImageMapper;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
-import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.entity.Image;
 import com.cohelp.server.service.ImageService;
-import com.cohelp.server.mapper.ImageMapper;
 import com.cohelp.server.utils.ResultUtil;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
 
@@ -37,7 +38,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
         if(ObjectUtils.anyNull(image)){
             return ResultUtil.fail("数据为空！");
         }else {
-            return ResultUtil.fail(image.getImageUrl(),"图片Url获取成功");
+            return ResultUtil.ok(image.getImageUrl(),"图片Url获取成功");
         }
     }
 

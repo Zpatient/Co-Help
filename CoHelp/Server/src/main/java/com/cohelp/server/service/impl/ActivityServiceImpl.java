@@ -14,21 +14,25 @@ import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
+import com.ruibty.nsfw.NsfwService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.NumberConstant.ONE_DAY_MILLI;
-import static com.cohelp.server.constant.StatusCode.*;
+import static com.cohelp.server.constant.StatusCode.ERROR_PARAMS;
+import static com.cohelp.server.constant.StatusCode.ERROR_SAVE_IMAGE;
 import static com.cohelp.server.constant.TypeEnum.ACTIVITY;
 
 /**
@@ -39,6 +43,8 @@ import static com.cohelp.server.constant.TypeEnum.ACTIVITY;
 @Service("activityService")
 public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
     implements ActivityService{
+    @Value("${threshold}")
+    private String threshold;
 
     @Resource
     private Gson gson;
@@ -63,6 +69,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
     @Resource
     private CollectService collectService;
+
+    @Autowired
+    private NsfwService nsfwService;
 
     @Value("${spring.tengxun.url}")
     private String path;
@@ -99,14 +108,25 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         // 设置对应的组织id到活动中
         activity.setTeamId(user.getTeamId());
 
-        boolean save = this.save(activity);
-        if (!save) {
-            return ResultUtil.fail(ERROR_SAVE_HELP, "活动发布失败");
-        }
+//        boolean save = this.save(activity);
+//        if (!save) {
+//            return ResultUtil.fail(ERROR_SAVE_HELP, "活动发布失败");
+//        }
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
         if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
+                //图片检测，当该图片的预测值超过阈值则忽略上传
+                try {
+                    byte[] bytes = file.getBytes();
+                    float prediction = nsfwService.getPrediction(bytes);
+                    if(prediction>new Float(threshold)){
+                        continue;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
                     return ResultUtil.fail("图片上传异常");

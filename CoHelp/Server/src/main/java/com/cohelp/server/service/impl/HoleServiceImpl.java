@@ -14,14 +14,17 @@ import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
+import com.ruibty.nsfw.NsfwService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +64,12 @@ public class HoleServiceImpl
 
     @Resource
     private TopicLikeService topicLikeService;
+
+    @Autowired
+    private NsfwService nsfwService;
+
+    @Value("${threshold}")
+    private String threshold;
 
     @Override
     public Result<Boolean> publishHole(String holeJson, MultipartFile[] files) {
@@ -102,6 +111,17 @@ public class HoleServiceImpl
         ArrayList<String> fileNameList = new ArrayList<>();
         if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
+                //图片检测，当该图片的预测值超过阈值则忽略上传
+                try {
+                    byte[] bytes = file.getBytes();
+                    float prediction = nsfwService.getPrediction(bytes);
+                    if(prediction>new Float(threshold)){
+                        continue;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
                     return ResultUtil.fail("图片上传异常");

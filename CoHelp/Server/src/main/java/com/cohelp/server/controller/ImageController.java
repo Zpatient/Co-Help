@@ -30,7 +30,7 @@ public class ImageController {
         return imageService.getAllImage(idAndType);
     }
     @RequestMapping("/image/getimagebyid")
-    public Result setImageState(@RequestParam Integer imageId){
+    public Result getImageById(@RequestParam Integer imageId){
         return imageService.getImageById(imageId);
     }
 }

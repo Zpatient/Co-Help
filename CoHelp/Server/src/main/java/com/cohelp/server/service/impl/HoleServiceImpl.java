@@ -181,6 +181,17 @@ public class HoleServiceImpl
         ArrayList<String> fileNameList = new ArrayList<>();
         if (files != null && files.length > 0 && !"".equals(files[0].getOriginalFilename())) {
             for (MultipartFile file : files) {
+                //图片检测，当该图片的预测值超过阈值则忽略上传
+                try {
+                    byte[] bytes = file.getBytes();
+                    float prediction = nsfwService.getPrediction(bytes);
+                    if(prediction>new Float(threshold)){
+                        continue;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 String fileName = fileUtils.fileUpload(file);
                 if (StringUtils.isBlank(fileName)) {
                     return ResultUtil.fail("图片上传异常");

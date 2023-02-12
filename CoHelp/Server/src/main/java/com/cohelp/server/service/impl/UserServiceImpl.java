@@ -415,9 +415,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public Result<Boolean> changeUserInfo(User user) {
         User currentUser = UserHolder.getUser();
-        if (!currentUser.getId().equals(user.getId())) {
-            return ResultUtil.fail(ERROR_CHANGE_USER_INFO, false, "修改失败");
-        }
+
+        // 将当前用户id设置到user中
+        user.setId(currentUser.getId());
 
         // 敏感词过滤
         String userName = user.getUserName();

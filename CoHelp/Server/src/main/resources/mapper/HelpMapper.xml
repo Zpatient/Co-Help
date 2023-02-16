@@ -24,7 +24,7 @@
         id,help_owner_id,help_title,
         help_detail,help_paid,help_like,
         help_collect,help_comment,help_label,
-        help_state,help_create_time,team_id
+        help_state,help_create_time,team_id,read_num
     </sql>
 
     <select id="listByHot" resultType="com.cohelp.server.model.entity.Help">

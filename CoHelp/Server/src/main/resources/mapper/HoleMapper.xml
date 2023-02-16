@@ -23,7 +23,7 @@
         id,hole_owner_id,hole_title,
         hole_detail,hole_like,hole_collect,
         hole_comment,hole_label,hole_state,
-        hole_create_time,team_id
+        hole_create_time,team_id,read_num
     </sql>
 
     <select id="listByHot" resultType="com.cohelp.server.model.entity.Hole">

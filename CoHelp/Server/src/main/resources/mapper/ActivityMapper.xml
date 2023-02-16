@@ -24,7 +24,7 @@
         id,activity_owner_id,activity_title,
         activity_detail,activity_time,activity_like,
         activity_comment,activity_label,activity_collect,
-        activity_state,activity_create_time,team_id
+        activity_state,activity_create_time,team_id,read_num
     </sql>
 
     <select id="listByHot" resultType="com.cohelp.server.model.entity.Activity">

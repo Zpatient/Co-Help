@@ -529,13 +529,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Result<SearchPublishResponse> searchPublish(String userAccount) {
+    public Result<SearchPublishResponse> searchPublish() {
         // 查看当前登录用户id与账户所查的用户id是否一致
         User user = UserHolder.getUser();
         int userId = user.getId();
-        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_account", userAccount);
-        User one = this.getOne(queryWrapper);
+        User one = this.getById(userId);
         if (userId != one.getId()) {
             return ResultUtil.fail("抱歉！您无权查看");
         }

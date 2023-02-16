@@ -90,7 +90,7 @@ public interface UserService extends IService<User> {
      * 查询发布
      * @return
      */
-    Result searchPublish(String userAccount);
+    Result<SearchPublishResponse> searchPublish();
 
     /**
      * 修改头像

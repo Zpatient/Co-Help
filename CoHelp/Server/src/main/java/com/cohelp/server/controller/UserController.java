@@ -69,9 +69,9 @@ public class UserController {
         return userService.deletePublish(publishDeleteRequest);
     }
 
-    @GetMapping("/searchpub/{userAccount}")
-    public Result<SearchPublishResponse> searchPublish(@PathVariable("userAccount") String userAccount) {
-        return userService.searchPublish(userAccount);
+    @GetMapping("/searchpub")
+    public Result<SearchPublishResponse> searchPublish() {
+        return userService.searchPublish();
     }
 
     @PostMapping("/logout")

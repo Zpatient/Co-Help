@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.*;
 import com.cohelp.server.utils.*;
 import org.apache.commons.lang3.ObjectUtils;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.soap.Detail;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -529,7 +531,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     }
 
     @Override
-    public Result<SearchPublishResponse> searchPublish() {
+    public Result<List<DetailResponse>> searchPublish() {
         // 查看当前登录用户id与账户所查的用户id是否一致
         User user = UserHolder.getUser();
         int userId = user.getId();
@@ -537,20 +539,34 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (userId != one.getId()) {
             return ResultUtil.fail("抱歉！您无权查看");
         }
+
+        // 创建视图体数组
+        List<DetailResponse> detailResponseList = new ArrayList<>();
+
         // 查询活动
         QueryWrapper<Activity> activityQueryWrapper = new QueryWrapper<>();
         activityQueryWrapper.eq("activity_owner_id", userId);
         ArrayList<Activity> activityList = (ArrayList<Activity>) activityService.list(activityQueryWrapper);
+        activityList.forEach(activity ->
+                detailResponseList.add(activityService.getDetailResponse(activity))
+        );
         // 查询互助
         QueryWrapper<Help> helpQueryWrapper = new QueryWrapper<>();
         helpQueryWrapper.eq("help_owner_id", userId);
         ArrayList<Help> helpList = (ArrayList<Help>) helpService.list(helpQueryWrapper);
+        helpList.forEach(help ->
+                detailResponseList.add(helpService.getDetailResponse(help))
+        );
+
         // 查询树洞
         QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
         holeQueryWrapper.eq("hole_owner_id", userId);
         ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
+        holeList.forEach(hole ->
+                detailResponseList.add(holeService.getDetailResponse(hole))
+        );
 
-        return ResultUtil.ok(new SearchPublishResponse(activityList, helpList, holeList));
+        return ResultUtil.ok(detailResponseList);
     }
 
     @Override

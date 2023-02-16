@@ -3,9 +3,11 @@ package com.cohelp.server.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.DetailResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author jianping5
@@ -90,7 +92,7 @@ public interface UserService extends IService<User> {
      * 查询发布
      * @return
      */
-    Result<SearchPublishResponse> searchPublish();
+    Result<List<DetailResponse>> searchPublish();
 
     /**
      * 修改头像

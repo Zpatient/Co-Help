@@ -25,6 +25,10 @@ public class RemarkVO {
      */
     private Integer remarkTargetId;
     /**
+     * 评论目标的发布者的昵称
+     */
+    private String remarkTargetName;
+    /**
      * 评论链顶层（根）ID
      */
     private Integer topId;

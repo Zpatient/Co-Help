@@ -11,9 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/RemarkVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/RemarkVO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/ActivityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/ActivityServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/ImageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/ImageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HoleServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/test/java/com/cohelp/server/ServerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/test/java/com/cohelp/server/ServerApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +90,6 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/CoHelp/Server/src/main/resources/application.yml" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -165,6 +166,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ServerApplicationTests.testOrder" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cohelp.server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.cohelp.server" />
+      <option name="MAIN_CLASS_NAME" value="com.cohelp.server.ServerApplicationTests" />
+      <option name="METHOD_NAME" value="testOrder" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServerApplicationTests.testSeach" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="server" />
       <extension name="coverage">
@@ -176,22 +193,6 @@
       <option name="PACKAGE_NAME" value="com.cohelp.server" />
       <option name="MAIN_CLASS_NAME" value="com.cohelp.server.ServerApplicationTests" />
       <option name="METHOD_NAME" value="testSeach" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="ServerApplicationTests.testTypeEnum" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.cohelp.server.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.cohelp.server" />
-      <option name="MAIN_CLASS_NAME" value="com.cohelp.server.ServerApplicationTests" />
-      <option name="METHOD_NAME" value="testTypeEnum" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -227,19 +228,19 @@
     <list>
       <item itemvalue="JUnit.com.cohelp.server in server" />
       <item itemvalue="JUnit.ServerApplicationTests.test" />
-      <item itemvalue="JUnit.ServerApplicationTests.testTypeEnum" />
       <item itemvalue="JUnit.ServerApplicationTests.testSeach" />
       <item itemvalue="JUnit.ServerApplicationTests.test08" />
       <item itemvalue="JUnit.ServerApplicationTests.test09" />
+      <item itemvalue="JUnit.ServerApplicationTests.testOrder" />
       <item itemvalue="Spring Boot.ServerApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServerApplicationTests.testOrder" />
         <item itemvalue="JUnit.ServerApplicationTests.test09" />
         <item itemvalue="JUnit.ServerApplicationTests.test" />
         <item itemvalue="JUnit.ServerApplicationTests.test08" />
         <item itemvalue="JUnit.ServerApplicationTests.testSeach" />
-        <item itemvalue="JUnit.ServerApplicationTests.testTypeEnum" />
       </list>
     </recent_temporary>
   </component>
@@ -356,14 +357,10 @@
       <workItem from="1675519276003" duration="1237000" />
       <workItem from="1675745831263" duration="8504000" />
       <workItem from="1675783596189" duration="26638000" />
-      <workItem from="1675871647436" duration="7048000" />
-    </task>
-    <task id="LOCAL-00029" summary="modify some interfaces commit">
-      <created>1666832937815</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1666832937815</updated>
+      <workItem from="1675871647436" duration="8024000" />
+      <workItem from="1675944275467" duration="16497000" />
+      <workItem from="1676004043022" duration="444000" />
+      <workItem from="1676203598724" duration="2415000" />
     </task>
     <task id="LOCAL-00030" summary="modify some interfaces commit">
       <created>1666833406014</created>
@@ -701,7 +698,14 @@
       <option name="project" value="LOCAL" />
       <updated>1675854576970</updated>
     </task>
-    <option name="localTasksCounter" value="78" />
+    <task id="LOCAL-00078" summary="update image filter">
+      <created>1675923738789</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1675923738789</updated>
+    </task>
+    <option name="localTasksCounter" value="79" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -734,7 +738,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="inform commit" />
     <MESSAGE value="changepassword interfaces modified commit" />
     <MESSAGE value="submitinform commit" />
     <MESSAGE value="entities update commit" />
@@ -759,7 +762,13 @@
     <MESSAGE value="update admin interfaces" />
     <MESSAGE value="new PageResponse" />
     <MESSAGE value="update remarkVO" />
-    <option name="LAST_COMMIT_MESSAGE" value="update remarkVO" />
+    <MESSAGE value="update image filter" />
+    <option name="LAST_COMMIT_MESSAGE" value="update image filter" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Co_Help$ServerApplicationTests_testOrder.ic" NAME="ServerApplicationTests.testOrder Coverage Results" MODIFIED="1675948868282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.cohelp.server.*</FILTER>
+    </SUITE>
   </component>
 </project>

@@ -415,7 +415,6 @@ public class GeneralServiceImpl implements GeneralService {
             List<RemarkActivity> remarkList = remarkActivityService.list(remarkQueryWrapper);
             for(RemarkActivity remark:remarkList){
                 RemarkVO remarkVO = traverseRemark(TypeEnum.REMARKACTIVITY.ordinal(), userId,remark);
-
                 remarkVOS.add(remarkVO);
             }
             return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkVOS,"评论查询成功");

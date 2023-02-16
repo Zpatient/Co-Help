@@ -103,7 +103,6 @@ public class HoleServiceImpl
         hole.setTeamId(user.getTeamId());
 
         boolean save = this.save(hole);
-
         if (!save) {
             return ResultUtil.fail(ERROR_SAVE_HOLE, "树洞发布失败");
         }

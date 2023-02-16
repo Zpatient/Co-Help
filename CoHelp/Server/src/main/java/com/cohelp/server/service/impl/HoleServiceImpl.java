@@ -268,6 +268,7 @@ public class HoleServiceImpl
         // 注入 ActivityVO
         HoleVO holeVO = traverseHole(hole);
         detailResponse.setHoleVO(holeVO);
+        detailResponse.setReadNum(hole.getReadNum());
 
         // 注入点赞判定值
         QueryWrapper<TopicLike> topicLikeQueryWrapper = new QueryWrapper<>();

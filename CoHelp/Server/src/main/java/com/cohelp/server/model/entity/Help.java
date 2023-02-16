@@ -4,13 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import static com.cohelp.server.constant.TypeEnum.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 互助表
@@ -71,21 +70,21 @@ public class Help implements Serializable {
     private Integer helpState;
 
     /**
+     * 互助发布时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    private LocalDateTime helpCreateTime;
+
+    /**
      * 组织id
      */
     private Integer teamId;
 
     /**
-     * 互助发布时间
+     * 阅读量
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date helpCreateTime;
-
-    /**
-     * 分类数
-     */
-    @TableField(exist = false)
-    private static final int typeNumber = HELP.ordinal();
+    private Integer readNum;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -112,7 +111,9 @@ public class Help implements Serializable {
             && (this.getHelpComment() == null ? other.getHelpComment() == null : this.getHelpComment().equals(other.getHelpComment()))
             && (this.getHelpLabel() == null ? other.getHelpLabel() == null : this.getHelpLabel().equals(other.getHelpLabel()))
             && (this.getHelpState() == null ? other.getHelpState() == null : this.getHelpState().equals(other.getHelpState()))
-            && (this.getHelpCreateTime() == null ? other.getHelpCreateTime() == null : this.getHelpCreateTime().equals(other.getHelpCreateTime()));
+            && (this.getHelpCreateTime() == null ? other.getHelpCreateTime() == null : this.getHelpCreateTime().equals(other.getHelpCreateTime()))
+            && (this.getTeamId() == null ? other.getTeamId() == null : this.getTeamId().equals(other.getTeamId()))
+            && (this.getReadNum() == null ? other.getReadNum() == null : this.getReadNum().equals(other.getReadNum()));
     }
 
     @Override
@@ -130,6 +131,8 @@ public class Help implements Serializable {
         result = prime * result + ((getHelpLabel() == null) ? 0 : getHelpLabel().hashCode());
         result = prime * result + ((getHelpState() == null) ? 0 : getHelpState().hashCode());
         result = prime * result + ((getHelpCreateTime() == null) ? 0 : getHelpCreateTime().hashCode());
+        result = prime * result + ((getTeamId() == null) ? 0 : getTeamId().hashCode());
+        result = prime * result + ((getReadNum() == null) ? 0 : getReadNum().hashCode());
         return result;
     }
 
@@ -150,6 +153,8 @@ public class Help implements Serializable {
         sb.append(", helpLabel=").append(helpLabel);
         sb.append(", helpState=").append(helpState);
         sb.append(", helpCreateTime=").append(helpCreateTime);
+        sb.append(", teamId=").append(teamId);
+        sb.append(", readNum=").append(readNum);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

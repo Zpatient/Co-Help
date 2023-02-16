@@ -44,4 +44,8 @@ public class DetailResponse implements Serializable {
      * 是否被收藏
      */
     private Integer isCollected;
+    /**
+     * 阅读量
+     */
+    private Integer readNum;
 }

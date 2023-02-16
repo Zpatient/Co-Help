@@ -349,6 +349,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         // 注入 HelpVO
         HelpVO helpVO = traverseHelp(help);
         detailResponse.setHelpVO(helpVO);
+        detailResponse.setReadNum(help.getReadNum());
 
         // 注入点赞判定值
         QueryWrapper<TopicLike> topicLikeQueryWrapper = new QueryWrapper<>();

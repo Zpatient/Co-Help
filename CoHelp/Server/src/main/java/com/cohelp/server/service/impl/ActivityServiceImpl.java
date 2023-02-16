@@ -295,6 +295,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         // 注入 ActivityVO
         ActivityVO activityVO = traverseActivity(activity);
         detailResponse.setActivityVO(activityVO);
+        detailResponse.setReadNum(activity.getReadNum());
 
         // 注入点赞判定值
         QueryWrapper<TopicLike> topicLikeQueryWrapper = new QueryWrapper<>();

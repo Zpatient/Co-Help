@@ -4,13 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import static com.cohelp.server.constant.TypeEnum.HOLE;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 树洞表
@@ -66,21 +65,21 @@ public class Hole implements Serializable {
     private Integer holeState;
 
     /**
+     * 树洞发布时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    private LocalDateTime holeCreateTime;
+
+    /**
      * 组织id
      */
     private Integer teamId;
 
     /**
-     * 树洞发布时间
+     * 阅读量
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date holeCreateTime;
-
-    /**
-     * 分类数
-     */
-    @TableField(exist = false)
-    private static final int typeNumber = HOLE.ordinal();
+    private Integer readNum;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -106,7 +105,9 @@ public class Hole implements Serializable {
             && (this.getHoleComment() == null ? other.getHoleComment() == null : this.getHoleComment().equals(other.getHoleComment()))
             && (this.getHoleLabel() == null ? other.getHoleLabel() == null : this.getHoleLabel().equals(other.getHoleLabel()))
             && (this.getHoleState() == null ? other.getHoleState() == null : this.getHoleState().equals(other.getHoleState()))
-            && (this.getHoleCreateTime() == null ? other.getHoleCreateTime() == null : this.getHoleCreateTime().equals(other.getHoleCreateTime()));
+            && (this.getHoleCreateTime() == null ? other.getHoleCreateTime() == null : this.getHoleCreateTime().equals(other.getHoleCreateTime()))
+            && (this.getTeamId() == null ? other.getTeamId() == null : this.getTeamId().equals(other.getTeamId()))
+            && (this.getReadNum() == null ? other.getReadNum() == null : this.getReadNum().equals(other.getReadNum()));
     }
 
     @Override
@@ -123,6 +124,8 @@ public class Hole implements Serializable {
         result = prime * result + ((getHoleLabel() == null) ? 0 : getHoleLabel().hashCode());
         result = prime * result + ((getHoleState() == null) ? 0 : getHoleState().hashCode());
         result = prime * result + ((getHoleCreateTime() == null) ? 0 : getHoleCreateTime().hashCode());
+        result = prime * result + ((getTeamId() == null) ? 0 : getTeamId().hashCode());
+        result = prime * result + ((getReadNum() == null) ? 0 : getReadNum().hashCode());
         return result;
     }
 
@@ -142,6 +145,8 @@ public class Hole implements Serializable {
         sb.append(", holeLabel=").append(holeLabel);
         sb.append(", holeState=").append(holeState);
         sb.append(", holeCreateTime=").append(holeCreateTime);
+        sb.append(", teamId=").append(teamId);
+        sb.append(", readNum=").append(readNum);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

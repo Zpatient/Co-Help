@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
-import static com.cohelp.server.constant.TypeEnum.ACTIVITY;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * 活动表
@@ -42,7 +42,8 @@ public class Activity implements Serializable {
     /**
      * 活动时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
     private LocalDateTime activityTime;
 
     /**
@@ -71,21 +72,21 @@ public class Activity implements Serializable {
     private Integer activityState;
 
     /**
+     * 活动发布时间
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+08:00")
+    private LocalDateTime activityCreateTime;
+
+    /**
      * 组织id
      */
     private Integer teamId;
 
     /**
-     * 活动发布时间
+     * 阅读量
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime activityCreateTime;
-
-    /**
-     * 分类数
-     */
-    @TableField(exist = false)
-    private static final int typeNumber = ACTIVITY.ordinal();
+    private Integer readNum;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -112,7 +113,9 @@ public class Activity implements Serializable {
             && (this.getActivityLabel() == null ? other.getActivityLabel() == null : this.getActivityLabel().equals(other.getActivityLabel()))
             && (this.getActivityCollect() == null ? other.getActivityCollect() == null : this.getActivityCollect().equals(other.getActivityCollect()))
             && (this.getActivityState() == null ? other.getActivityState() == null : this.getActivityState().equals(other.getActivityState()))
-            && (this.getActivityCreateTime() == null ? other.getActivityCreateTime() == null : this.getActivityCreateTime().equals(other.getActivityCreateTime()));
+            && (this.getActivityCreateTime() == null ? other.getActivityCreateTime() == null : this.getActivityCreateTime().equals(other.getActivityCreateTime()))
+            && (this.getTeamId() == null ? other.getTeamId() == null : this.getTeamId().equals(other.getTeamId()))
+            && (this.getReadNum() == null ? other.getReadNum() == null : this.getReadNum().equals(other.getReadNum()));
     }
 
     @Override
@@ -130,6 +133,8 @@ public class Activity implements Serializable {
         result = prime * result + ((getActivityCollect() == null) ? 0 : getActivityCollect().hashCode());
         result = prime * result + ((getActivityState() == null) ? 0 : getActivityState().hashCode());
         result = prime * result + ((getActivityCreateTime() == null) ? 0 : getActivityCreateTime().hashCode());
+        result = prime * result + ((getTeamId() == null) ? 0 : getTeamId().hashCode());
+        result = prime * result + ((getReadNum() == null) ? 0 : getReadNum().hashCode());
         return result;
     }
 
@@ -150,6 +155,8 @@ public class Activity implements Serializable {
         sb.append(", activityCollect=").append(activityCollect);
         sb.append(", activityState=").append(activityState);
         sb.append(", activityCreateTime=").append(activityCreateTime);
+        sb.append(", teamId=").append(teamId);
+        sb.append(", readNum=").append(readNum);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

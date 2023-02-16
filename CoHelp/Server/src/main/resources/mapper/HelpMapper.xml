@@ -17,6 +17,7 @@
             <result property="helpState" column="help_state" jdbcType="TINYINT"/>
             <result property="helpCreateTime" column="help_create_time" jdbcType="TIMESTAMP"/>
             <result property="teamId" column="team_id" jdbcType="INTEGER"/>
+            <result property="readNum" column="read_num" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">

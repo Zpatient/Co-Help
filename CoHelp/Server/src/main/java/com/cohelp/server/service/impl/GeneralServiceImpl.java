@@ -83,6 +83,11 @@ public class GeneralServiceImpl implements GeneralService {
         if(TypeEnum.isActivity(type)){
             Activity activity = activityService.getBaseMapper().selectById(id);
             if(!ObjectUtils.anyNull(activity)){
+                //增加阅读量
+                Integer readNum = activity.getReadNum();
+                activity.setReadNum(readNum+1);
+                activityService.saveOrUpdate(activity);
+                //获取详情
                 detailResponse = activityService.getDetailResponse(activity);
                 //插入历史记录
                 QueryWrapper<History> queryWrapper = new QueryWrapper<History>()
@@ -109,6 +114,11 @@ public class GeneralServiceImpl implements GeneralService {
         else if(TypeEnum.isHelp(type)){
             Help help = helpService.getById(id);
             if(!ObjectUtils.anyNull(help)){
+                //增加阅读量
+                Integer readNum = help.getReadNum();
+                help.setReadNum(readNum+1);
+                helpService.saveOrUpdate(help);
+                //获取详情
                 detailResponse = helpService.getDetailResponse(help);
                 //插入历史记录
                 QueryWrapper<History> queryWrapper = new QueryWrapper<History>()
@@ -132,6 +142,11 @@ public class GeneralServiceImpl implements GeneralService {
         else {
             Hole hole = holeService.getById(id);
             if(!ObjectUtils.anyNull(hole)) {
+                //增加阅读量
+                Integer readNum = hole.getReadNum();
+                hole.setReadNum(readNum+1);
+                holeService.saveOrUpdate(hole);
+                //获取详情
                 detailResponse = holeService.getDetailResponse(hole);
                 //插入历史记录
                 QueryWrapper<History> queryWrapper = new QueryWrapper<History>()

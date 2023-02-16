@@ -16,6 +16,7 @@
             <result property="holeState" column="hole_state" jdbcType="TINYINT"/>
             <result property="holeCreateTime" column="hole_create_time" jdbcType="TIMESTAMP"/>
             <result property="teamId" column="team_id" jdbcType="INTEGER"/>
+            <result property="readNum" column="read_num" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">

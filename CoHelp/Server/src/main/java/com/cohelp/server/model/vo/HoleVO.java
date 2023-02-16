@@ -84,4 +84,8 @@ public class HoleVO implements Serializable {
      * 组织id
      */
     private Integer teamId;
+    /**
+     * 阅读量
+     */
+    private Integer readNum;
 }

@@ -2,6 +2,7 @@ package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.PageResponse;
+import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.entity.UserTeam;
 
 /**
@@ -22,4 +23,10 @@ public interface UserTeamService extends IService<UserTeam> {
      * @return java.lang.String
      */
     String changeUserTeam(UserTeam userTeam);
+    /**
+     * 获取当前用户的更改组织申请的组织名
+     * @param user 当前用户
+     * @return java.lang.String
+     */
+    String getChangeTeam(User user);
 }

@@ -90,6 +90,27 @@ public class UserTeamServiceImpl extends ServiceImpl<UserTeamMapper, UserTeam>
             return "修改成功！";
         }
     }
+
+    @Override
+    public String getChangeTeam(User user) {
+        if(user==null){
+            return null;
+        }
+        Integer id = user.getId();
+        QueryWrapper<UserTeam> eq = new QueryWrapper<UserTeam>().eq("user_id", id).eq("join_state", 0);
+        UserTeam one = getOne(eq);
+        if(one==null){
+            return "";
+        }else {
+            Integer targetTeamId = one.getTargetTeamId();
+            Team target = teamService.getById(targetTeamId);
+            if(target==null){
+                return "";
+            }else {
+                return target.getTeamName();
+            }
+        }
+    }
 }
 
 

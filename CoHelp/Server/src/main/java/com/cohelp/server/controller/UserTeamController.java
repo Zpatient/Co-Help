@@ -50,4 +50,11 @@ public class UserTeamController {
         String result = userTeamService.changeUserTeam(userTeam);
         return ResultUtil.ok(result);
     }
+    @GetMapping("/getchangeteam")
+    public  Result<String> getChangeTeam(){
+        User user = UserHolder.getUser();
+        return ResultUtil.ok(userTeamService.getChangeTeam(user));
+    }
+
+
 }

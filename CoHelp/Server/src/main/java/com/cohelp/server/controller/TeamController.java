@@ -10,7 +10,6 @@ import com.cohelp.server.service.TeamService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,9 +28,6 @@ public class TeamController {
 
     @GetMapping("/query")
     public Result<List<Team>> fuzzyQuery(@RequestParam String teamName) {
-        if (StringUtils.isBlank(teamName)) {
-            return ResultUtil.fail("输入为空");
-        }
         return teamService.fuzzyQuery(teamName);
     }
 
@@ -50,7 +46,6 @@ public class TeamController {
         // 获取参数
         Integer conditionType = teamUpdateRequest.getConditionType();
         Integer teamId = teamUpdateRequest.getTeamId();
-
         return teamService.changeTeam(conditionType, teamId);
 
     }

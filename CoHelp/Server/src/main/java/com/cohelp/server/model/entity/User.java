@@ -94,7 +94,12 @@ public class User implements Serializable {
     @TableField(exist = false)
     private String teamName;
 
-    public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, String userEmail, Integer userRole, Integer state, Date userCreateTime, Integer age, Integer teamId, String animalSign) {
+    /**
+     * 类型
+     */
+    private Integer type;
+
+    public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, String userEmail, Integer userRole, Integer state, Date userCreateTime, Integer age, Integer teamId, String teamName, Integer type, String animalSign) {
         this.id = id;
         this.userAccount = userAccount;
         this.userName = userName;
@@ -108,6 +113,8 @@ public class User implements Serializable {
         this.userCreateTime = userCreateTime;
         this.age = age;
         this.teamId = teamId;
+        this.teamName = teamName;
+        this.type = type;
         this.animalSign = animalSign;
     }
 

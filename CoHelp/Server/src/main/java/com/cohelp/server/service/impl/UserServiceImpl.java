@@ -8,12 +8,14 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
+import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.*;
 import com.cohelp.server.utils.*;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -24,9 +26,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.xml.soap.Detail;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.cohelp.server.constant.NumberConstant.*;
 import static com.cohelp.server.constant.StatusCode.*;
@@ -67,6 +68,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private TeamService teamService;
+
+    @Resource
+    private SelectionService selectionService;
+
+    @Resource
+    private CourseService courseService;
 
 
 
@@ -162,6 +169,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setTeamName(teamService.getById(user.getTeamId()).getTeamName());
         return safetyUser;
     }
+
+
 
     @Override
     public Result userRegister(RegisterRequest registerRequest, HttpServletRequest request) {
@@ -687,6 +696,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return userPageResponse;
     }
 
+    @Override
+    public Result<Set<String>> listSemester() {
+        // 获取当前登录用户
+        User user = UserHolder.getUser();
+        int userId = user.getId();
+
+        //  查询该学生的选课记录（从选课表中查）
+        QueryWrapper<Selection> selectionQueryWrapper = new QueryWrapper<>();
+        selectionQueryWrapper.eq("student_id", userId);
+        List<Selection> list = selectionService.list(selectionQueryWrapper);
+
+        if (list == null) {
+            return ResultUtil.fail("选课记录为空！");
+        }
+        // 将学年抽取出来，并去重（若无，则为空集合）
+        // 顺序为从小到大
+        Set<String> semesterSet = list.stream().map(item -> item.getSemester()).collect(Collectors.toSet());
+        return ResultUtil.ok(semesterSet);
+    }
 }
 
 

@@ -1,0 +1,226 @@
+
+|
+java:S2293ό"YReplace the type specification in this constructor call with the diamond operator ("<>").(υ¬Ρ¥ϋÿÿÿÿ8ώψ“Σε0
+w
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(οÿΎ8ώψ“Σε0
+|
+java:S2293©"YReplace the type specification in this constructor call with the diamond operator ("<>").(υ¬Ρ¥ϋÿÿÿÿ8ÿψ“Σε0
+w
+java:S2293Ο"YReplace the type specification in this constructor call with the diamond operator ("<>").(οÿΎ8ÿψ“Σε0
+w
+java:S2293…"YReplace the type specification in this constructor call with the diamond operator ("<>").(ΟΝθ8ÿψ“Σε0
+w
+java:S2293Χ"YReplace the type specification in this constructor call with the diamond operator ("<>").(¨α8ÿψ“Σε0
+w
+java:S2293ΰ"YReplace the type specification in this constructor call with the diamond operator ("<>").(ΟΝθ8€ω“Σε0
+w
+java:S2293²"YReplace the type specification in this constructor call with the diamond operator ("<>").(¨α8€ω“Σε0
+q
+java:S1192³"SDefine a constant instead of duplicating this literal "θ―„θ®Ίζ¥θ―Άζε" 3 times.(¶«γ8ω“Σε0
+s
+java:S1192ϋ"PDefine a constant instead of duplicating this literal "θ―„θ®Ίε¤±θ΄¥οΌ" 3 times.(‹ι«·ϊÿÿÿÿ8ω“Σε0
+m
+java:S1192Ώ"ODefine a constant instead of duplicating this literal "remark_hole_id" 3 times.(„―μσ8ω“Σε0
+g
+java:S1192ι"IDefine a constant instead of duplicating this literal "team_id" 16 times.(σΕΐ8‚ω“Σε0
+h
+java:S1192_"KDefine a constant instead of duplicating this literal "topic_type" 6 times.(ς¤λι8¦υΣε0
+v
+java:S1192­"SDefine a constant instead of duplicating this literal "remark_activity_id" 3 times.(®Χϋ‰ψÿÿÿÿ8‚ω“Σε0
+j
+java:S1192ύ"LDefine a constant instead of duplicating this literal "remark_type" 6 times.(έ€ϊ8‚ω“Σε0
+t
+java:S1192ω"VDefine a constant instead of duplicating this literal "θ―„θ®Ίε ι™¤ε¤±θ΄¥οΌ" 3 times.(£Ώ‹8ƒω“Σε0
+y
+java:S1192€"VDefine a constant instead of duplicating this literal "θ―„θ®Ίε ι™¤ζεοΌ" 3 times.(±ρΊΡÿÿÿÿÿ8ƒω“Σε0
+s
+java:S1192"PDefine a constant instead of duplicating this literal "θ―„θ®ΊζεοΌ" 3 times.(νΗβωÿÿÿÿ8ƒω“Σε0
+±
+java:S1192ά"Define a constant instead of duplicating this literal "https://img-blog.csdnimg.cn/img_convert/b573b00bed7126db2c209ed01eb35189.png" 6 times.(Ίκ·δύÿÿÿÿ8ƒω“Σε0
+…
+java:S1192Ϋ"bDefine a constant instead of duplicating this literal "ε‚ζ•°ζ•°ζ®δΈΊη©Ίζ— ζ³•δΏ®ζ”ΉοΌ" 3 times.(―‹Φίωÿÿÿÿ8ƒω“Σε0
+v
+java:S1192υ"YDefine a constant instead of duplicating this literal "ζ–‡ζ¬ζ¶‰εζ•ζ„θ―ζ±‡" 3 times.(ΰ–E8„ω“Σε0
+f
+java:S1192`"IDefine a constant instead of duplicating this literal "topic_id" 6 times.(³ΧηΓ8¨υΣε0
+l
+java:S1192λ"IDefine a constant instead of duplicating this literal "is_liked" 3 times.(›ςΓύÿÿÿÿ8„ω“Σε0
+n
+java:S1192Γ"PDefine a constant instead of duplicating this literal "ε ι™¤ε¤±θ΄¥οΌ" 3 times.(Όªς8„ω“Σε0
+n
+java:S1192ί"PDefine a constant instead of duplicating this literal "η”¨ζ·δΈε­ε¨" 3 times.(Μάι‚8„ω“Σε0
+n
+java:S1192Ώ"PDefine a constant instead of duplicating this literal "ε ι™¤ζεοΌ" 6 times.(αΞτθ8…ω“Σε0
+r
+java:S1192ι"ODefine a constant instead of duplicating this literal "remark_content" 3 times.(λπεΑϋÿÿÿÿ8…ω“Σε0
+m
+java:S1192ώ"JDefine a constant instead of duplicating this literal "remark_id" 6 times.(ΏΫ…ρψÿÿÿÿ8…ω“Σε0
+m
+java:S1192O"PDefine a constant instead of duplicating this literal "ε‚ζ•°δΈεζ³•" 8 times.(ΐΆ­Χ8…ω“Σε0
+j
+java:S1192^"HDefine a constant instead of duplicating this literal "user_id" 9 times.(β«Χόÿÿÿÿ8©υΣε0
+n
+java:S1192ί"PDefine a constant instead of duplicating this literal "δΏ®ζ”Ήε¤±θ΄¥οΌ" 3 times.(Ϊ‰Δ8†ω“Σε0
+m
+java:S1192¶"ODefine a constant instead of duplicating this literal "remark_help_id" 3 times.(ƒΓ•°8†ω“Σε0
+s
+java:S1192α"PDefine a constant instead of duplicating this literal "δΏ®ζ”ΉζεοΌ" 3 times.(¶§ήΠψÿÿÿÿ8†ω“Σε0
+L
+java:S5411N"*Use the primitive boolean expression here.(σ¶όϊÿÿÿÿ8ω“Σε0
+L
+java:S5411S"*Use the primitive boolean expression here.(ρ¬ρΜώÿÿÿÿ8‘ω“Σε0
+G
+java:S5411r"*Use the primitive boolean expression here.(ΐε ω8‘ω“Σε0
+M
+java:S5411΄"*Use the primitive boolean expression here.(Ξ•§ρϊÿÿÿÿ8‘ω“Σε0
+M
+java:S5411Α"*Use the primitive boolean expression here.(ρ¬ρΜώÿÿÿÿ8‘ω“Σε0
+H
+java:S5411Θ"*Use the primitive boolean expression here.(ΐε ω8’ω“Σε0
+H
+java:S5411δ"*Use the primitive boolean expression here.(Α…8‘ω“Σε0
+H
+java:S5411η"*Use the primitive boolean expression here.(΄ÿΕ8’ω“Σε0
+H
+java:S5411“"*Use the primitive boolean expression here.(ΐε ω8’ω“Σε0
+H
+java:S5411σ"*Use the primitive boolean expression here.(»―®8’ω“Σε0
+H
+java:S5411φ"*Use the primitive boolean expression here.(΄ÿΕ8’ω“Σε0
+H
+java:S5411ƒ"*Use the primitive boolean expression here.(ΐε ω8“ω“Σε0
+H
+java:S5411©"*Use the primitive boolean expression here.(»―®8“ω“Σε0
+H
+java:S5411¬"*Use the primitive boolean expression here.(΄ÿΕ8“ω“Σε0
+H
+java:S5411µ"*Use the primitive boolean expression here.(ΐε ω8”ω“Σε0
+M
+java:S5411Ι"*Use the primitive boolean expression here.(–οόÿÿÿÿ8“ω“Σε0
+H
+java:S5411Μ"*Use the primitive boolean expression here.(ΞªΠ³8“ω“Σε0
+M
+java:S5411τ"*Use the primitive boolean expression here.(Η†Όϊÿÿÿÿ8”ω“Σε0
+M
+java:S5411ϋ"*Use the primitive boolean expression here.(ΎΉ•¶ϋÿÿÿÿ8”ω“Σε0
+M
+java:S5411ÿ"*Use the primitive boolean expression here.(ρ¬ρΜώÿÿÿÿ8”ω“Σε0
+H
+java:S5411‰"*Use the primitive boolean expression here.(ΐε ω8•ω“Σε0
+H
+java:S5411¨"*Use the primitive boolean expression here.(Νη·φ8•ω“Σε0
+M
+java:S5411¬"*Use the primitive boolean expression here.(ρ¬ρΜώÿÿÿÿ8•ω“Σε0
+H
+java:S5411·"*Use the primitive boolean expression here.(ΐε ω8–ω“Σε0
+M
+java:S5411Υ"*Use the primitive boolean expression here.(ϊΥΠΙϋÿÿÿÿ8•ω“Σε0
+M
+java:S5411Ω"*Use the primitive boolean expression here.(ρ¬ρΜώÿÿÿÿ8•ω“Σε0
+H
+java:S5411ε"*Use the primitive boolean expression here.(ΐε ω8™ω“Σε0
+M
+java:S5411„"*Use the primitive boolean expression here.(™›µέÿÿÿÿÿ8–ω“Σε0
+H
+java:S5411"*Use the primitive boolean expression here.(ΞªΠ³8–ω“Σε0
+H
+java:S5411Ά"*Use the primitive boolean expression here.(­€8—ω“Σε0
+H
+java:S5411ί"*Use the primitive boolean expression here.(ΤΑ‘Δ8—ω“Σε0
+H
+java:S5411γ"*Use the primitive boolean expression here.(ΞªΠ³8—ω“Σε0
+H
+java:S5411ύ"*Use the primitive boolean expression here.(­€8ω“Σε0
+H
+java:S5411Έ"*Use the primitive boolean expression here.(Ω–‘8ω“Σε0
+H
+java:S5411Ό"*Use the primitive boolean expression here.(ΞªΠ³8ω“Σε0
+H
+java:S5411Θ"*Use the primitive boolean expression here.(­€8ω“Σε0
+M
+java:S5411ψ"*Use the primitive boolean expression here.(Ή“ψΚψÿÿÿÿ8ω“Σε0
+H
+java:S5411ύ"*Use the primitive boolean expression here.(ΞªΠ³8™ω“Σε0
+H
+java:S5411"*Use the primitive boolean expression here.(­€8™ω“Σε0
+M
+java:S5411Ώ"*Use the primitive boolean expression here.(σ¶όϊÿÿÿÿ8™ω“Σε0
+M
+java:S5411Γ"*Use the primitive boolean expression here.(ρ¬ρΜώÿÿÿÿ8™ω“Σε0
+H
+java:S5411Λ"*Use the primitive boolean expression here.(ΐε ω8·υΣε0
+h
+java:S2259½"JA "NullPointerException" could be thrown; "getKeywords()" can return null.(―Υ¦8χύ“Σε0
+`
+java:S2259»"BA "NullPointerException" could be thrown; "user" is nullable here.(έ†ώ8ψύ“Σε0
+o
+java:S3776G"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(ΏυΫ 8ƒώ“Σε0
+u
+java:S3776­"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(Ο„κΨϊÿÿÿÿ8ώ“Σε0
+p
+java:S3776έ"RRefactor this method to reduce its Cognitive Complexity from 38 to the 15 allowed.(«¥‰Η8Λώ“Σε0
+p
+java:S3776Θ"RRefactor this method to reduce its Cognitive Complexity from 44 to the 15 allowed.(θ»ά8Ϋώ“Σε0
+F	java:S108Ω")Either remove or fill this block of code.(ο­£Δ8λώ“Σε0
+A
+java:S2129ό"Remove this "Long" constructor(υ¬Ρ¥ϋÿÿÿÿ8οώ“Σε0
+<
+java:S2129ƒ"Remove this "Long" constructor(χΙ„ 8πώ“Σε0
+<
+java:S2129"Remove this "Long" constructor(εΎΠ8ρώ“Σε0
+<
+java:S2129—"Remove this "Long" constructor(„άη™8ςώ“Σε0
+A
+java:S2129©"Remove this "Long" constructor(υ¬Ρ¥ϋÿÿÿÿ8τώ“Σε0
+<
+java:S2129±"Remove this "Long" constructor(χΙ„ 8φώ“Σε0
+<
+java:S2129Ό"Remove this "Long" constructor(εΎΠ8χώ“Σε0
+<
+java:S2129Η"Remove this "Long" constructor(„άη™8ψώ“Σε0
+u
+java:S3776Σ"RRefactor this method to reduce its Cognitive Complexity from 26 to the 15 allowed.(§υÿªψÿÿÿÿ8ωώ“Σε0
+u
+java:S3776€"RRefactor this method to reduce its Cognitive Complexity from 47 to the 15 allowed.(Ϋ¶λωÿÿÿÿ8ϋώ“Σε0
+<
+java:S2129‚"Remove this "Long" constructor(ύÒΙ8όώ“Σε0
+<
+java:S2129…"Remove this "Long" constructor(ΟΝθ8ύώ“Σε0
+u
+java:S3776Ϋ"RRefactor this method to reduce its Cognitive Complexity from 47 to the 15 allowed.(Έ‰Ά¤όÿÿÿÿ8„ÿ“Σε0
+<
+java:S2129έ"Remove this "Long" constructor(ύÒΙ8†ÿ“Σε0
+<
+java:S2129ΰ"Remove this "Long" constructor(ΟΝθ8†ÿ“Σε0
+p
+java:S3776¶"RRefactor this method to reduce its Cognitive Complexity from 20 to the 15 allowed.(—Ίυ8ÿ“Σε0
+N
+java:S1168δ"+Return an empty collection instead of null.(§ώ…Οϊÿÿÿÿ8”ÿ“Σε0
+u
+java:S3776τ"RRefactor this method to reduce its Cognitive Complexity from 24 to the 15 allowed.(π®ΐ«ÿÿÿÿÿ8–ÿ“Σε0
+I
+java:S1168ί"+Return an empty collection instead of null.(—κ¨•8ÿ“Σε0
+T
+java:S2153€	"1Remove the boxing of "activityCurrentDayPublish".(„ΠγΊϊÿÿÿÿ8΅ÿ“Σε0
+A
+java:S2129€	"Remove this "Long" constructor(„ΠγΊϊÿÿÿÿ8Άÿ“Σε0
+K
+java:S2153„	"-Remove the boxing of "helpCurrentDayPublish".(ƒΜΆ©8£ÿ“Σε0
+<
+java:S2129„	"Remove this "Long" constructor(ƒΜΆ©8£ÿ“Σε0
+K
+java:S2153	"-Remove the boxing of "holeCurrentDayPublish".(ητ–8¤ÿ“Σε0
+<
+java:S2129	"Remove this "Long" constructor(ητ–8¤ÿ“Σε0
+E
+java:S2153¦	"'Remove the boxing of "activityPublish".(κ‹Ψό8¬ÿ“Σε0
+<
+java:S2129¦	"Remove this "Long" constructor(κ‹Ψό8¬ÿ“Σε0
+A
+java:S2153§	"#Remove the boxing of "helpPublish".(ΈβμΣ8¬ÿ“Σε0
+<
+java:S2129§	"Remove this "Long" constructor(ΈβμΣ8­ÿ“Σε0
+A
+java:S2153¨	"#Remove the boxing of "holePublish".(Ί‚Ψ€8­ÿ“Σε0
+<
+java:S2129¨	"Remove this "Long" constructor(Ί‚Ψ€8®ÿ“Σε0

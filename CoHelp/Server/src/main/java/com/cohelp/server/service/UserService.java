@@ -2,12 +2,15 @@ package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.*;
+import com.cohelp.server.model.entity.Selection;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 /**
 * @author jianping5
@@ -126,5 +129,11 @@ public interface UserService extends IService<User> {
     PageResponse<User> listUserByName(Integer teamId,Integer currentPage,Integer pageSize,String key);
 
     User getSafetyUser(User user);
+
+    /**
+     * 获取学生的学年记录
+     * @return
+     */
+    Result<Set<String>> listSemester();
 
 }

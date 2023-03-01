@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -78,7 +79,7 @@ public class HoleVO implements Serializable {
      * 树洞发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date holeCreateTime;
+    private LocalDateTime holeCreateTime;
 
     /**
      * 组织id

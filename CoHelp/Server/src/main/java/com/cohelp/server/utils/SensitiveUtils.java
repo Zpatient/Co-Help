@@ -2,6 +2,8 @@ package com.cohelp.server.utils;
 
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -11,6 +13,8 @@ import java.util.List;
  * @createDate 14/1/2023 下午 1:21
  */
 public class SensitiveUtils {
+
+    private static List<String> sensitiveWordList = Arrays.asList("活动", "鸡", "色");
 
     /**
      * 判断是否包含敏感词
@@ -22,12 +26,15 @@ public class SensitiveUtils {
         for (String text : texts) {
             if (SensitiveWordBs.newInstance().contains(text)) {
                 List<String> all = SensitiveWordBs.newInstance().findAll(text);
-                if (all.size() == 1 && "活动".equals(all.get(0))) {
-                    continue;
+                for (String sensitiveWord : all) {
+                    if (sensitiveWordList.contains(sensitiveWord)) {
+                        continue;
+                    }
+                    return true;
                 }
-                return true;
             }
         }
+
         return false;
     }
 }

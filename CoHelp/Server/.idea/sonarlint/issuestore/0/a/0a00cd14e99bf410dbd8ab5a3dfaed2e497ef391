@@ -1,0 +1,25 @@
+
+w
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(œÎ»8ô–ìòŞ0
+e
+java:S1192,"HDefine a constant instead of duplicating this literal "user_id" 3 times.(å“‡è8°ûü¶â0
+L
+java:S54110"*Use the primitive boolean expression here.(Ùåì¶üÿÿÿÿ8šƒŞ¬ä0
+L
+java:S54111"*Use the primitive boolean expression here.(ÃÏËÁøÿÿÿÿ8›ƒŞ¬ä0
+L
+java:S54116"*Use the primitive boolean expression here.(Íë›•şÿÿÿÿ8œƒŞ¬ä0
+L
+java:S5411T"*Use the primitive boolean expression here.(Ùåì¶üÿÿÿÿ8œƒŞ¬ä0
+L
+java:S5411U"*Use the primitive boolean expression here.(ÃÏËÁøÿÿÿÿ8ƒŞ¬ä0
+L
+java:S5411Z"*Use the primitive boolean expression here.(Íë›•şÿÿÿÿ8ƒŞ¬ä0
+L
+java:S5411t"*Use the primitive boolean expression here.(õù–îøÿÿÿÿ8ƒŞ¬ä0
+o
+java:S3776*"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ëó§ƒ8ºŠŞ¬ä0
+o
+java:S3776G"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(¨çÊÈ8ÁŠŞ¬ä0
+I
+java:S1168œ"+Return an empty collection instead of null.(¸¡»ö8Ä—ìòŞ0

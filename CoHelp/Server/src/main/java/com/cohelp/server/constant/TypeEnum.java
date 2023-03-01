@@ -36,7 +36,15 @@ public enum TypeEnum{
     /**
      * 树洞评论
      */
-    REMARKHOLE;
+    REMARKHOLE,
+    /**
+     * 题目
+     */
+    ASK,
+    /**
+     * 回答
+     */
+    ANSWER;
     /**
      * 判断type是否是话题类型
      * @author: ZGY

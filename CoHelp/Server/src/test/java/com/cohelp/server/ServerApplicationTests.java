@@ -8,10 +8,16 @@ import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.TopicNumber;
 import com.cohelp.server.model.entity.Help;
+import com.cohelp.server.model.entity.Selection;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.AskVO;
+import com.cohelp.server.model.vo.CourseVO;
+import com.cohelp.server.service.CourseService;
 import com.cohelp.server.service.ImageService;
+import com.cohelp.server.service.UserService;
 import com.cohelp.server.service.impl.GeneralServiceImpl;
 import com.cohelp.server.utils.MailUtils;
+import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
 import org.apache.commons.lang3.ObjectUtils;
 import org.junit.jupiter.api.Test;
@@ -22,6 +28,8 @@ import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -39,6 +47,13 @@ class ServerApplicationTests {
 
     @Resource
     private ActivityMapper activityMapper;
+
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private CourseService courseService;
+
     @Resource
     private GeneralServiceImpl generalServiceImpl;
 
@@ -164,9 +179,23 @@ class ServerApplicationTests {
     }
     @Test
     void test(){
-        String s = "{\"code\":\"201\",\"data\":{\"id\":1,\"userAccount\":\"1234567890\",\"userName\":\"超级管理员\",\"userPassword\":null,\"avatar\":1,\"sex\":1,\"phoneNumber\":\"19121755640\",\"userEmail\":\"2712748478@qq.com\",\"userRole\":2,\"state\":0,\"userCreateTime\":\"2023-01-20 21:56:42\",\"age\":18,\"teamId\":1,\"teamName\":\"默认\",\"animalSign\":\"鸡\"},\"message\":\"登录成功\"}";
-        Result<User> user = JSON.parseObject(s, new TypeReference<Result<User>>(){});
-        System.out.println(user);
+        User user = userService.getById(19);
+        UserHolder.setUser(user);
+
+        // 获取学年
+        Result<Set<String>> setResult = userService.listSemester();
+        Set<String> data = setResult.getData();
+        System.out.println(data);
+
+        // 获取课程
+        Result<List<CourseVO>> setResult1 = courseService.listCourse("2019-2020-1");
+        System.out.println(setResult1.getData());
+
+        // 获取提问
+        Result<List<AskVO>> listResult = courseService.listAsk(1, 5, 1, 0);
+        System.out.println(listResult.getData());
+
+
     }
 }
 

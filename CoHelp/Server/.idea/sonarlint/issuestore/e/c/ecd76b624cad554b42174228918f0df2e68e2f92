@@ -1,0 +1,21 @@
+
+E
+java:S3740)"/Provide the parametrized type for this generic.(ÏúçĞ
+K
+java:S1191
+"5Use classes from the Java API instead of Sun classes.(‚º
+b
+java:S1128"@Remove this unused import 'com.cohelp.server.model.entity.Hole'.(ïìĞÒúÿÿÿÿ8˜‹¸Ä0
+`
+java:S1128">Remove this unused import 'com.cohelp.server.model.vo.HelpVO'.(õ°¶Øÿÿÿÿÿ8‚˜‹¸Ä0
+`
+java:S1128">Remove this unused import 'com.cohelp.server.model.vo.HoleVO'.(ÔŸ™ôÿÿÿÿÿ8‚˜‹¸Ä0
+_
+java:S1128"BRemove this unused import 'com.cohelp.server.service.HelpService'.(×­Ğ´8‚˜‹¸Ä0
+k
+java:S1128
+"NRemove this unused import 'com.sun.org.apache.xpath.internal.operations.Mult'.(‚º8‚˜‹¸Ä0
+_
+java:S1128"BRemove this unused import 'javax.servlet.http.HttpServletRequest'.(ø©¹…8ƒ˜‹¸Ä0
+R
+java:S1128"5Remove this unused import 'java.awt.peer.ChoicePeer'.(Ò‡¯ã8ƒ˜‹¸Ä0

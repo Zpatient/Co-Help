@@ -1,0 +1,24 @@
+
+w
+java:S1488:"aImmediately return this expression instead of assigning it to the temporary variable "cosClient".(ùÍ®¬
+i
+java:S2259~"NA "NullPointerException" could be thrown; "originalFilename" is nullable here.(©ÙğÈüÿÿÿÿ
+i
+java:S2095D"NUse try-with-resources or close this "FileOutputStream" in a "finally" clause.(„óÂ¡ÿÿÿÿÿ
+U
+java:S11177":Rename "region" which hides the field declared at line 39.(Øñõ”ıÿÿÿÿ
+X
+java:S1854v"=Remove this useless assignment to local variable "fileBytes".(ˆ©‚÷şÿÿÿÿ
+I
+java:S1481v".Remove this unused "fileBytes" local variable.(ˆ©‚÷şÿÿÿÿ
+A
+java:S1075"&Remove this hard-coded path-delimiter.(ò“¬ùÿÿÿÿ
+_
+java:S1128"BRemove this unused import 'com.cohelp.server.constant.StatusCode'.(¼Ø€ó8ªùıäÄ0
+^
+java:S1128
+"ARemove this unused import 'com.qcloud.cos.model.PutObjectResult'.(ÓÒã 8ªùıäÄ0
+U
+java:S1128"3Remove this unused import 'org.joda.time.DateTime'.(×¥…©úÿÿÿÿ8ªùıäÄ0
+K
+java:S1128".Remove this unused import 'java.util.Objects'.(¼¸õ›8ªùıäÄ0

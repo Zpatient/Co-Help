@@ -1,17 +1,21 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.model.domain.*;
+import com.cohelp.server.model.entity.Selection;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 用户信息控制器
@@ -113,4 +117,10 @@ public class UserController {
         PageResponse<User> users = userService.listUserByName(user.getTeamId(),page,limit,searchObj);
         return ResultUtil.ok(users);
     }
+
+    @GetMapping("/semester")
+    public Result<Set<String>> listSemester() {
+        return userService.listSemester();
+    }
+
 }

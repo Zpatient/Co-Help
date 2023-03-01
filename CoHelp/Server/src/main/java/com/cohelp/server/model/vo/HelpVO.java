@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -88,7 +89,7 @@ public class HelpVO implements Serializable {
      * 互助发布时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date helpCreateTime;
+    private LocalDateTime helpCreateTime;
 
     /**
      * 组织id

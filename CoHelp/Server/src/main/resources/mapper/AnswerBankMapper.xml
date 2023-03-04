@@ -9,10 +9,11 @@
             <result property="content" column="content" jdbcType="VARCHAR"/>
             <result property="recommendedDegree" column="recommended_degree" jdbcType="INTEGER"/>
             <result property="questionId" column="question_id" jdbcType="INTEGER"/>
+            <result property="answerId" column="answer_id" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,content,recommended_degree,
-        question_id
+        question_id,answer_id
     </sql>
 </mapper>

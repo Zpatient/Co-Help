@@ -1,6 +1,5 @@
 package com.cohelp.server.model.domain;
 
-import com.cohelp.server.model.entity.Activity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

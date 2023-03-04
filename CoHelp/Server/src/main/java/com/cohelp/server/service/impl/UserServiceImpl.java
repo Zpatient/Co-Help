@@ -8,14 +8,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
-import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.*;
 import com.cohelp.server.utils.*;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -24,9 +22,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.soap.Detail;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.cohelp.server.constant.NumberConstant.*;
@@ -457,6 +457,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Result<Boolean> userLogout(HttpServletRequest request) {
         request.getSession().removeAttribute("user");
         return ResultUtil.ok(SUCCESS_LOGOUT, true, "成功退出");
+    }
+    @Override
+    public Result<Boolean> deletePublishs(List<PublishDeleteRequest> publishDeleteRequests){
+        if(publishDeleteRequests==null){
+            return ResultUtil.fail("参数不能为空！");
+        }else {
+            List<String> collect = publishDeleteRequests.stream().map(i -> deletePublish(i).getMessage()).collect(Collectors.toList());
+            boolean noneMatch = collect.stream().noneMatch(i -> i.equals("删除成功"));
+            if(noneMatch){
+                return ResultUtil.fail("部分删除失败！");
+            }else {
+                return ResultUtil.ok("删除成功！");
+            }
+        }
     }
 
     @Override

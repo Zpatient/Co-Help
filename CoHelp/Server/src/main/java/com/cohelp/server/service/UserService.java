@@ -2,9 +2,7 @@ package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.Selection;
 import com.cohelp.server.model.entity.User;
-import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -90,6 +88,12 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result<Boolean> deletePublish(PublishDeleteRequest publishDeleteRequest);
+    /**
+     * 删除发布
+     * @param publishDeleteRequests
+     * @return
+     */
+    Result<Boolean> deletePublishs(List<PublishDeleteRequest> publishDeleteRequests);
 
     /**
      * 查询发布

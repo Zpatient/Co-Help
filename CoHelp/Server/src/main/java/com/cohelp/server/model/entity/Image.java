@@ -4,8 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 图片表
@@ -21,7 +22,7 @@ public class Image implements Serializable {
     private Integer id;
 
     /**
-     * 图片（0：用户 1：活动 2：互助 3：树洞）
+     * 图片（0：用户 1：活动 2：互助 3：树洞 7:提问 8:回答）
      */
     private Integer imageType;
 

@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * 
@@ -52,9 +53,14 @@ public class Answer implements Serializable {
     private Integer answerTargetId;
 
     /**
-     * 回答目标类型
+     * 回答目标类型(0:提问 1:回答)
      */
     private Integer answerTargetType;
+
+    /**
+     * 是否已加入答案库（0：未加入 1：已加入）
+     */
+    private Integer isAdded;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -78,7 +84,8 @@ public class Answer implements Serializable {
             && (this.getPublisherId() == null ? other.getPublisherId() == null : this.getPublisherId().equals(other.getPublisherId()))
             && (this.getLikeCount() == null ? other.getLikeCount() == null : this.getLikeCount().equals(other.getLikeCount()))
             && (this.getAnswerTargetId() == null ? other.getAnswerTargetId() == null : this.getAnswerTargetId().equals(other.getAnswerTargetId()))
-            && (this.getAnswerTargetType() == null ? other.getAnswerTargetType() == null : this.getAnswerTargetType().equals(other.getAnswerTargetType()));
+            && (this.getAnswerTargetType() == null ? other.getAnswerTargetType() == null : this.getAnswerTargetType().equals(other.getAnswerTargetType()))
+            && (this.getIsAdded() == null ? other.getIsAdded() == null : this.getIsAdded().equals(other.getIsAdded()));
     }
 
     @Override
@@ -93,6 +100,7 @@ public class Answer implements Serializable {
         result = prime * result + ((getLikeCount() == null) ? 0 : getLikeCount().hashCode());
         result = prime * result + ((getAnswerTargetId() == null) ? 0 : getAnswerTargetId().hashCode());
         result = prime * result + ((getAnswerTargetType() == null) ? 0 : getAnswerTargetType().hashCode());
+        result = prime * result + ((getIsAdded() == null) ? 0 : getIsAdded().hashCode());
         return result;
     }
 
@@ -110,6 +118,7 @@ public class Answer implements Serializable {
         sb.append(", likeCount=").append(likeCount);
         sb.append(", answerTargetId=").append(answerTargetId);
         sb.append(", answerTargetType=").append(answerTargetType);
+        sb.append(", isAdded=").append(isAdded);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

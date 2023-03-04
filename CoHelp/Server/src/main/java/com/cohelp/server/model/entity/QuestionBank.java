@@ -4,8 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 
@@ -35,6 +36,11 @@ public class QuestionBank implements Serializable {
      */
     private Integer level;
 
+    /**
+     * 对应提问的id
+     */
+    private Integer askId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -53,7 +59,8 @@ public class QuestionBank implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getCourseId() == null ? other.getCourseId() == null : this.getCourseId().equals(other.getCourseId()))
-            && (this.getLevel() == null ? other.getLevel() == null : this.getLevel().equals(other.getLevel()));
+            && (this.getLevel() == null ? other.getLevel() == null : this.getLevel().equals(other.getLevel()))
+            && (this.getAskId() == null ? other.getAskId() == null : this.getAskId().equals(other.getAskId()));
     }
 
     @Override
@@ -64,6 +71,7 @@ public class QuestionBank implements Serializable {
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getCourseId() == null) ? 0 : getCourseId().hashCode());
         result = prime * result + ((getLevel() == null) ? 0 : getLevel().hashCode());
+        result = prime * result + ((getAskId() == null) ? 0 : getAskId().hashCode());
         return result;
     }
 
@@ -77,6 +85,7 @@ public class QuestionBank implements Serializable {
         sb.append(", content=").append(content);
         sb.append(", courseId=").append(courseId);
         sb.append(", level=").append(level);
+        sb.append(", askId=").append(askId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

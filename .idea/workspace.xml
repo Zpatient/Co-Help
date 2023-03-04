@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AnalysisUIOptions">
+    <option name="GROUP_BY_SEVERITY" value="true" />
+  </component>
   <component name="AndroidLayouts">
     <shared>
       <config />
@@ -10,10 +13,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_ruibty_nsfw_open_nsfw_spring_boot_starter_1_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_11_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_tensorflow_libtensorflow_1_15_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_tensorflow_libtensorflow_jni_1_15_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_tensorflow_tensorflow_1_15_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/TeachController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/AnswerBankVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/AnswerVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/QuestionBankVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/ScoreVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/UserTeamController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/UserTeamController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/UserTeamService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/UserTeamService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserTeamServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserTeamServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/constant/TypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/constant/TypeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerBankMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerBankMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AskMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AskMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/QuestionBankMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/QuestionBankMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/PublishDeleteRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/PublishDeleteRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Answer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/AnswerBank.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/AnswerBank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Ask.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Ask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Image.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/QuestionBank.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/QuestionBank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/TeachService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/TeachService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CourseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeachServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeachServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerBankMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerBankMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AskMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AskMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/QuestionBankMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/QuestionBankMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +105,9 @@
       </MavenGeneralSettings>
     </option>
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedIndex" value="2" />
+  </component>
   <component name="ProjectId" id="2FLlUkdwsHp0UAPj3k2Qh4xp0DZ" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -88,6 +127,7 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/CoHelp/Server/src/main/resources/application.yml" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper" />
@@ -95,7 +135,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.1507799" />
     <property name="project.structure.side.proportion" value="0.12378167" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -107,6 +147,7 @@
       <recent name="com.cohelp.server" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.cohelp.server.model.vo" />
       <recent name="com.cohelp.server.service.impl" />
       <recent name="com.cohelp.server.service" />
       <recent name="com.cohelp.server.model.domain" />
@@ -362,14 +403,19 @@
       <workItem from="1676004043022" duration="444000" />
       <workItem from="1676203598724" duration="2415000" />
       <workItem from="1676550901733" duration="6070000" />
-      <workItem from="1676715737883" duration="5719000" />
-    </task>
-    <task id="LOCAL-00034" summary="1.0">
-      <created>1667027605427</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1667027605427</updated>
+      <workItem from="1676715737883" duration="6911000" />
+      <workItem from="1676891860035" duration="1554000" />
+      <workItem from="1676978331519" duration="3887000" />
+      <workItem from="1677492239844" duration="7335000" />
+      <workItem from="1677664636176" duration="1390000" />
+      <workItem from="1677666056702" duration="10109000" />
+      <workItem from="1677677802918" duration="4968000" />
+      <workItem from="1677721910507" duration="76000" />
+      <workItem from="1677725888524" duration="673000" />
+      <workItem from="1677815312994" duration="3000" />
+      <workItem from="1677836132863" duration="20897000" />
+      <workItem from="1677892893640" duration="18703000" />
+      <workItem from="1677924432273" duration="16583000" />
     </task>
     <task id="LOCAL-00035" summary="merge test">
       <created>1667027757050</created>
@@ -707,7 +753,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676717237612</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="add getchangeteam interface">
+      <created>1676722571853</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1676722571853</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -740,7 +793,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="changepassword interfaces modified commit" />
     <MESSAGE value="submitinform commit" />
     <MESSAGE value="entities update commit" />
     <MESSAGE value="merge commit" />
@@ -765,7 +817,8 @@
     <MESSAGE value="new PageResponse" />
     <MESSAGE value="update remarkVO" />
     <MESSAGE value="update image filter" />
-    <option name="LAST_COMMIT_MESSAGE" value="update image filter" />
+    <MESSAGE value="add getchangeteam interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="add getchangeteam interface" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">

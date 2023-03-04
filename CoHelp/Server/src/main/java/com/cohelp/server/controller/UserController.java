@@ -1,14 +1,11 @@
 package com.cohelp.server.controller;
 
 import com.cohelp.server.model.domain.*;
-import com.cohelp.server.model.entity.Selection;
 import com.cohelp.server.model.entity.User;
-import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -75,6 +72,9 @@ public class UserController {
         return userService.deletePublish(publishDeleteRequest);
     }
 
+
+
+
     @GetMapping("/searchpub")
     public Result<List<DetailResponse>> searchPublish() {
         return userService.searchPublish();
@@ -122,5 +122,20 @@ public class UserController {
     public Result<Set<String>> listSemester() {
         return userService.listSemester();
     }
+
+
+
+
+
+
+
+
+    //待测试
+    @PostMapping("/deletepubs")
+    public Result<Boolean> deletePublish(@RequestBody List<PublishDeleteRequest> publishDeleteRequests) {
+        return userService.deletePublishs(publishDeleteRequests);
+    }
+
+
 
 }

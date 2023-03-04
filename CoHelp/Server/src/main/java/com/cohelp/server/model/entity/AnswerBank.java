@@ -4,8 +4,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.io.Serializable;
 import lombok.Data;
+
+import java.io.Serializable;
 
 /**
  * 
@@ -35,6 +36,11 @@ public class AnswerBank implements Serializable {
      */
     private Integer questionId;
 
+    /**
+     * 对应回答id
+     */
+    private Integer answerId;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
@@ -53,7 +59,8 @@ public class AnswerBank implements Serializable {
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getRecommendedDegree() == null ? other.getRecommendedDegree() == null : this.getRecommendedDegree().equals(other.getRecommendedDegree()))
-            && (this.getQuestionId() == null ? other.getQuestionId() == null : this.getQuestionId().equals(other.getQuestionId()));
+            && (this.getQuestionId() == null ? other.getQuestionId() == null : this.getQuestionId().equals(other.getQuestionId()))
+            && (this.getAnswerId() == null ? other.getAnswerId() == null : this.getAnswerId().equals(other.getAnswerId()));
     }
 
     @Override
@@ -64,6 +71,7 @@ public class AnswerBank implements Serializable {
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getRecommendedDegree() == null) ? 0 : getRecommendedDegree().hashCode());
         result = prime * result + ((getQuestionId() == null) ? 0 : getQuestionId().hashCode());
+        result = prime * result + ((getAnswerId() == null) ? 0 : getAnswerId().hashCode());
         return result;
     }
 
@@ -77,6 +85,7 @@ public class AnswerBank implements Serializable {
         sb.append(", content=").append(content);
         sb.append(", recommendedDegree=").append(recommendedDegree);
         sb.append(", questionId=").append(questionId);
+        sb.append(", answerId=").append(answerId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -8,6 +8,7 @@ import com.cohelp.server.mapper.TeachMapper;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.*;
 import com.cohelp.server.service.*;
+import com.cohelp.server.utils.PageUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.BeanUtils;
@@ -37,6 +38,9 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
 
     @Resource
     private AnswerService answerService;
+
+    @Resource
+    private HistoryService historyService;
 
     @Resource
     private AskService askService;
@@ -457,6 +461,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                 ask.setQuestion(questionBank.getContent());
                 ask.setPublisherId(userId);
                 ask.setCourseId(questionBank.getCourseId());
+                ask.setIsAdded(1);
                 //查询当前学期
                 QueryWrapper<Teach> teachQueryWrapper = new QueryWrapper<Teach>()
                         .eq("teacher_id", userId)
@@ -517,6 +522,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                 answer.setContent(answerBank.getContent());
                 answer.setAnswerTargetId(targetId);
                 answer.setAnswerTargetType(targetType);
+                answer.setIsAdded(1);
                 if(targetType.equals(0)){
                     answer.setAskId(targetId);
                 }else if(targetType.equals(1)){
@@ -546,6 +552,25 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                         image.setImageSrcId(answer.getId());
                         imageService.save(image);
                     });
+                    //更改历史记录参与字段
+                    QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
+                            .eq("user_id",UserHolder.getUser().getId())
+                            .eq("topic_type", ASK.ordinal())
+                            .eq("topic_id",answer.getAskId());
+                    History oldHistory = historyService.getOne(historyQueryWrapper);
+                    //存在浏览记录则将将参与字段置1
+                    if(oldHistory!=null){
+                        oldHistory.setIsInvolved(1);
+                        historyService.saveOrUpdate(oldHistory);
+                    }
+                    else{//否则插入新浏览记录
+                        History history = new History();
+                        history.setUserId(UserHolder.getUser().getId());
+                        history.setTopicType(ASK.ordinal());
+                        history.setTopicId(answer.getAskId());
+                        history.setIsInvolved(1);
+                        historyService.saveOrUpdate(history);
+                    }
                 }else {
                     flag = true;
                 }
@@ -561,8 +586,8 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
     }
 
     @Override
-    public List<AnswerBankVO> listAnswerFromBank(Integer askId) {
-        if(ObjectUtils.anyNull(askId)){
+    public List<AnswerBankVO> listAnswerFromBank(Integer askId,Integer page,Integer limit) {
+        if(ObjectUtils.anyNull(askId,page,limit)){
             return null;
         }
         //查询与该题目类似的推荐答案
@@ -588,7 +613,8 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                 }
             });
         }
-        return answerBankVOS;
+        List<AnswerBankVO> bankVOList = PageUtil.pageByList(answerBankVOS, page, limit);
+        return bankVOList;
     }
 
     @Override

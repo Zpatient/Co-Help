@@ -9,6 +9,7 @@ import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.*;
+import com.cohelp.server.utils.PageUtil;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
@@ -36,9 +37,14 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     HoleService holeService;
     @Resource
     GeneralService generalService;
+    @Resource
+    private AskService askService;
 
     @Override
-    public Result listCollect(User user) {
+    public Result listCollect(User user,Integer page,Integer limit) {
+        if (ObjectUtils.anyNull(user,page,limit)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空");
+        }
         //返回查询结果
         List<Collect> records = list(new QueryWrapper<Collect>()
                 .eq("user_id",user.getId())
@@ -47,7 +53,9 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         for(Collect collect:records){
             Integer topicId = collect.getTopicId();
             Integer topicType = collect.getTopicType();
-            if(TypeEnum.isTopic(topicType)) continue;
+            if(!TypeEnum.isTopic(topicType)&&!topicType.equals(TypeEnum.ASK.ordinal())){
+                continue;
+            }
             if(TypeEnum.isActivity(topicType)){
                 Activity byId = activityService.getById(topicId);
                 if(!byId.getTeamId().equals(user.getTeamId())){
@@ -58,7 +66,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
                 if(!byId.getTeamId().equals(user.getTeamId())){
                     records.remove(collect);
                 }
-            }else {
+            }else if(TypeEnum.isHole(topicType)){
                 Hole byId = holeService.getById(topicId);
                 if(!byId.getTeamId().equals(user.getTeamId())){
                     records.remove(collect);
@@ -66,7 +74,8 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
             }
         }
         List<IdAndType> idAndTypeList = getIdAndTypeList(records);
-        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
+        List<IdAndType> idAndTypes = PageUtil.pageByList(idAndTypeList, page, limit);
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypes);
         return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据查询成功！");
     }
     @Override
@@ -98,7 +107,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
                 Help help = helpService.getById(topicId);
                 help.setHelpCollect(help.getHelpCollect()-1);
                 helpService.saveOrUpdate(help);
-            }else {
+            }else if(TypeEnum.isHole(topicType)){
                 Hole hole = holeService.getById(topicId);
                 hole.setHoleCollect(hole.getHoleCollect()-1);
                 holeService.saveOrUpdate(hole);
@@ -113,7 +122,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
                 Help help = helpService.getById(topicId);
                 help.setHelpCollect(help.getHelpCollect()+1);
                 helpService.saveOrUpdate(help);
-            }else {
+            }else if(TypeEnum.isHole(topicType)){
                 Hole hole = holeService.getById(topicId);
                 hole.setHoleCollect(hole.getHoleCollect()+1);
                 holeService.saveOrUpdate(hole);
@@ -139,29 +148,70 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
         //判断当前用户权限
         Integer userId = getById(id).getUserId();
         User user = UserHolder.getUser();
-        if(!userId.equals(user.getId()))
+        if(!userId.equals(user.getId())){
             return ResultUtil.fail(INTERCEPTOR_LOGIN, "未登录");
+        }
         //返回数据库操作结果
         Integer topicType = getById(id).getTopicType();
         Integer topicId = getById(id).getTopicId();
         boolean bool = removeById(id);
-        if(TypeEnum.isActivity(topicType)){
-            Activity activity = activityService.getById(topicId);
-            activity.setActivityCollect(activity.getActivityCollect()-1);
-        }else if(TypeEnum.isHelp(topicType)){
-            Help help = helpService.getById(topicId);
-            help.setHelpCollect(help.getHelpCollect()-1);
-        }else {
-            Hole hole = holeService.getById(topicId);
-            hole.setHoleCollect(hole.getHoleCollect()-1);
+        if(bool){
+            if(TypeEnum.isActivity(topicType)){
+                Activity activity = activityService.getById(topicId);
+                if(activity!=null){
+                    activity.setActivityCollect(activity.getActivityCollect()-1);
+                    activityService.saveOrUpdate(activity);
+                }
+            }else if(TypeEnum.isHelp(topicType)){
+                Help help = helpService.getById(topicId);
+                if(help!=null){
+                    help.setHelpCollect(help.getHelpCollect()-1);
+                    helpService.saveOrUpdate(help);
+                }
+            }else if(TypeEnum.isHole(topicType)){
+                Hole hole = holeService.getById(topicId);
+                if(hole!=null){
+                    hole.setHoleCollect(hole.getHoleCollect()-1);
+                    holeService.saveOrUpdate(hole);
+                }
+            }else if(topicType.equals(TypeEnum.ASK.ordinal())){
+                Ask ask = askService.getById(topicId);
+                if(ask!=null){
+                    ask.setCollectCount(ask.getCollectCount());
+                    askService.saveOrUpdate(ask);
+                }
+            }
         }
-        if(bool)
-            return ResultUtil.ok(SUCCESS_REQUEST,"记录删除成功！");
-        else
-            return ResultUtil.fail(ERROR_REQUEST,"记录删除失败！");
+        if(bool){
+            return ResultUtil.ok(SUCCESS_REQUEST,"删除成功！");
+        }
+        else{
+            return ResultUtil.fail(ERROR_REQUEST,"删除失败！");
+        }
+    }
+    @Override
+    public Result deleteCollectRecord(List<Integer> ids) {
+        //检验参数合法性
+        if(ObjectUtils.anyNull(ids)){
+            return ResultUtil.fail(ERROR_PARAMS,"参数为空！");
+        }
+        Boolean flag = false;
+        for (Integer id:ids){
+            Result result = deleteCollectRecord(id);
+            if(!result.getMessage().equals("删除成功！")){
+                flag = true;
+            }
+        }
+        if(flag){
+            return ResultUtil.ok(ERROR_REQUEST,"删除异常！");
+        }else {
+            return ResultUtil.fail(SUCCESS_REQUEST,"删除成功！");
+        }
     }
     private List<IdAndType> getIdAndTypeList(List<Collect> collectList){
-        if(collectList==null) return null;
+        if(collectList==null){
+            return null;
+        }
         List<IdAndType> idAndTypes = new ArrayList<IdAndType>();
         for(Collect collect : collectList){
             Integer topicType = collect.getTopicType();

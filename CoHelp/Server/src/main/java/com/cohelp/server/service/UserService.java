@@ -99,7 +99,7 @@ public interface UserService extends IService<User> {
      * 查询发布
      * @return
      */
-    Result<List<DetailResponse>> searchPublish();
+    Result<List<DetailResponse>> searchPublish(Integer page,Integer limit);
 
     /**
      * 修改头像

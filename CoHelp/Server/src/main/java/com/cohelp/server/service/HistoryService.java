@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.History;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.DetailResponse;
+
+import java.util.List;
 
 /**
 * @author jianping5
@@ -18,7 +21,7 @@ public interface HistoryService extends IService<History> {
      * @param historyRequest 浏览记录查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result listHistory(User user);
+    Result<List<DetailResponse>> listHistory(User user,Integer page,Integer limit);
     /**
      * 根据History对象插入浏览记录
      * @author: ZGY
@@ -36,10 +39,18 @@ public interface HistoryService extends IService<History> {
      */
     Result deleteHistoryRecord(Integer id);
     /**
+     * 根据id删除指定浏览记录
+     * @author: ZGY
+     * @date: 2022-10-24 22:52
+     * @param ids 待删除的记录id
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result deleteHistoryRecord(List<Integer> ids);
+    /**
      * 获取用户参与评论的话题
      * @param currentUserId 当前用户Id
      * @return com.cohelp.server.model.domain.Result
      */
-    Result listInvolvedRecord(User user);
+    Result<List<DetailResponse>> listInvolvedRecord(User user,Integer page,Integer limit);
 
 }

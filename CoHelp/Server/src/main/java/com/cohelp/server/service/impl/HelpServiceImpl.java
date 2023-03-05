@@ -10,10 +10,7 @@ import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.model.vo.HelpVO;
 import com.cohelp.server.service.*;
-import com.cohelp.server.utils.FileUtils;
-import com.cohelp.server.utils.ResultUtil;
-import com.cohelp.server.utils.SensitiveUtils;
-import com.cohelp.server.utils.UserHolder;
+import com.cohelp.server.utils.*;
 import com.google.gson.Gson;
 import com.ruibty.nsfw.NsfwService;
 import lombok.extern.slf4j.Slf4j;
@@ -217,13 +214,13 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
     }
 
     @Override
-    public Result<List<DetailResponse>> listByCondition(Integer conditionType) {
+    public Result<List<DetailResponse>> listByCondition(Integer conditionType,Integer page,Integer limit) {
 
         // 获取当前登录用户的组织id
         User user = UserHolder.getUser();
         Integer teamId = user.getTeamId();
 
-        if (conditionType == null) {
+        if (ObjectUtils.anyNull(conditionType,page,limit)) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建互助视图体数组
@@ -231,7 +228,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Help> helpList = helpMapper.listByHot(teamId);
+            List<Help> helpList0 = helpMapper.listByHot(teamId);
+            List<Help> helpList = PageUtil.pageByList(helpList0, page, limit);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
@@ -247,7 +245,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
             helpQueryWrapper.orderByDesc("help_create_time");
             helpQueryWrapper.eq("team_id", teamId);
             helpQueryWrapper.eq("help_state", 0);
-            List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
+            List<Help> helpList0 = helpMapper.selectList(helpQueryWrapper);
+            List<Help> helpList = PageUtil.pageByList(helpList0, page, limit);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
             }
@@ -262,7 +261,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
             helpQueryWrapper.eq("help_paid", 1);
             helpQueryWrapper.eq("team_id", teamId);
             helpQueryWrapper.eq("help_state", 0);
-            List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
+            List<Help> helpList0 = helpMapper.selectList(helpQueryWrapper);
+            List<Help> helpList = PageUtil.pageByList(helpList0, page, limit);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无有偿互助");
             }
@@ -277,7 +277,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
             helpQueryWrapper.eq("help_paid", 0);
             helpQueryWrapper.eq("team_id", teamId);
             helpQueryWrapper.eq("help_state", 0);
-            List<Help> helpList = helpMapper.selectList(helpQueryWrapper);
+            List<Help> helpList0 = helpMapper.selectList(helpQueryWrapper);
+            List<Help> helpList = PageUtil.pageByList(helpList0, page, limit);
             if (helpList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无无偿互助");
             }
@@ -289,14 +290,14 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
     }
 
     @Override
-    public Result<List<DetailResponse>> listByTag(String tag) {
+    public Result<List<DetailResponse>> listByTag(String tag,Integer page,Integer limit) {
 
         // 获取当前登录用户的组织id
         User user = UserHolder.getUser();
         Integer teamId = user.getTeamId();
 
 
-        if (tag == null) {
+        if (ObjectUtils.anyNull(tag,page,limit)) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建互助视图体数组
@@ -304,7 +305,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
 
         // 查询当前团体内的所有活动(按热度和时间综合排序）
         List<Help> helpList = helpMapper.listByHotAndTime(teamId);
-
+        ArrayList<Help> helps = new ArrayList<>();
         if (helpList == null) {
             return ResultUtil.fail(ERROR_PARAMS, "暂无互助");
         }
@@ -312,7 +313,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         // 若查询全部
         if (tag.equals(HelpTypeConstant.HELP_ALL)) {
             for (Help help : helpList) {
-                detailResponseList.add(getDetailResponse(help));
+                helps.add(help);
+                //detailResponseList.add(getDetailResponse(help));
             }
             return ResultUtil.ok(detailResponseList);
         }
@@ -322,7 +324,8 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
             for (Help help : helpList) {
                 String helpTag = help.getHelpLabel();
                 if (helpTag != null && isTypeOther(helpTag)) {
-                    detailResponseList.add(getDetailResponse(help));
+                    helps.add(help);
+                    //detailResponseList.add(getDetailResponse(help));
                 }
             }
             return ResultUtil.ok(detailResponseList);
@@ -332,9 +335,12 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
         helpList.forEach(help -> {
             String helpTag = help.getHelpLabel();
             if (helpTag != null && helpTag.contains(tag)) {
-                detailResponseList.add(getDetailResponse(help));
+                helps.add(help);
+                //detailResponseList.add(getDetailResponse(help));
             }
         });
+        List<Help> list = PageUtil.pageByList(helps, page, limit);
+        list.stream().forEach(k->detailResponseList.add(getDetailResponse(k)));
         return ResultUtil.ok(detailResponseList);
     }
 

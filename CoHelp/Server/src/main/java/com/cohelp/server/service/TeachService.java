@@ -97,7 +97,7 @@ public interface TeachService extends IService<Teach> {
      * @param askId 提问id
      * @return java.lang.String
      */
-    List<AnswerBankVO> listAnswerFromBank(Integer askId);
+    List<AnswerBankVO> listAnswerFromBank(Integer askId,Integer page,Integer limit);
     /**
      * 列出题库指定题目的答案
      * @param questionBankId 题库题目id

@@ -37,13 +37,13 @@ public interface HelpService extends IService<Help> {
      * @param conditionType
      * @return
      */
-    Result<List<DetailResponse>> listByCondition(Integer conditionType);
+    Result<List<DetailResponse>> listByCondition(Integer conditionType,Integer page,Integer limit);
 
     /**
      * 根据标签展示互助
      * @param tag
      */
-    Result<List<DetailResponse>> listByTag(String tag);
+    Result<List<DetailResponse>> listByTag(String tag,Integer page,Integer limit);
 
     DetailResponse getDetailResponse(Help help);
 }

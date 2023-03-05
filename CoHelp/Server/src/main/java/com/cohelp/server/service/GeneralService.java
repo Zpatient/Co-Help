@@ -29,7 +29,7 @@ public interface GeneralService{
      * @param searchRequest 查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result search(SearchRequest searchRequest);
+    Result search(SearchRequest searchRequest,Integer page,Integer limit);
     /**
      * 插入评论
      * @author: ZGY

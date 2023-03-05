@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Collect;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.DetailResponse;
+
+import java.util.List;
 
 /**
 * @author zgy
@@ -19,7 +22,7 @@ public interface CollectService extends IService<Collect> {
      * @param collectRequest 收藏记录查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result listCollect(User user);
+    Result<List<DetailResponse>> listCollect(User user, Integer page, Integer limit);
     /**
      * 根据Collect对象插入/删除收藏记录
      * @author: ZGY
@@ -36,4 +39,10 @@ public interface CollectService extends IService<Collect> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result deleteCollectRecord(Integer id);
+    /**
+     * 根据id删除指定收藏记录
+     * @param ids 待删除的记录ids
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result deleteCollectRecord(List<Integer> ids);
 }

@@ -3,13 +3,13 @@ package com.cohelp.server.controller;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Collect;
 import com.cohelp.server.model.entity.User;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.CollectService;
 import com.cohelp.server.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author zgy
@@ -20,17 +20,28 @@ import org.springframework.web.bind.annotation.RestController;
 public class CollectController {
     @Autowired
     CollectService collectService;
-    @RequestMapping("/getcollectlist")
-    public Result listCollect(){
+
+    @RequestMapping("/getcollectlist/{page}/{limit}")
+    public Result<List<DetailResponse>> listCollect(@PathVariable Integer page, @PathVariable Integer limit){
         User user = UserHolder.getUser();
-        return collectService.listCollect(user);
+        return collectService.listCollect(user,page,limit);
     }
     @RequestMapping("/insertcollectrecord")
     public Result insertCollectRecord(@RequestBody Collect collect){
         return collectService.collectTopic(collect);
     }
+
+
+
     @RequestMapping("/deletecollectrecord")
     public Result deleteCollectRecord(@RequestParam Integer id){
         return collectService.deleteCollectRecord(id);
     }
+
+    @RequestMapping("/deletecollectrecords")
+    public Result deleteCollectRecord(@RequestParam List<Integer> ids){
+        return collectService.deleteCollectRecord(ids);
+    }
+
+
 }

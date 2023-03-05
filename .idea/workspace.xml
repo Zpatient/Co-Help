@@ -13,43 +13,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ed0114c-f04d-44b0-987e-76d972b44c0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_ruibty_nsfw_open_nsfw_spring_boot_starter_1_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_11_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_tensorflow_libtensorflow_1_15_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_tensorflow_libtensorflow_jni_1_15_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_tensorflow_tensorflow_1_15_0.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/TeachController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/AnswerBankVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/AnswerVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/QuestionBankVO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/ScoreVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/mybatisx/templates.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/utils/PageUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/constant/TypeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/constant/TypeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/ActivityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/ActivityController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/CollectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/CollectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/GeneralController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/GeneralController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HelpController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HelpController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HistoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HistoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/HoleController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/TeachController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/TeachController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerBankMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerBankMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AnswerMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AskMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/AskMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/QuestionBankMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper/QuestionBankMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/PublishDeleteRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/PublishDeleteRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Answer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/AnswerBank.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/AnswerBank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Ask.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Ask.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/Image.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/QuestionBank.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/QuestionBank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/ActivityListRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/domain/ActivityListRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/AskVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/AskVO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/DetailResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/model/vo/DetailResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/ActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/ActivityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/AskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/AskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/CollectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/CollectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/GeneralService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/GeneralService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HelpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HelpService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HistoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HistoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/HoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/TeachService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/TeachService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/ActivityServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/ActivityServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/AskServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/AskServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CollectServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CollectServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CourseServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/CourseServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/GeneralServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HelpServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HelpServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HistoryServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HistoryServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HoleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/HoleServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeachServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/TeachServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerBankMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerBankMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AnswerMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AskMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/AskMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/QuestionBankMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CoHelp/Server/src/main/resources/mapper/QuestionBankMapper.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +126,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/CoHelp/Server/src/main/resources/application.yml" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/mapper" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/CoHelp/Server/src/main/java/com/cohelp/server/service/impl" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.1507799" />
@@ -139,6 +135,8 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\maven_workspace\Co-Help\CoHelp\Server\src\main\java\com\cohelp\server\service\impl" />
+      <recent name="D:\maven_workspace\Co-Help\CoHelp\Server\src\main\java\com\cohelp\server\model\vo" />
       <recent name="D:\maven_workspace\Co-Help\CoHelp\Server\src\main\java\com\cohelp\server\mapper" />
       <recent name="D:\maven_workspace\Co-Help\CoHelp\Server\src\main\resources\mapper" />
       <recent name="D:\java_workspace\Co-Help\CoHelp\Server\src\main\resources" />
@@ -415,14 +413,8 @@
       <workItem from="1677815312994" duration="3000" />
       <workItem from="1677836132863" duration="20897000" />
       <workItem from="1677892893640" duration="18703000" />
-      <workItem from="1677924432273" duration="16583000" />
-    </task>
-    <task id="LOCAL-00035" summary="merge test">
-      <created>1667027757050</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1667027757050</updated>
+      <workItem from="1677924432273" duration="16776000" />
+      <workItem from="1677982406604" duration="35487000" />
     </task>
     <task id="LOCAL-00036" summary="merge test">
       <created>1667027832544</created>
@@ -760,7 +752,14 @@
       <option name="project" value="LOCAL" />
       <updated>1676722571853</updated>
     </task>
-    <option name="localTasksCounter" value="84" />
+    <task id="LOCAL-00084" summary="add getchangeteam interface">
+      <created>1677944979519</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1677944979519</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

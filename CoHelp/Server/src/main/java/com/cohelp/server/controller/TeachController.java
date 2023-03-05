@@ -35,31 +35,7 @@ public class TeachController {
         return ResultUtil.ok(answerVOS);
     }
 
-    @RequestMapping("/removequestion/{questionId}")
-    public Result<List<AnswerVO>> removeQuestionFromBank(@PathVariable Integer questionId){
-        //获取当前登录的用户并判断是否是老师
-        User user = UserHolder.getUser();
-        Integer type = user.getType();
-        if(!type.equals(1)){
-            return ResultUtil.fail("权限不足，删除失败！");
-        }
-        String removeQuestionFromBank = teachService.removeQuestionFromBank(questionId);
-        return ResultUtil.ok(removeQuestionFromBank);
-    }
 
-    @RequestMapping("/removeanswer/{answerId}")
-    public Result<Boolean> removeAnswerFromBank(@PathVariable Integer answerId){
-        //获取当前登录的用户并判断是否是老师
-        User user = UserHolder.getUser();
-        Integer type = user.getType();
-        if(!type.equals(1)){
-            return ResultUtil.fail("权限不足，删除失败！");
-        }
-        //其余状况
-        String removeAnswerFromBank = teachService.removeAnswerFromBank(answerId);
-        return ResultUtil.ok(removeAnswerFromBank);
-
-    }
 
     @RequestMapping("/listquestion/{page}/{limit}/{courseId}")
      public Result<List<QuestionBankVO>> listQuestionFromBank(@PathVariable Integer page, @PathVariable Integer limit, @PathVariable Integer courseId){
@@ -138,8 +114,8 @@ public class TeachController {
         return ResultUtil.ok(publishAnswerFromBank);
     }
 
-    @RequestMapping("/listanswerfrombank/{askId}")
-    public Result<List<AnswerBankVO>> listAnswerFromBank(@PathVariable Integer askId){
+    @RequestMapping("/listanswerfrombank/{askId}/{page}/{limit}")
+    public Result<List<AnswerBankVO>> listAnswerFromBank(@PathVariable Integer askId,@PathVariable Integer page,@PathVariable Integer limit){
         //获取当前登录的用户并判断是否是老师
         User user = UserHolder.getUser();
         Integer type = user.getType();
@@ -147,7 +123,7 @@ public class TeachController {
             return ResultUtil.fail("权限不足，无权查询！");
         }
         //其余状况
-        List<AnswerBankVO> answerBankVOS = teachService.listAnswerFromBank(askId);
+        List<AnswerBankVO> answerBankVOS = teachService.listAnswerFromBank(askId,page,limit);
         return ResultUtil.ok(answerBankVOS);
     }
     @RequestMapping("/listanswerbankbyquestionbankid/{questionBankId}")
@@ -162,7 +138,6 @@ public class TeachController {
         List<AnswerBankVO> answerBankVOS = teachService.listAnswerBankByQuestionBankId(questionBankId);
         return ResultUtil.ok(answerBankVOS);
     }
-
     @RequestMapping("/listscore/{courseId}")
     public Result<List<ScoreVO>> listScore(@PathVariable Integer courseId){
         //获取当前登录的用户并判断是否是老师
@@ -174,6 +149,33 @@ public class TeachController {
         //其余状况
         List<ScoreVO> scoreVOS = teachService.listScore(courseId);
         return ResultUtil.ok(scoreVOS);
+    }
+
+
+    @RequestMapping("/removequestion/{questionId}")
+    public Result<List<AnswerVO>> removeQuestionFromBank(@PathVariable Integer questionId){
+        //获取当前登录的用户并判断是否是老师
+        User user = UserHolder.getUser();
+        Integer type = user.getType();
+        if(!type.equals(1)){
+            return ResultUtil.fail("权限不足，删除失败！");
+        }
+        String removeQuestionFromBank = teachService.removeQuestionFromBank(questionId);
+        return ResultUtil.ok(removeQuestionFromBank);
+    }
+
+    @RequestMapping("/removeanswer/{answerId}")
+    public Result<Boolean> removeAnswerFromBank(@PathVariable Integer answerId){
+        //获取当前登录的用户并判断是否是老师
+        User user = UserHolder.getUser();
+        Integer type = user.getType();
+        if(!type.equals(1)){
+            return ResultUtil.fail("权限不足，删除失败！");
+        }
+        //其余状况
+        String removeAnswerFromBank = teachService.removeAnswerFromBank(answerId);
+        return ResultUtil.ok(removeAnswerFromBank);
+
     }
 
 }

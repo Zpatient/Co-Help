@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
@@ -74,6 +75,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private CourseService courseService;
+
+    @Resource
+    private AskService askService;
 
 
 
@@ -550,11 +554,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
             return ResultUtil.ok(true, "删除成功");
         }
+        // 提问
+        if (typeNumber == TypeEnum.ASK.ordinal()) {
+            Result<Boolean> booleanResult = courseService.deleteAsk(id);
+            if (!booleanResult.getData()) {
+                return ResultUtil.fail(booleanResult.getMessage());
+            }
+            return ResultUtil.ok(true, "删除成功");
+        }
         return ResultUtil.fail("未存在该类型发布");
     }
 
     @Override
-    public Result<List<DetailResponse>> searchPublish() {
+    public Result<List<DetailResponse>> searchPublish(Integer page,Integer limit) {
         // 查看当前登录用户id与账户所查的用户id是否一致
         User user = UserHolder.getUser();
         int userId = user.getId();
@@ -581,15 +593,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 detailResponseList.add(helpService.getDetailResponse(help))
         );
 
-        // 查询树洞
-        QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
-        holeQueryWrapper.eq("hole_owner_id", userId);
-        ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
-        holeList.forEach(hole ->
-                detailResponseList.add(holeService.getDetailResponse(hole))
-        );
+//        // 查询树洞
+//        QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
+//        holeQueryWrapper.eq("hole_owner_id", userId);
+//        ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
+//        holeList.forEach(hole ->
+//                detailResponseList.add(holeService.getDetailResponse(hole))
+//        );
 
-        return ResultUtil.ok(detailResponseList);
+        //查询提问
+        QueryWrapper<Ask> askQueryWrapper = new QueryWrapper<>();
+        helpQueryWrapper.eq("publisher_id", userId);
+        List<Ask> list = askService.list(askQueryWrapper);
+        list.forEach(ask ->
+                detailResponseList.add(askService.getDetailResponse(ask))
+        );
+        List<DetailResponse> detailResponses = PageUtil.pageByList(detailResponseList, page, limit);
+        return ResultUtil.ok(detailResponses);
     }
 
     @Override

@@ -52,6 +52,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     @Resource
     private FileUtils fileUtils;
 
+    @Resource
+    private HistoryService historyService;
+
     @Autowired
     private NsfwService nsfwService;
 
@@ -286,8 +289,24 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                 }
             }
         }
-
-
+        QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
+                .eq("user_id",UserHolder.getUser().getId())
+                .eq("topic_type", ASK.ordinal())
+                .eq("topic_id",answer.getAskId());
+        History oldHistory = historyService.getOne(historyQueryWrapper);
+        //存在浏览记录则将将参与字段置1
+        if(oldHistory!=null){
+            oldHistory.setIsInvolved(1);
+            historyService.saveOrUpdate(oldHistory);
+        }
+        else{//否则插入新浏览记录
+            History history = new History();
+            history.setUserId(UserHolder.getUser().getId());
+            history.setTopicType(ASK.ordinal());
+            history.setTopicId(answer.getAskId());
+            history.setIsInvolved(1);
+            historyService.saveOrUpdate(history);
+        }
         return ResultUtil.ok(true);
     }
 
@@ -519,7 +538,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             return ResultUtil.fail(ERROR_REQUEST,"记录更新失败");
         }
     }
-
 }
 
 

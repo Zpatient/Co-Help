@@ -1,19 +1,15 @@
 package com.cohelp.server.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cohelp.server.model.domain.PublishDeleteRequest;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.vo.AskVO;
 import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.service.CourseService;
 import com.cohelp.server.utils.ResultUtil;
-import net.sf.jsqlparser.expression.operators.relational.MinorThanEquals;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Set;
 
 import static com.cohelp.server.constant.StatusCode.ERROR_PARAMS;
 
@@ -58,13 +54,14 @@ public class CourseController {
         return courseService.likeQA(type, id);
     }
 
-    @PostMapping("/deleteAsk/{id}")
-    public Result<Boolean> deleteAsk(@PathVariable Integer askId) {
-        return courseService.deleteAsk(askId);
-    }
-
     @PostMapping("/collect/{id}")
     public Result<Boolean> collectAsk(@PathVariable Integer askId) {
         return courseService.collectAsk(askId);
+    }
+
+
+    @PostMapping("/deleteAsk/{id}")
+    public Result<Boolean> deleteAsk(@PathVariable Integer askId) {
+        return courseService.deleteAsk(askId);
     }
 }

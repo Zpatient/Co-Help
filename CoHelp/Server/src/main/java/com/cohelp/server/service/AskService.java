@@ -1,7 +1,8 @@
 package com.cohelp.server.service;
 
-import com.cohelp.server.model.entity.Ask;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.entity.Ask;
+import com.cohelp.server.model.vo.DetailResponse;
 
 /**
 * @author jianping5
@@ -9,5 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 * @createDate 2023-03-01 14:31:07
 */
 public interface AskService extends IService<Ask> {
+
+    DetailResponse getDetailResponse(Ask ask);
 
 }

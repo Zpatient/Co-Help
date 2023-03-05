@@ -10,6 +10,7 @@ import com.cohelp.server.model.vo.DetailRemark;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.model.vo.RemarkVO;
 import com.cohelp.server.service.*;
+import com.cohelp.server.utils.PageUtil;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
@@ -36,37 +37,39 @@ import static com.cohelp.server.constant.StatusCode.*;
 public class GeneralServiceImpl implements GeneralService {
 
     @Resource
-    ActivityService activityService;
+    private ActivityService activityService;
     @Resource
-    ActivityMapper activityMapper;
+    private AskService askService;
     @Resource
-    RemarkActivityMapper remarkActivityMapper;
+    private ActivityMapper activityMapper;
     @Resource
-    HelpService helpService;
+    private RemarkActivityMapper remarkActivityMapper;
     @Resource
-    HelpMapper helpMapper;
+    private HelpService helpService;
     @Resource
-    RemarkHelpMapper remarkHelpMapper;
+    private HelpMapper helpMapper;
     @Resource
-    HoleService holeService;
+    private RemarkHelpMapper remarkHelpMapper;
     @Resource
-    HoleMapper holeMapper;
+    private HoleService holeService;
     @Resource
-    RemarkHoleMapper remarkHoleMapper;
+    private HoleMapper holeMapper;
     @Resource
-    ImageService imageService;
+    private RemarkHoleMapper remarkHoleMapper;
     @Resource
-    RemarkActivityService remarkActivityService;
+    private ImageService imageService;
     @Resource
-    RemarkHelpService remarkHelpService;
+    private RemarkActivityService remarkActivityService;
     @Resource
-    RemarkHoleService remarkHoleService;
+    private RemarkHelpService remarkHelpService;
     @Resource
-    HistoryService historyService;
+    private RemarkHoleService remarkHoleService;
     @Resource
-    UserService userService;
+    private HistoryService historyService;
     @Resource
-    RemarkLikeService remarkLikeService;
+    private UserService userService;
+    @Resource
+    private RemarkLikeService remarkLikeService;
     @Override
     public Result getDetail(IdAndType idAndType) {
         //判断参数合法性
@@ -75,7 +78,7 @@ public class GeneralServiceImpl implements GeneralService {
         }
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
-        if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
+        if((!TypeEnum.isTopic(type)&&!type.equals(TypeEnum.ASK.ordinal()))|| ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         DetailResponse detailResponse = null;
@@ -139,7 +142,7 @@ public class GeneralServiceImpl implements GeneralService {
                 return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败！");
             }
         }
-        else {
+        else if(TypeEnum.isHole(type)){
             Hole hole = holeService.getById(id);
             if(!ObjectUtils.anyNull(hole)) {
                 //增加阅读量
@@ -166,11 +169,36 @@ public class GeneralServiceImpl implements GeneralService {
             else{
                 return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败");
             }
+        }else if(type.equals(TypeEnum.ASK.ordinal())){
+            Ask ask = askService.getById(id);
+            if(!ObjectUtils.anyNull(ask)) {
+                //获取详情
+                detailResponse = askService.getDetailResponse(ask);
+                //插入历史记录
+                QueryWrapper<History> queryWrapper = new QueryWrapper<History>()
+                        .eq("user_id", UserHolder.getUser().getId())
+                        .eq("topic_type", type)
+                        .eq("topic_id",id);
+                History oldHistory = historyService.getOne(queryWrapper);
+                if(oldHistory==null){
+                    History history = new History();
+                    history.setUserId(UserHolder.getUser().getId());
+                    history.setTopicType(type);
+                    history.setTopicId(id);
+                    historyService.saveOrUpdate(history);
+                }
+                return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponse, "数据获取成功");
+            }
+            else{
+                return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败");
+            }
+        }else {
+            return ResultUtil.returnResult(ERROR_GET_DATA,null,"数据获取失败");
         }
     }
 
     @Override
-    public Result search(SearchRequest searchRequest) {
+    public Result search(SearchRequest searchRequest,Integer page,Integer limit) {
         //判断参数合法性
         if(ObjectUtils.anyNull(searchRequest)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");
@@ -213,7 +241,8 @@ public class GeneralServiceImpl implements GeneralService {
                 }
             }
         }
-        List<DetailResponse> detailResponses = listDetailResponse(idAndTypeList);
+        List<IdAndType> idAndTypes = PageUtil.pageByList(idAndTypeList, page, limit);
+        List<DetailResponse> detailResponses = listDetailResponse(idAndTypes);
         return ResultUtil.ok(SUCCESS_GET_DATA, detailResponses,"数据查询成功！");
     }
 
@@ -292,8 +321,9 @@ public class GeneralServiceImpl implements GeneralService {
             //插入评论
             boolean result = remarkHelpService.save(remarkHelp);
 
-            if(!result)
+            if(!result) {
                 return ResultUtil.fail("评论失败！");
+            }
             else {
                 QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
                         .eq("user_id", UserHolder.getUser().getId())
@@ -334,8 +364,9 @@ public class GeneralServiceImpl implements GeneralService {
             //插入评论
             boolean result = remarkHoleService.save(remarkHole);
 
-            if (!result)
+            if (!result){
                 return ResultUtil.fail("评论失败！");
+            }
             else {
                 QueryWrapper<History> historyQueryWrapper = new QueryWrapper<History>()
                         .eq("user_id", UserHolder.getUser().getId())
@@ -453,6 +484,8 @@ public class GeneralServiceImpl implements GeneralService {
             return ResultUtil.returnResult(SUCCESS_GET_DATA,remarkVOS,"评论查询成功");
         }
     }
+
+
     public RemarkVO traverseRemark(Integer type,Integer userId,Object remark){
         if(ObjectUtils.anyNull(type,remark)||!TypeEnum.isRemark(type)){
             return null;
@@ -1010,7 +1043,9 @@ public class GeneralServiceImpl implements GeneralService {
 
     @Override
     public DetailRemark  getDetailRemark(IdAndType idAndType) {
-        if(idAndType==null) return null;
+        if(idAndType==null){
+            return null;
+        }
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
         if(!TypeEnum.isRemark(type)|| ObjectUtils.anyNull(id)){
@@ -1084,7 +1119,7 @@ public class GeneralServiceImpl implements GeneralService {
         }
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
-        if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
+        if((!TypeEnum.isTopic(type)&&!type.equals(TypeEnum.ASK.ordinal()))|| ObjectUtils.anyNull(id)){
             return null;
         }
         //判断请求哪种话题的详情并执行相应操作
@@ -1095,28 +1130,37 @@ public class GeneralServiceImpl implements GeneralService {
             }else{
                 return null;
             }
-        }
-        else if(TypeEnum.isHelp(type)){
+        }else if(TypeEnum.isHelp(type)){
             Help help = helpService.getById(id);
             if(!ObjectUtils.anyNull(help)){
                 return helpService.getDetailResponse(help);
             }else {
                 return null;
             }
-        }
-        else {
+        }else if(TypeEnum.isHole(type)){
             Hole hole = holeService.getById(id);
             if(!ObjectUtils.anyNull(hole)) {
                 return holeService.getDetailResponse(hole);
             }else {
                 return null;
             }
+        }else if(type.equals(TypeEnum.ASK.ordinal())){
+            Ask ask = askService.getById(id);
+            if(ask!=null){
+                return askService.getDetailResponse(ask);
+            }else {
+                return null;
+            }
+        }else {
+            return null;
         }
     }
 
     @Override
     public List<DetailResponse>  listDetailResponse(List<IdAndType> idAndTypes) {
-        if(idAndTypes==null) return null;
+        if(idAndTypes==null){
+            return null;
+        }
         List<DetailResponse> detailResponses = new ArrayList<>();
         for(IdAndType idAndType : idAndTypes) {
             DetailResponse detailResponse = getDetailResponse(idAndType);

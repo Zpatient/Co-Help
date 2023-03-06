@@ -1,7 +1,6 @@
 package com.cohelp.server.controller;
 
 import com.alibaba.excel.EasyExcel;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cohelp.server.listener.ExcelCourseListener;
 import com.cohelp.server.listener.ExcelSelectionListener;
 import com.cohelp.server.listener.ExcelTeachListener;

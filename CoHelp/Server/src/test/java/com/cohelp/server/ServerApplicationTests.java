@@ -7,11 +7,14 @@ import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.TopicNumber;
+import com.cohelp.server.model.entity.Course;
 import com.cohelp.server.model.entity.Help;
 import com.cohelp.server.model.entity.Selection;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.AskVO;
 import com.cohelp.server.model.vo.CourseVO;
+import com.cohelp.server.model.vo.DetailResponse;
+import com.cohelp.server.service.CollectService;
 import com.cohelp.server.service.CourseService;
 import com.cohelp.server.service.ImageService;
 import com.cohelp.server.service.UserService;
@@ -53,6 +56,9 @@ class ServerApplicationTests {
 
     @Resource
     private CourseService courseService;
+
+    @Resource
+    private CollectService collectService;
 
     @Resource
     private GeneralServiceImpl generalServiceImpl;
@@ -192,11 +198,21 @@ class ServerApplicationTests {
         System.out.println(setResult1.getData());
 
         // 获取提问
-        Result<List<AskVO>> listResult = courseService.listAsk(1, 5, 1, 0);
+        Result<List<AskVO>> listResult = courseService.listAsk(1, 5, 1, "2019-2020-1", 1);
         System.out.println(listResult.getData());
 
+        // 获取发布
+        Result<List<DetailResponse>> listResult1 = userService.searchPublish();
+        System.out.println(listResult1.getData());
+
+        // 获取收藏
+        Result result = collectService.listCollect(user);
+        System.out.println("收藏: " + result.getData());
 
     }
+
+
+
 }
 
 

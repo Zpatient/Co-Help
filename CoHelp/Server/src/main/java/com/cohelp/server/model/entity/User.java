@@ -1,5 +1,6 @@
 package com.cohelp.server.model.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -29,16 +30,19 @@ public class User implements Serializable {
     /**
      * 账号
      */
+    @ExcelProperty(value = "账号", index = 0)
     private String userAccount;
 
     /**
      * 昵称
      */
+    @ExcelProperty(value = "姓名", index = 1)
     private String userName;
 
     /**
      * 密码
      */
+    @ExcelProperty(value = "密码", index = 2)
     private String userPassword;
 
     /**
@@ -49,16 +53,19 @@ public class User implements Serializable {
     /**
      * 性别（0：男 1：女）
      */
+    @ExcelProperty(value = "性别", index = 3)
     private Integer sex;
 
     /**
      * 联系方式
      */
+    @ExcelProperty(value = "手机号", index = 4)
     private String phoneNumber;
 
     /**
      * 邮箱
      */
+    @ExcelProperty(value = "邮箱", index = 5)
     private String userEmail;
 
     /**
@@ -81,11 +88,13 @@ public class User implements Serializable {
     /**
      * 年龄
      */
+    @ExcelProperty(value = "年龄", index = 6)
     private Integer age;
 
     /**
      * 组织id
      */
+    @ExcelProperty(value = "组织ID", index = 7)
     private Integer teamId;
 
     /**
@@ -97,6 +106,7 @@ public class User implements Serializable {
     /**
      * 类型
      */
+    @ExcelProperty(value = "类型", index = 8)
     private Integer type;
 
     public User(Integer id, String userAccount, String userName, String userPassword, Integer avatar, Integer sex, String phoneNumber, String userEmail, Integer userRole, Integer state, Date userCreateTime, Integer age, Integer teamId, String teamName, Integer type, String animalSign) {

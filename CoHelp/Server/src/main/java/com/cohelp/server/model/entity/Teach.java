@@ -1,5 +1,6 @@
 package com.cohelp.server.model.entity;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -23,16 +24,19 @@ public class Teach implements Serializable {
     /**
      * 课程id
      */
+    @ExcelProperty(value = "课程ID", index = 0)
     private Integer courseId;
 
     /**
      * 教师id
      */
+    @ExcelProperty(value = "教师ID", index = 1)
     private Integer teacherId;
 
     /**
      * 学年
      */
+    @ExcelProperty(value = "学期", index = 2)
     private String semester;
 
     @TableField(exist = false)

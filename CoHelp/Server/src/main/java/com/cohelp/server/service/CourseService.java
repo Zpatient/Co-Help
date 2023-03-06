@@ -1,15 +1,17 @@
 package com.cohelp.server.service;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cohelp.server.model.domain.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.AskVO;
 import com.cohelp.server.model.vo.CourseVO;
+import com.cohelp.server.model.vo.SelectionVO;
+import com.cohelp.server.model.vo.TeachVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Set;
 
 /**
 * @author jianping5
@@ -17,9 +19,6 @@ import java.util.Set;
 * @createDate 2023-03-01 14:31:07
 */
 public interface CourseService extends IService<Course> {
-
-
-
 
     /**
      * 获取学生指定学年所选的课程
@@ -33,10 +32,11 @@ public interface CourseService extends IService<Course> {
      * @param page
      * @param limit
      * @param courseId
+     * @param semester
      * @param condition
      * @return
      */
-    Result<List<AskVO>> listAsk(Integer page, Integer limit, Integer courseId, Integer condition);
+    Result<List<AskVO>> listAsk(Integer page, Integer limit, Integer courseId, String semester, Integer condition);
 
     /**
      * 发布提问
@@ -75,4 +75,48 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     Result<Boolean> collectAsk(Integer askId);
+
+
+    /**
+     * 根据学校 ID，查询课程
+     * @param page
+     * @param limit
+     * @param teamId
+     * @return
+     */
+    Result<PageResponse<Course>> listCourseById(Integer page, Integer limit, Integer teamId);
+
+    /**
+     * 显示选课
+     * @param page
+     * @param limit
+     * @param teamId
+     * @return
+     */
+    Result<PageResponse<SelectionVO>> listSelection(Integer page, Integer limit, Integer teamId);
+
+    /**
+     * 显示授课
+     * @param page
+     * @param limit
+     * @param teamId
+     * @return
+     */
+    Result<PageResponse<TeachVO>> listTeach(Integer page, Integer limit, Integer teamId);
+
+    /**
+     * 显示教师
+     * @param page
+     * @param limit
+     * @param teamId
+     * @return
+     */
+    Result<PageResponse<User>> listTeacher(Integer page, Integer limit, Integer teamId);
+
+    /**
+     * 添加教师
+     * @param user
+     * @return
+     */
+    Result<Boolean> addTeacher(User user);
 }

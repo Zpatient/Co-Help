@@ -58,6 +58,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private ImageService imageService;
 
     @Resource
+    private AskService askService;
+
+    @Resource
     private FileUtils fileUtils;
 
     @Value("${spring.tengxun.url}")
@@ -573,6 +576,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
         holeList.forEach(hole ->
                 detailResponseList.add(holeService.getDetailResponse(hole))
+        );
+
+        // 查询题目
+        QueryWrapper<Ask> askQueryWrapper = new QueryWrapper<>();
+        askQueryWrapper.eq("publisher_id", userId);
+        ArrayList<Ask> askList = (ArrayList<Ask>) askService.list(askQueryWrapper);
+        askList.forEach(ask ->
+                detailResponseList.add(askService.getDetailResponse(ask))
         );
 
         return ResultUtil.ok(detailResponseList);

@@ -1,36 +1,41 @@
 package com.cohelp.server.service.impl;
 
+import com.alibaba.excel.ExcelReader;
+import com.alibaba.excel.metadata.Sheet;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cohelp.server.constant.TypeEnum;
+import com.cohelp.server.model.domain.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.AskVO;
 import com.cohelp.server.model.vo.CourseVO;
+import com.cohelp.server.model.vo.SelectionVO;
+import com.cohelp.server.model.vo.TeachVO;
 import com.cohelp.server.service.*;
 import com.cohelp.server.mapper.CourseMapper;
-import com.cohelp.server.utils.FileUtils;
-import com.cohelp.server.utils.ResultUtil;
-import com.cohelp.server.utils.SensitiveUtils;
-import com.cohelp.server.utils.UserHolder;
+import com.cohelp.server.utils.*;
 import com.google.gson.Gson;
 import com.ruibty.nsfw.NsfwService;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveDataAutoConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.io.InputStream;
+import java.nio.charset.CoderResult;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.cohelp.server.constant.StatusCode.*;
@@ -65,6 +70,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     private SelectionService selectionService;
 
     @Resource
+    private TeachService teachService;
+
+    @Resource
     private CourseService courseService;
 
     @Resource
@@ -84,6 +92,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
 
     @Resource
     private CollectService collectService;
+
+    private static List<Integer> scoreList = Arrays.asList(10, 20, 30, 40, 50);
 
     @Override
     public Result<List<CourseVO>> listCourse(String semester) {
@@ -126,7 +136,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
     }
 
     @Override
-    public Result<List<AskVO>> listAsk(Integer page, Integer limit, Integer courseId, Integer condition) {
+    public Result<List<AskVO>> listAsk(Integer page, Integer limit, Integer courseId, String semester, Integer condition) {
         // 校验参数
         if (courseId == null || courseId <= 0) {
             return ResultUtil.fail("参数错误");
@@ -135,6 +145,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         // 根据当前课程去查询该课程下的所有提问（从提问表中查询）
         QueryWrapper<Ask> askQueryWrapper = new QueryWrapper<>();
         askQueryWrapper.eq("course_id", courseId);
+        askQueryWrapper.eq("semester", semester);
         Page<Ask> askPage = new Page<>();
 
         // 默认排序
@@ -144,7 +155,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
 
         // 按热度排序
         if (condition == 1) {
-            askQueryWrapper.orderByDesc("like_count");
+            askQueryWrapper.orderByDesc("like_count + collect_count + answer_count");
             askPage = askService.page(new Page<>((page - 1) * limit, limit), askQueryWrapper);
         }
         // 按时间降序排列
@@ -167,6 +178,37 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             // 获取用户头像
             Image image = imageService.getById(user.getAvatar());
             askVO.setAvatarUrl(image.getImageUrl());
+
+            // 设置图片
+            QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+            imageQueryWrapper.eq("image_src_id", ask.getId());
+            imageQueryWrapper.eq("image_type", ASK.ordinal());
+            List<String> imageUrlList = imageService.list(imageQueryWrapper).stream().map(image1 -> image1.getImageUrl()).collect(Collectors.toList());
+            askVO.setImageUrl(imageUrlList);
+
+            // 注入点赞判定值
+            QueryWrapper<DiscussionLike> discussionLikeQueryWrapper = new QueryWrapper<>();
+            discussionLikeQueryWrapper.eq("user_id", askVO.getPublisherId())
+                    .eq("target_type", 1)
+                    .eq("target_id", askVO.getId());
+            DiscussionLike discussionLike = discussionLikeService.getOne(discussionLikeQueryWrapper);
+            if (discussionLike == null) {
+                askVO.setIsLiked(0);
+            } else {
+                askVO.setIsLiked(discussionLike.getIsLiked());
+            }
+
+            // 注入收藏判定值
+            QueryWrapper<Collect> collectQueryWrapper = new QueryWrapper<>();
+            collectQueryWrapper.eq("user_id", UserHolder.getUser().getId())
+                    .eq("topic_type", 1)
+                    .eq("topic_id", askVO.getId());
+            Collect one = collectService.getOne(collectQueryWrapper);
+            if (one == null) {
+                askVO.setIsCollected(0);
+            } else {
+                askVO.setIsCollected(1);
+            }
 
             askVOList.add(askVO);
         }
@@ -349,6 +391,10 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                 }
                 // 增加对应主题的点赞量到
                 ask.setLikeCount(ask.getLikeCount() + 1);
+
+                // 加积分
+                addScoreByAsk(ask);
+
                 boolean updateResult = askService.updateById(ask);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
@@ -364,7 +410,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                     return ResultUtil.fail(ERROR_SYSTEM, "取消点赞失败");
                 }
                 // 减少对应主题的点赞量到
-                ask.setLikeCount(ask.getLikeCount() + 1);
+                ask.setLikeCount(ask.getLikeCount() - 1);
                 boolean updateResult = askService.updateById(ask);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "取消点赞失败");
@@ -417,8 +463,13 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                 if (!updateResult1) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
+
                 // 增加对应主题的点赞量到
                 answer.setLikeCount(answer.getLikeCount() + 1);
+
+                // 加积分
+                addScoreByAnswer(answer);
+
                 boolean updateResult = answerService.updateById(answer);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
@@ -483,8 +534,9 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         // 删除与之相关的图片
         QueryWrapper<Image> imageQueryWrapper1 = new QueryWrapper<>();
         List<Integer> answerIdList = answerService.list(answerQueryWrapper).stream().map(answer -> answer.getId()).collect(Collectors.toList());
-        imageQueryWrapper.eq("image_type", ANSWER.ordinal()).in("image_src_id", answerIdList);
-        boolean remove3 = imageService.remove(imageQueryWrapper);
+        if (answerIdList != null) {
+            imageQueryWrapper.eq("image_type", ANSWER.ordinal()).in("image_src_id", answerIdList);
+        }
         return ResultUtil.ok(true, "删除成功");
     }
 
@@ -522,6 +574,193 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             return ResultUtil.ok(SUCCESS_REQUEST,"记录更新成功！");
         } else{
             return ResultUtil.fail(ERROR_REQUEST,"记录更新失败");
+        }
+    }
+
+    @Override
+    public Result<PageResponse<Course>> listCourseById(Integer page, Integer limit, Integer teamId) {
+        QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
+        courseQueryWrapper.eq("team_id", teamId);
+        Page<Course> page1 = courseService.page(new Page<>((page - 1) * limit, limit), courseQueryWrapper);
+
+        List<Course> records = page1.getRecords();
+        long total = page1.getTotal();
+        PageResponse<Course> coursePageResponse = new PageResponse<>();
+        coursePageResponse.setResult(records);
+        coursePageResponse.setTotal(total);
+
+        return ResultUtil.ok(coursePageResponse);
+    }
+
+    @Override
+    public Result<PageResponse<SelectionVO>> listSelection(Integer page, Integer limit, Integer teamId) {
+        // 分页获取该学校的课程 id 数组
+        QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
+        courseQueryWrapper.eq("team_id", teamId);
+        Page<Course> page1 = courseService.page(new Page<>((page - 1) * limit, limit), courseQueryWrapper);
+        List<Integer> courseIdList = page1.getRecords().stream().map(course -> course.getId()).collect(Collectors.toList());
+
+        // 根据课程 id 查询对应选课记录
+        QueryWrapper<Selection> selectionQueryWrapper = new QueryWrapper<>();
+        selectionQueryWrapper.in("course_id", courseIdList);
+        List<Selection> selectionList = selectionService.page(new Page<>((page - 1) * limit, limit), selectionQueryWrapper).getRecords();
+
+        // 创建选课视图体
+        ArrayList<SelectionVO> selectionVOList = new ArrayList<>();
+
+        // 遍历选课表，将数据注入选课视图体
+        for (Selection selection : selectionList) {
+            SelectionVO selectionVO = new SelectionVO();
+            // 将选课数据赋值到选课视图体
+            BeanUtils.copyProperties(selection, selectionVO);
+
+            // 设置姓名
+            Integer studentId = selection.getStudentId();
+            User user = userService.getById(studentId);
+            if (user != null) {
+                selectionVO.setUserName(user.getUserName());
+            }
+
+            // 设置课程名
+            Integer courseId = selection.getCourseId();
+            Course course = courseService.getById(courseId);
+            if (course != null) {
+                selectionVO.setCourseName(course.getName());
+            }
+
+            selectionVOList.add(selectionVO);
+
+        }
+
+        long total = page1.getTotal();
+        PageResponse<SelectionVO> selectionVOPageResponse = new PageResponse<>();
+        selectionVOPageResponse.setResult(selectionVOList);
+        selectionVOPageResponse.setTotal(total);
+
+        return ResultUtil.ok(selectionVOPageResponse);
+    }
+
+    @Override
+    public Result<PageResponse<TeachVO>> listTeach(Integer page, Integer limit, Integer teamId) {
+        // 分页获取该学校的课程 id 数组
+        QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
+        courseQueryWrapper.eq("team_id", teamId);
+        Page<Course> page1 = courseService.page(new Page<>((page - 1) * limit, limit), courseQueryWrapper);
+        List<Integer> courseIdList = page1.getRecords().stream().map(course -> course.getId()).collect(Collectors.toList());
+
+        // 根据课程 id 查询对应授课记录
+        QueryWrapper<Teach> teachQueryWrapper = new QueryWrapper<>();
+        teachQueryWrapper.in("course_id", courseIdList);
+        List<Teach> teachList = teachService.page(new Page<>((page - 1) * limit, limit), teachQueryWrapper).getRecords();
+
+        // 创建选课视图体
+        ArrayList<TeachVO> teachVOList = new ArrayList<>();
+
+        // 遍历选课表，将数据注入选课视图体
+        for (Teach teach : teachList) {
+            TeachVO teachVO = new TeachVO();
+            // 将选课数据赋值到选课视图体
+            BeanUtils.copyProperties(teach, teachVO);
+
+            // 设置姓名
+            Integer teacherId = teach.getTeacherId();
+            User user = userService.getById(teacherId);
+            if (user != null) {
+                teachVO.setUserName(user.getUserName());
+            }
+
+            // 设置课程名
+            Integer courseId = teach.getCourseId();
+            Course course = courseService.getById(courseId);
+            if (course != null) {
+                teachVO.setCourseName(course.getName());
+            }
+
+            teachVOList.add(teachVO);
+
+        }
+
+        long total = page1.getTotal();
+        PageResponse<TeachVO> teachVOPageResponse = new PageResponse<>();
+        teachVOPageResponse.setResult(teachVOList);
+        teachVOPageResponse.setTotal(total);
+
+        return ResultUtil.ok(teachVOPageResponse);
+    }
+
+    @Override
+    public Result<PageResponse<User>> listTeacher(Integer page, Integer limit, Integer teamId) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("team_id", teamId);
+        queryWrapper.eq("type", 1);
+
+        Page<User> page1 = userService.page(new Page<>((page - 1) * limit, limit), queryWrapper);
+
+        // 封装分页视图体
+        List<User> records = page1.getRecords().stream().map(user -> userService.getSafetyUser(user)).collect(Collectors.toList());
+        long total = page1.getTotal();
+        PageResponse<User> userPageResponse = new PageResponse<>();
+        userPageResponse.setResult(records);
+        userPageResponse.setTotal(total);
+
+        return ResultUtil.ok(userPageResponse);
+    }
+
+    @Override
+    public Result<Boolean> addTeacher(User user) {
+        User currentUser = UserHolder.getUser();
+
+        // 初始化 User
+        user.setUserPassword(user.getUserAccount());
+        user.setTeamId(currentUser.getTeamId());
+        user.setType(1);
+        boolean save = userService.save(user);
+
+        return ResultUtil.ok(save);
+    }
+
+
+    /**
+     * 给问题加积分
+     * @param ask
+     */
+    public void addScoreByAsk(Ask ask) {
+
+        // 若点赞量达到其中之一，则增加其积分
+        if (scoreList.contains(ask.getLikeCount())) {
+            String semester = ask.getSemester();
+            Integer courseId = ask.getCourseId();
+            QueryWrapper<Selection> selectionQueryWrapper = new QueryWrapper<>();
+            selectionQueryWrapper.eq("semester", semester);
+            selectionQueryWrapper.eq("course_id", courseId);
+            Selection selection = selectionService.getOne(selectionQueryWrapper);
+            selection.setScore(selection.getScore() + 1);
+            selectionService.updateById(selection);
+        }
+    }
+
+
+    /**
+     * 给答案加积分
+     * @param answer
+     */
+    public void addScoreByAnswer(Answer answer) {
+
+        // 若点赞量达到其中之一，则增加其积分
+        if (scoreList.contains(answer.getLikeCount())) {
+            // 获取对应题目
+            Integer askId = answer.getAskId();
+            Ask ask = askService.getById(askId);
+            // 找到授课表
+            String semester = ask.getSemester();
+            Integer courseId = ask.getCourseId();
+            QueryWrapper<Selection> selectionQueryWrapper = new QueryWrapper<>();
+            selectionQueryWrapper.eq("semester", semester);
+            selectionQueryWrapper.eq("course_id", courseId);
+            Selection selection = selectionService.getOne(selectionQueryWrapper);
+            // 加分
+            selection.setScore(selection.getScore() + 1);
+            selectionService.updateById(selection);
         }
     }
 

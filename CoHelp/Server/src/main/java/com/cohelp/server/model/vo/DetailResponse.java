@@ -27,6 +27,11 @@ public class DetailResponse implements Serializable {
      * 树洞视图体，封装树洞基本信息(不包括发布者头像及话题相关图片)
      */
     private HoleVO holeVO;
+
+    /**
+     * 提问 VO
+     */
+    private AskVO askVO;
     /**
      * 发布者头像Url
      */

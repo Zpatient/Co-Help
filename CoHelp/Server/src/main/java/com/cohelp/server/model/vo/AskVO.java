@@ -1,13 +1,12 @@
 package com.cohelp.server.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author jianping5
@@ -62,4 +61,28 @@ public class AskVO implements Serializable {
      * 活动发布者头像 Url
      */
     private String avatarUrl;
+
+    /**
+     * 图片
+     */
+    private List<String> imageUrl;
+
+    /**
+     * 是否被点赞
+     */
+    private Integer isLiked;
+    /**
+     * 是否被收藏
+     */
+    private Integer isCollected;
+
+    /**
+     * 收藏量
+     */
+    private Integer collectCount;
+
+    /**
+     * 答案量
+     */
+    private Integer answerCount;
 }

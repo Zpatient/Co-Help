@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
+import static com.cohelp.server.constant.TypeEnum.ASK;
 
 /**
  * @author zgy
@@ -67,6 +68,9 @@ public class GeneralServiceImpl implements GeneralService {
     UserService userService;
     @Resource
     RemarkLikeService remarkLikeService;
+
+    @Resource
+    private AskService askService;
     @Override
     public Result getDetail(IdAndType idAndType) {
         //判断参数合法性
@@ -1084,9 +1088,6 @@ public class GeneralServiceImpl implements GeneralService {
         }
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
-        if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
-            return null;
-        }
         //判断请求哪种话题的详情并执行相应操作
         if(TypeEnum.isActivity(type)){
             Activity activity = activityService.getBaseMapper().selectById(id);
@@ -1104,14 +1105,22 @@ public class GeneralServiceImpl implements GeneralService {
                 return null;
             }
         }
-        else {
+        else if (TypeEnum.isHole(type)){
             Hole hole = holeService.getById(id);
             if(!ObjectUtils.anyNull(hole)) {
                 return holeService.getDetailResponse(hole);
             }else {
                 return null;
             }
+        } else if (type == ASK.ordinal()) {
+            Ask ask = askService.getById(id);
+            if (!ObjectUtils.anyNull(ask)) {
+                return askService.getDetailResponse(ask);
+            } else {
+                return null;
+            }
         }
+        return null;
     }
 
     @Override

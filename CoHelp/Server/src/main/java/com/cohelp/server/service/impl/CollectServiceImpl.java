@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
+import static com.cohelp.server.constant.TypeEnum.ASK;
 
 /**
 * @author zgy
@@ -37,17 +38,21 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     @Resource
     GeneralService generalService;
 
+    @Resource
+    private AskService askService;
+
     @Override
-    public Result listCollect(User user) {
+    public Result<List<DetailResponse>> listCollect(User user) {
         //返回查询结果
         List<Collect> records = list(new QueryWrapper<Collect>()
                 .eq("user_id",user.getId())
                 .select()
                 .orderByDesc("collect_time"));
+
         for(Collect collect:records){
             Integer topicId = collect.getTopicId();
             Integer topicType = collect.getTopicType();
-            if(TypeEnum.isTopic(topicType)) continue;
+            if (!TypeEnum.isTopic(topicType)) continue;
             if(TypeEnum.isActivity(topicType)){
                 Activity byId = activityService.getById(topicId);
                 if(!byId.getTeamId().equals(user.getTeamId())){
@@ -58,13 +63,14 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
                 if(!byId.getTeamId().equals(user.getTeamId())){
                     records.remove(collect);
                 }
-            }else {
+            }else if (TypeEnum.isHelp(topicType)){
                 Hole byId = holeService.getById(topicId);
                 if(!byId.getTeamId().equals(user.getTeamId())){
                     records.remove(collect);
                 }
             }
         }
+
         List<IdAndType> idAndTypeList = getIdAndTypeList(records);
         List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
         return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据查询成功！");

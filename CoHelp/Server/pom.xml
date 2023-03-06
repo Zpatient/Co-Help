@@ -118,6 +118,15 @@
             <version>0.2.0</version>
         </dependency>
 
+        <!--阿里easyexcel 用于进行Excel处理 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.10</version>
+        </dependency>
+
+
+
         <dependency>
             <groupId>com.github.shibing624</groupId>
             <artifactId>similarity</artifactId>

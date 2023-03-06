@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 
@@ -15,6 +17,8 @@ import java.util.Date;
  */
 @TableName(value ="answer")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Answer implements Serializable {
     /**
      * 主键
@@ -53,7 +57,7 @@ public class Answer implements Serializable {
     private Integer answerTargetId;
 
     /**
-     * 回答目标类型(0:提问 1:回答)
+     * 回答目标类型
      */
     private Integer answerTargetType;
 

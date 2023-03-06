@@ -19,7 +19,6 @@ public interface CollectService extends IService<Collect> {
      * 指定页码和数量分页查询收藏记录
      * @author: ZGY
      * @date: 2022-10-26 22:46
-     * @param collectRequest 收藏记录查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
     Result<List<DetailResponse>> listCollect(User user, Integer page, Integer limit);

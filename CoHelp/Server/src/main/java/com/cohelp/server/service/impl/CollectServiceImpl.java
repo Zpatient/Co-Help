@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
+import static com.cohelp.server.constant.TypeEnum.ASK;
 
 /**
 * @author zgy
@@ -37,6 +38,7 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
     HoleService holeService;
     @Resource
     GeneralService generalService;
+
     @Resource
     private AskService askService;
 

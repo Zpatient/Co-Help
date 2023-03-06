@@ -59,6 +59,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private ImageService imageService;
 
     @Resource
+    private AskService askService;
+
+    @Resource
     private FileUtils fileUtils;
 
     @Value("${spring.tengxun.url}")
@@ -75,9 +78,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Resource
     private CourseService courseService;
-
-    @Resource
-    private AskService askService;
 
 
 

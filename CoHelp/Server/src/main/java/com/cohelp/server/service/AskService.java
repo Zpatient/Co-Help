@@ -1,6 +1,7 @@
 package com.cohelp.server.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.model.entity.Ask;
 import com.cohelp.server.model.vo.DetailResponse;
 
@@ -11,6 +12,11 @@ import com.cohelp.server.model.vo.DetailResponse;
 */
 public interface AskService extends IService<Ask> {
 
+    /**
+     * 获取详情
+     * @param ask
+     * @return
+     */
     DetailResponse getDetailResponse(Ask ask);
 
 }

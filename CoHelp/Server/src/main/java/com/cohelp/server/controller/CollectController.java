@@ -7,7 +7,10 @@ import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.CollectService;
 import com.cohelp.server.utils.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -20,11 +23,10 @@ import java.util.List;
 public class CollectController {
     @Autowired
     CollectService collectService;
-
-    @RequestMapping("/getcollectlist/{page}/{limit}")
-    public Result<List<DetailResponse>> listCollect(@PathVariable Integer page, @PathVariable Integer limit){
+    @RequestMapping("/getcollectlist")
+    public Result<List<DetailResponse>> listCollect(){
         User user = UserHolder.getUser();
-        return collectService.listCollect(user,page,limit);
+        return collectService.listCollect(user);
     }
     @RequestMapping("/insertcollectrecord")
     public Result insertCollectRecord(@RequestBody Collect collect){

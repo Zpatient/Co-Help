@@ -10,7 +10,6 @@ import com.cohelp.server.model.vo.DetailRemark;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.model.vo.RemarkVO;
 import com.cohelp.server.service.*;
-import com.cohelp.server.utils.PageUtil;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
@@ -37,39 +36,40 @@ import static com.cohelp.server.constant.StatusCode.*;
 public class GeneralServiceImpl implements GeneralService {
 
     @Resource
-    private ActivityService activityService;
+    ActivityService activityService;
+    @Resource
+    ActivityMapper activityMapper;
+    @Resource
+    RemarkActivityMapper remarkActivityMapper;
+    @Resource
+    HelpService helpService;
+    @Resource
+    HelpMapper helpMapper;
+    @Resource
+    RemarkHelpMapper remarkHelpMapper;
+    @Resource
+    HoleService holeService;
+    @Resource
+    HoleMapper holeMapper;
+    @Resource
+    RemarkHoleMapper remarkHoleMapper;
+    @Resource
+    ImageService imageService;
+    @Resource
+    RemarkActivityService remarkActivityService;
+    @Resource
+    RemarkHelpService remarkHelpService;
+    @Resource
+    RemarkHoleService remarkHoleService;
+    @Resource
+    HistoryService historyService;
+    @Resource
+    UserService userService;
+    @Resource
+    RemarkLikeService remarkLikeService;
+
     @Resource
     private AskService askService;
-    @Resource
-    private ActivityMapper activityMapper;
-    @Resource
-    private RemarkActivityMapper remarkActivityMapper;
-    @Resource
-    private HelpService helpService;
-    @Resource
-    private HelpMapper helpMapper;
-    @Resource
-    private RemarkHelpMapper remarkHelpMapper;
-    @Resource
-    private HoleService holeService;
-    @Resource
-    private HoleMapper holeMapper;
-    @Resource
-    private RemarkHoleMapper remarkHoleMapper;
-    @Resource
-    private ImageService imageService;
-    @Resource
-    private RemarkActivityService remarkActivityService;
-    @Resource
-    private RemarkHelpService remarkHelpService;
-    @Resource
-    private RemarkHoleService remarkHoleService;
-    @Resource
-    private HistoryService historyService;
-    @Resource
-    private UserService userService;
-    @Resource
-    private RemarkLikeService remarkLikeService;
     @Override
     public Result getDetail(IdAndType idAndType) {
         //判断参数合法性
@@ -78,7 +78,7 @@ public class GeneralServiceImpl implements GeneralService {
         }
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
-        if((!TypeEnum.isTopic(type)&&!type.equals(TypeEnum.ASK.ordinal()))|| ObjectUtils.anyNull(id)){
+        if(!TypeEnum.isTopic(type)|| ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         DetailResponse detailResponse = null;
@@ -198,7 +198,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public Result search(SearchRequest searchRequest,Integer page,Integer limit) {
+    public Result search(SearchRequest searchRequest) {
         //判断参数合法性
         if(ObjectUtils.anyNull(searchRequest)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");

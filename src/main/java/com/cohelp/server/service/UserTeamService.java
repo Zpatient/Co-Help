@@ -13,7 +13,6 @@ import com.cohelp.server.model.entity.UserTeam;
 public interface UserTeamService extends IService<UserTeam> {
     /**
      * 获取某组织待处理的加入申请
-     * @param teamName 组织名称
      * @return java.util.List<com.cohelp.server.model.entity.UserTeam>
      */
     PageResponse<UserTeam> listUserTeam(Integer teamId, Integer currentPage, Integer pageSize);

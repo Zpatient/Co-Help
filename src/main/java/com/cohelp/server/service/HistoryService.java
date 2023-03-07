@@ -18,7 +18,6 @@ public interface HistoryService extends IService<History> {
      * 指定页码和数量分页查询浏览记录
      * @author: ZGY
      * @date: 2022-10-24 22:46
-     * @param historyRequest 浏览记录查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
     Result<List<DetailResponse>> listHistory(User user,Integer page,Integer limit);
@@ -48,7 +47,6 @@ public interface HistoryService extends IService<History> {
     Result deleteHistoryRecord(List<Integer> ids);
     /**
      * 获取用户参与评论的话题
-     * @param currentUserId 当前用户Id
      * @return com.cohelp.server.model.domain.Result
      */
     Result<List<DetailResponse>> listInvolvedRecord(User user,Integer page,Integer limit);

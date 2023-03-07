@@ -45,7 +45,7 @@ public class HistoryController {
     }
 
     @RequestMapping("/deletehistoryrecords")
-    public Result deleteHistoryRecord(@RequestParam List<Integer> ids){
+    public Result deleteHistoryRecord(@RequestBody List<Integer> ids){
         return historyService.deleteHistoryRecord(ids);
     }
 

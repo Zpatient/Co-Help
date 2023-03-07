@@ -43,6 +43,10 @@ public class DetailResponse implements Serializable {
      */
     private Integer isLiked;
     /**
+     * 类型
+     */
+    private Integer type;
+    /**
      * 是否被收藏
      */
     private Integer isCollected;

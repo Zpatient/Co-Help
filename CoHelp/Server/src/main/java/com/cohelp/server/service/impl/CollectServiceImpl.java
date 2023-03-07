@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeEnum.ASK;
 
 /**
 * @author zgy
@@ -60,25 +59,26 @@ public class CollectServiceImpl extends ServiceImpl<CollectMapper, Collect>
             }
             if(TypeEnum.isActivity(topicType)){
                 Activity byId = activityService.getById(topicId);
-                if(!byId.getTeamId().equals(user.getTeamId())){
+                if(byId!=null&&!byId.getTeamId().equals(user.getTeamId())){
                     records.remove(collect);
                 }
             }else if (TypeEnum.isHelp(topicType)){
                 Help byId = helpService.getById(topicId);
-                if(!byId.getTeamId().equals(user.getTeamId())){
+                if(byId!=null&&!byId.getTeamId().equals(user.getTeamId())){
                     records.remove(collect);
                 }
             }else if(TypeEnum.isHole(topicType)){
                 Hole byId = holeService.getById(topicId);
-                if(!byId.getTeamId().equals(user.getTeamId())){
+                if(byId!=null&&!byId.getTeamId().equals(user.getTeamId())){
                     records.remove(collect);
                 }
             }
         }
         List<IdAndType> idAndTypeList = getIdAndTypeList(records);
-        List<IdAndType> idAndTypes = PageUtil.pageByList(idAndTypeList, page, limit);
-        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypes);
-        return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据查询成功！");
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
+        List<DetailResponse> detailResponses1 = generalService.filterByState(detailResponses);
+        List<DetailResponse> detailResponses2 = PageUtil.pageByList(detailResponses1, page, limit);
+        return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses2,"数据查询成功！");
     }
     @Override
     public Result collectTopic(Collect collect) {

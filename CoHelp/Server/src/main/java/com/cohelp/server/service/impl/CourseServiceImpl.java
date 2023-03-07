@@ -1,12 +1,10 @@
 package com.cohelp.server.service.impl;
 
-import com.alibaba.excel.ExcelReader;
-import com.alibaba.excel.metadata.Sheet;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.constant.TypeEnum;
+import com.cohelp.server.mapper.CourseMapper;
 import com.cohelp.server.model.domain.PageResponse;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.entity.*;
@@ -15,32 +13,30 @@ import com.cohelp.server.model.vo.CourseVO;
 import com.cohelp.server.model.vo.SelectionVO;
 import com.cohelp.server.model.vo.TeachVO;
 import com.cohelp.server.service.*;
-import com.cohelp.server.mapper.CourseMapper;
-import com.cohelp.server.utils.*;
+import com.cohelp.server.utils.FileUtils;
+import com.cohelp.server.utils.ResultUtil;
+import com.cohelp.server.utils.SensitiveUtils;
+import com.cohelp.server.utils.UserHolder;
 import com.google.gson.Gson;
 import com.ruibty.nsfw.NsfwService;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.data.couchbase.CouchbaseReactiveDataAutoConfiguration;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.CoderResult;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.cohelp.server.constant.StatusCode.*;
-import static com.cohelp.server.constant.TypeConstant.ACTIVITY_TYPE;
-import static com.cohelp.server.constant.TypeEnum.*;
+import static com.cohelp.server.constant.TypeEnum.ANSWER;
+import static com.cohelp.server.constant.TypeEnum.ASK;
 
 /**
 * @author jianping5
@@ -517,10 +513,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             return ResultUtil.fail("该提问删除失败");
         }
         // 删除与之相关的图片
-        QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
-        imageQueryWrapper.eq("image_type", ASK.ordinal()).eq("image_src_id", askId);
-        boolean remove1 = imageService.remove(imageQueryWrapper);
-        if (!remove1) {
+        QueryWrapper<Image> wrapper = new QueryWrapper<>();
+        wrapper.eq("image_type", ASK.ordinal()).eq("image_src_id", askId);
+        List<Image> imageList = imageService.list(wrapper);
+        boolean remove1 = imageService.remove(wrapper);
+        if (!remove1&&!imageList.isEmpty()) {
             return ResultUtil.fail("该提问相关图片删除失败");
         }
 
@@ -535,7 +532,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         QueryWrapper<Image> imageQueryWrapper1 = new QueryWrapper<>();
         List<Integer> answerIdList = answerService.list(answerQueryWrapper).stream().map(answer -> answer.getId()).collect(Collectors.toList());
         if (answerIdList != null) {
-            imageQueryWrapper.eq("image_type", ANSWER.ordinal()).in("image_src_id", answerIdList);
+            imageQueryWrapper1.eq("image_type", ANSWER.ordinal()).in("image_src_id", answerIdList);
+            imageService.remove(imageQueryWrapper1);
         }
         return ResultUtil.ok(true, "删除成功");
     }

@@ -2,11 +2,11 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.mapper.AskMapper;
 import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.AskVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.*;
-import com.cohelp.server.mapper.AskMapper;
 import com.cohelp.server.utils.UserHolder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -58,7 +58,7 @@ public class AskServiceImpl extends ServiceImpl<AskMapper, Ask>
 
         //获取该话题对应的的图片URL列表
         detailResponse.setImagesUrl((ArrayList<String>) askVO.getImageUrl());
-
+        detailResponse.setType(ASK.ordinal());
         return detailResponse;
     }
 

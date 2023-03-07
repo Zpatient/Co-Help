@@ -1,15 +1,11 @@
 package com.cohelp.server;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.TypeReference;
 import com.cohelp.server.mapper.ActivityMapper;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Mail;
 import com.cohelp.server.model.domain.Result;
 import com.cohelp.server.model.domain.TopicNumber;
-import com.cohelp.server.model.entity.Course;
 import com.cohelp.server.model.entity.Help;
-import com.cohelp.server.model.entity.Selection;
 import com.cohelp.server.model.entity.User;
 import com.cohelp.server.model.vo.AskVO;
 import com.cohelp.server.model.vo.CourseVO;
@@ -202,11 +198,11 @@ class ServerApplicationTests {
         System.out.println(listResult.getData());
 
         // 获取发布
-        Result<List<DetailResponse>> listResult1 = userService.searchPublish();
+        Result<List<DetailResponse>> listResult1 = userService.searchPublish(1,3);
         System.out.println(listResult1.getData());
 
         // 获取收藏
-        Result result = collectService.listCollect(user);
+        Result result = collectService.listCollect(user,1,3);
         System.out.println("收藏: " + result.getData());
 
     }

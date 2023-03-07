@@ -2,7 +2,6 @@ package com.cohelp.server.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.ImageMapper;
 import com.cohelp.server.model.domain.IdAndType;
 import com.cohelp.server.model.domain.Result;
@@ -50,7 +49,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
         }
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
-        if(!(TypeEnum.isTopic(type)||TypeEnum.isUser(type))|| ObjectUtils.anyNull(id)){
+        if(ObjectUtils.anyNull(id)){
             return null;
         }
         //查询数据
@@ -58,7 +57,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
         imageQueryWrapper.eq("image_type",type)
                 .eq("image_src_id",id)
                 .eq("image_state",0);
-        List<Image> images = getBaseMapper().selectList(imageQueryWrapper);
+        List<Image> images = list(imageQueryWrapper);
         ArrayList<String> imagesUrl = new ArrayList<>();
         if(images != null && !CollectionUtils.isEmpty(images)){
             for (Image image : images){
@@ -76,7 +75,7 @@ public class ImageServiceImpl extends ServiceImpl<ImageMapper, Image>
         }
         Integer type = idAndType.getType();
         Integer id = idAndType.getId();
-        if(!(TypeEnum.isTopic(type)||TypeEnum.isUser(type))|| ObjectUtils.anyNull(id)){
+        if(ObjectUtils.anyNull(id)){
             return ResultUtil.fail(ERROR_PARAMS,"参数不合法");
         }
         //查询数据

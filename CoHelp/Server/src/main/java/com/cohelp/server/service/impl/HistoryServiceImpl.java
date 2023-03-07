@@ -72,9 +72,10 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
         }
         List<IdAndType> idAndTypeList = getIdAndTypeList(records);
         //分页
-        List<IdAndType> idAndTypes = PageUtil.pageByList(idAndTypeList, page, limit);
-        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypes);
-        return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses,"数据查询成功");
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
+        List<DetailResponse> detailResponses1 = generalService.filterByState(detailResponses);
+        List<DetailResponse> detailResponses2 = PageUtil.pageByList(detailResponses1, page, limit);
+        return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses2,"数据查询成功！");
     }
     @Override
     public Result<List<DetailResponse>> listInvolvedRecord(User user,Integer page,Integer limit) {
@@ -111,12 +112,10 @@ public class HistoryServiceImpl extends ServiceImpl<HistoryMapper, History>
             }
         }
         List<IdAndType> idAndTypeList = getIdAndTypeList(records);
-        List<IdAndType> idAndTypes = PageUtil.pageByList(idAndTypeList, page, limit);
-        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypes);
-        if(detailResponses==null){
-            return ResultUtil.fail("获取失败！");
-        }
-        return ResultUtil.ok(SUCCESS_GET_DATA,detailResponses,"数据获取成功！");
+        List<DetailResponse> detailResponses = generalService.listDetailResponse(idAndTypeList);
+        List<DetailResponse> detailResponses1 = generalService.filterByState(detailResponses);
+        List<DetailResponse> detailResponses2 = PageUtil.pageByList(detailResponses1, page, limit);
+        return ResultUtil.returnResult(SUCCESS_GET_DATA,detailResponses2,"数据查询成功！");
     }
     @Override
     public Result insertHistoryRecord(History history) {

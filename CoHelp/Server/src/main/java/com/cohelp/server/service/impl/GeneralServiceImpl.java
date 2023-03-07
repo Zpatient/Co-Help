@@ -10,6 +10,7 @@ import com.cohelp.server.model.vo.DetailRemark;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.model.vo.RemarkVO;
 import com.cohelp.server.service.*;
+import com.cohelp.server.utils.PageUtil;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.SensitiveUtils;
 import com.cohelp.server.utils.UserHolder;
@@ -198,7 +199,7 @@ public class GeneralServiceImpl implements GeneralService {
     }
 
     @Override
-    public Result search(SearchRequest searchRequest) {
+    public Result search(SearchRequest searchRequest,Integer page,Integer limit) {
         //判断参数合法性
         if(ObjectUtils.anyNull(searchRequest)){
             return ResultUtil.fail(ERROR_PARAMS,"参数为空");
@@ -1239,5 +1240,31 @@ public class GeneralServiceImpl implements GeneralService {
         topicNumber.setHelpNumber(helpNumber);
         topicNumber.setHoleNumber(holeNumber);
         return topicNumber;
+    }
+
+    @Override
+    public List<DetailResponse> filterByState(List<DetailResponse> detailResponses) {
+        List<DetailResponse> detailResponseList = new ArrayList<>();
+        if (detailResponses==null||detailResponses.isEmpty()){
+            return detailResponseList;
+        }
+        detailResponses.stream().forEach(k->{
+            if(k.getActivityVO()!=null){
+                if(k.getActivityVO().getActivityState().equals(0)){
+                    detailResponseList.add(k);
+                }
+            }
+            if(k.getHelpVO()!=null){
+                if(k.getHelpVO().getHelpState().equals(0)){
+                    detailResponseList.add(k);
+                }
+            }
+            if(k.getHoleVO()!=null){
+                if(k.getHoleVO().getHoleState().equals(0)){
+                    detailResponseList.add(k);
+                }
+            }
+        });
+        return detailResponseList;
     }
 }

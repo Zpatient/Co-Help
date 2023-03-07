@@ -73,7 +73,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
     private String path;
 
     @Override
-    public Result<Boolean> publishActivity(String activityJson, MultipartFile[] files) {
+    public Result<Boolean> publishActivity(String activityJson, MultipartFile[] files)  {
         if (StringUtils.isBlank(activityJson)) {
             return ResultUtil.fail(ERROR_PARAMS, "请求参数错误");
         }
@@ -174,9 +174,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         if (userId != activity.getActivityOwnerId()) {
             return ResultUtil.fail("没有权限修改");
         }
-        QueryWrapper<Image> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("image_type", ACTIVITY.ordinal()).eq("image_src_id", activity.getId());
-        boolean remove = imageService.remove(queryWrapper);
+        QueryWrapper<Image> wrapper = new QueryWrapper();
+        wrapper.eq("image_type", ACTIVITY.ordinal()).eq("image_src_id", activity.getId());
+        boolean remove = imageService.remove(wrapper);
 
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
@@ -335,7 +335,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             imagesUrl = new ArrayList<>();
         }
         detailResponse.setImagesUrl(imagesUrl);
-
+        detailResponse.setType(ACTIVITY.ordinal());
         return detailResponse;
     }
 

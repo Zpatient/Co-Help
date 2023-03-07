@@ -393,7 +393,7 @@ public class HelpServiceImpl extends ServiceImpl<HelpMapper, Help>
             imagesUrl = new ArrayList<>();
         }
         detailResponse.setImagesUrl(imagesUrl);
-
+        detailResponse.setType(HELP.ordinal());
         return detailResponse;
     }
 

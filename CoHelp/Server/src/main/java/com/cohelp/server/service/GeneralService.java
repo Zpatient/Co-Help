@@ -141,4 +141,6 @@ public interface GeneralService{
      * @return com.cohelp.server.model.domain.TopicNumber
      */
     TopicNumber getCurrentYearPublish(Integer teamId);
+
+   List<DetailResponse> filterByState(List<DetailResponse> detailResponses);
 }

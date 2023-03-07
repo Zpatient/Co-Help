@@ -94,10 +94,6 @@ public class User implements Serializable {
      */
     @ExcelProperty(value = "组织ID", index = 7)
     private Integer teamId;
-    /**
-     * 类型（0：学生 1：教师）
-     */
-    private Integer type;
 
     /**
      * 组织名

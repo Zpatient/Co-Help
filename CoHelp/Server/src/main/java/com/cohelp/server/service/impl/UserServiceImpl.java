@@ -169,6 +169,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setUserCreateTime(user.getUserCreateTime());
         safetyUser.setUserEmail(user.getUserEmail());
         safetyUser.setTeamId(user.getTeamId());
+        safetyUser.setType(user.getType());
         safetyUser.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - user.getAge()));
         safetyUser.setTeamName(teamService.getById(user.getTeamId()).getTeamName());
         return safetyUser;
@@ -500,8 +501,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // 删除与之相关的图片
             QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
             imageQueryWrapper.eq("image_type", ACTIVITY_TYPE).eq("image_src_id", id);
+            List<Image> list = imageService.list(imageQueryWrapper);
             boolean remove1 = imageService.remove(imageQueryWrapper);
-            if (!remove1) {
+            if (!remove1&&!list.isEmpty()) {
                 return ResultUtil.fail("该活动相关图片删除失败");
             }
             return ResultUtil.ok(true, "删除成功");
@@ -523,9 +525,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
             // 删除与之相关的图片
             QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+            List<Image> list = imageService.list(imageQueryWrapper);
             imageQueryWrapper.eq("image_type", HELP_TYPE).eq("image_src_id", id);
             boolean remove1 = imageService.remove(imageQueryWrapper);
-            if (!remove1) {
+            if (!remove1&&!list.isEmpty()) {
                 return ResultUtil.fail("该互助相关图片删除失败");
             }
             return ResultUtil.ok(true, "删除成功");
@@ -548,8 +551,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // 删除与之相关的图片
             QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
             imageQueryWrapper.eq("image_type", HOLE_TYPE).eq("image_src_id", id);
+            List<Image> list = imageService.list(imageQueryWrapper);
             boolean remove1 = imageService.remove(imageQueryWrapper);
-            if (!remove1) {
+            if (!remove1&&!list.isEmpty()) {
                 return ResultUtil.fail("该树洞相关图片删除失败");
             }
             return ResultUtil.ok(true, "删除成功");
@@ -562,7 +566,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
             return ResultUtil.ok(true, "删除成功");
         }
-        return ResultUtil.fail("未存在该类型发布");
+        return ResultUtil.fail("不存在该类型发布");
     }
 
     @Override

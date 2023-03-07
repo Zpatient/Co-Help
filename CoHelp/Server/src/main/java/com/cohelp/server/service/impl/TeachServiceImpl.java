@@ -143,8 +143,9 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
         // 删除与之相关的图片
         QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
         imageQueryWrapper.eq("image_type", ANSWERBANK.ordinal()).eq("image_src_id", answerId);
+        List<Image> imageList = imageService.list(imageQueryWrapper);
         boolean remove1 = imageService.remove(imageQueryWrapper);
-        if (!remove1) {
+        if (!remove1&&!imageList.isEmpty()) {
             return "答案相关图片删除失败";
         }
         return "删除成功";
@@ -164,8 +165,9 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
         // 删除与之相关的图片
         QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
         imageQueryWrapper.eq("image_type", QUESTIONBANK.ordinal()).eq("image_src_id", questionId);
+        List<Image> imageList = imageService.list(imageQueryWrapper);
         boolean remove1 = imageService.remove(imageQueryWrapper);
-        if (!remove1) {
+        if (!remove1&&!imageList.isEmpty()) {
             return "题目相关图片删除失败";
         }
         // 删除它的回答
@@ -173,7 +175,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
         answerQueryWrapper.eq("question_id", questionId);
         List<Integer> answerBanks = answerBankService.list(answerQueryWrapper).stream().map(i -> i.getId()).collect(Collectors.toList());
         boolean match = answerBanks.stream().map(i -> removeAnswerFromBank(i)).noneMatch(k -> k.equals("删除成功"));
-        if (match) {
+        if (match&&!answerBanks.isEmpty()) {
             return "题目相关答案删除失败";
         }
         return "删除成功";
@@ -243,10 +245,11 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                 }
                 //将题目对应图片也加入题库
                 Integer questionBankId = questionBank.getId();
-                List<Image> list = imageService.list(new QueryWrapper<Image>()
-                        .eq("image_type", ASK)
+                QueryWrapper<Image> wrapper = new QueryWrapper<Image>()
+                        .eq("image_type", ASK.ordinal())
                         .eq("image_src_id", askId)
-                        .eq("image_state", 0));
+                        .eq("image_state", 0);
+                List<Image> list = imageService.list(wrapper);
                 boolean noneMatch = list.stream().map(i -> i.getImageUrl()).noneMatch(k -> {
                     Image image = new Image();
                     image.setImageType(QUESTIONBANK.ordinal());
@@ -254,7 +257,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                     image.setImageUrl(k);
                     return imageService.saveOrUpdate(image);
                 });
-                if(noneMatch){
+                if(noneMatch&&!list.isEmpty()){
                     return "题目图片加入题库失败";
                 }
                 //修改ask的is_added字段
@@ -274,14 +277,16 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                     return "题目加入题库失败";
                 }
                 //更新题库图片
-                boolean remove = imageService.remove(new QueryWrapper<Image>()
-                        .eq("image_type", QUESTIONBANK)
-                        .eq("image_src_id", questionBankOne.getId()));
-                if(!remove){
+                 QueryWrapper<Image> wrapper = new QueryWrapper<Image>()
+                        .eq("image_type", QUESTIONBANK.ordinal())
+                        .eq("image_src_id", questionBankOne.getId());
+                List<Image> imageList = imageService.list(wrapper);
+                boolean remove = imageService.remove(wrapper);
+                if(!remove&&!imageList.isEmpty()){
                     return "题目图片加入题库失败";
                 }
                 List<Image> list = imageService.list(new QueryWrapper<Image>()
-                        .eq("image_type", ASK)
+                        .eq("image_type", ASK.ordinal())
                         .eq("image_src_id", askId)
                         .eq("image_state", 0));
                 boolean noneMatch = list.stream().map(i -> i.getImageUrl()).noneMatch(k -> {
@@ -291,7 +296,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                     image.setImageUrl(k);
                     return imageService.saveOrUpdate(image);
                 });
-                if(noneMatch){
+                if(noneMatch&&!list.isEmpty()){
                     return "题目相关图片加入题库失败";
                 }
                 //修改ask的is_added字段
@@ -341,7 +346,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                     //将答案对应图片也加入题库
                     Integer answerBankId = answerBank.getId();
                     List<Image> list = imageService.list(new QueryWrapper<Image>()
-                            .eq("image_type", ANSWER)
+                            .eq("image_type", ANSWER.ordinal())
                             .eq("image_src_id", answerId)
                             .eq("image_state", 0));
                     boolean noneMatch = list.stream().map(i -> i.getImageUrl()).noneMatch(k -> {
@@ -351,7 +356,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                         image.setImageUrl(k);
                         return imageService.saveOrUpdate(image);
                     });
-                    if(noneMatch){
+                    if(noneMatch&&!list.isEmpty()){
                         return "回答图片加入答案库失败";
                     }
                     //修改answer的is_added字段
@@ -382,14 +387,16 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                         return "回答加入答案库失败";
                     }
                     //更新题库图片
-                    boolean remove = imageService.remove(new QueryWrapper<Image>()
-                            .eq("image_type", ANSWERBANK)
-                            .eq("image_src_id", answerBankOne.getId()));
-                    if(!remove){
+                    QueryWrapper<Image> wrapper = new QueryWrapper<Image>()
+                            .eq("image_type", ANSWERBANK.ordinal())
+                            .eq("image_src_id", answerBankOne.getId());
+                    List<Image> imageList = imageService.list(wrapper);
+                    boolean remove = imageService.remove(wrapper);
+                    if(!remove&&!imageList.isEmpty()){
                         return "回答图片加入答案库失败";
                     }
                     List<Image> list = imageService.list(new QueryWrapper<Image>()
-                            .eq("image_type", ANSWER)
+                            .eq("image_type", ANSWER.ordinal())
                             .eq("image_src_id", answerId)
                             .eq("image_state", 0));
                     boolean noneMatch = list.stream().map(i -> i.getImageUrl()).noneMatch(k -> {
@@ -399,7 +406,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                         image.setImageUrl(k);
                         return imageService.saveOrUpdate(image);
                     });
-                    if(noneMatch){
+                    if(noneMatch&&!list.isEmpty()){
                         return "回答图片加入答案库失败";
                     }
                     //修改answer的is_added字段
@@ -477,7 +484,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                 boolean save = askService.save(ask);
                 if(save){
                     List<Image> images = imageService.list(new QueryWrapper<Image>()
-                            .eq("image_type", QUESTIONBANK)
+                            .eq("image_type", QUESTIONBANK.ordinal())
                             .eq("image_src_id", questionBank.getId())
                             .eq("image_state", 0));
                     List<String> collect = images.stream().map(o -> o.getImageUrl()).collect(Collectors.toList());
@@ -541,7 +548,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                 boolean save = answerService.save(answer);
                 if(save){
                     List<Image> images = imageService.list(new QueryWrapper<Image>()
-                            .eq("image_type", ANSWERBANK)
+                            .eq("image_type", ANSWERBANK.ordinal())
                             .eq("image_src_id", answerBank.getId())
                             .eq("image_state", 0));
                     List<String> collect = images.stream().map(o -> o.getImageUrl()).collect(Collectors.toList());
@@ -651,7 +658,9 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                     .eq("course_id", courseId)
                     .orderByDesc("semester");
             List<Teach> list = list(teachQueryWrapper);
-            list.stream().findFirst().ifPresent(((k->semester.concat(k.getSemester()))));
+            if(!list.isEmpty()){
+                semester = list.get(0).getSemester();
+            }
             if(semester.equals("")){
                 return scoreVOS;
             }else {
@@ -660,6 +669,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                         .eq("course_id", courseId)
                         .eq("semester", semester);
                 List<Selection> selectionList = selectionService.list(queryWrapper);
+                String finalSemester = semester;
                 selectionList.stream().forEach(m->{
                     ScoreVO scoreVO = new ScoreVO();
                     User student = userService.getById(m.getStudentId());
@@ -670,7 +680,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
                         scoreVO.setUserName(student.getUserName());
                     }
                     scoreVO.setScore(m.getScore());
-                    scoreVO.setSemester(semester);
+                    scoreVO.setSemester(finalSemester);
                     Course course = courseService.getById(courseId);
                     if(course==null){
                         scoreVO.setCourseName("课程不存在");
@@ -704,7 +714,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
         }
         //获取答案相关图片注入视图体
         List<Image> list = imageService.list(new QueryWrapper<Image>()
-                .eq("image_type", ANSWERBANK)
+                .eq("image_type", ANSWERBANK.ordinal())
                 .eq("image_src_id", answerBank.getId())
                 .eq("image_state", 0));
         List<String> imageUrl = list.stream().map(k -> k.getImageUrl()).collect(Collectors.toList());
@@ -742,7 +752,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
         }
         //获取题目相关图片注入视图体
         List<Image> list = imageService.list(new QueryWrapper<Image>()
-                .eq("image_type", QUESTIONBANK)
+                .eq("image_type", QUESTIONBANK.ordinal())
                 .eq("image_src_id", questionBank.getId())
                 .eq("image_state", 0));
         List<String> imageUrl = list.stream().map(k -> k.getImageUrl()).collect(Collectors.toList());
@@ -795,7 +805,7 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach>
         }
         //查询回答内容中的图片
         QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<Image>()
-                .eq("image_type", 8)
+                .eq("image_type", ANSWER.ordinal())
                 .eq("image_src_id", answer.getId())
                 .eq("image_state", 0);
         List<Image> list = imageService.list(imageQueryWrapper);

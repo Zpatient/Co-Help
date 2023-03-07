@@ -306,7 +306,7 @@ public class HoleServiceImpl
             imagesUrl = new ArrayList<>();
         }
         detailResponse.setImagesUrl(imagesUrl);
-
+        detailResponse.setType(HOLE.ordinal());
         return detailResponse;
     }
 

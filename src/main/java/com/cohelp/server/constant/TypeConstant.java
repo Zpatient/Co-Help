@@ -1,8 +1,5 @@
 package com.cohelp.server.constant;
 
-import org.springframework.format.number.PercentStyleFormatter;
-import sun.security.provider.PolicySpiFile;
-
 /**
  * 类型常量
  *

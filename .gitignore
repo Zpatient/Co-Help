@@ -25,6 +25,7 @@ application.yml
 *.sql
 mvnw
 .mvn
+image
 
 ### NetBeans ###
 /nbproject/private/

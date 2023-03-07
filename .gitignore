@@ -22,7 +22,6 @@ application.yml
 *.ipr
 *.cmd
 *.md
-*.sql
 mvnw
 .mvn
 **/image/

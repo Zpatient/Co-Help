@@ -25,6 +25,7 @@ application.yml
 mvnw
 .mvn
 **/image/
+**/test/
 
 ### NetBeans ###
 /nbproject/private/

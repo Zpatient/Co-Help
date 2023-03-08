@@ -23,4 +23,18 @@
         publisher_id,collect_count,answer_count,
         is_added
     </sql>
+
+    <select id="getCurrentDayPublish" resultType="java.lang.Long">
+        select count(*)
+        from ask
+        where publisher_id = #{userId} and
+            date_format(publish_time,'%Y-%m-%d') = CURDATE()
+    </select>
+    <select id="getMonthPublish" resultType="java.lang.Long">
+        select count(*)
+        from ask
+        where publisher_id = #{userId} and
+                  YEAR(publish_time) = EXTRACT(YEAR FROM NOW()) and
+            MONTH(publish_time) = #{month}
+    </select>
 </mapper>

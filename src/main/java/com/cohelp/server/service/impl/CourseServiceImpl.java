@@ -366,6 +366,17 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                 // 增加对应主题的点赞量到
                 ask.setLikeCount(ask.getLikeCount() + 1);
                 boolean updateResult = askService.updateById(ask);
+
+                // 加积分
+                Integer type1 = loginUser.getType();
+                if (type1 == 1) {
+                    Integer publisherId = ask.getPublisherId();
+                    User user = userService.getById(publisherId);
+                    if (user != null && user.getType() != 1) {
+                        teachService.addScore(publisherId, 2, ask.getCourseId());
+                    }
+                }
+
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
                 }
@@ -442,6 +453,20 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
                 boolean updateResult = answerService.updateById(answer);
                 if (!updateResult) {
                     return ResultUtil.fail(ERROR_SYSTEM, "点赞失败");
+                }
+
+                // 加积分
+                Integer type1 = loginUser.getType();
+                if (type1 == 1) {
+                    Integer publisherId = answer.getPublisherId();
+                    User user = userService.getById(publisherId);
+                    if (user != null && user.getType() != 1) {
+                        Integer askId = answer.getAskId();
+                        Ask ask = askService.getById(askId);
+                        if (ask != null) {
+                            teachService.addScore(publisherId, 2, ask.getCourseId());
+                        }
+                    }
                 }
                 return ResultUtil.ok(true, "点赞成功");
             }
@@ -715,6 +740,105 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         boolean save = userService.save(user);
 
         return ResultUtil.ok(save);
+    }
+
+    @Override
+    public Result<Boolean> deleteCourse(Integer courseId) {
+        // 获取当前用户的组织 id
+        User user = UserHolder.getUser();
+        Integer teamId = user.getTeamId();
+
+        // 获取当前课程的组织 id
+        Course course = courseService.getById(courseId);
+        if (course == null) {
+            return ResultUtil.fail("抱歉，该课程不存在");
+        }
+        Integer courseTeamId = course.getTeamId();
+
+        // 比较二者
+        if (!teamId.equals(courseTeamId)) {
+            return ResultUtil.fail("抱歉，您没有权限");
+        }
+
+        // 删除该课程
+        boolean b = courseService.removeById(courseId);
+
+        if (!b) {
+            return ResultUtil.fail("删除失败");
+        }
+
+
+        return ResultUtil.ok(true);
+    }
+
+    @Override
+    public Result<Boolean> deleteSelection(Integer selectionId) {
+        // 查询对应的选课
+        Selection selection = selectionService.getById(selectionId);
+
+        // 判断是否为空
+        if (selection == null) {
+            return ResultUtil.fail("抱歉，该选课记录不存在");
+        }
+
+        // 查询对应的学生是否属于当前学校
+        Integer studentId = selection.getStudentId();
+        User user = userService.getById(studentId);
+        if (user == null) {
+            return ResultUtil.fail("抱歉，该用户不存在");
+        }
+
+        Integer teamId = user.getTeamId();
+        User currentUser = UserHolder.getUser();
+        Integer teamId1 = currentUser.getTeamId();
+
+        if (!teamId.equals(teamId1)) {
+            return ResultUtil.fail("抱歉，您无权删除");
+        }
+
+        // 删除对应的选择
+        boolean result = selectionService.removeById(selectionId);
+
+        if (!result) {
+            return ResultUtil.fail("删除失败");
+        }
+
+        return ResultUtil.ok(true);
+    }
+
+    @Override
+    public Result<Boolean> deleteTeach(Integer teachId) {
+        // 查询对应的授课
+        Teach teach = teachService.getById(teachId);
+
+        // 判断是否为空
+        if (teachId == null) {
+            return ResultUtil.fail("抱歉，该授课记录不存在");
+        }
+
+        // 查询对应的教师是否属于当前学校
+        Integer teacherId = teach.getTeacherId();
+        User user = userService.getById(teacherId);
+        if (user == null) {
+            return ResultUtil.fail("抱歉，该用户不存在");
+        }
+
+        Integer teamId = user.getTeamId();
+        User currentUser = UserHolder.getUser();
+        Integer teamId1 = currentUser.getTeamId();
+
+        if (!teamId.equals(teamId1)) {
+            return ResultUtil.fail("抱歉，您无权删除");
+        }
+
+        // 删除对应的选择
+        boolean result = teachService.removeById(teachId);
+
+        if (!result) {
+            return ResultUtil.fail("删除失败");
+        }
+
+        return ResultUtil.ok(true);
     }
 
 

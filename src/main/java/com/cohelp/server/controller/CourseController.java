@@ -20,14 +20,12 @@ import com.cohelp.server.service.SelectionService;
 import com.cohelp.server.service.TeachService;
 import com.cohelp.server.service.UserService;
 import com.cohelp.server.utils.ResultUtil;
-import net.sf.jsqlparser.expression.operators.relational.MinorThanEquals;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 import static com.cohelp.server.constant.StatusCode.ERROR_PARAMS;
 
@@ -156,4 +154,18 @@ public class CourseController {
         return courseService.addTeacher(user);
     }
 
+    @PostMapping("/deleteCourse/{courseId}")
+    public Result<Boolean> deleteCourse(@PathVariable Integer courseId) {
+        return courseService.deleteCourse(courseId);
+    }
+
+    @PostMapping("/deleteSelection/{selectionId}")
+    public Result<Boolean> deleteSelection(@PathVariable Integer selectionId) {
+        return courseService.deleteSelection(selectionId);
+    }
+
+    @PostMapping("/deleteTeach/{teachId}")
+    public Result<Boolean> deleteTeach(@PathVariable Integer teachId) {
+        return courseService.deleteTeach(teachId);
+    }
 }

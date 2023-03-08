@@ -17,4 +17,5 @@ public class TopicNumber {
     private List<Integer> activityNumber;
     private List<Integer> helpNumber;
     private List<Integer> holeNumber;
+    private List<Integer> askNumber;
 }

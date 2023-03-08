@@ -119,4 +119,25 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     Result<Boolean> addTeacher(User user);
+
+    /**
+     * 删除课程
+     * @param courseId
+     * @return
+     */
+    Result<Boolean> deleteCourse(Integer courseId);
+
+    /**
+     * 删除选课
+     * @param selectionId
+     * @return
+     */
+    Result<Boolean> deleteSelection(Integer selectionId);
+
+    /**
+     * 删除授课
+     * @param teachId
+     * @return
+     */
+    Result<Boolean> deleteTeach(Integer teachId);
 }

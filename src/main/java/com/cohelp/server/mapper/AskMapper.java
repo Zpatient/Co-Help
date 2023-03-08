@@ -11,6 +11,20 @@ import com.cohelp.server.model.entity.Ask;
 */
 public interface AskMapper extends BaseMapper<Ask> {
 
+
+    /**
+     * 查询用户当天发布的活动数
+     * @param userId 用户Id
+     * @return long
+     */
+    long getCurrentDayPublish(Integer userId);
+    /**
+     * 查询用户本年度某月发布的活动数
+     * @param userId 用户Id
+     * @return long
+     */
+    long getMonthPublish(Integer userId, Integer month);
+
 }
 
 

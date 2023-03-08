@@ -53,6 +53,8 @@ public class GeneralServiceImpl implements GeneralService {
     @Resource
     HoleMapper holeMapper;
     @Resource
+    AskMapper askMapper;
+    @Resource
     RemarkHoleMapper remarkHoleMapper;
     @Resource
     ImageService imageService;
@@ -1184,6 +1186,7 @@ public class GeneralServiceImpl implements GeneralService {
         long activityCurrentDayPublish = 0;
         long helpCurrentDayPublish = 0;
         long holeCurrentDayPublish = 0;
+        long askCurrentDayPublish = 0;
         for(Integer id : userIdList){
             //查当天活动发布数
             activityCurrentDayPublish += activityMapper.getCurrentDayPublish(id);
@@ -1191,19 +1194,28 @@ public class GeneralServiceImpl implements GeneralService {
             helpCurrentDayPublish += helpMapper.getCurrentDayPublish(id);
             //查当天树洞发布数
             holeCurrentDayPublish += holeMapper.getCurrentDayPublish(id);
+            //查当天问题发布数
+            askCurrentDayPublish += askMapper.getCurrentDayPublish(id);
         }
         //保存当天活动发布数
         ArrayList<Integer> activityNumber = new ArrayList<>();
         activityNumber.add(new Long(activityCurrentDayPublish).intValue());
         topicNumber.setActivityNumber(activityNumber);
+
         //保存当天互助发布数
         ArrayList<Integer> helpNumber = new ArrayList<>();
         helpNumber.add(new Long(helpCurrentDayPublish).intValue());
         topicNumber.setHelpNumber(helpNumber);
+
         //保存当天树洞发布数
         ArrayList<Integer> holeNumber = new ArrayList<>();
         holeNumber.add(new Long(holeCurrentDayPublish).intValue());
         topicNumber.setHoleNumber(holeNumber);
+
+        //保存当天问题发布数
+        ArrayList<Integer> askNumber = new ArrayList<>();
+        askNumber.add(new Long(askCurrentDayPublish).intValue());
+        topicNumber.setAskNumber(askNumber);
         return topicNumber;
     }
 
@@ -1219,10 +1231,12 @@ public class GeneralServiceImpl implements GeneralService {
         ArrayList<Integer> activityNumber = new ArrayList<>();
         ArrayList<Integer> helpNumber = new ArrayList<>();
         ArrayList<Integer> holeNumber = new ArrayList<>();
+        ArrayList<Integer> askNumber = new ArrayList<>();
         for(int month = 1;month <= 12;month++){
             long activityPublish = 0;
             long helpPublish = 0;
             long holePublish = 0;
+            long askPublish = 0;
             for(Integer id : userIdList){
                 //查活动发布数
                 activityPublish += activityMapper.getMonthPublish(id,month);
@@ -1230,15 +1244,19 @@ public class GeneralServiceImpl implements GeneralService {
                 helpPublish += helpMapper.getMonthPublish(id,month);
                 //查树洞发布数
                 holePublish += holeMapper.getMonthPublish(id,month);
+                //查问题发布数
+                askPublish += askMapper.getMonthPublish(id,month);
             }
             //依次保存本年度第month月的话题发布数
             activityNumber.add(new Long(activityPublish).intValue());
             helpNumber.add(new Long(helpPublish).intValue());
             holeNumber.add(new Long(holePublish).intValue());
+            askNumber.add(new Long(askPublish).intValue());
         }
         topicNumber.setActivityNumber(activityNumber);
         topicNumber.setHelpNumber(helpNumber);
         topicNumber.setHoleNumber(holeNumber);
+        topicNumber.setAskNumber(askNumber);
         return topicNumber;
     }
 

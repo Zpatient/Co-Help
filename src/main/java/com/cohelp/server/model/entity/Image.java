@@ -22,7 +22,7 @@ public class Image implements Serializable {
     private Integer id;
 
     /**
-     * 图片（0：用户 1：活动 2：互助 3：树洞）
+     * 图片（0：用户 1：活动 2：互助 3：树洞 7:提问 8:回答）
      */
     private Integer imageType;
 

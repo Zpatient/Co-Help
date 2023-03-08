@@ -513,10 +513,11 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
             return ResultUtil.fail("该提问删除失败");
         }
         // 删除与之相关的图片
-        QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
-        imageQueryWrapper.eq("image_type", ASK.ordinal()).eq("image_src_id", askId);
-        boolean remove1 = imageService.remove(imageQueryWrapper);
-        if (!remove1) {
+        QueryWrapper<Image> wrapper = new QueryWrapper<>();
+        wrapper.eq("image_type", ASK.ordinal()).eq("image_src_id", askId);
+        List<Image> imageList = imageService.list(wrapper);
+        boolean remove1 = imageService.remove(wrapper);
+        if (!remove1&&!imageList.isEmpty()) {
             return ResultUtil.fail("该提问相关图片删除失败");
         }
 
@@ -531,7 +532,8 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         QueryWrapper<Image> imageQueryWrapper1 = new QueryWrapper<>();
         List<Integer> answerIdList = answerService.list(answerQueryWrapper).stream().map(answer -> answer.getId()).collect(Collectors.toList());
         if (answerIdList != null) {
-            imageQueryWrapper.eq("image_type", ANSWER.ordinal()).in("image_src_id", answerIdList);
+            imageQueryWrapper1.eq("image_type", ANSWER.ordinal()).in("image_src_id", answerIdList);
+            imageService.remove(imageQueryWrapper1);
         }
         return ResultUtil.ok(true, "删除成功");
     }

@@ -19,10 +19,9 @@ public interface CollectService extends IService<Collect> {
      * 指定页码和数量分页查询收藏记录
      * @author: ZGY
      * @date: 2022-10-26 22:46
-     * @param collectRequest 收藏记录查询请求参数
      * @return com.cohelp.server.model.domain.Result
      */
-    Result<List<DetailResponse>> listCollect(User user);
+    Result<List<DetailResponse>> listCollect(User user, Integer page, Integer limit);
     /**
      * 根据Collect对象插入/删除收藏记录
      * @author: ZGY
@@ -39,4 +38,10 @@ public interface CollectService extends IService<Collect> {
      * @return com.cohelp.server.model.domain.Result
      */
     Result deleteCollectRecord(Integer id);
+    /**
+     * 根据id删除指定收藏记录
+     * @param ids 待删除的记录ids
+     * @return com.cohelp.server.model.domain.Result
+     */
+    Result deleteCollectRecord(List<Integer> ids);
 }

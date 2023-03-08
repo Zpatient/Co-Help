@@ -9,10 +9,7 @@ import com.cohelp.server.model.entity.*;
 import com.cohelp.server.model.vo.ActivityVO;
 import com.cohelp.server.model.vo.DetailResponse;
 import com.cohelp.server.service.*;
-import com.cohelp.server.utils.FileUtils;
-import com.cohelp.server.utils.ResultUtil;
-import com.cohelp.server.utils.SensitiveUtils;
-import com.cohelp.server.utils.UserHolder;
+import com.cohelp.server.utils.*;
 import com.google.gson.Gson;
 import com.ruibty.nsfw.NsfwService;
 import org.apache.commons.lang3.ObjectUtils;
@@ -76,7 +73,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
     private String path;
 
     @Override
-    public Result<Boolean> publishActivity(String activityJson, MultipartFile[] files) {
+    public Result<Boolean> publishActivity(String activityJson, MultipartFile[] files)  {
         if (StringUtils.isBlank(activityJson)) {
             return ResultUtil.fail(ERROR_PARAMS, "请求参数错误");
         }
@@ -177,9 +174,9 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
         if (userId != activity.getActivityOwnerId()) {
             return ResultUtil.fail("没有权限修改");
         }
-        QueryWrapper<Image> queryWrapper = new QueryWrapper();
-        queryWrapper.eq("image_type", ACTIVITY.ordinal()).eq("image_src_id", activity.getId());
-        boolean remove = imageService.remove(queryWrapper);
+        QueryWrapper<Image> wrapper = new QueryWrapper();
+        wrapper.eq("image_type", ACTIVITY.ordinal()).eq("image_src_id", activity.getId());
+        boolean remove = imageService.remove(wrapper);
 
         // 上传图片获取url
         ArrayList<String> fileNameList = new ArrayList<>();
@@ -223,13 +220,13 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
 
     @Override
-    public Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum) {
+    public Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum,Integer page,Integer limit) {
 
         // 获取当前登录用户的组织id
         User user = UserHolder.getUser();
         Integer teamId = user.getTeamId();
 
-        if (conditionType == null) {
+        if (ObjectUtils.anyNull(conditionType,page,limit)) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         // 创建活动视图体数组
@@ -237,7 +234,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
 
         // 按热度排序（并将活动信息和对应发布者部分信息注入到活动视图体中）
         if (conditionType == 0) {
-            List<Activity> activityList = activityMapper.listByHot(teamId);
+            List<Activity> activityList0 = activityMapper.listByHot(teamId);
+            List<Activity> activityList = PageUtil.pageByList(activityList0, page, limit);
             if (activityList == null) {
                 return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
             }
@@ -254,7 +252,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                 activityQueryWrapper.orderByDesc("activity_create_time");
                 activityQueryWrapper.eq("team_id", teamId);
                 activityQueryWrapper.eq("activity_state", 0);
-                List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
+                List<Activity> activityList0 = activityMapper.selectList(activityQueryWrapper);
+                List<Activity> activityList = PageUtil.pageByList(activityList0, page, limit);
                 if (activityList == null) {
                     return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
                 }
@@ -268,7 +267,8 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                 activityQueryWrapper.orderByAsc("activity_time");
                 activityQueryWrapper.eq("team_id", teamId);
                 activityQueryWrapper.eq("activity_state", 0);
-                List<Activity> activityList = activityMapper.selectList(activityQueryWrapper);
+                List<Activity> activityList0 = activityMapper.selectList(activityQueryWrapper);
+                List<Activity> activityList = PageUtil.pageByList(activityList0, page, limit);
                 if (activityList == null) {
                     return ResultUtil.fail(ERROR_PARAMS, "暂无活动");
                 }
@@ -335,7 +335,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
             imagesUrl = new ArrayList<>();
         }
         detailResponse.setImagesUrl(imagesUrl);
-
+        detailResponse.setType(ACTIVITY.ordinal());
         return detailResponse;
     }
 

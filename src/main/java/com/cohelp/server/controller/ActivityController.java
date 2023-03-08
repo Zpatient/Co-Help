@@ -38,14 +38,14 @@ public class ActivityController {
         return activityService.updateActivity(activityJson, files);
     }
 
-    @PostMapping("/list")
-    public Result<List<DetailResponse>> listByCondition(@RequestBody ActivityListRequest activityListRequest) {
+    @PostMapping("/list/{page}/{limit}")
+    public Result<List<DetailResponse>> listByCondition(@RequestBody ActivityListRequest activityListRequest,@PathVariable Integer page,@PathVariable Integer limit) {
         if (activityListRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         Integer conditionType = activityListRequest.getConditionType();
         Integer dayNum = activityListRequest.getDayNum();
-        return activityService.listByCondition(conditionType, dayNum);
+        return activityService.listByCondition(conditionType, dayNum,page,limit);
     }
 
 }

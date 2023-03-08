@@ -58,7 +58,7 @@ public class AskServiceImpl extends ServiceImpl<AskMapper, Ask>
 
         //获取该话题对应的的图片URL列表
         detailResponse.setImagesUrl((ArrayList<String>) askVO.getImageUrl());
-
+        detailResponse.setType(ASK.ordinal());
         return detailResponse;
     }
 

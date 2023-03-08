@@ -12,11 +12,15 @@
             <result property="publishTime" column="publish_time" jdbcType="TIMESTAMP"/>
             <result property="likeCount" column="like_count" jdbcType="INTEGER"/>
             <result property="publisherId" column="publisher_id" jdbcType="INTEGER"/>
+            <result property="collectCount" column="collect_count" jdbcType="INTEGER"/>
+            <result property="answerCount" column="answer_count" jdbcType="INTEGER"/>
+            <result property="isAdded" column="is_added" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,question,course_id,
         semester,publish_time,like_count,
-        publisher_id
+        publisher_id,collect_count,answer_count,
+        is_added
     </sql>
 </mapper>

@@ -72,9 +72,9 @@ public class UserController {
         return userService.deletePublish(publishDeleteRequest);
     }
 
-    @GetMapping("/searchpub")
-    public Result<List<DetailResponse>> searchPublish() {
-        return userService.searchPublish();
+    @GetMapping("/searchpub/{page}/{limit}")
+    public Result<List<DetailResponse>> searchPublish(@PathVariable Integer page,@PathVariable Integer limit) {
+        return userService.searchPublish(page,limit);
     }
 
     @PostMapping("/logout")
@@ -119,5 +119,20 @@ public class UserController {
     public Result<Set<String>> listSemester() {
         return userService.listSemester();
     }
+
+
+
+
+
+
+
+
+    //待测试
+    @PostMapping("/deletepubs")
+    public Result<Boolean> deletePublish(@RequestBody List<PublishDeleteRequest> publishDeleteRequests) {
+        return userService.deletePublishs(publishDeleteRequests);
+    }
+
+
 
 }

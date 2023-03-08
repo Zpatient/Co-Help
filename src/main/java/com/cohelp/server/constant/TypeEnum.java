@@ -44,7 +44,15 @@ public enum TypeEnum{
     /**
      * 回答
      */
-    ANSWER;
+    ANSWER,
+    /**
+     * 题库题目
+     */
+    QUESTIONBANK,
+    /**
+     * 答案库答案
+     */
+    ANSWERBANK;
     /**
      * 判断type是否是话题类型
      * @author: ZGY
@@ -53,12 +61,15 @@ public enum TypeEnum{
      * @return java.lang.Boolean
      */
     public static Boolean isTopic(Integer type){
-        if(type == null)
+        if(type == null){
             return false;
-        if(type.equals(TypeEnum.ACTIVITY.ordinal())||type.equals(TypeEnum.HELP.ordinal())||type.equals(TypeEnum.HOLE.ordinal()))
+        }
+        if(type.equals(TypeEnum.ACTIVITY.ordinal())||type.equals(TypeEnum.HELP.ordinal())||type.equals(TypeEnum.HOLE.ordinal())){
             return true;
-        else
+        }
+        else{
             return false;
+        }
     }
     /**
      * 判断type是否是评论类型

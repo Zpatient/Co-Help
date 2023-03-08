@@ -36,7 +36,7 @@ public interface HoleService extends IService<Hole> {
      * @param conditionType
      * @return
      */
-    Result<List<DetailResponse>> listByCondition(Integer conditionType);
+    Result<List<DetailResponse>> listByCondition(Integer conditionType,Integer page,Integer limit);
 
     DetailResponse getDetailResponse(Hole hole);
 }

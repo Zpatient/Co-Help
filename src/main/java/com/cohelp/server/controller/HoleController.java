@@ -38,13 +38,13 @@ public class HoleController {
         return holeService.updateHole(holeJson, files);
     }
 
-    @PostMapping("/list")
-    public Result<List<DetailResponse>> listByCondition(@RequestBody HoleListRequest holeListRequest) {
+    @PostMapping("/list/{page}/{limit}")
+    public Result<List<DetailResponse>> listByCondition(@RequestBody HoleListRequest holeListRequest,@PathVariable Integer page,@PathVariable Integer limit) {
         if (holeListRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         Integer conditionType = holeListRequest.getConditionType();
-        return holeService.listByCondition(conditionType);
+        return holeService.listByCondition(conditionType,page,limit);
     }
 
 }

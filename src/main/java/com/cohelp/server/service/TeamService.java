@@ -37,7 +37,6 @@ public interface TeamService extends IService<Team> {
 
     /**
      * 获取某待审批的组织创建申请
-     * @param teamName 组织名称
      * @return java.util.List<com.cohelp.server.model.entity.UserTeam>
      */
     PageResponse<Team> listNotApproved(Integer currentPage, Integer pageSize);

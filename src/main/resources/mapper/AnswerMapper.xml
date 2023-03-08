@@ -13,11 +13,12 @@
             <result property="likeCount" column="like_count" jdbcType="INTEGER"/>
             <result property="answerTargetId" column="answer_target_id" jdbcType="INTEGER"/>
             <result property="answerTargetType" column="answer_target_type" jdbcType="INTEGER"/>
+            <result property="isAdded" column="is_added" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,content,ask_id,
         publish_time,publisher_id,like_count,
-        answer_target_id,answer_target_type
+        answer_target_id,answer_target_type,is_added
     </sql>
 </mapper>

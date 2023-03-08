@@ -41,22 +41,22 @@ public class HelpController {
         return helpService.updateHelp(helpJson, files);
     }
 
-    @PostMapping("/list")
-    public Result<List<DetailResponse>> listByCondition(@RequestBody HelpListRequest helpListRequest) {
+    @PostMapping("/list/{page}/{limit}")
+    public Result<List<DetailResponse>> listByCondition(@RequestBody HelpListRequest helpListRequest,@PathVariable Integer page,@PathVariable Integer limit) {
         if (helpListRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         Integer conditionType = helpListRequest.getConditionType();
-        return helpService.listByCondition(conditionType);
+        return helpService.listByCondition(conditionType,page,limit);
     }
 
-    @PostMapping("/list/tag")
-    public Result<List<DetailResponse>> listByTag(@RequestBody HelpTagRequest helpTagRequest) {
+    @PostMapping("/list/tag/{page}/{limit}")
+    public Result<List<DetailResponse>> listByTag(@RequestBody HelpTagRequest helpTagRequest,@PathVariable Integer page,@PathVariable Integer limit) {
         if (helpTagRequest == null) {
             return ResultUtil.fail(ERROR_PARAMS);
         }
         String tag = helpTagRequest.getTag();
-        return helpService.listByTag(tag);
+        return helpService.listByTag(tag,page,limit);
     }
 
 }

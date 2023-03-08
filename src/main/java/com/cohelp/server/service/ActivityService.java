@@ -37,7 +37,7 @@ public interface ActivityService extends IService<Activity> {
      * @param dayNum
      * @return
      */
-    Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum);
+    Result<List<DetailResponse>> listByCondition(Integer conditionType, Integer dayNum,Integer page,Integer limit);
 
     DetailResponse getDetailResponse(Activity activity);
 }

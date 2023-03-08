@@ -53,14 +53,19 @@ public class Ask implements Serializable {
     private Integer publisherId;
 
     /**
-     * 收藏量
+     * 
      */
     private Integer collectCount;
 
     /**
-     * 答案量
+     * 
      */
     private Integer answerCount;
+
+    /**
+     * 是否已加入题库（0:未加入 1:已加入）
+     */
+    private Integer isAdded;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
@@ -83,7 +88,10 @@ public class Ask implements Serializable {
             && (this.getSemester() == null ? other.getSemester() == null : this.getSemester().equals(other.getSemester()))
             && (this.getPublishTime() == null ? other.getPublishTime() == null : this.getPublishTime().equals(other.getPublishTime()))
             && (this.getLikeCount() == null ? other.getLikeCount() == null : this.getLikeCount().equals(other.getLikeCount()))
-            && (this.getPublisherId() == null ? other.getPublisherId() == null : this.getPublisherId().equals(other.getPublisherId()));
+            && (this.getPublisherId() == null ? other.getPublisherId() == null : this.getPublisherId().equals(other.getPublisherId()))
+            && (this.getCollectCount() == null ? other.getCollectCount() == null : this.getCollectCount().equals(other.getCollectCount()))
+            && (this.getAnswerCount() == null ? other.getAnswerCount() == null : this.getAnswerCount().equals(other.getAnswerCount()))
+            && (this.getIsAdded() == null ? other.getIsAdded() == null : this.getIsAdded().equals(other.getIsAdded()));
     }
 
     @Override
@@ -97,6 +105,9 @@ public class Ask implements Serializable {
         result = prime * result + ((getPublishTime() == null) ? 0 : getPublishTime().hashCode());
         result = prime * result + ((getLikeCount() == null) ? 0 : getLikeCount().hashCode());
         result = prime * result + ((getPublisherId() == null) ? 0 : getPublisherId().hashCode());
+        result = prime * result + ((getCollectCount() == null) ? 0 : getCollectCount().hashCode());
+        result = prime * result + ((getAnswerCount() == null) ? 0 : getAnswerCount().hashCode());
+        result = prime * result + ((getIsAdded() == null) ? 0 : getIsAdded().hashCode());
         return result;
     }
 
@@ -113,6 +124,9 @@ public class Ask implements Serializable {
         sb.append(", publishTime=").append(publishTime);
         sb.append(", likeCount=").append(likeCount);
         sb.append(", publisherId=").append(publisherId);
+        sb.append(", collectCount=").append(collectCount);
+        sb.append(", answerCount=").append(answerCount);
+        sb.append(", isAdded=").append(isAdded);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

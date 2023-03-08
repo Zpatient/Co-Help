@@ -10,10 +10,7 @@ import com.cohelp.server.service.GeneralService;
 import com.cohelp.server.utils.ResultUtil;
 import com.cohelp.server.utils.UserHolder;
 import org.apache.commons.lang3.ObjectUtils;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,26 +26,23 @@ import static com.cohelp.server.constant.StatusCode.SUCCESS_GET_DATA;
 public class GeneralController {
     @Resource
     GeneralService generalService;
-    @RequestMapping("/getdetail")
-    public Result getDetail(@RequestBody IdAndType idAndType){
-        return generalService.getDetail(idAndType);
-    }
-    @RequestMapping("/search")
-    public Result search(@RequestBody SearchRequest searchRequest){
-        return generalService.search(searchRequest);
-    }
-    @RequestMapping("/insertremark")
-    public Result insertRemark(@RequestBody RemarkRequest remarkRequest){
-        return generalService.insertRemark(remarkRequest);
-    }
-    @RequestMapping("/deleteremark")
-    public Result deleteRemark(@RequestBody IdAndType idAndType){
-        return generalService.deleteRemark(idAndType);
-    }
+
     @RequestMapping("/getremarklist")
     public Result<List<RemarkVO>> listRemark(@RequestBody IdAndType idAndType){
         User user = UserHolder.getUser();
         return generalService.listRemark(idAndType,user.getId());
+    }
+    @RequestMapping("/getdetail")
+    public Result getDetail(@RequestBody IdAndType idAndType){
+        return generalService.getDetail(idAndType);
+    }
+    @RequestMapping("/search/{page}/{limit}")
+    public Result search(@RequestBody SearchRequest searchRequest, @PathVariable Integer page,@PathVariable Integer limit){
+        return generalService.search(searchRequest,page,limit);
+    }
+    @RequestMapping("/insertremark")
+    public Result insertRemark(@RequestBody RemarkRequest remarkRequest){
+        return generalService.insertRemark(remarkRequest);
     }
 
     @RequestMapping("/getcurrentdaypublish")
@@ -114,5 +108,10 @@ public class GeneralController {
     public Result removeRemark(@RequestParam Integer id,@RequestParam Integer type){
         String s = generalService.deleteRemark(type, id);
         return ResultUtil.ok(s);
+    }
+
+    @RequestMapping("/deleteremark")
+    public Result deleteRemark(@RequestBody IdAndType idAndType){
+        return generalService.deleteRemark(idAndType);
     }
 }

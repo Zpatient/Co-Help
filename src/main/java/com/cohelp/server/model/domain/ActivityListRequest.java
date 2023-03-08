@@ -24,7 +24,6 @@ public class ActivityListRequest implements Serializable {
      */
     private Integer conditionType;
 
-
     /**
      * 距离当天有几天
      */

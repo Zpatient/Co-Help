@@ -88,12 +88,18 @@ public interface UserService extends IService<User> {
      * @return
      */
     Result<Boolean> deletePublish(PublishDeleteRequest publishDeleteRequest);
+    /**
+     * 删除发布
+     * @param publishDeleteRequests
+     * @return
+     */
+    Result<Boolean> deletePublishs(List<PublishDeleteRequest> publishDeleteRequests);
 
     /**
      * 查询发布
      * @return
      */
-    Result<List<DetailResponse>> searchPublish();
+    Result<List<DetailResponse>> searchPublish(Integer page,Integer limit);
 
     /**
      * 修改头像

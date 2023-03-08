@@ -28,9 +28,6 @@ public class DetailResponse implements Serializable {
      */
     private HoleVO holeVO;
 
-    /**
-     * 提问 VO
-     */
     private AskVO askVO;
     /**
      * 发布者头像Url
@@ -45,6 +42,10 @@ public class DetailResponse implements Serializable {
      * 是否被点赞
      */
     private Integer isLiked;
+    /**
+     * 类型
+     */
+    private Integer type;
     /**
      * 是否被收藏
      */

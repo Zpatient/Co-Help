@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cohelp.server.constant.TypeEnum;
 import com.cohelp.server.mapper.UserMapper;
 import com.cohelp.server.model.domain.*;
 import com.cohelp.server.model.entity.*;
@@ -168,6 +169,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         safetyUser.setUserCreateTime(user.getUserCreateTime());
         safetyUser.setUserEmail(user.getUserEmail());
         safetyUser.setTeamId(user.getTeamId());
+        safetyUser.setType(user.getType());
         safetyUser.setAnimalSign(getAnimalSign(LocalDateTime.now().getYear() - user.getAge()));
         safetyUser.setTeamName(teamService.getById(user.getTeamId()).getTeamName());
         return safetyUser;
@@ -461,6 +463,20 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         request.getSession().removeAttribute("user");
         return ResultUtil.ok(SUCCESS_LOGOUT, true, "成功退出");
     }
+    @Override
+    public Result<Boolean> deletePublishs(List<PublishDeleteRequest> publishDeleteRequests){
+        if(publishDeleteRequests==null){
+            return ResultUtil.fail("参数不能为空！");
+        }else {
+            List<String> collect = publishDeleteRequests.stream().map(i -> deletePublish(i).getMessage()).collect(Collectors.toList());
+            boolean noneMatch = collect.stream().noneMatch(i -> i.equals("删除成功"));
+            if(noneMatch){
+                return ResultUtil.fail("部分删除失败！");
+            }else {
+                return ResultUtil.ok("删除成功！");
+            }
+        }
+    }
 
     @Override
     public Result<Boolean> deletePublish(PublishDeleteRequest publishDeleteRequest) {
@@ -485,8 +501,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // 删除与之相关的图片
             QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
             imageQueryWrapper.eq("image_type", ACTIVITY_TYPE).eq("image_src_id", id);
+            List<Image> list = imageService.list(imageQueryWrapper);
             boolean remove1 = imageService.remove(imageQueryWrapper);
-            if (!remove1) {
+            if (!remove1&&!list.isEmpty()) {
                 return ResultUtil.fail("该活动相关图片删除失败");
             }
             return ResultUtil.ok(true, "删除成功");
@@ -508,9 +525,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             }
             // 删除与之相关的图片
             QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
+            List<Image> list = imageService.list(imageQueryWrapper);
             imageQueryWrapper.eq("image_type", HELP_TYPE).eq("image_src_id", id);
             boolean remove1 = imageService.remove(imageQueryWrapper);
-            if (!remove1) {
+            if (!remove1&&!list.isEmpty()) {
                 return ResultUtil.fail("该互助相关图片删除失败");
             }
             return ResultUtil.ok(true, "删除成功");
@@ -533,17 +551,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             // 删除与之相关的图片
             QueryWrapper<Image> imageQueryWrapper = new QueryWrapper<>();
             imageQueryWrapper.eq("image_type", HOLE_TYPE).eq("image_src_id", id);
+            List<Image> list = imageService.list(imageQueryWrapper);
             boolean remove1 = imageService.remove(imageQueryWrapper);
-            if (!remove1) {
+            if (!remove1&&!list.isEmpty()) {
                 return ResultUtil.fail("该树洞相关图片删除失败");
             }
             return ResultUtil.ok(true, "删除成功");
         }
-        return ResultUtil.fail("未存在该类型发布");
+        // 提问
+        if (typeNumber == TypeEnum.ASK.ordinal()) {
+            Result<Boolean> booleanResult = courseService.deleteAsk(id);
+            if (!booleanResult.getData()) {
+                return ResultUtil.fail(booleanResult.getMessage());
+            }
+            return ResultUtil.ok(true, "删除成功");
+        }
+        return ResultUtil.fail("不存在该类型发布");
     }
 
     @Override
-    public Result<List<DetailResponse>> searchPublish() {
+    public Result<List<DetailResponse>> searchPublish(Integer page,Integer limit) {
         // 查看当前登录用户id与账户所查的用户id是否一致
         User user = UserHolder.getUser();
         int userId = user.getId();
@@ -570,23 +597,23 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 detailResponseList.add(helpService.getDetailResponse(help))
         );
 
-        // 查询树洞
-        QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
-        holeQueryWrapper.eq("hole_owner_id", userId);
-        ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
-        holeList.forEach(hole ->
-                detailResponseList.add(holeService.getDetailResponse(hole))
-        );
+//        // 查询树洞
+//        QueryWrapper<Hole> holeQueryWrapper = new QueryWrapper<>();
+//        holeQueryWrapper.eq("hole_owner_id", userId);
+//        ArrayList<Hole> holeList = (ArrayList<Hole>) holeService.list(holeQueryWrapper);
+//        holeList.forEach(hole ->
+//                detailResponseList.add(holeService.getDetailResponse(hole))
+//        );
 
-        // 查询题目
+        //查询提问
         QueryWrapper<Ask> askQueryWrapper = new QueryWrapper<>();
-        askQueryWrapper.eq("publisher_id", userId);
-        ArrayList<Ask> askList = (ArrayList<Ask>) askService.list(askQueryWrapper);
-        askList.forEach(ask ->
+        helpQueryWrapper.eq("publisher_id", userId);
+        List<Ask> list = askService.list(askQueryWrapper);
+        list.forEach(ask ->
                 detailResponseList.add(askService.getDetailResponse(ask))
         );
-
-        return ResultUtil.ok(detailResponseList);
+        List<DetailResponse> detailResponses = PageUtil.pageByList(detailResponseList, page, limit);
+        return ResultUtil.ok(detailResponses);
     }
 
     @Override

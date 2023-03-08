@@ -21,7 +21,7 @@ public interface HoleMapper extends BaseMapper<Hole> {
     List<Hole> listByHot(Integer teamId);
     /**
      * 根据关键词搜索某人发布的树洞
-     * @param userId 用户Id
+     * @param teamId 组织Id
      * @param key 关键词
      * @param keywords 分词结果
      * @return java.util.List<com.cohelp.server.model.entity.Activity>

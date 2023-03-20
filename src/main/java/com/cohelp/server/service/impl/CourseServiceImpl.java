@@ -841,6 +841,30 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         return ResultUtil.ok(true);
     }
 
+    @Override
+    public Result<List<String>> listSemester() {
+        // 获取学生 id
+        User user = UserHolder.getUser();
+        Integer userId = user.getId();
+
+        // 根据学生 id 从选课表中查询学年
+        QueryWrapper<Selection> selectionQueryWrapper = new QueryWrapper<>();
+        selectionQueryWrapper.eq("student_id", userId);
+        List<Selection> selectionList = selectionService.list(selectionQueryWrapper);
+
+        // 若学生未选课，则返回空数组
+        if (selectionList == null) {
+            return ResultUtil.ok(new ArrayList<>());
+        }
+
+        // 对学年进行去重和排序
+        Set<String> semesterSet = selectionList.stream().map(selection -> selection.getSemester()).collect(Collectors.toSet());
+        List<String> semesterList = semesterSet.stream().collect(Collectors.toList());
+
+        // 返回学年数组
+        return ResultUtil.ok(semesterList);
+    }
+
 
     /**
      * 给问题加积分

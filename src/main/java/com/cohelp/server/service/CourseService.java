@@ -140,4 +140,10 @@ public interface CourseService extends IService<Course> {
      * @return
      */
     Result<Boolean> deleteTeach(Integer teachId);
+
+    /**
+     * 获取当前学生对应的学年
+     * @return
+     */
+    Result<List<String>> listSemester();
 }

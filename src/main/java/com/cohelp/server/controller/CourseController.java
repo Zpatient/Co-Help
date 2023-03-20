@@ -54,6 +54,12 @@ public class CourseController {
         return courseService.listCourse(semester);
     }
 
+    @GetMapping("/get/semester")
+    public Result<List<String>> listSemester() {
+        return courseService.listSemester();
+    }
+
+
     @GetMapping("list/ask/{page}/{limit}/{courseId}/{semester}/{condition}")
     public Result<List<AskVO>> listAsk(@PathVariable Integer page, @PathVariable Integer limit, @PathVariable Integer courseId,
                                        @PathVariable String semester, @PathVariable Integer condition) {

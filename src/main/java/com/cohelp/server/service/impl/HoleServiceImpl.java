@@ -112,7 +112,7 @@ public class HoleServiceImpl
                     byte[] bytes = file.getBytes();
                     float prediction = nsfwService.getPrediction(bytes);
                     if(prediction>new Float(threshold)){
-                        continue;
+                        return ResultUtil.fail("图片涉及敏感内容");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -182,7 +182,7 @@ public class HoleServiceImpl
                     byte[] bytes = file.getBytes();
                     float prediction = nsfwService.getPrediction(bytes);
                     if(prediction>new Float(threshold)){
-                        continue;
+                        return ResultUtil.fail("图片涉及敏感内容");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();

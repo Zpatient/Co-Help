@@ -117,7 +117,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                     byte[] bytes = file.getBytes();
                     float prediction = nsfwService.getPrediction(bytes);
                     if(prediction>new Float(threshold)){
-                        continue;
+                        return ResultUtil.fail("图片涉及敏感内容");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -187,7 +187,7 @@ public class ActivityServiceImpl extends ServiceImpl<ActivityMapper, Activity>
                     byte[] bytes = file.getBytes();
                     float prediction = nsfwService.getPrediction(bytes);
                     if(prediction>new Float(threshold)){
-                        continue;
+                        return ResultUtil.fail("图片涉及敏感内容");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
